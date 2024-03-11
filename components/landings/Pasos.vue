@@ -5,7 +5,7 @@
       <div class="pasos__list py-8 mb-8">
          <div class="pasos__list-items p-12" v-for="items in data.pasos.listado_pasos">
             <div class="pasos__list-items-image">
-               <img loading="lazy" :src="items.icono.url" :alt="items.icono.alt">
+               <NuxtImg loading="lazy" :src="items.icono.url" :alt="items.icono.alt" />
             </div>
             <div class="pasos__list-items-content">
                <p v-html="items.texto_icono"></p>

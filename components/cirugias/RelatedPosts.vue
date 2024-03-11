@@ -5,7 +5,7 @@
          <article v-for="post in posts" :key="post.id" class="card" :aria-labelledby="'post-title-' + post.id">
             <nuxt-link :to="`/blog/${post.slug}`"
                :aria-label="'Leer más sobre ' + post.title.rendered">
-               <img loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src" class="card__image"
+               <NuxtImg loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src" class="card__image"
                   :alt="post.featured_image_src.alt" :aria-labelledby="'post-title-' + post.id" />
                <h2 :id="'post-title-' + post.id" class="h6">{{ post.title.rendered }}</h2>
             </nuxt-link>

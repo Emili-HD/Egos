@@ -40,7 +40,7 @@
                     <ul>
                         <li v-for="miembro in doctorByCategory(category.id)" :key="miembro.id" class="card !aspect-[4/5] bg-nude8 rounded-3xl overflow-hidden">
                             <div class="card__member block relative size-full overflow-hidden">
-                                <img v-if="miembro.featured_image_src" :src="miembro.featured_image_src.src"
+                                <NuxtImg loading="lazy" v-if="miembro.featured_image_src" :src="miembro.featured_image_src.src"
                                     class="card__image absolute w-full -top-[10%] object-center object-cover min-h-full overflow-hidden rounded-3xl" :alt="miembro.featured_image_src.alt" />
                                 <div class="card__description bg-nude8 p-4 absolute bottom-0 rounded-3xl w-full z-10 flex flex-col justify-end items-center gap-2">
                                     <h3 class="card__title h6 !mb-0">

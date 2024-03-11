@@ -31,7 +31,8 @@
               :aria-label="'Leer más sobre ' + clinica.title.rendered"
               @click.prevent
             >
-              <img
+              <NuxtImg
+                loading="lazy"
                 v-if="clinica.featured_image_data"
                 :src="clinica.featured_image_data.src"
                 class="clinicas__egos-card-image"

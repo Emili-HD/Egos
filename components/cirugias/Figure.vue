@@ -22,7 +22,7 @@
                <div class="size-full " data-plyr-provider="vimeo" :data-plyr-embed-id="items.video"></div>
             </vue-plyr>
          </div>
-         <img loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" alt="" />
+         <NuxtImg loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" alt="" />
       </figure>
    <!-- </DelayHydration> -->
    <div class="panel__content col-[10_/_span_6] has-[.accordion]:col-[2_/_span_6] row-start-1"  v-if="contentData && contentData.opciones_listado != 'columnas' && contentData.opciones_listado != 'antesdespues'">

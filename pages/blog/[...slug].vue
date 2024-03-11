@@ -19,7 +19,7 @@
             <h2 class="area-title">{{ content.titulo_area }}</h2>
             <div v-html="content.contenido_area"></div>
             <div class="post__content-image" v-if="content.imagen_area.url">
-              <img :src="content.imagen_area.url" alt="" />
+              <NuxtImg loading="lazy" :src="content.imagen_area.url" alt="" />
             </div>
           </div>
 

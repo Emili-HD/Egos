@@ -13,7 +13,7 @@
         <article v-for="post in posts" :key="post.id" class="card" :aria-labelledby="'post-title-' + post.id">
           <nuxt-link :to="'/blog/' + post.slug"
             :aria-label="'Leer más sobre ' + post.title.rendered">
-            <img v-if="post.featured_image_src" :src="post.featured_image_src.src" class="card__image"
+            <NuxtImg loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src" class="card__image"
               :alt="post.featured_image_src.alt" :aria-labelledby="'post-title-' + post.id" />
             <div class="card__content p-1 p-xs-4">
               <div class="card__content-wrapper">

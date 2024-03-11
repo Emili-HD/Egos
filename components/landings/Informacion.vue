@@ -15,7 +15,7 @@
             </div>
             <div class="listado__list--item-content">
                <div class="listado__list--item-content-img">
-                  <img loading="lazy" :src="listado.imagen.url" :alt="listado.imagen.alt" />
+                  <NuxtImg loading="lazy" :src="listado.imagen.url" :alt="listado.imagen.alt" />
                </div>
                <div class="listado__list--item-content-description">
                   <div class="listado__list-grid mb-12">

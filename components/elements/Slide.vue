@@ -1,7 +1,7 @@
 <template>
-   <swiper :direction="'vertical'" :slidesPerView="'auto'" :freeMode="true" :scrollbar="true" :mousewheel="true"
-      :modules="modules" class="mySwiper">
-      <swiper-slide>
+   <Swiper :direction="'vertical'" :slidesPerView="'auto'" :freeMode="true" :scrollbar="true" :mousewheel="true"
+      :modules="[SwiperFreeMode, SwiperScrollbar, SwiperMousewheel]" class="mySwiper">
+      <SwiperSlide>
          <div class="team__panel-content-inner">
             <div class="row pr-2" v-if="data.acf.trayectoria.num_colegiadoa">
                <p><strong>Núm. Colegiado/a</strong></p>
@@ -23,34 +23,17 @@
                <div v-html="data.content.rendered"></div>
             </div>
          </div>
-      </swiper-slide>
+      </SwiperSlide>
    </swiper>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-// Importa los componentes de Swiper para Vue.js
-// import { Swiper, SwiperSlide } from 'swiper/vue';
-
-// Importa los estilos de Swiper
-// import 'swiper/css';
-// import 'swiper/css/free-mode';
-// import 'swiper/css/scrollbar';
-
-// Importa los módulos requeridos de Swiper
-import { FreeMode, Scrollbar, Mousewheel } from 'swiper/modules';
-
 // Props
 const props = defineProps({
    data: {
       type: Object
    }
 })
-
-// Módulos
-const modules = [FreeMode, Scrollbar, Mousewheel];
-
 </script>
 
 <style lang="scss">

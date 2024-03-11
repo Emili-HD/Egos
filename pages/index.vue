@@ -1,12 +1,20 @@
 <template>
   <main class="site-main" v-if="home">
       <HomeWellcome :data="home" />
-      <HomeCategories :data="home" />
-      <HomeTestimonios />
+      <DelayHydration>
+        <LazyHomeCategories :data="home" />
+      </DelayHydration>
+      <DelayHydration>
+        <LazyHomeTestimonios />
+      </DelayHydration>
       <FormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid"/>
       <HomeAcordeon :data="home.acf.acordeon_cirugias" />
-      <HomeBlog />
-      <HomeSocial />
+      <DelayHydration>
+        <LazyHomeBlog />
+      </DelayHydration>
+      <DelayHydration>
+        <LazyHomeSocial />
+      </DelayHydration>
   </main>
 </template>
 

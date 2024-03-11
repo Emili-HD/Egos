@@ -2,17 +2,17 @@
    <section class="detalles pb-12">
       <div class="detalles__header p-12 mb-12">
          <h2 class="h4">{{ data.detalles.avalados }}</h2>
-         <img loading="lazy" :src="data.detalles.logo_avalados.url" alt="" />
+         <NuxtImg loading="lazy" :src="data.detalles.logo_avalados.url" alt="" />
       </div>
       <div class="consejos py-40 px-20 mb-12" ref="detalles">
          <figure class="icon" v-for="icons in data.detalles.consejo" :key="icons.id">
-            <img loading="lazy" :src="icons.icono.url" alt="" />
+            <NuxtImg loading="lazy" :src="icons.icono.url" alt="" />
             <figcaption v-html="icons.texto_icono"></figcaption>
          </figure>
       </div>
       <div class="bg__detalles py-5 px-3">
          <figure class="bg__detalles-img">
-            <img loading="lazy" :src="data.detalles.imagen_avalados.url" alt="" />
+            <NuxtImg loading="lazy" :src="data.detalles.imagen_avalados.url" alt="" />
          </figure>
       </div>
    </section>

@@ -4,7 +4,7 @@
          <h2>Reseñas</h2>
          <ElementsDivider />
       </div>
-      <swiper
+      <Swiper
          :slidesPerView="1"
          :spaceBetween="30"
          :pagination="{
@@ -20,10 +20,10 @@
                spaceBetween: 50,
             },
          }"
-         :modules="modules"
+         :modules="[SwiperPagination]"
          class="mySwiper"
       >
-         <swiper-slide v-for="comment in data.resenas.resena">
+         <SwiperSlide v-for="comment in data.resenas.resena">
             <h3 class="h6">{{ comment.nombre }}</h3>
             <div class="stars pb-4" :data-stars="comment.valoracion">
                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 172.4 33.6">
@@ -44,21 +44,16 @@
                </svg>
             </div>
             <p class="comentario">{{ comment.texto }}</p>
-         </swiper-slide>
-      </swiper>
+         </SwiperSlide>
+      </Swiper>
    </section>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
 
 // Estado reactivo
 const resenas = ref(null)
-
-const modules = [Pagination]
 
 // props
 const props = defineProps({

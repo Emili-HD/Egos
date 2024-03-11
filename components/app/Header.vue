@@ -3,7 +3,7 @@
         <div class="header-wrapper flex flex-row justify-between px-1 w-full">
             <div class="header-brand bg-nude8 flex flex-col justify-start items-start p-1 rounded-2xl">
                 <nuxt-link class="block px-2 xl:px-4 py-1 xl:py-2 rounded-xl" to="/">
-                    <img class="w-full max-w-20 xl:max-w-16 xl:max-w-14" src="../../assets/images/icons/logo-egos.svg" alt="">
+                    <img class="w-full max-w-20 xl:max-w-16 xl:max-w-14" src="../../assets/images/icons/logo-egos.svg" alt="" />
                 </nuxt-link>
             </div>
     

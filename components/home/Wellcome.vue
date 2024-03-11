@@ -1,7 +1,7 @@
 <template>
     <section class="intro">
         <div class="intro__image">
-            <img loading="lazy" class="girl" :src="data.featured_image_src.src" alt="" />
+            <NuxtImg loading="lazy" class="girl" :src="data.featured_image_src.src" alt="" />
             <p class="intro__title">Más de 2000<br><span id="a">pacientes</span> <span id="b">intervenidos</span> <br>al año</p>
             <div class="intro__content">
                 <div class="heading" v-html="data.content.rendered"></div>

@@ -1,7 +1,9 @@
 <template>
   <main class="page site-main grid grid-cols-[repeat(16,_minmax(0,_1fr))]" v-if="pages">
       <PageHeading :data="pages" />
-      <PageCatRelacionadas  :data="pages.acf" />
+      <DelayHydration>
+        <LazyPageCatRelacionadas  :data="pages.acf" />
+      </DelayHydration>
       <FormsPiceCita :titulo="`¿No encuentras tu cirugía?`" :portalId="String(pages.acf.formulario.portalid)" :formId="pages.acf.formulario.formid" />
       <section class="quote font-base text-balance normal-case font-semibold leading-5 py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid">
           <ElementsReveal :titulo="pages.acf.hero.texto_imagen" tag="p" />

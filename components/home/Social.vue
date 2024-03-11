@@ -2,11 +2,11 @@
     <section class="social py-40 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
       <SocialPopUp />
       <h2 class="social__title col-[2_/_span_14] text-center">#BellezaSinFiltros: la realidad detrás de la estética</h2>
-      <swiper
+      <Swiper
          :slidesPerView="3"
          :spaceBetween="30"
          :navigation="true"
-         :modules="modules"
+         :modules="[SwiperNavigation]"
          class="tiktokSlide w-full max-h-[37.5rem] col-[3_/_span_12]"
          :breakpoints="{
             '@0.00': {
@@ -23,7 +23,7 @@
             },
          }"
       >
-         <swiper-slide class="text-center bg-white rounded-xl overflow-hidden flex flex-col justify-center items-center" v-for="tt in tiktokData.posts" :key="tt.index" @click="openPopup(tt.video_id)">
+         <SwiperSlide class="text-center bg-white rounded-xl overflow-hidden flex flex-col justify-center items-center" v-for="tt in tiktokData.posts" :key="tt.index" @click="openPopup(tt.video_id)">
             <div class="tiktok-feed-item" :title="tt.description">
                <div class="tiktok-post-hover flex flex-col justify-center items-center absolute w-full h-[37.5rem] bg-[#1c2c44]/50 top-0 left-0 opacity-0 z-10 hover:opacity-100 transition-[opacity]">
                   <svg class="play-icon w-6 h-6 fill-[var(--nude-8)]" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -32,28 +32,24 @@
                </div>
                <div class="tiktok-play-count-container"></div>
                <div :id="`tiktok-${tt.video_id}`">
-                  <img class="object-cover object-center min-h-[37.5rem] w-full" :src="tt.thumbnail_url" alt="">
+                  <NuxtImg class="object-cover object-center min-h-[37.5rem] w-full" :src="tt.thumbnail_url" alt="" />
                </div>
             </div>
-         </swiper-slide>
-      </swiper>        
+         </SwiperSlide>
+      </Swiper>        
     </section>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { tiktok } from '@/composables/useApi';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
+
 
 const social = ref(null)
 const tiktokData = ref({ posts: [] });
 const selectedVideoId = ref('');
 const showPopup = ref(false);
 
-// Modules
-const modules = [Navigation]
 
 // Función para manejar clic en un slide
 const openPopup = (videoId) => {

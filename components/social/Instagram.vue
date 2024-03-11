@@ -2,12 +2,12 @@
    <div class="instagram-wrapper">
       <h1 v-if="isLoading">LOADING...</h1>
       <h1 v-else-if="hasError">Ooops, something went wrong.</h1>
-      <swiper
+      <Swiper
          v-else
          :slidesPerView="3"
          :spaceBetween="30"
          :navigation="true"
-         :modules="modules"
+         :modules="[SwiperNavigation]"
          class="tiktokSlide"
          :breakpoints="{
             '@0.00': {
@@ -24,7 +24,7 @@
             },
          }"
       >
-         <swiper-slide v-for="image in instagramData?.data" :key="image.id">
+         <SwiperSlide v-for="image in instagramData?.data" :key="image.id">
             <a :href="image.permalink" :key="image.id" target="_blank" rel="noreferrer">
                <img v-if="image.media_type === 'IMAGE' ||
                   image.media_type === 'CAROUSEL_ALBUM'
@@ -34,17 +34,14 @@
                </video>
             </a>
             <span v-if="showCaption" class="instagram-caption">{{ image.caption }}</span>
-         </swiper-slide>
-      </swiper>
+         </SwiperSlide>
+      </Swiper>
    </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
 
 const props = defineProps({
    accessToken: String,
@@ -55,9 +52,6 @@ const isLoading = ref(true);
 const hasError = ref(false);
 const instagramData = ref(null);
 const showCaption = ref(false);
-
-// Modules
-const modules = [Navigation]
 
 const fetchInstaData = (url) => {
    axios

@@ -2,7 +2,7 @@
     <div class="card" :class="props.classes" v-if="category">
         <nuxt-link :to="processedLink" class="w-full h-full block">
             <picture>
-                <img loading="lazy"
+                <NuxtImg loading="lazy"
                     v-if="category.featured_image_data"
                     :src="category.featured_image_data.src"
                     :alt="category.featured_image_data.alt"

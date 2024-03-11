@@ -18,7 +18,7 @@
         <article v-for="testimonio in testimonios" :key="testimonio.id" class="card item"
           :class="getCategoriesNames(testimonio)">
           <div class="testimonios__image" v-if="testimonio.featured_image_data && testimonio.featured_image_data.src">
-            <img :src="testimonio.featured_image_data.src" :alt="testimonio.featured_image_data.alt" />
+            <NuxtImg :src="testimonio.featured_image_data.src" :alt="testimonio.featured_image_data.alt" />
           </div>
           <div class="testimonios__content">
             <h3 class="h6">{{ testimonio.title.rendered }}</h3>

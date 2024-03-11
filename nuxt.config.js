@@ -21,13 +21,35 @@ export default defineNuxtConfig({
   ],
   modules: [
     '@nuxtjs/tailwindcss',
+    '@nuxt/image',
     'nuxt-swiper',
     'nuxt-delay-hydration',
   ],
   delayHydration: {
     // enables nuxt-delay-hydration in dev mode for testing
     debug: process.env.NODE_ENV === 'development',
-    mode: 'init'
+    mode: 'init',
+    include: [
+      '/blog/**',
+      '/opinion/**',
+      'nuestra-clinicas',
+      'nuestro-equipo',
+      'casos-reales'
+    ]
+  },
+  image: {
+    // Opciones de @nuxt/image
+    providers: {
+      customProvider: {
+        name: 'customProvider',
+        provider: '~/providers/customProvider.js', // Ruta al archivo del proveedor personalizado
+        options: {
+          baseURL: 'https://test.clinicaegos.com', // URL base de tu proveedor de imágenes
+        },
+      },
+    },
+    // Configuración predeterminada del proveedor
+    defaultProvider: 'customProvider',
   },
   components: true,
   runtimeConfig: {

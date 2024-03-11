@@ -4,7 +4,7 @@
       
             <article v-for="post in posts" :key="post.id" class="card">
                <nuxt-link :to="'/blog/' + post.slug">
-                  <img loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src" class="card__image" :alt="post.featured_image_src.alt" />
+                  <NuxtImg loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src" class="card__image" :alt="post.featured_image_src.alt" />
                   <div class="card__content p-1 p-xs-4">
                      <div class="card__content-wrapper">
                         <p class="card__content-cat"><span>Categoría: {{ post.categories_names.join(', ') }}</span><br><time :datetime="post.date_gmt">{{ formatDate(post.date_gmt) }}</time></p>

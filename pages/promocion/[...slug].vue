@@ -7,7 +7,7 @@
          <LandingsHeader :data="landing[0]" />
          <div id="formulario" class="hero__form p-16">
             <div class="insignia mb-8 flex flex-row justify-center">
-               <img :src="landing[0].acf.insignia.url" alt="" />
+               <NuxtImg loading="lazy" :src="landing[0].acf.insignia.url" alt="" />
             </div>
             <FormsLanding :portalId="String(landing[0].acf.form[0].portalid)" :formId="landing[0].acf.form[0].formid" />
          </div>

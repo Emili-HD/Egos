@@ -11,7 +11,7 @@
          </div>
          <div v-for="(header, index) in table.tabla" class="column" :class="`column${index + 1}`">
             <div class="image_container mb-2">
-               <img loading="lazy" :src="header.cabecera_tabla.imagen_tabla.url" alt="" />
+               <NuxtImg loading="lazy" :src="header.cabecera_tabla.imagen_tabla.url" alt="" />
                <div v-html="header.cabecera_tabla.descripcion_tabla"></div>
             </div>
             <div class="contenido_tabla">

@@ -29,7 +29,7 @@
    
       <div class="panel__image col-[2_/_span_14] xl:col-[9_/_span_7] sm:row-1 xl:row-1 aspect-square w-full overflow-hidden rounded-3xl">
          <figure class="panel__image-img" v-for="image in data.items">
-            <img loading="lazy" v-if="image.imagen.url" :src="image.imagen.url" alt="" />
+            <NuxtImg loading="lazy" v-if="image.imagen.url" :src="image.imagen.url" alt="" />
          </figure>
       </div>
    </section>
