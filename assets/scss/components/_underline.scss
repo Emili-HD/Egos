@@ -1,0 +1,17 @@
+.underline {
+   &::before {
+      content: "";
+      width: 100%;
+      height: 1px;
+      background-color: currentColor;
+      position: absolute;
+      bottom: -0.5rem;
+      max-width: 0;
+      transform: max-width .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+   }
+   
+   &:hover::before {
+      max-width: 100%;
+      transform: max-width .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+   }
+}

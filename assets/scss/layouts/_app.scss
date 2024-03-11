@@ -1,0 +1,27 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+}
+
+@media (hover: hover) {
+  a:hover {
+    color: var(--link-color-hover);
+  }
+}
+
+// #app {
+//   max-width: var(--full-width);
+//   width: var(--full-width);
+//   margin: 0 auto;
+//   padding: 0;
+//   overflow-x: hidden;
+// }
+
+
+// body {
+//   margin: 0;
+//   padding: 0;
+// }

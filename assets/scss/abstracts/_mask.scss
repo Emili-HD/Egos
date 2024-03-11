@@ -1,0 +1,34 @@
+.smooth-corner {
+   --size: auto;
+   --smooth-corner: 90%;
+   --smooth-reserve: clamp(0%, calc(var(--smooth-corner) * 0.375), 20%);
+   --radii: clamp(0%, calc(var(--smooth-corner) * 0.25), 10%);
+   --smooth-margin: calc(var(--radii) * -1);
+
+   position: relative;
+   height: var(--size);
+   width: var(--size);
+   border-radius: var(--radii);
+}
+
+.smooth-corner::before,
+.smooth-corner::after {
+   position: absolute;
+   content: "";
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   z-index: -1;
+   background-color: inherit;
+}
+
+.smooth-corner::before {
+   margin: var(--smooth-margin) 0;
+   border-radius: var(--smooth-corner) / var(--smooth-reserve);
+}
+
+.smooth-corner::after {
+   margin: 0 var(--smooth-margin);
+   border-radius: var(--smooth-reserve) / var(--smooth-corner);
+}

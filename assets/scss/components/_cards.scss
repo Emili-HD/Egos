@@ -1,0 +1,59 @@
+.card {
+    border-radius: var(--radius-m);
+    aspect-ratio: 2/3;
+    overflow: hidden;
+
+    picture {
+        background-color: #F1F3F0;
+        display: block;
+        height: 100%;
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .category__title {
+        h3 {
+            font-size: calc(var(--font-size) * .8);
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        p {
+            font-size: 90%;
+            margin-bottom: 0;
+            text-align: center;
+            text-wrap: balance;
+        }
+    }
+}
+
+.testimonios {
+    &__list {
+        max-width: var(--full-width);
+
+        @media (max-width: 767px) {
+            grid-template-columns: 1fr;
+        }
+
+        .card {
+            @include flex(column, space-between, center);
+            aspect-ratio: unset;
+            background-color: var(--nude-8);
+        }
+    }
+
+    &__content {
+        padding: var(--gap);
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+}
+
+.grid-cols-16 {
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+}

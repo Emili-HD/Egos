@@ -1,0 +1,71 @@
+$spacings: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, auto);
+
+$sides: ("t": "top",
+   "b": "bottom",
+   "l": "left",
+   "r": "right",
+   "": ("top",
+      "left",
+      "bottom",
+      "right"
+   ),
+   "x": ("left",
+      "right"
+   ),
+   "y": ("top",
+      "bottom"
+   ));
+
+$breakpoints: ("": "",
+   "xs": 767px,
+   "sm": 820px,
+   "md": 1024px,
+   "lg": 1440px,
+   "xl": 1600px);
+
+@each $breakName,
+$breakValue in $breakpoints {
+   @each $space in $spacings {
+
+      @each $prefix,
+      $positions in $sides {
+         @if $breakName !="" {
+            $prefix: #{$prefix}-#{$breakName};
+         }
+
+         @else {
+            $prefix: #{$prefix};
+         }
+
+         @if $breakName !="" {
+            @media (max-width: $breakValue) {
+               .p#{$prefix}-#{$space} {
+                  @each $pos in $positions {
+                     padding-#{$pos}: if($space==auto, $space, #{$space}rem);
+                  }
+               }
+
+               .m#{$prefix}-#{$space} {
+                  @each $pos in $positions {
+                     margin-#{$pos}: if($space==auto, $space, #{$space}rem);
+                  }
+               }
+            }
+         }
+
+         @else {
+            .p#{$prefix}-#{$space} {
+               @each $pos in $positions {
+                  padding-#{$pos}: if($space==auto, $space, #{$space}rem);
+               }
+            }
+
+            .m#{$prefix}-#{$space} {
+               @each $pos in $positions {
+                  margin-#{$pos}: if($space==auto, $space, #{$space}rem);
+               }
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,163 @@
+@function hexToRGB($hex) {
+  @return red($hex),
+  green($hex),
+  blue($hex);
+}
+
+// BASE COLOR PALETTE SASS
+$blue-1: #1c2c44;
+$blue-2: #223552;
+$blue-3: #273e60;
+$blue-4: #2d476e;
+$blue-5: #33507c;
+$blue-6: #395989;
+
+$gold: #CCB780;
+$gold-2: #908057;
+$gold-3: #857650;
+$nude-1: #c0b5a3;
+$nude-2: #c8beaf;
+$nude-3: #d0c8ba;
+$nude-4: #d8d1c6;
+$nude-5: #e0dad2;
+$nude-6: #e8e4dd;
+$nude-7: #f0ede9;
+$nude-8: #f8f7f4;
+$white: #ffffff;
+
+:root {
+  // BASE COLOR PALETTE CSS
+  --blue-1: #{$blue-1};
+  --blue-2: #{$blue-2};
+  --blue-3: #{$blue-3};
+  --blue-4: #{$blue-4};
+  --blue-5: #{$blue-5};
+  --blue-6: #{$blue-6};
+
+  --gold-1: #{$gold};
+  --gold-2: #{$gold-2};
+  --gold-3: #{$gold-3};
+  --nude-1: #{$nude-1};
+  --nude-2: #{$nude-2};
+  --nude-3: #{$nude-3};
+  --nude-4: #{$nude-4};
+  --nude-5: #{$nude-5};
+  --nude-6: #{$nude-6};
+  --nude-7: #{$nude-7};
+  --nude-8: #{$nude-8};
+  --white: #{$white};
+
+  --blue-1-rgb: #{hexToRGB($blue-1)};
+  --blue-2-rgb: #{hexToRGB($blue-2)};
+  --blue-3-rgb: #{hexToRGB($blue-3)};
+  --blue-4-rgb: #{hexToRGB($blue-4)};
+  --blue-5-rgb: #{hexToRGB($blue-5)};
+  --blue-6-rgb: #{hexToRGB($blue-6)};
+
+  --gold-1-rgb: #{hexToRGB($gold)};
+  --gold-2-rgb: #{hexToRGB($gold-2)};
+  --gold-3-rgb: #{hexToRGB($gold-3)};
+  --nude-1-rgb: #{hexToRGB($nude-1)};
+  --nude-2-rgb: #{hexToRGB($nude-2)};
+  --nude-3-rgb: #{hexToRGB($nude-3)};
+  --nude-4-rgb: #{hexToRGB($nude-4)};
+  --nude-5-rgb: #{hexToRGB($nude-5)};
+  --nude-6-rgb: #{hexToRGB($nude-6)};
+  --nude-7-rgb: #{hexToRGB($nude-7)};
+  --nude-8-rgb: #{hexToRGB($nude-8)};
+  --white-rgb: #{hexToRGB($white)};
+
+
+  // GRADIENTS
+  --gradient-blue: linear-gradient(150deg, var(--blue-1), var(--blue-4));
+  --gradient-gold: linear-gradient(-35deg, var(--nude-3), var(--gold-2), var(--nude-3), var(--gold-2), var(--nude-3));
+  --background-gradient: linear-gradient(135deg, var(--gold), var(--nude-6));
+  --background-gradient-cards: linear-gradient(180deg, rgba(var(--gold-rgb), 0) 0%, var(--nude-7) 50%);
+  --gradient: radial-gradient(117% 90% at 31% 74%, rgba(220, 227, 230, 0.3) -10%, rgba(220, 227, 230, 0.1) 40%, rgba(220, 227, 230, 0) 60%),
+    radial-gradient(53% 108% at 60% 121%, rgba(139, 145, 148, 0.8) 0%, rgba(139, 145, 148, 0) 80%),
+    radial-gradient(180% 180% at 174% -112%, rgb(139, 145, 148) 0%, rgb(139, 145, 148) 70%, rgba(139, 145, 148, 0) 95%),
+    linear-gradient(41deg, rgba(220, 227, 230, 0) 0%, rgba(220, 227, 230, 0) 70%, rgba(220, 227, 230, 0.6) 110%),
+    radial-gradient(58% 49% at -8% 55%, rgb(192, 199, 202) 0%, rgba(192, 199, 202, 0) 100%),
+    radial-gradient(40% 27% at -4% 13%, rgb(192, 199, 202) 0%, rgba(192, 199, 202, 0) 90%);
+
+  // SHADOWS
+  --shadow: 0 16px 8px rgba(160, 156, 151, 0.07),
+    0 32px 16px rgba(160, 156, 151, 0.11);
+
+  --dropShadow: drop-shadow(0 2px 1px rgba(160, 156, 151, 0.11)) drop-shadow(0 4px 2px rgba(160, 156, 151, 0.13)) drop-shadow(0 8px 4px rgba(160, 156, 151, 0.15)) drop-shadow(0 16px 8px rgba(160, 156, 151, 0.17)) drop-shadow(0 32px 16px rgba(160, 156, 151, 0.21));
+
+  // TEXT
+  --text-color: var(--blue-1);
+  --text-color-dark: var(--blue-1);
+  --link-color-hover: var(--gold);
+
+
+  // SIZES
+  --header-height: 4.8125rem;
+  --full-width: 100vw;
+  --full-height: 100vh;
+  --spacing: 2rem;
+  --margin: 1.5em;
+  --gap: .3rem;
+
+
+  // BORDERS
+  --border-color-light: rgba(var(--nude-3-rgb), 0.4);
+  --border-color-dark: rgba(var(--blue-1-rgb), 0.4);
+  --border-blue-light: rgba(var(--blue-6-rgb), 0.4);
+  --border-radius: 1;
+  --radius-xxl: 2.1rem;
+  --radius-xl: 1.8rem;
+  --radius-l: 1.5rem;
+  --radius-m: 1.2rem;
+  --radius-s: 0.9rem;
+  --radius-xs: 0.6rem;
+
+
+  // TRANSITIONS
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  // CLIP
+  --clip: var(--gap);
+  --round: var(--radius-xl);
+  --clipPath: inset(var(--clip) round var(--round));
+}
+
+@media (max-width: 767px) {
+  :root {
+    --radius-xxl: 1.9rem;
+    --radius-xl: 1.5rem;
+    --radius-l: 1.2rem;
+    --radius-m: .9rem;
+    --radius-s: 0.6rem;
+    --radius-xs: 0.3rem;
+  }
+}
+
+@for $i from 1 through 6 {
+  .blue#{$i} {
+    color: var(--blue-#{$i});
+  }
+
+  .bg-blue#{$i} {
+    background-color: var(--blue-#{$i});
+  }
+}
+
+@for $i from 1 through 8 {
+  .nude#{$i} {
+    color: var(--nude-#{$i});
+  }
+  .bg-nude#{$i} {
+    background-color: var(--nude-#{$i});
+  }
+}
+
+@for $i from 1 through 3 {
+  .gold#{$i} {
+    color: var(--gold-#{$i});
+  }
+  .bg-gold#{$i} {
+    background-color: var(--gold-#{$i});
+  }
+}

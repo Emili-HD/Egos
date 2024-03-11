@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.panel#cuidados {
+    @apply mb-0;
+}
+
+.panel#paciente_ideal {
+    @apply items-center;
+}
+
+.tabla {
+    @apply py-40; 
+}
+
+.related__posts h3 > div {
+    @apply text-center !important;
+    @apply pb-12 font-semibold font-[Geomanist] uppercase;
+}
+
+#procedimiento {
+    @apply items-center gap-y-8;
+    
+    .panel__content {
+        @apply col-[2_/_span_14] xl:col-[2_/_span_6] row-start-2 xl:row-start-1;
+    }
+    .panel__image {
+        @apply col-[2_/_span_14] xl:col-[9_/_span_7] ;
+    }
+}
+
+.landing-main .antesdespues {
+    @apply p-24;
+}
+
+.answer__columnas {
+    .columna1 {
+        @apply row-start-1 col-[1_/_-1] xl:col-span-5;
+    }
+    .columna2 {
+        @apply row-start-3 xl:row-start-1 col-[1_/_-1] xl:col-[12_/_17] xl:-left-20;
+    }
+}
+
+.video__player {
+    .plyr {
+        @apply rounded-2xl;
+    }
+}
+
+.panel__image:has(.video__player) {
+    @apply col-[2_/_span_7] rounded-none;
+}

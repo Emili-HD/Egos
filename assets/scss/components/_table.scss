@@ -1,0 +1,17 @@
+table {
+   --column-width-min: 10em;
+   font-size: calc(var(--font-size) * 0.8);
+   width: 100%;
+
+   tr {
+      background-color: var(--nude-6);
+      border-radius: 0.8em;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(var(--column-width-min), 1fr));
+      margin-bottom: .5rem;
+
+      td {
+         padding: 1rem;
+      }
+   }
+}
