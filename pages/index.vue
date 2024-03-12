@@ -7,8 +7,12 @@
       <DelayHydration>
         <LazyHomeTestimonios />
       </DelayHydration>
-      <FormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid"/>
-      <HomeAcordeon :data="home.acf.acordeon_cirugias" />
+      <DelayHydration>
+        <LazyFormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid"/>
+      </DelayHydration>
+      <DelayHydration>
+        <LazyHomeAcordeon :data="home.acf.acordeon_cirugias" />
+      </DelayHydration>
       <DelayHydration>
         <LazyHomeBlog />
       </DelayHydration>

@@ -1,8 +1,7 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 
-const DOMAIN_URL = 'https://test.clinicaegos.com'; // dev mode
-// const DOMAIN_URL = 'https://www.clinicaegos.com/backoffice'; // production mode
+const DOMAIN_URL = 'https://test.clinicaegos.com';
 const JSON_URL = DOMAIN_URL + '/wp-json';
 
 const apiClient = axios.create({

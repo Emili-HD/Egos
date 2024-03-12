@@ -9,7 +9,7 @@
          <h1 class="header__landing-content-title" v-html="data.acf.titulo_landing"></h1>
          <div class="precio">
             <p class="h3">desde <span>{{ data.acf.precio }}€/mes</span></p>
-            <ElementsButton class="gold pedircita mt-4" href="#hubspotLanding">Más Información</ElementsButton>
+            <ElementsButton class="gold pedircita mt-4" href="#hubspotLanding" @click.prevent="handleClick">Más Información</ElementsButton>
          </div>
       </div>
    </div>
@@ -27,6 +27,12 @@ const props = defineProps({
       type: Object,
    }
 })
+
+function handleClick() {
+  const { $lenis: lenis } = useNuxtApp();
+  console.log('lenis on click', lenis);
+  lenis.scrollTo('#hubspotLanding', {offset: -20});
+}
 </script>
 
 <style lang="scss">

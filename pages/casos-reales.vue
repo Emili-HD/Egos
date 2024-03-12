@@ -1,7 +1,7 @@
 <template>
   <main class="site-main casos-reales" v-if="testimonios">
     <section class="testimonios section__hero">
-      <div class="testimonios__header">
+      <div class="testimonios__header min-h-[60vh] flex flex-col justify-center align-center p-40">
         <h1>{{ pages.title.rendered }}</h1>
         <div v-html="pages.content.rendered"></div>
       </div>
@@ -14,7 +14,7 @@
         </svg>
         </label>
       </div>
-      <div class="testimonios__list" v-if="testimonios">
+      <div class="testimonios__list px-40 py-20" v-if="testimonios">
         <article v-for="testimonio in testimonios" :key="testimonio.id" class="card item"
           :class="getCategoriesNames(testimonio)">
           <div class="testimonios__image" v-if="testimonio.featured_image_data && testimonio.featured_image_data.src">
@@ -165,6 +165,45 @@ useHead(() => {
 </script>
 
 <style lang="scss" scoped>
+.checkboxes {
+    // @include flex(row, flex-start, center, nowrap, 1);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-color);
+
+    input {
+        display: none;
+    }
+
+    svg {
+        overflow: visible;
+        background-color: rgba(var(--blue-1-rgb), 0.1);
+        border-radius: 1rem;
+    }
+
+    .path {
+        fill: none;
+        stroke: var(--gold);
+        stroke-width: 0;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: stroke-dasharray var(--transition), stroke-dashoffset var(--transition), stroke var(--transition), stroke-width var(--transition);
+        stroke-dasharray: 241 9999999;
+        stroke-dashoffset: 0;
+    }
+
+    input:checked~svg .path {
+        stroke: var(--nude-8);
+        stroke-width: 5;
+        stroke-dasharray: 70.5096664428711 9999999;
+        stroke-dashoffset: -262.2723388671875;
+    }
+
+}
+
 .testimonios {
   column-gap: 1em;
   row-gap: 2em;

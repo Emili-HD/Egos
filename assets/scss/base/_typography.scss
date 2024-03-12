@@ -277,24 +277,6 @@ sub {
     bottom: -0.25em;
 }
 
-
-/**
- * Utilities
- */
-.text-centre,
-.has-text-align-center,
-.text-center {
-    text-align: center;
-}
-
-.text-left {
-    text-align: left;
-}
-
-.text-right {
-    text-align: right;
-}
-
 // https://justmarkup.com/log/2015/07/dealing-with-long-words-in-css/
 .hyphenate {
     -webkit-hyphens: auto;

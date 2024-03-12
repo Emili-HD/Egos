@@ -1,7 +1,7 @@
 <template>
   <section class="accordion" v-for="competencias in data.listado_competencias" :key="competencias.id">
     <div class="heading accordion__heading">
-      <h2 class="accordion__heading-title" v-html="competencias.titulo_seccion"></h2>
+      <h2 class="accordion__heading-title xl:text-center" v-html="competencias.titulo_seccion"></h2>
       <div v-if="competencias.descripcion_seccion" v-html="competencias.descripcion_seccion"></div>
     </div>
     <div class="list accordion__list">

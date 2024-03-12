@@ -1,7 +1,7 @@
 <template>
     <header class="egos-header fixed p-0 mx-1 xl:m-1 flex flex-row justify-start items-center gap-8 z-[999]" id="site-header">
         <div class="header-wrapper flex flex-row justify-between px-1 w-full">
-            <div class="header-brand bg-nude8 flex flex-col justify-start items-start p-1 rounded-2xl">
+            <div class="header-brand bg-white flex flex-col justify-start items-start p-1 rounded-2xl">
                 <nuxt-link class="block px-2 xl:px-4 py-1 xl:py-2 rounded-xl" to="/">
                     <img class="w-full max-w-20 xl:max-w-16 xl:max-w-14" src="../../assets/images/icons/logo-egos.svg" alt="" />
                 </nuxt-link>
@@ -72,7 +72,7 @@
                                                 :key="subTratamiento.id" :data-index="index">
                                                 <div class="slide-c" v-for="subSubTratamiento in subTratamiento.child_items"
                                                     :key="subSubTratamiento.ID">
-                                                    <img class="menu-icon inline-svg" :src="subSubTratamiento.acf.icon" alt="">
+                                                    <img loading="lazy" class="menu-icon inline-svg" :src="subSubTratamiento.acf.icon" alt="" />
                                                 </div>
                                             </li>
                                         </ul>
@@ -85,8 +85,8 @@
                 </nav>
             </div>
     
-            <div class="nav-secondary min-w-28 p-1 rounded-tr-2xl rounded-br-2xl hidden xl:block">
-                <a class="button pedircita text-center flex flex-col justify-center items-center border-none rounded-xl p-0 w-full h-full z-2" href="#formulario">
+            <div class="nav-secondary bg-white min-w-28 p-1 rounded-tr-2xl rounded-br-2xl hidden xl:block">
+                <a class="button pedircita text-center flex flex-col justify-center items-center border-none rounded-xl p-0 w-full h-full z-2" href="#formulario" @click.prevent="handleClick">
                     Pide Cita
                 </a>
             </div>
@@ -95,14 +95,21 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, onMounted, inject } from 'vue';
 import { menuTratamientos } from '@/composables/useApi';
 // import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 
 const { $gsap: gsap } = useNuxtApp();
 
-ScrollTrigger.normalizeScroll()
+function handleClick() {
+  const { $lenis: lenis } = useNuxtApp();
+  console.log('lenis on click', lenis);
+  lenis.scrollTo('#formulario', {offset: -20});
+}
+
+
+// ScrollTrigger.normalizeScroll()
 
 // State
 const menuTratamientosData = ref({});

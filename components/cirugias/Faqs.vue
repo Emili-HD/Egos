@@ -4,7 +4,7 @@
       <NuxtImg loading="lazy" class="size-full object-cover" :src="faqsData.imagen_faqs.url" alt="" />
     </div>
     <div class="heading accordion__heading col-[2_/_span_14] xl:col-[9_/_span_7]">
-      <h2 class="accordion__heading-title" v-html="faqsData.titulo_faqs"></h2>
+      <h2 class="accordion__heading-title xl:text-center" v-html="faqsData.titulo_faqs"></h2>
     </div>
     <div class="list accordion__list col-[2_/_span_14] xl:col-[9_/_span_7]">
       <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer" v-for="content in faqsData.faqs" :key="content.heading_faq">

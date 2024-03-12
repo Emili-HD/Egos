@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.site-main {
+    background-color: var(--nude-8);
+}
+
 .panel#cuidados {
     @apply mb-0;
 }

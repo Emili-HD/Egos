@@ -8,7 +8,7 @@
                     :alt="category.featured_image_data.alt"
                 />
             </picture>
-            <div class="category__title bg-white bg-opacity-80 flex flex-col justify-end items-center gap-4 bottom-4 p-6 absolute w-[calc(100%-1rem)] m-auto left-0 right-0 rounded-xl overflow-hidden">
+            <div class="category__title bg-white bg-opacity-80 flex flex-col justify-end items-center gap-4 bottom-2 p-6 absolute w-[calc(100%-1rem)] m-auto left-0 right-0 rounded-xl overflow-hidden">
                 <h3 class="h6 text-center uppercase">{{ category.title.rendered }}</h3>
                 <div v-html="category.excerpt.rendered"></div>
                 <ElementsButton class="py-1 px-6 border border-solid border-[#1c2c44]/25@ text-center uppercase rounded-3xl">Saber más</ElementsButton>

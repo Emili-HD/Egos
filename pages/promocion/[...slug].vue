@@ -1,6 +1,6 @@
 <template>
    <div class="fixed-button fixed top-full w-full p-4 z-[998]">
-      <ElementsButton class="gold pedircita" href="#hubspotLanding">Cita con el cirujano</ElementsButton>
+      <ElementsButton class="gold pedircita" href="#hubspotLanding" @click.prevent="handleClick">Cita con el cirujano</ElementsButton>
    </div>
    <main class="site-main landing-main" v-if="landing && landing[0].acf">
       <section class="hero m-0">
@@ -30,12 +30,15 @@ import { ref, nextTick, onMounted } from 'vue';
 import { getLanding } from '@/composables/useApi';
 import { useRoute } from 'vue-router';
 
-// Componentes
-
-
 // Estado reactivo
 const landing = ref(null);
 const route = useRoute();
+
+function handleClick() {
+  const { $lenis: lenis } = useNuxtApp();
+  console.log('lenis on click', lenis);
+  lenis.scrollTo('#hubspotLanding', {offset: -20});
+}
 
 const loadLanding = async () => {
    try {

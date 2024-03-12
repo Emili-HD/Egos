@@ -87,7 +87,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 :global(.mask-reveal) {
-   --bg: #fff;
+   --bg: var(--nude-8);
    width: 100%;
    height: 115%;
    position: absolute;

@@ -5,26 +5,9 @@
     max-height: var(--menu-height);
     width: calc(var(--full-width) - (var(--gap) * 2));
 
-    // &::before {
-    //     background: var(--blue-1);
-    //     content: "";
-    //     height: 100vh;
-    //     inset: 0;
-    //     opacity: 0;
-    //     pointer-events: none;
-    //     position: fixed;
-    //     width: 100%;
-    // }
-
     .header-wrapper {
-        .header-nav {
-            .nav-categories {
-                background: var(--nude-8);
-            }
-        }
 
         .nav-secondary {
-            background: var(--nude-8);
 
             @media (max-width: 1200px) {
                 min-width: 25vw;
@@ -40,35 +23,6 @@
                 }
             }
         }
-
-        /* .nav-form {
-            @include flex(column, center, center, nowrap, 1);
-            background-color: rgba(var(--blue-1-rgb), 1);
-            border-radius: var(--radius-xl);
-            height: calc(100vh - (var(--gap) * 3));
-            overflow: hidden;
-            position: absolute;
-            right: -0.3rem;
-            top: calc(-1 * var(--gap));
-            transition: width var(--transition), height var(--transition);
-            width: calc((100vw / 4) - var(--gap));
-            z-index: 1;
-            z-index: -1;
-
-            h2 {
-                color: var(--nude-6);
-                margin-bottom: 0;
-                padding: 0 var(--spacing);
-            }
-
-            form.form {
-                background-color: transparent;
-                justify-content: space-evenly;
-                transition: opacity var(--transition);
-                transition-delay: .4s;
-                width: 100%
-            }
-        } */
 
         .menu-list {
             @include flex(row, flex-end, center);

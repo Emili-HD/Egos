@@ -5,7 +5,7 @@
             <p class="intro__title">Más de 2000<br><span id="a">pacientes</span> <span id="b">intervenidos</span> <br>al año</p>
             <div class="intro__content">
                 <div class="heading" v-html="data.content.rendered"></div>
-                <ElementsButton class="gold pedircita" href="#">Cumple tu sueño</ElementsButton>
+                <ElementsButton class="gold pedircita text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-auto" href="#formulario" @click.prevent="handleClick">Cumple tu sueño</ElementsButton>
             </div>
         </div>
     </section>
@@ -26,12 +26,16 @@ const props = defineProps({
 })
 
 // Métodos
+function handleClick() {
+  const { $lenis: lenis } = useNuxtApp();
+  console.log('lenis on click', lenis);
+  lenis.scrollTo('#formulario', {offset: -20});
+}
+
 const animationMask = async () => {
     // if (process.client) {
-    
         let tl = gsap.timeline()
-    
-        // console.log(mask)
+
         tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.intro',
