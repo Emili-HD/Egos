@@ -19,7 +19,7 @@
             </div>
 
          </div>
-         <div class="home__services-description">
+         <div class="home__services-description w-full !pb-12">
             <p v-html="data.acf.tratamientos_home.descripcion_categorias"></p>
          </div>
       </div>
@@ -195,9 +195,9 @@ onMounted( async () => {
    align-items: center;
    height: 150vh;
    
-   // @media (max-width: 1024px) and (orientation: portrait) {
-   //    height: calc(var(--full-height) * 1.525);
-   // }
+   @media (max-width: 1024px) and (orientation: portrait) {
+      height: fit-content;
+   }
    
    // @media (max-width: 767px) {
    //    height: calc(var(--full-height) * 1.9);

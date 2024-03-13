@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     '~/src/styles.css',
   ],
   modules: [
+    '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
     '@nuxt/image',
     'nuxt-speedkit',

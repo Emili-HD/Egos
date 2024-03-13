@@ -2041,7 +2041,7 @@ ul li {
   align-items: center;
   flex-wrap: nowrap;
   gap: 0rem;
-  min-height: calc(var(--full-height) * 0.6);
+  min-height: calc(var(--full-height) * 0.4);
   padding: 0;
   will-change: transform;
 }
@@ -2054,7 +2054,7 @@ ul li {
 @media (max-width: 767px) {
   .site-main .tratamientos .home__services-inner .card__wrapper {
     min-width: 100vw;
-    padding: 0 10vw;
+    padding: 0 15vw;
   }
 }
 .site-main .tratamientos .home__services-inner .card__wrapper .card {
@@ -2068,11 +2068,17 @@ ul li {
   opacity: 1;
 }
 .site-main .tratamientos .home__services-description {
-  padding: var(--spacing);
+  padding: 1rem 2rem 2rem;
 }
 .site-main .tratamientos .home__services-description p {
   text-wrap: balance;
   width: clamp(35ch, 60vw, 75ch);
+}
+@media (max-width: 767px) {
+  .site-main .tratamientos .home__services-description p {
+    text-wrap: wrap;
+    width: 100%;
+  }
 }
 
 .pidecita {

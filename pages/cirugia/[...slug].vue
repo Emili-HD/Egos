@@ -1,6 +1,6 @@
 <template>
   <main class="site-main" v-if="tratamiento" ref="componentRef">
-    <section class="cirugia bg-nude8 grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-0 py-2 xl:p-0">
+    <section class="cirugia bg-nude8 grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-0 xl:p-0">
       <CirugiasEncabezado :data="tratamiento" />
       <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
 

@@ -1,5 +1,5 @@
 <template>
-   <section class="all-cirugias grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-x-0 gap-y-8 xl:gap-4 py-20" v-if="data">
+   <section class="all-cirugias grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-x-0 gap-y-8 xl:gap-4 px-4 py-20" v-if="data">
       <div class="panel__content col-[2_/_span_14] xl:col-[2_/_span_6] sm:row-2 xl:row-1">
          <h2 class="panel__content-heading h3">{{ data.heading }}</h2>
          <div class="panel__content-description p-0">

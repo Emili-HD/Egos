@@ -1,5 +1,5 @@
 <template>
-   <section class="testimonios grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-4 pb-40">
+   <section class="testimonios grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-4 py-20">
       <div class="testimonios__header col-[4_/_span_10]">
          <h2>Antes y después de nuestras cirugías estéticas y medicina en clínica Egos </h2>
          <p>Cada año, se operan más de 2000 pacientes en Clínica Egos, para nosotros, vuestra satisfacción es nuestro mayor

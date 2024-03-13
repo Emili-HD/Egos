@@ -111,7 +111,7 @@
 
         &-inner {
             @include flex(row, flex-start, center, nowrap, 0);
-            min-height: calc(var(--full-height) * .6);
+            min-height: calc(var(--full-height) * .4);
             // margin-inline: 30vw;
             padding: 0;
             will-change: transform;
@@ -125,7 +125,7 @@
 
                 @media (max-width: 767px) {
                     min-width: 100vw;
-                    padding: 0 10vw;
+                    padding: 0 15vw;
                 }
 
                 .card {
@@ -143,11 +143,16 @@
         }
 
         &-description {
-            padding: var(--spacing);
+            padding: 1rem 2rem 2rem;
 
             p {
                 text-wrap: balance;
                 width: clamp(35ch, 60vw, 75ch);
+
+                @media (max-width: 767px) {
+                    text-wrap: wrap;
+                    width: 100%;
+                }
             }
         }
     }

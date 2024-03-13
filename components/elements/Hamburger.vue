@@ -14,11 +14,19 @@ import { onMounted } from 'vue';
 const toggleMenu = () => {
    const burger = document.getElementById('navTrigger')
    const nav = document.querySelector('.menu-list');
+   const links = document.querySelectorAll('.nav-link')
 
    burger.addEventListener('click', function (e) {
       this.classList.toggle('active');
       nav.classList.toggle('active');
    });
+
+   links.forEach(link => {
+      link.addEventListener('click', function (e) {
+         burger.classList.remove('active')
+         nav.classList.remove('active');
+      });
+   })
 }
 
 onMounted(() => {

@@ -1,7 +1,7 @@
 <template>
     <section class="intro">
         <div class="intro__image">
-            <img loading="lazy" class="girl" src="~/assets/images/2-intro/chica.avif" alt="" />
+            <img loading="lazy" class="girl h-fit xl:h-[150vh]" src="~/assets/images/2-intro/chica.avif" alt="" />
             <p class="intro__title">Más de 2000<br><span id="a">pacientes</span> <span id="b">intervenidos</span> <br>al año</p>
             <div class="intro__content">
                 <div class="heading" v-html="data.content.rendered"></div>
