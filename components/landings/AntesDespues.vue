@@ -9,9 +9,9 @@
       <div class="antesdespues__content flex flex-col xl:flex-row justify-between items-start gap-24 w-full">
          <div class="antesdespues__content-images text-center w-full flex flex-row xl:flex-col gap-2 xl:gap-0 flex-wrap"
             v-for="elem in data.antes_despues.cirugias_relacionadas">
-            <h5 class="antesdespues__content-images-title h6 w-full xl:w-auto mt-4 mb-0">{{ elem.cirugia }}</h5>
+            <h5 class="antesdespues__content-images-title w-full xl:w-auto mt-4 mb-0">{{ elem.cirugia }}</h5>
             <figure
-               class="antes bg-nude8 overflow-hidden min-h-[22lvh] xl:min-h-[33lvh] rounded-xl xl:rounded-bl-none xl:rounded-br-none">
+               class="antes bg-nude8 overflow-hidden min-h-[22lvh] xl:min-h-[33lvh] rounded-xl xl:rounded-bl-none xl:rounded-br-none w-full">
                <NuxtImg loading="lazy"
                   class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-[var(--nude-1)]"
                   :src="elem.imagen_antes.url" :alt="elem.imagen_antes.alt" />
@@ -20,7 +20,7 @@
                   Antes</figcaption>
             </figure>
             <figure
-               class="despues bg-nude8 overflow-hidden min-h-[22lvh] xl:min-h-[33lvh] rounded-xl xl:rounded-tl-none xlrounded-tr-none">
+               class="despues bg-nude8 overflow-hidden min-h-[22lvh] xl:min-h-[33lvh] rounded-xl xl:rounded-tl-none xl:rounded-tr-none w-full">
                <NuxtImg loading="lazy"
                   class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-[var(--nude-1)]"
                   :src="elem.imagen_despues.url" :alt="elem.imagen_despues.alt" />
@@ -51,9 +51,9 @@ const props = defineProps({
 <style lang="scss" scoped>
 .antesdespues {
    &__header {
-      @media (max-width: 767px) {
+      @media (min-width: 2767px) {
          h2 {
-            font-size: calc(var(--font-size) * 2.5);
+            font-size: 3rem;
          }
       }
    }

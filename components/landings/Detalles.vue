@@ -4,9 +4,9 @@
          <h2 class="h4">{{ data.detalles.avalados }}</h2>
          <NuxtImg loading="lazy" :src="data.detalles.logo_avalados.url" alt="" />
       </div>
-      <div class="consejos py-40 px-20 mb-12" ref="detalles">
-         <figure class="icon" v-for="icons in data.detalles.consejo" :key="icons.id">
-            <NuxtImg loading="lazy" :src="icons.icono.url" alt="" />
+      <div class="consejos p-12 xl:py-40 xl:px-20 flex flex-col xl:flex-row justify-center items-center xl:items-start w-full xl:w-1/2 gap-8" ref="detalles">
+         <figure class="icon text-center w-[min(14rem,35.3333vw)]" v-for="icons in data.detalles.consejo" :key="icons.id">
+            <NuxtImg loading="lazy" class="bg-[var(--nude-5)] p-7 mb-4 rounded-2xl w-full" :src="icons.icono.url" alt="" />
             <figcaption v-html="icons.texto_icono"></figcaption>
          </figure>
       </div>
@@ -95,37 +95,7 @@ const props = defineProps({
          display: none;
       }
    }
-   
-   .consejos {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 2rem;
-      width: 50%;
-   
-      @media (max-width: 767px) {
-         flex-direction: column;
-         align-items: center;
-         width: 100%;
-      }
-   
-      figure.icon {
-         text-align: center;
-         width: min(14rem, 35.3333vw);
-   
-         img {
-            width: min(12rem, 33.3333vw);
-            background-color: var(--nude-5);
-            padding: 1.75rem;
-            border-radius: var(--radius-m);
-         }
-   
-         @media (max-width: 767px) {
-            width: min(14rem, 60vw);
-         }
-      }
-   }
+
 }
 
 

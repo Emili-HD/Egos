@@ -1,94 +1,12 @@
 .about {
-   // @include flex(column);
-   @include grid(16, var(--gap));
-
-   h2 {
-      order: 0;
-   }
-
    section {
 
-      &.equipo {
-         grid-column: 1/-1;
-         width: var(--full-width);
-         @include grid(16, var(--gap));
-      }
-
-      &:not([class*="atencion"]),
-      &:not([class*="direccion"]) {
-         .card:nth-child(2n) {
-            transform: translateY(30%);
-         }
-      }
-
-      &[class*="atencion"],
-      &[class*="direccion"] {
-         ul {
-            grid-template-columns: repeat(3, 1fr);
-
-            .card:nth-child(2n) {
-               transform: none;
-            }
-
-            .card:nth-child(3n-1) {
-               transform: translateY(30%);
-            }
-         }
-      }
-
-      &.cirugia-estetica {
-         order: 1;
-      }
-
-      &.unidad-obesidad {
-         order: 2;
-      }
-
-      &.medicina-estetica {
-         order: 3;
-      }
-
-      &.cirugia-capilar-migropigmentacion {
-         order: 4;
-      }
-
-      &.atencion-al-paciente {
-         order: 5;
-      }
-
-      &.atencion-telematica {
-         order: 6;
-      }
-
-      &.direccion-y-administracion {
-         order: 7;
-      }
-
-      ul {
-         display: grid;
-         gap: 1rem;
-         grid-template-columns: repeat(2, 1fr);
-
-         .card {
-            &__member {
-               p {
-                  font-size: calc(var(--font-size) * .85);
-               }
-            }
-         }
-      }
-
       .equipo__left-column {
-         grid-column: 2/7;
 
          .equipo__left-description {
             position: sticky;
             top: calc(var(--header-height) * 2);
          }
-      }
-
-      .equipo__right-column {
-         grid-column: 8/-2;
       }
    }
 }

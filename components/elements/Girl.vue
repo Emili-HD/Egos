@@ -1,9 +1,9 @@
 <template>
-   <div class="girl__wrapper">
-      <svg class="girl-intro" version="1.1" id="girl" xmlns="http://www.w3.org/2000/svg"
+   <div class="girl__wrapper h-[100vh] inset-0 events-none absolute w-full -z-[1]">
+      <svg class="girl-intro h-full absolute left-1/2 top-1/2 -translate-x-1/2 xl:-translate-y-2/3" version="1.1" id="girl" xmlns="http://www.w3.org/2000/svg"
          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1032.1 1738.9"
          style="enable-background:new 0 0 1032.1 1738.9;">
-         <path class="oneline-girl"
+         <path class="oneline-girl" fill="none" stroke-miterlimit="10" stroke-width="1" stroke="#395989"
             d="M474.4,1707.1c-8.6-25.2-11.6-50.5-8.9-77.3c1.5-14.5,11.8,16.8,18.7,30.9s9.5,17.8,22,31.6
                c12.5,13.8-8.5-13.1-16.1-26.3c-7.6-13.2-26.8-55.7-37.5-75.3c-11.3-20.7-22.9-36.7-42.1-57.5c-15.9-17.3-30.8-33.1-48-57.5
                c-21.4-30.4-40.3-59.3-52.3-101.6c-9.1-32.2-5.6-68.3,0.3-91.1c6-23.2,13.9-52.2,26.3-73.3c18.5-31.6,34.7-55.2,62.8-81.2
@@ -100,30 +100,6 @@
 
 </script>
 
-
 <style lang="scss" scoped>
-.girl__wrapper {
-   height: 100vh;
-   inset: 0;
-   pointer-events: none;
-   position: absolute;
-   width: 100%;
-   z-index: 99;
-}
 
-.girl-intro {
-   height: 100%;
-   left: 50%;
-   max-inline-size: 100vh;
-   position: absolute;
-   top: 50%;
-   translate: -50% -65%;
-
-   .oneline-girl {
-      fill: none;
-      stroke: var(--blue-6);
-      stroke-miterlimit: 10;
-      stroke-width: 1;
-   }
-}
 </style>

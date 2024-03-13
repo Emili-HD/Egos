@@ -1,5 +1,5 @@
 <template>
-   <section class="resenas px-24 py-20 mb-0" ref="resenas">
+   <section class="resenas px-8 xl:px-24 py-10 xl:py-20 mb-0" ref="resenas">
       <div class="resenas__header">
          <h2>Reseñas</h2>
          <ElementsDivider />

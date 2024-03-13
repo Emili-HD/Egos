@@ -1,5 +1,5 @@
 <template>
-   <section class="testimonios px-24 py-20 mb-0" ref="testimonios">
+   <section class="testimonios px-8 xl:px-24 py-10 xl:py-20 mb-0" ref="testimonios">
       <div class="testimonios__header pt-6">
          <h2>{{ data.testimonios.titulo }}</h2>
          <ElementsDivider />

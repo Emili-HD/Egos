@@ -1,11 +1,11 @@
 <template>
-   <div class="fixed-button fixed top-full w-full p-4 z-[998]">
+   <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
       <ElementsButton class="gold pedircita" href="#hubspotLanding" @click.prevent="handleClick">Cita con el cirujano</ElementsButton>
    </div>
    <main class="site-main landing-main" v-if="landing && landing[0].acf">
       <section class="hero m-0">
          <LandingsHeader :data="landing[0]" />
-         <div id="formulario" class="hero__form p-16">
+         <div id="formulario" class="hero__form p-8 xl:p-16">
             <div class="insignia mb-8 flex flex-row justify-center">
                <NuxtImg loading="lazy" :src="landing[0].acf.insignia.url" alt="" />
             </div>
@@ -98,23 +98,7 @@ useHead(() => {
 </script>
 
 <style lang="scss" scoped>
-.fixed-button {
-   align-items: center;
-   background-color: var(--blue-1);
-   display: none;
-   flex-direction: row;
-   height: 5rem;
-   justify-content: center;
-   position: fixed;
-   top: calc(100% - 70px);
-   width: 100vw;
-   z-index: 999;
-   transition: top .1s;
 
-   @media (max-width: 767px) {
-      display: flex;
-   }
-}
 .hero {
    min-height: 100vh;
    padding: 0;

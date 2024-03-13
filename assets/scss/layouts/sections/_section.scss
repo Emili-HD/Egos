@@ -1,10 +1,1 @@
-section {
-    @for $i from 1 through 10 {
-        $value: $i*10;
-        $unit: '%';
 
-        .section-#{$value} {
-            width: $value+#{$unit};
-        }
-    }
-}

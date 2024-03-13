@@ -15,7 +15,7 @@
                                 <nuxt-link :to="tratamiento.url" class="nav-title hidden xl:flex" active-class="router-link-active">
                                     <span>{{ tratamiento.title }}</span>
                                 </nuxt-link>
-                                <img class="max-w-4 order-2 absolute right-4 opacity-50" src="../../assets/images/icons/arrow-down.svg" v-if="tratamiento.child_items" alt="">
+                                <img class="arrow-down max-w-4 order-2 absolute right-4 opacity-50" src="../../assets/images/icons/arrow-down.svg" v-if="tratamiento.child_items" alt="">
                             </div>
                             <div class="menu-wrapper">
                                 <nuxt-link :to="tratamiento.url" class="nav-link hidden xl:block" active-class="router-link-active">

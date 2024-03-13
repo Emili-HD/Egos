@@ -173,10 +173,6 @@ h5,
     font-size: calc(var(--font-size) * 1.6);
     font-weight: 400;
     margin-bottom: var(--baseline);
-
-    @media (max-width: 767px) {
-        font-size: calc(var(--font-size) * 1);
-    }
 }
 
 h6,

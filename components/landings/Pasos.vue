@@ -1,19 +1,19 @@
 <template>
-   <section class="pasos px-24 py-20" ref="pasos">
-      <h2 class="pasos__title">{{ data.pasos.titulo }}</h2>
+   <section class="pasos bg-nude8 px-8 xl:px-24 py-20 flex flex-col justify-start items-center" ref="pasos">
+      <h2 class="pasos__title text-center mb-0 text-4xl">{{ data.pasos.titulo }}</h2>
       <ElementsDivider />
-      <div class="pasos__list py-8 mb-8">
-         <div class="pasos__list-items p-12" v-for="items in data.pasos.listado_pasos">
-            <div class="pasos__list-items-image">
-               <NuxtImg loading="lazy" :src="items.icono.url" :alt="items.icono.alt" />
+      <div class="pasos__list py-8 mb-8 grid grid-cols-1 xl:grid-cols-4 auto-rows-fr gap-4">
+         <div class="pasos__list-items p-8 xl:p-12 bg-nude4 rounded-xl flex flex-row xl:flex-col justify-start items-center gap-6" v-for="items in data.pasos.listado_pasos">
+            <div class="pasos__list-items-image w-20">
+               <NuxtImg loading="lazy" class="min-w-20" :src="items.icono.url" :alt="items.icono.alt" />
             </div>
             <div class="pasos__list-items-content">
-               <p v-html="items.texto_icono"></p>
+               <p class="!mb-0 text-left xl:text-center" v-html="items.texto_icono"></p>
             </div>
          </div>
       </div>
-      <div class="pasos__destacado p-12">
-         <h3 class="h5 mb-0" v-html="data.pasos.mensaje_destacado"></h3>
+      <div class="pasos__destacado p-8 xl:p-12 bg-blue1 rounded-xl nude8 text-center w-full xl:w-1/2">
+         <h3 class="h5 !text-2xl xl:!text-3xl leading-6 !mb-0" v-html="data.pasos.mensaje_destacado"></h3>
       </div>
    </section>
 </template>
@@ -34,78 +34,6 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .pasos {
-   background-color: var(--nude-8);
-   display: flex;
-   flex-direction: column;
-   justify-content: flex-start;
-   align-items: center;
-
-   &__title {
-      text-align: center;
-      margin-bottom: 0;
-
-      @media (max-width: 767px) {
-         font-size: calc(var(--font-size) * 2.4);
-      }
-   }
-
-   &__list {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-
-      @media (max-width: 767px) {
-         grid-template-columns: 1fr;
-      }
-
-      &-items {
-         background-color: var(--nude-4);
-         border-radius: var(--radius-s);
-         display: flex;
-         flex-direction: column;
-         justify-content: flex-start;
-         align-items: center;
-         gap: 1.5rem;
-
-         @media (max-width: 767px) {
-            flex-direction: row;
-         }
-         
-         &-image {
-            width: 4.6875rem;
-            
-            img {
-               min-width: 4.6875rem;
-            }
-         }
-         
-         &-content {
-            p {
-               margin-bottom: 0;
-               text-align: center;
-               
-               @media (max-width: 767px) {
-                  text-align: left;
-               }
-            }
-         }
-      }
-   }
-
-   &__destacado {
-      background-color: var(--blue-1);
-      border-radius: var(--radius-s);
-      color: var(--nude-8);
-      text-align: center;
-      width: 50%;
-      
-      h3 {margin-bottom: 0;}
-
-      @media (max-width: 767px) {
-         width: 100%;
-
-         h3 {font-size: calc(var(--font-size) * 1.1);}
-      }
-   }
+   position: relative;
 }
 </style>

@@ -11,7 +11,7 @@
         </SwiperSlide>
       </Swiper>
     </div>
-    <CirugiasFigure class="cirugiasfigure" :contentData="contentData" />
+    <CirugiasFigure :contentData="contentData" />
   </div>
   <CirugiasDetallesCirugia v-if="contentData.opciones_listado === 'columnas'" class="tips"
     :detallesData="contentData.incluido_cirugia.tips ?? []" />

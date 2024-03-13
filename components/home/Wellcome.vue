@@ -1,7 +1,7 @@
 <template>
     <section class="intro">
         <div class="intro__image">
-            <NuxtImg loading="lazy" class="girl" :src="data.featured_image_src.src" alt="" />
+            <img loading="lazy" class="girl" src="~/assets/images/2-intro/chica.avif" alt="" />
             <p class="intro__title">Más de 2000<br><span id="a">pacientes</span> <span id="b">intervenidos</span> <br>al año</p>
             <div class="intro__content">
                 <div class="heading" v-html="data.content.rendered"></div>
@@ -33,7 +33,6 @@ function handleClick() {
 }
 
 const animationMask = async () => {
-    // if (process.client) {
         let tl = gsap.timeline()
 
         tl = gsap.timeline({
@@ -45,13 +44,11 @@ const animationMask = async () => {
                 // markers: true
             },
         })
-        tl.to('.intro__image', { "--clip": '2.5rem', "--round": '1.8rem' }, 0)
         tl.to(
             '.intro__image .girl',
             { scale: 1.2, transformOrigin: '50% 50%' },
             '<',
         )
-    // }
 }
 
 const switchText = async () => {
@@ -74,7 +71,7 @@ const switchText = async () => {
         }
     
         function init() {
-            const introTitle = document.querySelector('.intro__title')
+            const introTitle = document.querySelector('.intro__title #a')
 
             if (introTitle) {
                 switch_text('.intro__title #a', 'pacientes', 0);

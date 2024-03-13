@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { resolve } from 'path'
+// import { resolve } from 'path'
 
 export default defineNuxtConfig({
   tailwindcss: {
@@ -17,11 +17,12 @@ export default defineNuxtConfig({
     '~/plugins/setHtmlLang.js',
   ],
   css: [
-    '~/src/styles.css', 
+    '~/src/styles.css',
   ],
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxt/image',
+    'nuxt-speedkit',
     'nuxt-swiper',
     'nuxt-delay-hydration',
     'nuxt-viewport',
@@ -38,8 +39,76 @@ export default defineNuxtConfig({
       'casos-reales'
     ]
   },
+  speedkit: {
+
+    detection: {
+      performance: true,
+      browserSupport: true
+    },
+
+    performanceMetrics: {
+      device: {
+        hardwareConcurrency: { min: 2, max: 48 },
+        deviceMemory: { min: 2 }
+      },
+      timing: {
+        fcp: 800,
+        dcl: 1200
+      }
+    },
+
+    fonts: [{
+      family: 'Font A',
+      locals: ['Font A'],
+      fallback: ['Arial', 'sans-serif'],
+      variances: [
+        {
+          style: 'normal',
+          weight: 100,
+          sources: [
+            { src: '@/assets/fonts/canela/CanelaDeck-light.woff2', type: 'woff2' },
+          ]
+        }, {
+          style: 'normal',
+          weight: 600,
+          sources: [
+            { src: '@/assets/fonts/geomanist/geomanist-bold.woff', type: 'woff' },
+            { src: '@/assets/fonts/geomanist/geomanist-bold.woff2', type: 'woff2' }
+          ]
+        }
+      ]
+    }],
+
+    targetFormats: ['webp', 'avif', 'jpg|jpeg|png|gif'],
+
+    componentAutoImport: false,
+    componentPrefix: undefined,
+
+    /**
+     * IntersectionObserver rootMargin for Compoennts and Assets
+     */
+    lazyOffset: {
+      component: '0%',
+      asset: '0%'
+    }
+
+  },
   image: {
     // Opciones de @nuxt/image
+    screens: {
+      'xs': 320,
+      'sm': 640,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1280,
+      'xxl': 1536,
+      '2xl': 1536
+    },
+    domains: ['img.youtube.com', 'i.vimeocdn.com'],
+    alias: {
+      youtube: 'https://img.youtube.com',
+      vimeo: 'https://i.vimeocdn.com',
+    },
     providers: {
       customProvider: {
         name: 'customProvider',
@@ -73,8 +142,8 @@ export default defineNuxtConfig({
   components: true,
   runtimeConfig: {
     public: {
-        wordpressUrl: process.env.WP_URL,
-        frontendSiteUrl: process.env.FRONTEND_DEV_URL || process.env.FRONTEND_PROD_URL
+      wordpressUrl: process.env.WP_URL,
+      frontendSiteUrl: process.env.FRONTEND_DEV_URL || process.env.FRONTEND_PROD_URL
     },
     private: {
       FAUST_SECRET_KEY: process.env.FAUST_KEY
@@ -84,15 +153,24 @@ export default defineNuxtConfig({
     watcher: "chokidar",
   },
   hooks: {
-    'pages:extend' (pages) {
+    'pages:extend'(pages) {
       // add a route
       pages.push({
         name: 'tratamiento',
         path: '/:category/:slug',
-        // file: './cirugia/[...slug].vue'
-        file: resolve(__dirname, 'pages/cirugia/[...slug].vue'),
+        file: '~/pages/cirugia/[...slug].vue',
+        // file: resolve(__dirname, 'pages/cirugia/[...slug].vue'),
       })
     }
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "@/assets/scss/abstracts/_abstracts-dir.scss";',
+        },
+      },
+    },
   },
   nitro: {
     preset: 'node-server',

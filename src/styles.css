@@ -596,12 +596,6 @@ h5,
   font-weight: 400;
   margin-bottom: var(--baseline);
 }
-@media (max-width: 767px) {
-  h5,
-  .h5 {
-    font-size: calc(var(--font-size) * 1);
-  }
-}
 
 h6,
 .h6 {
@@ -947,16 +941,6 @@ a {
   .testimonios__list {
     grid-template-columns: 1fr;
   }
-}
-.testimonios__list .card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 2rem;
-  aspect-ratio: unset;
-  background-color: var(--nude-8);
 }
 .testimonios__content {
   padding: var(--gap);
@@ -1858,49 +1842,6 @@ ul li {
   text-transform: uppercase;
 }
 
-.site-main {
-  position: relative;
-  width: var(--full-width);
-  min-height: var(--full-height);
-}
-.site-main > .section {
-  padding-top: calc(var(--header-height) + var(--spacing));
-  padding-left: var(--spacing);
-  padding-right: var(--spacing);
-  padding-bottom: var(--spacing);
-}
-
-section .section-10 {
-  width: 10%;
-}
-section .section-20 {
-  width: 20%;
-}
-section .section-30 {
-  width: 30%;
-}
-section .section-40 {
-  width: 40%;
-}
-section .section-50 {
-  width: 50%;
-}
-section .section-60 {
-  width: 60%;
-}
-section .section-70 {
-  width: 70%;
-}
-section .section-80 {
-  width: 80%;
-}
-section .section-90 {
-  width: 90%;
-}
-section .section-100 {
-  width: 100%;
-}
-
 .intro {
   display: flex;
   flex-direction: column;
@@ -2019,6 +1960,8 @@ section .section-100 {
 @media (max-width: 767px) {
   .site-main .tratamientos .loquehacemos .foryou {
     flex-direction: column;
+    position: relative;
+    top: 5rem;
   }
 }
 .site-main .tratamientos .loquehacemos .foryou > .notes {
@@ -2060,13 +2003,10 @@ section .section-100 {
   flex-wrap: wrap;
   gap: 0rem;
   background-color: #fff;
-  background: radial-gradient(circle, rgb(255, 255, 255) 20%, rgb(248, 247, 244) 80%);
-  border-radius: var(--radius-l);
   color: #1c2c44;
   height: calc(var(--full-height) - var(--gap) * 2);
   left: 0;
-  margin-bottom: var(--spacing);
-  margin-top: calc(var(--spacing) * 3);
+  margin-top: 6rem;
   overflow: hidden;
   padding-top: calc(var(--spacing) * 2);
   width: 100%;
@@ -2146,7 +2086,7 @@ section .section-100 {
 }
 @media (max-width: 767px) {
   .pidecita {
-    grid-template-rows: 50vh 70vh;
+    grid-template-rows: 50vh 90vh;
     gap: 0;
     padding: 0;
     margin-bottom: 0;
@@ -2195,71 +2135,9 @@ section .section-100 {
   --bg-input: #1c2c44;
 }
 
-.about {
-  display: grid;
-  gap: var(--gap);
-  grid-template-columns: repeat(16, 1fr);
-}
-.about h2 {
-  order: 0;
-}
-.about section.equipo {
-  grid-column: 1/-1;
-  width: var(--full-width);
-  display: grid;
-  gap: var(--gap);
-  grid-template-columns: repeat(16, 1fr);
-}
-.about section:not([class*=atencion]) .card:nth-child(2n), .about section:not([class*=direccion]) .card:nth-child(2n) {
-  transform: translateY(30%);
-}
-.about section[class*=atencion] ul, .about section[class*=direccion] ul {
-  grid-template-columns: repeat(3, 1fr);
-}
-.about section[class*=atencion] ul .card:nth-child(2n), .about section[class*=direccion] ul .card:nth-child(2n) {
-  transform: none;
-}
-.about section[class*=atencion] ul .card:nth-child(3n-1), .about section[class*=direccion] ul .card:nth-child(3n-1) {
-  transform: translateY(30%);
-}
-.about section.cirugia-estetica {
-  order: 1;
-}
-.about section.unidad-obesidad {
-  order: 2;
-}
-.about section.medicina-estetica {
-  order: 3;
-}
-.about section.cirugia-capilar-migropigmentacion {
-  order: 4;
-}
-.about section.atencion-al-paciente {
-  order: 5;
-}
-.about section.atencion-telematica {
-  order: 6;
-}
-.about section.direccion-y-administracion {
-  order: 7;
-}
-.about section ul {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, 1fr);
-}
-.about section ul .card__member p {
-  font-size: calc(var(--font-size) * 0.85);
-}
-.about section .equipo__left-column {
-  grid-column: 2/7;
-}
 .about section .equipo__left-column .equipo__left-description {
   position: sticky;
   top: calc(var(--header-height) * 2);
-}
-.about section .equipo__right-column {
-  grid-column: 8/-2;
 }
 
 .team__panel {

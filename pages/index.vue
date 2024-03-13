@@ -1,6 +1,6 @@
 <template>
   <main class="site-main" v-if="home">
-      <HomeWellcome :data="home" />
+      <HomeWellcome critical :data="home" />
       <DelayHydration>
         <LazyHomeCategories :data="home" />
       </DelayHydration>

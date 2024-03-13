@@ -8,7 +8,7 @@
          <ElementsDivider />
       </div>
       <div class="testimonios__list grid-row-2 col-[2_/_span_14] grid grid-cols-4 gap-2" v-if="testimonios">
-         <article v-for="testimonio in testimonios" :key="testimonio.id" class="card rounded-2xl p-2">
+         <article v-for="testimonio in testimonios" :key="testimonio.id" class="card rounded-2xl p-2 bg-white !aspect-auto flex flex-col justify-between items-center gap-8">
             <div v-if="testimonio.acf.vimeo_video" class="video__player rounded-xl w-full overflow-hidden">
                <ClientOnly>
                   <vue-plyr>

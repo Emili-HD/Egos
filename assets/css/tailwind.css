@@ -4,6 +4,7 @@
 
 .site-main {
     background-color: var(--nude-8);
+    @apply overflow-hidden w-[100vw];
 }
 
 .panel#cuidados {
@@ -35,7 +36,7 @@
 }
 
 .landing-main .antesdespues {
-    @apply p-24;
+    @apply p-8 xl:p-24;
 }
 
 .answer__columnas {
@@ -56,3 +57,20 @@
 .panel__image:has(.video__player) {
     @apply col-[2_/_span_7] rounded-none;
 }
+
+.skill {
+    h3 {
+        @apply !font-semibold !text-lg mb-1 leading-6;
+    }
+}
+
+#orden-1 { @apply row-start-2; }
+#orden-2 { @apply row-start-3; }
+#orden-3 { @apply row-start-4; }
+#orden-4 { @apply row-start-5; }
+#orden-5 { @apply row-start-6; }
+#orden-6 { @apply row-start-7; }
+#orden-7 { @apply row-start-8; }
+#orden-8 { @apply row-start-9; }
+#orden-9 { @apply row-start-10; }
+#orden-10 { @apply row-start-11; }

@@ -6,6 +6,8 @@
                     v-if="category.featured_image_data"
                     :src="category.featured_image_data.src"
                     :alt="category.featured_image_data.alt"
+                    :placeholder="[50, 25, 75, 5]"
+                    sizes="100vw md:50vw xl:380px"
                 />
             </picture>
             <div class="category__title bg-white bg-opacity-80 flex flex-col justify-end items-center gap-4 bottom-2 p-6 absolute w-[calc(100%-1rem)] m-auto left-0 right-0 rounded-xl overflow-hidden">

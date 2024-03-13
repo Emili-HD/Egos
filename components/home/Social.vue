@@ -32,7 +32,7 @@
                </div>
                <div class="tiktok-play-count-container"></div>
                <div :id="`tiktok-${tt.video_id}`">
-                  <NuxtImg class="object-cover object-center min-h-[37.5rem] w-full" :src="tt.thumbnail_url" alt="" />
+                  <NuxtImg loading="lazy" sizes="100vw md:45vw xl:420px" class="object-cover object-center min-h-[37.5rem] w-full" :src="tt.thumbnail_url" alt="" />
                </div>
             </div>
          </SwiperSlide>

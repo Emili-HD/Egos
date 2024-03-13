@@ -28,6 +28,8 @@
 
             @media (max-width: 767px) {
                 flex-direction: column;
+                position: relative;
+                top: 5rem;
             }
 
             &>.notes {
@@ -71,13 +73,10 @@
     .home__services {
         @include flex(row, flex-start, center, wrap, 0);
         background-color: #fff;
-        background: radial-gradient(circle, rgba(255, 255, 255, 1) 20%, rgba(248, 247, 244, 1) 80%);
-        border-radius: var(--radius-l);
         color: $blue-1;
         height: calc(var(--full-height) - (var(--gap) * 2));
         left: 0;
-        margin-bottom: var(--spacing);
-        margin-top: calc(var(--spacing) * 3);
+        margin-top: 6rem;
         overflow: hidden;
         padding-top: calc(var(--spacing) * 2);
         width: 100%;
