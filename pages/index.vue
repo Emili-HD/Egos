@@ -45,29 +45,36 @@ useHead(() => {
 
   const yoast = home.value.yoast_head_json;
 
-  // Preparar las meta tags basándose en los datos de yoast_head_json
   const metaTags = [
     { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
     { property: 'og:title', content: yoast.og_title },
     { property: 'og:description', content: yoast.og_description },
     { property: 'og:url', content: yoast.og_url },
     { property: 'og:type', content: yoast.og_type },
+    { property: 'og:locale', content: yoast.og_locale },
+    { property: 'og:site_name', content: yoast.og_site_name },
+    { property: 'article:publisher', content: yoast.article_publisher },
+    // Twitter Card
+    { name: 'twitter:card', content: yoast.twitter_card },
+    // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
+    { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
+    // Canonical
+    { rel: 'canonical', href: yoast.canonical },
+    // Robots
+    {
+      name: 'robots',
+      content: `index=${yoast.robots.index}, follow=${yoast.robots.follow}, max-snippet=${yoast.robots['max-snippet']}, max-image-preview=${yoast.robots['max-image-preview']}, max-video-preview=${yoast.robots['max-video-preview']}`
+    },
+    // Añadir más tags según sean necesarios
   ];
 
   // Añadir las imágenes de Open Graph si están disponibles
   if (yoast.og_image && yoast.og_image.length > 0) {
     yoast.og_image.forEach((image) => {
       metaTags.push({ property: 'og:image', content: image.url });
-      // Agregar también las dimensiones si se desea
       metaTags.push({ property: 'og:image:width', content: image.width.toString() });
       metaTags.push({ property: 'og:image:height', content: image.height.toString() });
     });
-  }
-
-  // Añadir la meta tag de robots si está disponible
-  if (yoast.robots) {
-    const robotsContent = `${yoast.robots.index}, ${yoast.robots.follow}`;
-    metaTags.push({ name: 'robots', content: robotsContent });
   }
 
   return {

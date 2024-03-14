@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
     '@nuxt/image',
+    'nuxt-simple-robots',
     'nuxt-speedkit',
     'nuxt-swiper',
     'nuxt-delay-hydration',
