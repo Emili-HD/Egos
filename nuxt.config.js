@@ -3,12 +3,12 @@
 
 export default defineNuxtConfig({
   tailwindcss: {
-    cssPath: '~/assets/css/tailwind.css',
+    cssPath: ["~/assets/css/tailwind.css", { injectPosition: "first" }],
     configPath: 'tailwind.config',
-    exposeConfig: false,
-    exposeLevel: 2,
+    exposeConfig: {
+      level: 2, // Ajusta el nivel de exposición aquí
+    },
     config: {},
-    injectPosition: 'first',
     viewer: true,
   },
   devtools: { enabled: true },
@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxt/image',
     'nuxt-simple-robots',
+    '@nuxtjs/sitemap',
     'nuxt-speedkit',
     'nuxt-swiper',
     'nuxt-delay-hydration',
@@ -173,6 +174,55 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+  // Configuración de nuxt-simple-robots
+  robots: {
+    // Opciones de configuración
+    UserAgent: '*',
+    Disallow: '/admin',
+    Allow: '/',
+    Sitemap: 'https://clinicaegos.com/sitemap.xml',
+    // Puedes añadir más líneas según necesites
+  },
+  sitemap: {
+    hostname: process.env.NUXT_PUBLIC_SITE_URL,
+    sitemaps: {
+      posts: {
+        sources: [
+          '/api/sitemap/posts',
+        ]
+      },
+      pages: {
+        sources: [
+          '/api/sitemap/pages',
+        ]
+      },
+      clinicas: {
+        sources: [
+          '/api/sitemap/clinicas',
+        ]
+      },
+      equipo: {
+        sources: [
+          '/api/sitemap/equipo',
+        ]
+      },
+      cirugias: {
+        sources: [
+          '/api/sitemap/cirugias',
+        ]
+      },
+      testimonios: {
+        sources: [
+          '/api/sitemap/testimonios',
+        ]
+      },
+      landings: {
+        sources: [
+          '/api/sitemap/landings',
+        ]
+      },
+    }
   },
   nitro: {
     preset: 'node-server',
