@@ -1,6 +1,9 @@
 <template>
-   <GoogleMap api-key="AIzaSyA2wicYs8djzSjI4hXjbp15z6GBF3zO6YU" class="clinicas__egos-map" ref="mapRef" :center="centerMap"
-      :zoom="props.zoom" :styles="mapStyles">
+   <GoogleMap api-key="AIzaSyA2wicYs8djzSjI4hXjbp15z6GBF3zO6YU"
+      class="clinicas__egos-map size-full rounded-3xl overflow-hidden 
+      [.nuestras-clinicas_&]:grid-rows-2 [.nuestras-clinicas_&]:even:grid-rows-1 [.nuestras-clinicas_&]:col-[2/-2] 
+      xl:[.nuestras-clinicas_&]:col-[2/7]"
+      ref="mapRef" :center="centerMap" :zoom="props.zoom" :styles="mapStyles">
       <Marker :options="{ position: centerMap, anchorPoint: 'BOTTOM_CENTER', icon: markerIcon }" />
    </GoogleMap>
 </template>
@@ -17,9 +20,9 @@ const mapRef = ref(null)
 
 // Props
 const props = defineProps({
-  lat: Number,
-  lng: Number,
-  zoom: Number
+   lat: Number,
+   lng: Number,
+   zoom: Number
 });
 
 const centerMap = ref({ lat: props.lat, lng: props.lng });
@@ -378,11 +381,4 @@ const mapStyles = [
 
 </script>
 
-<style lang="scss">
-.clinicas__egos-map {
-   width: 100%;
-   height: 100%;
-   border-radius: var(--radius-xl);
-   overflow: hidden;
-}
-</style>
+<style lang="scss"></style>

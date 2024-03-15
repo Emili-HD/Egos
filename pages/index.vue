@@ -4,9 +4,7 @@
       <DelayHydration>
         <LazyHomeCategories :data="home" />
       </DelayHydration>
-      <DelayHydration>
-        <LazyHomeTestimonios />
-      </DelayHydration>
+      <HomeTestimonios />
       <DelayHydration>
         <LazyFormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid"/>
       </DelayHydration>

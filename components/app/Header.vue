@@ -1,10 +1,10 @@
 <template>
-    <header class="egos-header fixed p-0 mx-1 xl:m-1 flex flex-row justify-start items-center gap-8 z-[999]"
+    <header class="egos-header fixed p-3 flex flex-row justify-start items-center gap-8 z-[999]"
         id="site-header">
         <div class="header-wrapper flex flex-row justify-between px-1 w-full">
             <div class="header-brand bg-white flex flex-col justify-start items-start p-1 rounded-2xl">
                 <nuxt-link class="block px-2 xl:px-4 py-1 xl:py-2 rounded-xl" to="/" aria-label="Vuelve a la página de inicio">
-                    <img class="w-full max-w-20 xl:max-w-16 xl:max-w-14" src="../../assets/images/icons/logo-egos.svg"
+                    <img class="w-full max-w-20 xl:max-w-14" src="../../assets/images/icons/logo-egos.svg"
                         alt="" />
                 </nuxt-link>
             </div>
@@ -34,9 +34,9 @@
                                 <div class="submenu mt-1 xl:fixed top-0 left-0 xl:right-0 xl:top-12 xl:m-auto z-0"
                                     v-if="tratamiento.child_items">
                                     <div
-                                        class="submenu__right h-fit xl:h-[var(--menu-height)] right-0 xl:-right-1 w-full xl:w-[calc(var(--menu-width)*0.625)] top-0 rounded-2xl w-full xl:absolute xl:w-50 xl:backdrop-blur-xl">
+                                        class="submenu__right h-fit xl:h-[var(--menu-height)] right-0 xl:-right xl:w-[calc(var(--menu-width)*0.625)] top-0 rounded-2xl w-full xl:absolute xl:w-50 xl:backdrop-blur-xl">
                                         <ul
-                                            class="list-none p-0 h-full has-[.column]:flex flex-row justify-center  xl:content-center justify-center xl:justify-center items-start flex-wrap xl:absolute gap-4 xl:gap-0 w-full top-0 left-0">
+                                            class="list-none p-0 h-full has-[.column]:flex flex-row xl:content-center justify-center xl:justify-center items-start flex-wrap xl:absolute gap-4 xl:gap-0 w-full top-0 left-0">
                                             <li class="submenu-child w-full xl:w-fit xl:flex flex-col justify-between items-start flex-nowrap"
                                                 v-for="(subTratamiento, index) in tratamiento.child_items"
                                                 :key="subTratamiento.ID" :data-index="index">
@@ -83,7 +83,7 @@
                                         </ul>
                                     </div>
                                     <div
-                                        class="anchorLink submenu__left xl:h-[var(--menu-height)] hidden xl:block bg-cover bg-center w-full xl:w-[calc(var(--menu-width)*0.375)] top-0 -left-1 rounded-2xl xl:absolute xl:w-50" style="background-image: url(../../assets/images/hero.avif);">
+                                        class="anchorLink submenu__left xl:h-[var(--menu-height)] hidden xl:block bg-cover bg-center w-full xl:w-[calc(var(--menu-width)*0.375)] top-0 -left-1 rounded-2xl xl:absolute xl:w-50">
                                         <ul class="submenu__left-slider ">
                                             <li class="before-after"
                                                 v-for="(subTratamiento, index) in tratamiento.child_items"
@@ -373,11 +373,6 @@ await loadDataAndInitializeMenus();
 
 
 <style lang="scss" scoped>
-.hamburger {
-    width: 0;
-    opacity: 0;
-    position: absolute;
-}
 
 .form-offer {
     color: var(--nude-6);

@@ -1,5 +1,5 @@
 <template>
-  <main class="site-main blog">
+  <main class="site-main nuestras-clinicas">
     <section class="clinicas section__hero pb-40" v-if="pages" aria-labelledby="page-title">
       <ElementsEncabezado
         class="flex flex-col justify-end items-start min-h-[60vh] xl:min-h-[100vh] overflow-hidden bg-nude8 bg-center bg-cover"
@@ -10,8 +10,34 @@
           <article v-for="clinica in clinicas" :key="clinica.id" class="card clinicas__egos-card"
             :id="'clinica-' + clinica.id" :aria-labelledby="'clinica-title-' + clinica.id">
             <ElementsSingleGoogleMap :lat="clinica.acf.lat" :lng="clinica.acf.lng" :zoom="17" />
-            <div class="clinicas__egos-content" v-html="clinica.content.rendered"></div>
-            <div class="clinicas__egos-poster" :to="`/nuestras-clinicas/${clinica.slug}`"
+            <!-- align-items: flex-start;
+      bottom: 0;
+      bottom: var(--gap);
+      display: flex;
+      flex-direction: column;
+      grid-column: 7/10;
+      height: 50%;
+      justify-content: center;
+      left: var(--gap);
+      overflow: hidden;
+      padding: 2rem;
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+
+      @media (max-width: 767px) {
+        grid-column: 2/-2;
+        grid-row: 1;
+        top: calc(35vh - var(--gap));
+        height: 25vh;
+        left: var(--gap);
+        width: calc(100% - (var(--gap) * 2));
+        backdrop-filter: blur(3px);
+      } -->
+            <div class="clinicas__egos-content rounded-xl flex flex-col" v-html="clinica.content.rendered"></div>
+            <!--  -->
+            <div class="clinicas__egos-poster col-[2/-2] xl:col-[7/-2] grid-rows-1 pointer-events-none rounded-xl" :to="`/nuestras-clinicas/${clinica.slug}`"
               :aria-label="'Leer más sobre ' + clinica.title.rendered" @click.prevent>
               <NuxtImg loading="lazy" v-if="clinica.featured_image_data" :src="clinica.featured_image_data.src"
                 class="clinicas__egos-card-image" :alt="clinica.featured_image_data.alt"
@@ -137,9 +163,7 @@ await loadClinicas()
 
     // padding: var(--gap);
     &-content {
-      // background: rgba(var(--nude-6-rgb), 0.85);
       align-items: flex-start;
-      border-radius: var(--radius-xl);
       bottom: 0;
       bottom: var(--gap);
       display: flex;
@@ -184,25 +208,6 @@ await loadClinicas()
       }
     }
 
-    &-map {
-      grid-column: 2/7;
-
-      @media (max-width: 767px) {
-        grid-column: 2/-2;
-        grid-row: 2;
-      }
-    }
-
-    &-poster {
-      grid-column: 7/-2;
-      pointer-events: none;
-
-      @media (max-width: 767px) {
-        grid-column: 2/-2;
-        grid-row: 1;
-      }
-    }
-
 
     &-card {
       aspect-ratio: unset;
@@ -228,16 +233,6 @@ await loadClinicas()
             left: var(--gap);
             width: calc(100% - (var(--gap) * 2));
             backdrop-filter: blur(3px);
-          }
-        }
-
-        .clinicas__egos-map {
-          grid-column: 11/-2;
-          grid-row: 1;
-
-          @media (max-width: 767px) {
-            grid-column: 2/-2;
-            grid-row: 2;
           }
         }
 

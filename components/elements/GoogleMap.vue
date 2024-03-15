@@ -1,5 +1,5 @@
 <template>
-  <GoogleMap api-key="AIzaSyA2wicYs8djzSjI4hXjbp15z6GBF3zO6YU" class="clinicas__egos-map" ref="mapRef" :center="centerMap"
+  <GoogleMap api-key="AIzaSyA2wicYs8djzSjI4hXjbp15z6GBF3zO6YU" class="clinicas__egos-map size-full" ref="mapRef" :center="centerMap"
     :zoom="zoom" :styles="mapStyles">
     <CustomControl position="LEFT_CENTER" class="clinics">
       <ul class="clinics">
@@ -415,23 +415,12 @@ onMounted(async () => {
 
 <style lang="scss">
 .clinicas__egos-map {
-  width: 100%;
-  height: 100%;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-
-  @media (max-width: 767px), (max-width: 1024px) and (orientation: portrait) {
-      border-radius: 0;
-  }
-
   .gm-style .gm-style-iw-d,
   .gm-style .gm-style-iw-d,
   .gm-style .gm-style-iw-c,
   .gm-style .gm-style-iw-t {
     color: var(--blue-1);
-    // background: var(--nude-8);
   }
-
 }
 
 .gm-style .gm-style-iw-a {
@@ -442,8 +431,6 @@ onMounted(async () => {
   width: 350px !important;
   top: 0px !important;
   left: 0px !important;
-  // box-shadow: var(--shadow) !important;
-  // border: 1px solid rgba(72, 181, 233, 0.6);
 }
 
 .custom-control-wrapper {

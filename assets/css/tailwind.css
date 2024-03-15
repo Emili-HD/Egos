@@ -4,7 +4,7 @@
 
 .site-main {
     background-color: var(--nude-8);
-    @apply overflow-hidden w-[100vw];
+    @apply overflow-hidden w-[100vw] will-change-transform;
 }
 
 .panel#cuidados {
@@ -74,3 +74,7 @@
 #orden-8 { @apply row-start-9; }
 #orden-9 { @apply row-start-10; }
 #orden-10 { @apply row-start-11; }
+
+.nuestras-clinicas .clinicas__egos-card:nth-child(even) .clinicas__egos-map {
+    @apply xl:col-[11/-2];
+}

@@ -23,7 +23,7 @@ const props = defineProps({
 
 function handleClick() {
   const { $lenis: lenis } = useNuxtApp();
-  console.log('lenis on click', lenis);
+//   console.log('lenis on click', lenis);
   lenis.scrollTo('#hubspotLanding', {offset: -20});
 }
 

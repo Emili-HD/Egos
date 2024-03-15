@@ -2,8 +2,9 @@
 // import { resolve } from 'path'
 
 export default defineNuxtConfig({
+  devtools: { enabled: true },
   tailwindcss: {
-    cssPath: ["~/assets/css/tailwind.css", { injectPosition: "first" }],
+    cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'first' }],
     configPath: 'tailwind.config',
     exposeConfig: {
       level: 2, // Ajusta el nivel de exposición aquí
@@ -11,14 +12,8 @@ export default defineNuxtConfig({
     config: {},
     viewer: true,
   },
-  devtools: { enabled: true },
-  plugins: [
-    '~/plugins/gtm.js',
-    '~/plugins/setHtmlLang.js',
-  ],
-  css: [
-    '~/src/styles.css',
-  ],
+  plugins: ['~/plugins/gtm.js', '~/plugins/setHtmlLang.js'],
+  css: ['~/src/styles.css'],
   modules: [
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
@@ -39,48 +34,59 @@ export default defineNuxtConfig({
       '/opinion/**',
       'nuestra-clinicas',
       'nuestro-equipo',
-      'casos-reales'
-    ]
+      'casos-reales',
+    ],
   },
   speedkit: {
-
     detection: {
       performance: true,
-      browserSupport: true
+      browserSupport: true,
     },
 
     performanceMetrics: {
       device: {
         hardwareConcurrency: { min: 2, max: 48 },
-        deviceMemory: { min: 2 }
+        deviceMemory: { min: 2 },
       },
       timing: {
         fcp: 800,
-        dcl: 1200
-      }
+        dcl: 1200,
+      },
     },
 
-    fonts: [{
-      family: 'Font A',
-      locals: ['Font A'],
-      fallback: ['Arial', 'sans-serif'],
-      variances: [
-        {
-          style: 'normal',
-          weight: 100,
-          sources: [
-            { src: '@/assets/fonts/canela/CanelaDeck-light.woff2', type: 'woff2' },
-          ]
-        }, {
-          style: 'normal',
-          weight: 600,
-          sources: [
-            { src: '@/assets/fonts/geomanist/geomanist-bold.woff', type: 'woff' },
-            { src: '@/assets/fonts/geomanist/geomanist-bold.woff2', type: 'woff2' }
-          ]
-        }
-      ]
-    }],
+    fonts: [
+      {
+        family: 'Font A',
+        locals: ['Font A'],
+        fallback: ['Arial', 'sans-serif'],
+        variances: [
+          {
+            style: 'normal',
+            weight: 100,
+            sources: [
+              {
+                src: '@/assets/fonts/canela/CanelaDeck-light.woff2',
+                type: 'woff2',
+              },
+            ],
+          },
+          {
+            style: 'normal',
+            weight: 600,
+            sources: [
+              {
+                src: '@/assets/fonts/geomanist/geomanist-bold.woff',
+                type: 'woff',
+              },
+              {
+                src: '@/assets/fonts/geomanist/geomanist-bold.woff2',
+                type: 'woff2',
+              },
+            ],
+          },
+        ],
+      },
+    ],
 
     targetFormats: ['webp', 'avif', 'jpg|jpeg|png|gif'],
 
@@ -92,20 +98,19 @@ export default defineNuxtConfig({
      */
     lazyOffset: {
       component: '0%',
-      asset: '0%'
-    }
-
+      asset: '0%',
+    },
   },
   image: {
     // Opciones de @nuxt/image
     screens: {
-      'xs': 320,
-      'sm': 640,
-      'md': 768,
-      'lg': 1024,
-      'xl': 1280,
-      'xxl': 1536,
-      '2xl': 1536
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+      '2xl': 1536,
     },
     domains: ['img.youtube.com', 'i.vimeocdn.com'],
     alias: {
@@ -115,11 +120,28 @@ export default defineNuxtConfig({
     providers: {
       customProvider: {
         name: 'customProvider',
-        provider: '~/providers/customProvider.js', // Ruta al archivo del proveedor personalizado
+        provider: '~/providers/customProvider.ts', // Ruta al archivo del proveedor personalizado
         options: {
           baseURL: 'https://test.clinicaegos.com', // URL base de tu proveedor de imágenes
         },
       },
+      // provider: 'ipx',
+      // options: { 
+      //   default: {
+      //     modifiers: {
+      //       format: 'webp',
+      //       loading: 'lazy',
+      //       quality: '100',
+      //     },
+      //   },
+      //   svg: {
+      //     modifiers: {
+      //       format: 'svg',
+      //       loading: 'lazy',
+      //       quality: '100',
+      //     },
+      //   },
+      // },
     },
     // Configuración predeterminada del proveedor
     defaultProvider: 'customProvider',
@@ -140,20 +162,21 @@ export default defineNuxtConfig({
       tablet: 'md',
     },
 
-    fallbackBreakpoint: 'lg'
+    fallbackBreakpoint: 'lg',
   },
   components: true,
   runtimeConfig: {
     public: {
       wordpressUrl: process.env.WP_URL,
-      frontendSiteUrl: process.env.FRONTEND_DEV_URL || process.env.FRONTEND_PROD_URL
+      frontendSiteUrl:
+        process.env.FRONTEND_DEV_URL || process.env.FRONTEND_PROD_URL,
     },
     private: {
-      FAUST_SECRET_KEY: process.env.FAUST_KEY
-    }
+      FAUST_SECRET_KEY: process.env.FAUST_KEY,
+    },
   },
   experimental: {
-    watcher: "chokidar",
+    watcher: 'chokidar',
   },
   hooks: {
     'pages:extend'(pages) {
@@ -164,13 +187,14 @@ export default defineNuxtConfig({
         file: '~/pages/cirugia/[...slug].vue',
         // file: resolve(__dirname, 'pages/cirugia/[...slug].vue'),
       })
-    }
+    },
   },
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "@/assets/scss/abstracts/_abstracts-dir.scss";',
+          additionalData:
+            '@import "@/assets/scss/abstracts/_abstracts-dir.scss";',
         },
       },
     },
@@ -188,43 +212,29 @@ export default defineNuxtConfig({
     hostname: process.env.NUXT_PUBLIC_SITE_URL,
     sitemaps: {
       posts: {
-        sources: [
-          '/api/sitemap/posts',
-        ]
+        sources: ['/api/sitemap/posts'],
       },
       pages: {
-        sources: [
-          '/api/sitemap/pages',
-        ]
+        sources: ['/api/sitemap/pages'],
       },
       clinicas: {
-        sources: [
-          '/api/sitemap/clinicas',
-        ]
+        sources: ['/api/sitemap/clinicas'],
       },
       equipo: {
-        sources: [
-          '/api/sitemap/equipo',
-        ]
+        sources: ['/api/sitemap/equipo'],
       },
       cirugias: {
-        sources: [
-          '/api/sitemap/cirugias',
-        ]
+        sources: ['/api/sitemap/cirugias'],
       },
       testimonios: {
-        sources: [
-          '/api/sitemap/testimonios',
-        ]
+        sources: ['/api/sitemap/testimonios'],
       },
       landings: {
-        sources: [
-          '/api/sitemap/landings',
-        ]
+        sources: ['/api/sitemap/landings'],
       },
-    }
+    },
   },
   nitro: {
     preset: 'node-server',
-  }
+  },
 })

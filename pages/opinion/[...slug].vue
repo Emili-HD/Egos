@@ -1,21 +1,20 @@
 <template>
   <main class="site-main caso-real" v-if="casoreal">
-     <section class="caso-real__heading" ref="casoreal">
-        <div v-if="casoreal[0].acf.vimeo_video" class="caso-real__heading--video video__player">
-         <ClientOnly>
-           <vue-plyr>
-              <div data-plyr-provider="vimeo" :data-plyr-embed-id="casoreal[0].acf.vimeo_video"></div>
-           </vue-plyr>
-         </ClientOnly>
+    <section class="caso-real__heading" ref="casoreal">
+      <div v-if="casoreal[0].acf.vimeo_video" class="caso-real__heading--video video__player">
+        <div class="size-full aspect-[9/16]">
+          <VimeoPlayer :video-id="casoreal[0].acf.vimeo_video" />
         </div>
-       <div class="caso-real__heading--text">
-         <h1>{{ casoreal[0].title.rendered }}</h1>
-         <div v-html="casoreal[0].content.rendered"></div>
-       </div>
-       <div class="form__wrapper p-4 p-xs-12">
-         <FormsCirugia :identificador="'topPage'" :portalId="String(casoreal[0].acf.formulario.portalid)" :formId="casoreal[0].acf.formulario.formid" />
-       </div>
-     </section>
+      </div>
+      <div class="caso-real__heading--text">
+        <h1>{{ casoreal[0].title.rendered }}</h1>
+        <div v-html="casoreal[0].content.rendered"></div>
+      </div>
+      <div class="form__wrapper p-4 p-xs-12">
+        <FormsCirugia :identificador="'topPage'" :portalId="String(casoreal[0].acf.formulario.portalid)"
+          :formId="casoreal[0].acf.formulario.formid" />
+      </div>
+    </section>
   </main>
 </template>
 
@@ -48,7 +47,7 @@ watch(() => route.params.slug, async (newSlug, oldSlug) => {
 }, { immediate: true });
 
 // Ciclo de vida Mounted
-onMounted( async () => {
+onMounted(async () => {
   await getCasoReal()
 });
 
@@ -106,40 +105,40 @@ useHead(() => {
 
 <style lang="scss">
 .caso-real {
-   background-color: var(--nude-8);
-   
-   &__heading {
-      display: grid;
-      grid-template-columns: repeat(16, 1fr);
-      min-height: 100vh;
-      margin-bottom: 0;
-      
-      &--video {
-         min-height: 60vh;
-         // aspect-ratio: 16/9;
-         position: relative;
-         display: flex;
-         flex-direction: column;
-         justify-content: flex-start;
-         align-items: center;
-         grid-column: 1/5;
-   
-         .plyr {
-            height: 80vh;
-            width: auto;
-            border-radius: var(--radius-m);
-         }
-      }
+  background-color: var(--nude-8);
 
-      &--text {
-        grid-column: 6/11;
-      }
+  &__heading {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    min-height: 100vh;
+    margin-bottom: 0;
 
-      .form__wrapper {
-          grid-column: 12/-1;
-          background: var(--blue-1);
+    &--video {
+      min-height: 60vh;
+      // aspect-ratio: 16/9;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      grid-column: 1/5;
+
+      .plyr {
+        height: 80vh;
+        width: auto;
+        border-radius: var(--radius-m);
       }
-   }
+    }
+
+    &--text {
+      grid-column: 6/11;
+    }
+
+    .form__wrapper {
+      grid-column: 12/-1;
+      background: var(--blue-1);
+    }
+  }
 
 }
 </style>

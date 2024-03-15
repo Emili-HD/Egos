@@ -2,7 +2,7 @@
    <div class="hero__intro" :style="`background-image: url(${data.featured_image_data.src})`">
       <header class="header__landing px-12 py-6" ref="cabecera">
          <nuxt-link to="/">
-            <img class="header__landing-logo" src="../../assets/images/icons/logo-landings.svg" alt="">
+            <img class="header__landing-logo" src="/assets/images/icons/logo-landings.svg" alt="">
          </nuxt-link>
       </header>
       <div class="header__landing-content px-24 py-16">

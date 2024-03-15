@@ -8,11 +8,9 @@
       <div class="testimonios__videos">
          <figure class="testimonios__videos-item min-w-[25vw]" v-for="testimonio in data.testimonios.videos">
             <div v-if="testimonio.video_vimeo" class="video__player rounded-xl overflow-hidden">
-               <ClientOnly>
-                  <vue-plyr>
-                     <div data-plyr-provider="vimeo" :data-plyr-embed-id="testimonio.video_vimeo"></div>
-                  </vue-plyr>
-               </ClientOnly>
+               <div class="size-full aspect-[9/16]">
+                  <VimeoPlayer :video-id="testimonio.video_vimeo" />
+               </div>
             </div>
          </figure>
       </div>

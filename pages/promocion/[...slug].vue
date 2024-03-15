@@ -6,7 +6,7 @@
    <main class="site-main landing-main" v-if="landing && landing[0].acf">
       <section class="hero m-0">
          <LandingsHeader :data="landing[0]" />
-         <div id="formulario" class="hero__form p-8 xl:p-16">
+         <div id="formulario" class="hero__form p-12 xl:p-16">
             <div class="insignia mb-8 flex flex-row justify-center">
                <NuxtImg loading="lazy" :src="landing[0].acf.insignia.url" alt="" />
             </div>
@@ -37,7 +37,7 @@ const route = useRoute();
 
 function handleClick() {
    const { $lenis: lenis } = useNuxtApp();
-   console.log('lenis on click', lenis);
+   // console.log('lenis on click', lenis);
    lenis.scrollTo('#hubspotLanding', { offset: -20 });
 }
 

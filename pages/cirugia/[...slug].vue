@@ -8,12 +8,10 @@
         <div class="panels w-full">
           <section :id="processAncla(content.ancla)" class="panel grid grid-cols-[repeat(16,_minmax(0,_1fr))] row-gap-4 xl:gap-2 mb-32" :class="content.fondo, content.opciones_listado"
             v-for="content in tratamiento.acf.tabs">
-            <DelayHydration>
-              <LazyCirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
-              <LazyCirugiasTabla :contentData="content" />
-              <LazyCirugiasColumnas :contentData="content" />
-              <LazyLandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
-            </DelayHydration>
+              <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
+              <CirugiasTabla :contentData="content" />
+              <CirugiasColumnas :contentData="content" />
+              <LandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
           </section>
 
           <CirugiasFaqs :faqsData="tratamiento.acf" />

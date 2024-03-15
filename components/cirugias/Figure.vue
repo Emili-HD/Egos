@@ -9,23 +9,22 @@
             z-2
             has-[img]:aspect-square
             has-[img]:col-[9_/_span_7]
-            has-[img]:row-start-1"
-            v-if="contentData.fondo != 'sin'"
-   >
+            has-[img]:row-start-1" v-if="contentData.fondo != 'sin'">
       <div v-if="contentData.fondo == 'vHorizontal'" class="video__player aspect-video">
-            <vue-plyr class="video__player">
-               <div class="size-full" data-plyr-provider="vimeo" :data-plyr-embed-id="contentData.video"></div>
-            </vue-plyr>
+         <div class="size-full">
+            <VimeoPlayer :video-id="contentData.video" />
+         </div>
       </div>
       <div v-else-if="contentData.fondo == 'vVertical'" class="video__player max-w-full flex flex-row gap-4 h-fit">
-            <vue-plyr class="m-w-[60%]" v-for="(items, index) in contentData.videos" :key="items.index">
-               <div class="size-full " data-plyr-provider="vimeo" :data-plyr-embed-id="items.video"></div>
-            </vue-plyr>
+         <div class="size-full max-w-[60%] aspect-[9/16]" v-for="(items, index) in contentData.videos" :key="items.index">
+            <VimeoPlayer :video-id="contentData.video" />
          </div>
-         <NuxtImg loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" alt="" />
-      </figure>
+      </div>
+      <NuxtImg loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" alt="" />
+   </figure>
    <!-- </DelayHydration> -->
-   <div class="panel__content col-[10_/_span_6] has-[.accordion]:col-[2_/_span_6] row-start-1"  v-if="contentData && contentData.opciones_listado != 'columnas' && contentData.opciones_listado != 'antesdespues'">
+   <div class="panel__content col-[10_/_span_6] has-[.accordion]:col-[2_/_span_6] row-start-1"
+      v-if="contentData && contentData.opciones_listado != 'columnas' && contentData.opciones_listado != 'antesdespues'">
       <h2 class="h3">{{ contentData.heading }}</h2>
       <div class="answer p-0">
          <div class="answer__content" v-html="contentData.content"></div>
@@ -35,7 +34,8 @@
       </div>
    </div>
    <div class="answer__destacado" v-if="contentData.opciones_listado === 'tabla' && contentData.texto_destacado">
-      <div class="answer__content p-2" v-for="destacado in contentData.texto_destacado" :key="destacado.frase_destacada" v-html="destacado.frase_destacada"></div>
+      <div class="answer__content p-2" v-for="destacado in contentData.texto_destacado" :key="destacado.frase_destacada"
+         v-html="destacado.frase_destacada"></div>
    </div>
 </template>
 
@@ -51,5 +51,4 @@ const props = defineProps({
 
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

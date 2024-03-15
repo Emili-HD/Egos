@@ -1,6 +1,6 @@
 <template>
    <div class="girl__wrapper h-[100vh] inset-0 events-none absolute w-full -z-[1]">
-      <svg class="girl-intro h-full absolute left-1/2 top-1/2 -translate-x-1/2 xl:-translate-y-2/3" version="1.1" id="girl" xmlns="http://www.w3.org/2000/svg"
+      <svg class="girl-intro h-[100vh] absolute left-1/2 -bottom-6 -translate-x-1/2" version="1.1" id="girl" xmlns="http://www.w3.org/2000/svg"
          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1032.1 1738.9"
          style="enable-background:new 0 0 1032.1 1738.9;">
          <path class="oneline-girl" fill="none" stroke-miterlimit="10" stroke-width="1" stroke="#395989"
@@ -101,5 +101,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+.girl {
+   opacity: 1;
+}
 </style>

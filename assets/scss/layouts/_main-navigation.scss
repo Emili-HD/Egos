@@ -225,7 +225,7 @@
 
                 &__left {
                     background-color: var(--nude-8);
-                    // background-image: url(../../images/hero.webp);
+                    background-image: url(@/assets/images/hero.avif);
                     transform: translateY(-120%);
 
                     @media (max-width: 767px) {

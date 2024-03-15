@@ -1,19 +1,19 @@
 <template>
   <main class="site-main" v-if="post">
     <article>
-      <div class="post__header mb-12" :style="`background-image: url(${post[0].featured_image_src.src})`">
-        <h1>{{ post[0].title.rendered }}</h1>
+      <div class="post__header mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center" :style="`background-image: url(${post[0].featured_image_src.src})`">
+        <h1 class="text-[var(--nude-8)] font-semibold text-center w-full xl:max-w-[60vw]">{{ post[0].title.rendered }}</h1>
       </div>
-      <section class="post__content px-2 gap-4">
-        <aside class="nav-content p-6">
-          <h4 class="nav-content-title h6">Tabla de contenidos</h4>
-          <ul>
-            <li v-for="(content, index) in post[0].acf.areas_de_contenido" @click.prevent=""><span>{{ content.titulo_area }}</span></li>
-            <li v-if="post[0].acf.post_description.titulo_recomendaciones" @click.prevent=""><span v-html="post[0].acf.post_description.titulo_recomendaciones"></span></li>
-            <li v-if="post[0].acf.post_faqs.titulo_faqs" @click.prevent=""><span v-html="post[0].acf.post_faqs.titulo_faqs"></span></li>
+      <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
+        <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-3xl">
+          <h4 class="nav-content-title h6 bg-nude4 p-4">Tabla de contenidos</h4>
+          <ul class="pl-6 list-decimal">
+            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-[#1c2c44]/25" v-for="(content, index) in post[0].acf.areas_de_contenido" @click.prevent=""><span>{{ content.titulo_area }}</span></li>
+            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-[#1c2c44]/25" v-if="post[0].acf.post_description.titulo_recomendaciones" @click.prevent=""><span v-html="post[0].acf.post_description.titulo_recomendaciones"></span></li>
+            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-[#1c2c44]/25" v-if="post[0].acf.post_faqs.titulo_faqs" @click.prevent=""><span v-html="post[0].acf.post_faqs.titulo_faqs"></span></li>
           </ul>
         </aside>
-        <div class="post__content-areas py-6 px-10">
+        <div class="post__content-areas p-0 xl:py-6 xl:px-10">
           <div v-if="post[0].content.rendered" class="post__content-text pb-4" v-html="post[0].content.rendered"></div>
           <div class="post__content-text pb-4" v-for="(content, index) in post[0].acf.areas_de_contenido" :id="`area-${index}`">
             <h2 class="area-title">{{ content.titulo_area }}</h2>
@@ -62,7 +62,7 @@
 
         </div>
         <aside class="widgets p-6">
-          <div id="formulario" class="form__wrapper p-2 p-xs-6">
+          <div id="formulario" class="form__wrapper p-2 p-xs-6 [&>*]:!w-auto xl:[&>*]:!sticky !top-0">
             <FormsCirugia :identificador="'topPage'" :portalId="String(post[0].acf.formulario.portalid)" :formId="post[0].acf.formulario.formid" />
           </div>
         </aside>
@@ -200,15 +200,6 @@ onMounted( async () => {
 
 <style lang="scss">
 .post__header {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  clip-path: var(--clipPath);
 
   &::before {
     background: linear-gradient(180deg, rgba(var(--blue-1-rgb), 0) 10%, var(--blue-1) 80%);
@@ -222,47 +213,10 @@ onMounted( async () => {
     top: 0;
     width: 100%;
   }
-
-  h1 {
-    max-width: 60vw;
-    text-align: center;
-    color: var(--blue-1);
-    font-weight: 600;
-  }
 }
 
 .post__content {
-  display: grid;
-  grid-template-columns: repeat(16, 1fr);
-  min-height: 100vh;
-
-  .nav-content {
-    grid-column: 1/4;
-    // background-color: var(--nude-8);
-    border-radius: var(--radius-xl);
-    align-self: flex-start;
-
-    @media (max-width: 1024px) and (orientation: portrait) {
-      grid-column: 2/-2;
-    }
-
-    &-title {
-      background-color: var(--nude-4);
-      padding: 1rem;
-    }
-
-    ul {
-      list-style: decimal-leading-zero;
-      padding-left: 1.5rem;
-
-      li {
-        border-bottom: 1px solid rgba(var(--blue-1-rgb), 0.1);
-        padding: .5rem 0;
-        cursor: pointer;
-      }
-    }
-  }
-
+  
   &-image {
     border-radius: var(--radius-m);
     overflow: hidden;
