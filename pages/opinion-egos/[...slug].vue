@@ -1,5 +1,25 @@
+<style lang="scss">
+.caso-real {
+  &__heading {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    min-height: 100vh;
+    margin-bottom: 0;
+
+    &--text {
+      grid-column: 6/11;
+    }
+
+    .form__wrapper {
+      grid-column: 12/-1;
+      background: var(--blue-1);
+    }
+  }
+
+}
+</style>
 <template>
-  <main class="site-main caso-real" v-if="casoreal">
+  <main class="site-main caso-real bg-[var(--nude-8)]" v-if="casoreal">
     <section class="caso-real__heading" ref="casoreal">
       <div v-if="casoreal[0].acf.vimeo_video" class="caso-real__heading--video video__player">
         <div class="size-full aspect-[9/16]">
@@ -102,43 +122,3 @@ useHead(() => {
 });
 
 </script>
-
-<style lang="scss">
-.caso-real {
-  background-color: var(--nude-8);
-
-  &__heading {
-    display: grid;
-    grid-template-columns: repeat(16, 1fr);
-    min-height: 100vh;
-    margin-bottom: 0;
-
-    &--video {
-      min-height: 60vh;
-      // aspect-ratio: 16/9;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      grid-column: 1/5;
-
-      .plyr {
-        height: 80vh;
-        width: auto;
-        border-radius: var(--radius-m);
-      }
-    }
-
-    &--text {
-      grid-column: 6/11;
-    }
-
-    .form__wrapper {
-      grid-column: 12/-1;
-      background: var(--blue-1);
-    }
-  }
-
-}
-</style>

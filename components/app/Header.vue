@@ -2,9 +2,9 @@
     <header class="egos-header fixed p-3 flex flex-row justify-start items-center gap-8 z-[999]"
         id="site-header">
         <div class="header-wrapper flex flex-row justify-between px-1 w-full">
-            <div class="header-brand bg-white flex flex-col justify-start items-start p-1 rounded-2xl">
-                <nuxt-link class="block px-2 xl:px-4 py-1 xl:py-2 rounded-xl" to="/" aria-label="Vuelve a la página de inicio">
-                    <img class="w-full max-w-20 xl:max-w-14" src="../../assets/images/icons/logo-egos.svg"
+            <div class="header-brand flex flex-col justify-start items-start p-0">
+                <nuxt-link class="block" to="/" aria-label="Vuelve a la página de inicio">
+                    <img loading="lazy" class="w-full max-w-20 xl:max-w-20 saturate-200" src="/assets/images/icons/logo-egos.svg"
                         alt="" />
                 </nuxt-link>
             </div>
@@ -374,24 +374,9 @@ await loadDataAndInitializeMenus();
 
 <style lang="scss" scoped>
 
-.form-offer {
-    color: var(--nude-6);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    width: 100%;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: var(--gold-2);
-}
-
 ul.submenu__left-slider {
     --clip: 0rem;
     --round: var(--radius-xxl);
-    // background-color: var(--nude-8);
     clip-path: inset(var(--clip) round var(--round));
     display: flex;
     height: var(--menu-height);

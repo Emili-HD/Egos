@@ -1,5 +1,5 @@
 <template>
-    <section class="social py-40 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
+    <section class="social py-40 grid grid-cols-[repeat(16,_minmax(0,_1fr))]" v-if="showPopup" :data="{ video_id: selectedVideoId }" @close="closePopup">
       <SocialPopUp />
       <h2 class="social__title col-[2_/_span_14] text-center">#BellezaSinFiltros: la realidad detrás de la estética</h2>
       <Swiper

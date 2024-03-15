@@ -88,7 +88,7 @@ export default defineNuxtConfig({
       },
     ],
 
-    targetFormats: ['webp', 'avif', 'jpg|jpeg|png|gif'],
+    targetFormats: ['avif', 'webp', 'jpg|jpeg|png|gif'],
 
     componentAutoImport: false,
     componentPrefix: undefined,
@@ -117,34 +117,6 @@ export default defineNuxtConfig({
       youtube: 'https://img.youtube.com',
       vimeo: 'https://i.vimeocdn.com',
     },
-    providers: {
-      customProvider: {
-        name: 'customProvider',
-        provider: '~/providers/customProvider.ts', // Ruta al archivo del proveedor personalizado
-        options: {
-          baseURL: 'https://test.clinicaegos.com', // URL base de tu proveedor de imágenes
-        },
-      },
-      // provider: 'ipx',
-      // options: { 
-      //   default: {
-      //     modifiers: {
-      //       format: 'webp',
-      //       loading: 'lazy',
-      //       quality: '100',
-      //     },
-      //   },
-      //   svg: {
-      //     modifiers: {
-      //       format: 'svg',
-      //       loading: 'lazy',
-      //       quality: '100',
-      //     },
-      //   },
-      // },
-    },
-    // Configuración predeterminada del proveedor
-    defaultProvider: 'customProvider',
   },
   viewport: {
     breakpoints: {

@@ -2,7 +2,7 @@
    <footer class="footer bg-blue1 px-12 xl:px-24 pt-24 pb-6 flex flex-col justify-center items-center z-[999]">
       <div class="footer__inner grid grid-cols-3 auto-rows-auto xl:auto-rows-fr items-center gap-4 w-full gap-y-4 xl:gap-y-8 gap-x-4 xl:gap-x-8">
          <div class="footer-logo col-span-3 h-[20vh] flex flex-row justify-center ">
-            <img src="/assets/images/1-navigation/logo-egos.svg" alt="" />
+            <img src="~/assets/images/1-navigation/logo-egos.svg" alt="" />
          </div>
          <div class="menu-footer col-span-3 xl:col-span-1 flex flex-col justify-center items-center xl:items-start text-center xl:text-left">
             <ul class="list-none !mb-0">
@@ -44,6 +44,9 @@
 <script setup>
 import { ref } from 'vue';
 import { menuFooter, menuSocial, menuLegal } from '@/composables/useApi';
+// import { NuxtImg } from '@nuxt/image';
+
+const img = useImage()
 
 // Crea una referencia reactiva para los datos del footer
 const footerMenu = ref({});

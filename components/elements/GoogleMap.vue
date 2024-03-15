@@ -1,5 +1,5 @@
 <template>
-  <GoogleMap api-key="AIzaSyA2wicYs8djzSjI4hXjbp15z6GBF3zO6YU" class="clinicas__egos-map size-full" ref="mapRef" :center="centerMap"
+  <GoogleMap :api-key="apiKey" class="clinicas__egos-map size-full" ref="mapRef" :center="centerMap"
     :zoom="zoom" :styles="mapStyles">
     <CustomControl position="LEFT_CENTER" class="clinics">
       <ul class="clinics">
@@ -21,6 +21,8 @@ import {
   Marker,
   CustomControl,
 } from 'vue3-google-map'
+
+const apiKey = process.env.GOOGLE_MAP_API_KEY;
 
 let markerIcon;
 import('/images/marker_1.png').then((module) => {
