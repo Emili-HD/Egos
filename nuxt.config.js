@@ -139,6 +139,7 @@ export default defineNuxtConfig({
   components: true,
   runtimeConfig: {
     public: {
+      googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAP_API_KEY,
       wordpressUrl: process.env.WP_URL,
       frontendSiteUrl:
         process.env.FRONTEND_DEV_URL || process.env.FRONTEND_PROD_URL,

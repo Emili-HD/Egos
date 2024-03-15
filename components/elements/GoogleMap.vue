@@ -15,14 +15,13 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { getClinicas } from '@/composables/useApi'
+const apiKey = useRuntimeConfig().public.googleMapsApiKey;
 
 import {
   GoogleMap,
   Marker,
   CustomControl,
 } from 'vue3-google-map'
-
-const apiKey = process.env.GOOGLE_MAP_API_KEY;
 
 let markerIcon;
 import('/images/marker_1.png').then((module) => {
