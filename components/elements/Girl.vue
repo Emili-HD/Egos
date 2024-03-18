@@ -101,7 +101,5 @@
 </script>
 
 <style lang="scss" scoped>
-.girl {
-   opacity: 1;
-}
+// Estilo vacío
 </style>

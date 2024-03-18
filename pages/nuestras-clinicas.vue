@@ -2,7 +2,7 @@
   <main class="site-main nuestras-clinicas">
     <section class="clinicas section__hero pb-40" v-if="pages" aria-labelledby="page-title">
       <ElementsEncabezado
-        class="flex flex-col justify-end items-start min-h-[60vh] xl:min-h-[100vh] overflow-hidden bg-nude8 bg-center bg-cover"
+        class="flex flex-col justify-end items-start min-h-[60vh] xl:min-h-[100vh] overflow-hidden bg-nude-6 bg-center bg-cover"
         :data="pages" />
 
       <div class="clinicas__egos">

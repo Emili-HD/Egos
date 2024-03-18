@@ -2,79 +2,111 @@
 @tailwind components;
 @tailwind utilities;
 
-.site-main {
-    background-color: var(--nude-8);
-    @apply overflow-hidden w-[100vw] will-change-transform;
+@layer base {
+    p {
+        @apply mb-6 text-clamp-sm;
+    }
+    h1, .h1 {
+        @apply mb-6 text-clamp-6xl;
+    }
+    h2, .h2 {
+        @apply mb-6 text-clamp-5xl;
+    }
+    h3, .h3 {
+        @apply mb-6 text-clamp-4xl;
+    }
+    h4, .h4 {
+        @apply mb-6 text-clamp-3xl;
+    }
+    h5, .h5 {
+        @apply mb-6 text-clamp-2xl;
+    }
+    h6, .h6 {
+        @apply mb-6 text-clamp-xl;
+    }
 }
 
-.panel#cuidados {
-    @apply mb-0;
-}
+@layer components {
 
-.panel#paciente_ideal {
-    @apply items-center;
-}
-
-.tabla {
-    @apply py-40; 
-}
-
-.related__posts h3 > div {
-    @apply text-center !important;
-    @apply pb-12 font-semibold font-[Geomanist] uppercase;
-}
-
-#procedimiento {
-    @apply items-center gap-y-8;
+    .site-main {
+        @apply bg-nude-8 overflow-hidden w-[100vw] will-change-transform;
+    }
     
-    .panel__content {
-        @apply col-[2_/_span_14] xl:col-[2_/_span_6] row-start-2 xl:row-start-1;
+    .panel#cuidados {
+        @apply mb-0;
     }
-    .panel__image {
-        @apply col-[2_/_span_14] xl:col-[9_/_span_7] ;
+    
+    .panel#paciente_ideal {
+        @apply items-center;
+    }
+    
+    .tabla {
+        @apply py-40; 
+    }
+    
+    .related__posts h3 > div {
+        @apply text-center !important;
+        @apply pb-12 font-semibold font-[Geomanist] uppercase;
+    }
+    
+    #procedimiento {
+        @apply items-center gap-y-8;
+        
+        .panel__content {
+            @apply col-[2_/_span_14] xl:col-[2_/_span_6] row-start-2 xl:row-start-1;
+        }
+        .panel__image {
+            @apply col-[2_/_span_14] xl:col-[9_/_span_7] ;
+        }
+    }
+    
+    .landing-main .antesdespues {
+        @apply p-8 xl:p-24;
+    }
+    
+    .answer__columnas {
+        .columna1 {
+            @apply row-start-1 col-[1_/_-1] xl:col-span-5;
+        }
+        .columna2 {
+            @apply row-start-3 xl:row-start-1 col-[1_/_-1] xl:col-[12_/_17] xl:-left-20;
+        }
+    }
+    
+    .video__player {
+        .plyr {
+            @apply rounded-2xl;
+        }
+    }
+    
+    .panel__image:has(.video__player) {
+        @apply col-[2_/_span_7] rounded-none;
+    }
+    
+    .skill {
+        h3 {
+            @apply !font-semibold !text-lg mb-1 leading-6;
+        }
+    }
+    
+    .nuestras-clinicas .clinicas__egos-card:nth-child(even) .clinicas__egos-map {
+        @apply xl:col-[11/-2];
+    }
+    
+    .team__form .form-landing {
+        @apply max-w-full w-[max(360px,40vw)] bg-blue-1 p-8 rounded-2xl border-nude-1/20 top-[20vh];
     }
 }
 
-.landing-main .antesdespues {
-    @apply p-8 xl:p-24;
-}
-
-.answer__columnas {
-    .columna1 {
-        @apply row-start-1 col-[1_/_-1] xl:col-span-5;
-    }
-    .columna2 {
-        @apply row-start-3 xl:row-start-1 col-[1_/_-1] xl:col-[12_/_17] xl:-left-20;
-    }
-}
-
-.video__player {
-    .plyr {
-        @apply rounded-2xl;
-    }
-}
-
-.panel__image:has(.video__player) {
-    @apply col-[2_/_span_7] rounded-none;
-}
-
-.skill {
-    h3 {
-        @apply !font-semibold !text-lg mb-1 leading-6;
-    }
-}
-
-#orden-1 { @apply row-start-2; }
-#orden-2 { @apply row-start-3; }
-#orden-3 { @apply row-start-4; }
-#orden-4 { @apply row-start-5; }
-#orden-5 { @apply row-start-6; }
-#orden-6 { @apply row-start-7; }
-#orden-7 { @apply row-start-8; }
-#orden-8 { @apply row-start-9; }
-#orden-9 { @apply row-start-10; }
-#orden-10 { @apply row-start-11; }
-
-.nuestras-clinicas .clinicas__egos-card:nth-child(even) .clinicas__egos-map {
-    @apply xl:col-[11/-2];
+@layer utilities {
+    #orden-1 { @apply row-start-2; }
+    #orden-2 { @apply row-start-3; }
+    #orden-3 { @apply row-start-4; }
+    #orden-4 { @apply row-start-5; }
+    #orden-5 { @apply row-start-6; }
+    #orden-6 { @apply row-start-7; }
+    #orden-7 { @apply row-start-8; }
+    #orden-8 { @apply row-start-9; }
+    #orden-9 { @apply row-start-10; }
+    #orden-10 { @apply row-start-11; }
 }

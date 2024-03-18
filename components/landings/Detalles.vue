@@ -6,7 +6,7 @@
       </div>
       <div class="consejos p-12 xl:py-40 xl:px-20 flex flex-col xl:flex-row justify-center items-center xl:items-start w-full xl:w-1/2 gap-8" ref="detalles">
          <figure class="icon text-center w-[min(14rem,35.3333vw)]" v-for="icons in data.detalles.consejo" :key="icons.id">
-            <NuxtImg loading="lazy" class="bg-[var(--nude-5)] p-7 mb-4 rounded-2xl w-full" :src="icons.icono.url" alt="" />
+            <NuxtImg loading="lazy" class="bg-nude-5 p-7 mb-4 rounded-2xl w-full" :src="icons.icono.url" alt="" />
             <figcaption v-html="icons.texto_icono"></figcaption>
          </figure>
       </div>

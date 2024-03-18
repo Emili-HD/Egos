@@ -9,7 +9,7 @@
          <h1 class="header__landing-content-title" v-html="data.acf.titulo_landing"></h1>
          <div class="precio">
             <p class="h3">desde <span>{{ data.acf.precio }}€/mes</span></p>
-            <ElementsButton class="gold pedircita text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-auto" href="#hubspotLanding" @click.prevent="handleClick">Más Información</ElementsButton>
+            <ElementsButton class="gold text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-auto" href="#hubspotLanding" @click.prevent="handleClick">Más Información</ElementsButton>
          </div>
       </div>
    </div>

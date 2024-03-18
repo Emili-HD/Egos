@@ -3,7 +3,7 @@
         class="team__panel pt-24 px-16 pb-16 bg-white rounded-3xl fixed right-0 top-20 w-[vw] h-[calc(100vh-var(--header-height)-1rem)] z-[999] translate-x-[100%] transition-[translate] duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]">
         <div class="team__panel-content overscroll-contain" v-if="panelVisible">
             <div class="close absolute top-0 right-0 z-10" @click="panelVisible = false">
-                <svg class="close-icon size-16 fill-[#1c2c44]" viewBox="0 0 1024 1024" version="1.1"
+                <svg class="close-icon size-16 fill-blue-1" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M777.856 280.192l-33.92-33.952-231.872 231.872-231.84-231.872-33.984 33.888 231.872 231.904-231.84 231.84 33.888 33.984 231.904-231.904 231.84 231.872 33.952-33.888-231.872-231.904z" />
@@ -14,9 +14,9 @@
         </div>
     </div>
 
-    <div class="team__form" v-if="showPopup">
-        <div class="close" @click="closePopup">
-            <svg class="close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <div class="team__form fixed size-full z-[999999] bg-blue-1/50 flex flex-col justify-start items-center" v-if="showPopup">
+        <div class="close absolute top-24 right-12 cursor-pointer" @click="closePopup">
+            <svg class="close-icon size-16 fill-nude-8" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M777.856 280.192l-33.92-33.952-231.872 231.872-231.84-231.872-33.984 33.888 231.872 231.904-231.84 231.84 33.888 33.984 231.904-231.904 231.84 231.872 33.952-33.888-231.872-231.904z" />
             </svg>
@@ -25,14 +25,14 @@
             :formId="pages.acf.formid" />
     </div>
 
-    <main class="site-main about bg-nude6 grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-1">
+    <main class="site-main about bg-nude-6 grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-1">
         <section class="nosotros section__hero grid grid-cols-[repeat(16,_minmax(0,_1fr))] col-[1_/_-1]" v-if="pages">
             <ElementsEncabezadoFull :data="pages" />
         </section>
 
         <template v-if="doctor.length > 0">
             <section v-for="category in categories" :key="category.id" :class="`equipo ${category.slug}`"
-                class="pt-20 xl:pt-32 w-[100vw] grid grid-cols-subgrid col-[1_/_-1]" :id="`orden-${category.order}`">
+                class="pt-20 pb-40 xl:pt-32 w-[100vw] grid grid-cols-subgrid col-[1_/_-1]" :id="`orden-${category.order}`">
                 <aside class="equipo__left-column col-[2/-2] xl:col-[2/7] pb-20">
                     <div class="equipo__left-description">
                         <h3>{{ category.name }}</h3>
@@ -43,21 +43,21 @@
                 <article class="equipo__right-column col-[2/-2] xl:col-[8/-2]">
                     <ul class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                         <li v-for="miembro in doctorByCategory(category.id)" :key="miembro.id"
-                            class="card !aspect-[4/5] bg-nude8 rounded-3xl overflow-hidden xl:[&:nth-child(2n)]:translate-y-1/3">
+                            class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden xl:[&:nth-child(2n)]:translate-y-1/3">
                             <div class="card__member block relative size-full overflow-hidden">
                                 <NuxtImg loading="lazy" v-if="miembro.featured_image_src"
                                     :src="miembro.featured_image_src.src"
                                     class="card__image absolute w-full -top-[10%] object-center object-cover min-h-full overflow-hidden rounded-3xl"
                                     :alt="miembro.featured_image_src.alt" />
                                 <div
-                                    class="card__description bg-nude8 p-4 absolute bottom-0 rounded-3xl w-full z-10 flex flex-col justify-end items-center gap-2">
+                                    class="card__description bg-nude-6 p-4 absolute bottom-0 rounded-3xl w-full z-10 flex flex-col justify-end items-center gap-2">
                                     <h3 class="card__title h6 !mb-0">
                                         {{ miembro.title ? miembro.title.rendered : 'No Title' }}
                                     </h3>
                                     <p v-html="miembro.acf.trayectoria.especialidad"></p>
                                     <div class="button__group">
-                                        <a href="#" @click.prevent="showMemberPanel(miembro)" class="button">+ Info</a>
-                                        <button class="button button-blue" v-if="category.form === true"
+                                        <a href="#" @click.prevent="showMemberPanel(miembro)" class="button border border-solid border-blue-1/20 rounded-full py-1">+ Info</a>
+                                        <button class="button bg-blue-1 rounded-full py-1 text-nude-8" v-if="category.form === true"
                                             @click="openPopup">Pedir Cita</button>
                                     </div>
                                 </div>
@@ -282,38 +282,5 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
-.team__form {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 999999;
-    background: rgba(var(--blue-1-rgb), 0.6);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    .form-landing {
-        max-width: 100%;
-        width: max(360px, 40vw);
-        background: var(--blue-1);
-        padding: 2rem;
-        border-radius: var(--radius-m);
-        border: 1px solid rgba(var(--nude-1-rgb), 0.2);
-        top: 20vh;
-    }
-
-    .close {
-        position: absolute;
-        top: 6rem;
-        right: 3rem;
-        cursor: pointer;
-
-        .close-icon {
-            width: 4em;
-            height: 4em;
-            fill: var(--nude-8);
-        }
-    }
-}
+// estilo vacío
 </style>

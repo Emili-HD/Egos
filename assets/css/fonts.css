@@ -1,0 +1,52 @@
+@font-face {
+  font-family: 'Canela';
+  src: url('~/assets/fonts/canela/CanelaDeck-Bold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('~/assets/fonts/canela/CanelaDeck-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('~/assets/fonts/canela/CanelaDeck-light.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url("~/assets/fonts/geomanist/geomanist-light.woff2") format("woff2"),
+       url("~/assets/fonts/geomanist/geomanist-light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url("~/assets/fonts/geomanist/geomanist-regular.woff2") format("woff2"),
+       url("~/assets/fonts/geomanist/geomanist-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url("~/assets/fonts/geomanist/geomanist-medium.woff2") format("woff2"),
+       url("~/assets/fonts/geomanist/geomanist-medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url("~/assets/fonts/geomanist/geomanist-bold.woff2") format("woff2"),
+       url("~/assets/fonts/geomanist/geomanist-bold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}

@@ -1,6 +1,6 @@
 <template>
   <main class="site-main" v-if="tratamiento" ref="componentRef">
-    <section class="cirugia bg-nude8 grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-0 xl:p-0">
+    <section class="cirugia grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-0 xl:p-0">
       <CirugiasEncabezado :data="tratamiento" />
       <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
 
@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <section class="form__page pt-24">
+      <section class="form__page grid grid-cols-subgrid col-[1/-1]">
         <CirugiasFormSection :data="tratamiento.acf" />
       </section>
     </section>
@@ -324,9 +324,5 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.form__page {
-  grid-column: 1/-1;
-  display: grid;
-  grid-template-columns: subgrid;
-}
+// estilo vacío
 </style>

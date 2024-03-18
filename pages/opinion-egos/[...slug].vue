@@ -19,7 +19,7 @@
 }
 </style>
 <template>
-  <main class="site-main caso-real bg-[var(--nude-8)]" v-if="casoreal">
+  <main class="site-main caso-real bg-nude-8" v-if="casoreal">
     <section class="caso-real__heading" ref="casoreal">
       <div v-if="casoreal[0].acf.vimeo_video" class="caso-real__heading--video video__player">
         <div class="size-full aspect-[9/16]">

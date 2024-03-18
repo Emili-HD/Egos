@@ -13,6 +13,7 @@
     "@nuxt/image": "^1.4.0",
     "@pinia/nuxt": "^0.5.1",
     "@studio-freight/lenis": "^1.0.39",
+    "@tailwindcss/typography": "^0.5.10",
     "axios": "^1.6.7",
     "axios-cache-interceptor": "^1.5.1",
     "axios-retry": "^4.0.0",

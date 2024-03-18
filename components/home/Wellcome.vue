@@ -2,10 +2,14 @@
     <section class="intro">
         <div class="intro__image">
             <img provider="ipx" loading="lazy" class="girl h-fit xl:h-[150vh]" src="/assets/images/2-intro/chica.avif" alt="" />
-            <p class="intro__title">Más de 2000<br><span id="a">pacientes</span> <span id="b">intervenidos</span> <br>al año</p>
-            <div class="intro__content">
-                <div class="heading" v-html="data.content.rendered"></div>
-                <ElementsButton class="gold pedircita text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-auto" href="#formulario" @click.prevent="handleClick">Cumple tu sueño</ElementsButton>
+            <p class="intro__title font-geomanist font-semibold text-clamp-6xl 
+                      lg:text-[4vw] text-nude-7 leading-[0.9] mb-0 mt-[15vh] pl-8 lg:pl-16 text-left
+                      [&>span]:!text-gold-2 [&>span]:w-full [&>span]:block lg:[&>span]:inline-block">
+                Más de 2000<br><span id="a">pacientes</span> <span id="b">intervenidos</span> <br>al año
+            </p>
+            <div class="intro__content pl-8 lg:pl-16 text-nude-8 flex flex-col justify-center items-start gap-4">
+                <div class="heading [&>h1]:font-geomanist [&>h1]:text-clamp-xl" v-html="data.content.rendered"></div>
+                <ElementsButton class="gold text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-auto" href="#formulario" @click.prevent="handleClick">Cumple tu sueño</ElementsButton>
             </div>
         </div>
     </section>
@@ -32,7 +36,7 @@ function handleClick() {
   lenis.scrollTo('#formulario', {offset: -20});
 }
 
-const animationMask = async () => {
+/* const animationMask = async () => {
         let tl = gsap.timeline()
 
         tl = gsap.timeline({
@@ -49,7 +53,7 @@ const animationMask = async () => {
             { scale: 1.2, transformOrigin: '50% 50%' },
             '<',
         )
-}
+} */
 
 const switchText = async () => {
     
@@ -88,34 +92,12 @@ const switchText = async () => {
 }
 
 onMounted( async () => {
-    await animationMask();
+    // await animationMask();
     await switchText()
 })
 
 </script>
 
 <style lang="scss" scoped>
-#myVideo {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -1;
-}
-
-#scene {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-}
-
-.intro__title span {
-    color: var(--gold-2);
-
-    @media (max-width: 767px) {
-        display: inline-block;
-        width: 100%;
-    }
-}
+// Empty style
 </style>

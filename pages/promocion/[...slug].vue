@@ -1,6 +1,6 @@
 <template>
    <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
-      <ElementsButton class="gold pedircita" href="#hubspotLanding" @click.prevent="handleClick">Cita con el cirujano
+      <ElementsButton class="gold" href="#hubspotLanding" @click.prevent="handleClick">Cita con el cirujano
       </ElementsButton>
    </div>
    <main class="site-main landing-main" v-if="landing && landing[0].acf">

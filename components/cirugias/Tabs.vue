@@ -1,10 +1,17 @@
 <template>
    <div class="accordion" v-if="contentData.list_tabs && contentData.opciones_listado == 'pestanyes'" ref="accordion">
       <div class="list accordion__list">
-         <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer" v-for="(list, index) in contentData.list_tabs" :key="list.list_title">
-            <div class="accordion__list--item-title flex flex-row justify-between items-center">
-               <div class="max-w-[85%]" v-html="list.list_title"></div>
-               <svg class="h-6 w-6 stroke-[var(--blue-1)] stroke-1" viewbox="0 0 24 24">
+
+         <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
+                     after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25
+                     first:before:bg-current first:before:content-[''] first:before:absolute first:before:top-0 first:before:left-0 
+                     first:before:w-full first:before:h-[1px] first:before:opacity-25" 
+              v-for="(list, index) in contentData.list_tabs" :key="list.list_title"
+            >
+            <div class="accordion__list--item-title flex flex-row justify-between items-center
+                    [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
+               <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0" v-html="list.list_title"></div>
+               <svg class="h-6 w-6 stroke-blue1 stroke-1" viewbox="0 0 24 24">
                   <path class="iconV" d="M 12,0 V 24" />
                   <path class="iconH" d="M 0,12 H 24" />
                </svg>

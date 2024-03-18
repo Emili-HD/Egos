@@ -1,12 +1,13 @@
 <template>
   <section class="accordion" v-for="competencias in data.listado_competencias" :key="competencias.id">
     <div class="heading accordion__heading">
-      <h2 class="accordion__heading-title xl:text-center" v-html="competencias.titulo_seccion"></h2>
+      <h2 class="accordion__heading-title xl:text-center [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0" v-html="competencias.titulo_seccion"></h2>
       <div v-if="competencias.descripcion_seccion" v-html="competencias.descripcion_seccion"></div>
     </div>
     <div class="list accordion__list">
       <div class="accordion__list--item" v-for="listado in competencias.seccion_competencias" :key="listado.id">
-        <div class="accordion__list--item-title">
+        <div class="accordion__list--item-title
+                    [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
           <div v-html="listado.titulo"></div>
           <svg viewbox="0 0 24 24">
             <path class="iconV" d="M 12,0 V 24" />
@@ -72,3 +73,7 @@ const initAccordion = () => {
 onMounted(initAccordion)
 
 </script>
+
+<style lang="scss" scoped>
+  // estilo vacío
+</style>

@@ -5,7 +5,7 @@
         <LazyPageCatRelacionadas  :data="pages.acf" />
       </DelayHydration>
       <FormsPiceCita :titulo="`¿No encuentras tu cirugía?`" :portalId="String(pages.acf.formulario.portalid)" :formId="pages.acf.formulario.formid" />
-      <section class="quote font-base text-balance normal-case font-semibold leading-5 py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid">
+      <section class="quote font-base text-balance normal-case font-semibold leading-5 py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid" >
           <ElementsReveal :titulo="pages.acf.hero.texto_imagen" tag="p" />
       </section>
       <PageRecomendaciones :data="pages.acf" />
@@ -26,13 +26,70 @@ const loadPage = async (slug) => {
       const pageResponse = await getSinglePageBySlug(slug);
       if (pageResponse.data && pageResponse.data.length > 0) {
         pages.value = pageResponse.data[0];
-      } else {
-        console.error('No se encontraron datos para el slug proporcionado.');
       }
     } catch (error) {
       console.error(error);
     } 
 };
+
+// Métodos
+const textReveal = async () => {
+   gsap.registerPlugin(ScrollTrigger, SplitText);
+
+   await nextTick()
+
+   let split = new SplitText(".content__header-title", { type: "lines" });
+   let masks;
+   function makeItHappen() {
+      masks = [];
+      split.lines.forEach((target) => {
+         let mask = document.createElement("span");
+         mask.className = "mask-reveal";
+         target.append(mask);
+         masks.push(mask);
+         gsap.to(mask, {
+            scaleX: 0,
+            transformOrigin: "right center",
+            ease: "none",
+            scrollTrigger: {
+               trigger: target,
+               scrub: true,
+               start: "top center",
+               end: "bottom center",
+               pinSpacing: false,
+               // markers: true
+            }
+         });
+      });
+   }
+
+   window.addEventListener("resize", newTriggers);
+
+   function newTriggers() {
+      ScrollTrigger.getAll().forEach((trigger, i) => {
+         trigger.kill();
+         masks[i].remove();
+      });
+      split.split();
+      makeItHappen();
+   }
+
+   makeItHappen();
+}
+
+const rAF = () => {
+   return new Promise(r => window.requestAnimationFrame(r));
+}
+
+// Ciclo de vida
+onMounted(async () => {
+   await nextTick()
+   await rAF()
+   if (pages && pages.acf) {
+    // Datos disponibles
+       textReveal()
+  } 
+})
 
 // Datos YOAST SEO
 useHead(() => {
@@ -66,7 +123,7 @@ useHead(() => {
     },
     // Añadir más tags según sean necesarios
   ];
-
+  
   // Añadir las imágenes de Open Graph si están disponibles
   if (yoast.og_image && yoast.og_image.length > 0) {
     yoast.og_image.forEach((image) => {
@@ -75,14 +132,16 @@ useHead(() => {
       metaTags.push({ property: 'og:image:height', content: image.height.toString() });
     });
   }
-
+  
   return {
     title: yoast.title,
     meta: metaTags,
   };
 });
-await loadPage()
 
+onMounted( async () => {
+  await loadPage()
+})
 </script>
 
 

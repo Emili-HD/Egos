@@ -1,6 +1,10 @@
 <template>
-   <a class="button"
+   <a 
       :class="class"
+      class="button [&.light]:text-nude-8
+            [&.gold]:text-blue-1 [&.gold]:font-normal [&.gold]:animate-gradient [&.gold]:bg-gold-gradient-text
+            [&.gold]:bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running]
+            [&.gold]:py-2 [&.gold]:px-4 [&.gold]:rounded-3xl"
       :href="href"
       >
       <slot></slot>
@@ -8,7 +12,6 @@
 </template>
 
 <script setup>
-import { inject, nextTick } from 'vue';
 // props
 const props = defineProps({
    class: {
@@ -22,44 +25,5 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.button {
-   // font-size: var(--font-size);
-   // border-radius: var(--radius-l);
-   // padding: 0.5rem 1.25rem;
-   
-   &.light {
-      color: var(--nude-8);
-   }
-
-   &.gold {
-      color: var(--blue-1);
-      font-weight: 400;
-      background: var(--gradient-gold);
-      background-position: 0% 50%;
-      background-size: 300% 300%;
-      animation: gradient 7s ease infinite;
-      animation-play-state: paused;
-
-      &:hover {
-         animation-play-state: running;
-      }
-   }
-
-   &.orange {
-      color: var(--nude-6);
-      background: rgba(var(--orange-2-rgb),1);
-   }
-
-   @keyframes gradient {
-      0% {
-         background-position: 0% 50%;
-      }
-      50% {
-         background-position: 100% 50%;
-      }
-      100% {
-         background-position: 0% 50%;
-      }
-   }
-}
+// Estilo vacío
 </style>

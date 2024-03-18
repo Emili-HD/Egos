@@ -2,15 +2,15 @@
   <main class="site-main" v-if="post">
     <article>
       <div class="post__header mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center" :style="`background-image: url(${post[0].featured_image_src.src})`">
-        <h1 class="text-[var(--nude-8)] font-semibold text-center w-full xl:max-w-[60vw]">{{ post[0].title.rendered }}</h1>
+        <h1 class="text-nude-8 font-semibold text-center w-full xl:max-w-[60vw]">{{ post[0].title.rendered }}</h1>
       </div>
       <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
         <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-3xl">
-          <h4 class="nav-content-title h6 bg-nude4 p-4">Tabla de contenidos</h4>
+          <h4 class="nav-content-title h6 bg-nude-4 p-4">Tabla de contenidos</h4>
           <ul class="pl-6 list-decimal">
-            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-[#1c2c44]/25" v-for="(content, index) in post[0].acf.areas_de_contenido" @click.prevent=""><span>{{ content.titulo_area }}</span></li>
-            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-[#1c2c44]/25" v-if="post[0].acf.post_description.titulo_recomendaciones" @click.prevent=""><span v-html="post[0].acf.post_description.titulo_recomendaciones"></span></li>
-            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-[#1c2c44]/25" v-if="post[0].acf.post_faqs.titulo_faqs" @click.prevent=""><span v-html="post[0].acf.post_faqs.titulo_faqs"></span></li>
+            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25" v-for="(content, index) in post[0].acf.areas_de_contenido" @click.prevent="lenis.scrollTo(`#area-${index}`, {offset: -100})"><span>{{ content.titulo_area }}</span></li>
+            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25" v-if="post[0].acf.post_description.titulo_recomendaciones" @click.prevent="lenis.scrollTo('#recomendaciones', {offset: -100})"><span v-html="post[0].acf.post_description.titulo_recomendaciones"></span></li>
+            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25" v-if="post[0].acf.post_faqs.titulo_faqs" @click.prevent="lenis.scrollTo('#faqs', {offset: -100})"><span v-html="post[0].acf.post_faqs.titulo_faqs"></span></li>
           </ul>
         </aside>
         <div class="post__content-areas p-0 xl:py-6 xl:px-10">
@@ -25,14 +25,19 @@
 
           <div id="recomendaciones" v-if="post[0].acf.post_description.titulo_recomendaciones" class="post__content-text recomendaciones pb-6">
             <div class="heading accordion__heading">
-              <h2 class="accordion__heading-title area-title" v-html="post[0].acf.post_description.titulo_recomendaciones"></h2>
+              <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0" v-html="post[0].acf.post_description.titulo_recomendaciones"></h2>
               <div class="accordion__description pb-2" v-html="post[0].acf.post_description.descripcion_recomendaciones"></div>
             </div>
             <div class="list accordion__list">
-              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer" v-for="item in post[0].acf.post_description.secciones_del_post" :key="item.post_subtitle">
-                <div class="accordion__list--item-title flex flex-row justify-between items-center">
-                  <div class="max-w-[85%]" v-html="item.post_subtitle"></div>
-                  <svg class="size-6 stroke-[var(--blue-1)] stroke-1" viewbox="0 0 24 24">
+              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
+                          after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25
+                          first:before:bg-current first:before:content-[''] first:before:absolute first:before:top-0 first:before:left-0 
+                          first:before:w-full first:before:h-[1px] first:before:opacity-25" 
+              v-for="item in post[0].acf.post_description.secciones_del_post" :key="item.post_subtitle">
+                <div class="accordion__list--item-title flex flex-row justify-between items-center
+                    [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
+                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0" v-html="item.post_subtitle"></div>
+                  <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                     <path class="iconV" d="M 12,0 V 24" />
                     <path class="iconH" d="M 0,12 H 24" />
                   </svg>
@@ -44,13 +49,20 @@
 
           <div v-if="post[0].acf.post_faqs" class="post__content-text faqs py-12" id="faqs">
             <div class="heading accordion__heading">
-              <h2 class="accordion__heading-title area-title" v-html="post[0].acf.post_faqs.titulo_faqs"></h2>
+              <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0" v-html="post[0].acf.post_faqs.titulo_faqs"></h2>
             </div>
             <div class="list accordion__list">
-              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer" v-for="contentido in post[0].acf.post_faqs.preguntas_frecuentes" :key="contentido.faq_subtitle">
-                <div class="accordion__list--item-title flex flex-row justify-between items-center">
-                  <div class="max-w-[85%]" v-html="contentido.faq_subtitle"></div>
-                  <svg class="size-6 stroke-[var(--blue-1)] stroke-1" viewbox="0 0 24 24">
+              <div 
+                class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
+                      after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25
+                      first:before:bg-current first:before:content-[''] first:before:absolute first:before:bottom-0 first:before:left-0 
+                      first:before:w-full first:before:h-[1px] first:before:opacity-25" 
+                v-for="contentido in post[0].acf.post_faqs.preguntas_frecuentes" :key="contentido.faq_subtitle"
+              >
+                <div class="accordion__list--item-title flex flex-row justify-between items-center
+                    [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
+                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0" v-html="contentido.faq_subtitle"></div>
+                  <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                     <path class="iconV" d="M 12,0 V 24" />
                     <path class="iconH" d="M 0,12 H 24" />
                   </svg>
@@ -76,7 +88,7 @@ import { ref, onMounted, inject, watch } from 'vue';
 import { getSinglePostBySlug } from '@/composables/useApi'
 import { useRoute } from 'vue-router';
 
-const { $gsap: gsap } = useNuxtApp();
+const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
 // Estado reactivo para el post
 const post = ref(null);

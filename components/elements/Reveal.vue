@@ -1,6 +1,12 @@
 <template>
-   <div class="content__header col-[2_/_span_14] xl:col-[4_/_span_10]" ref="reveal">
-      <component :is="props.tag" class="content__header-title blue1 w-full p-0" v-html="titulo"></component>
+   <div class="content__header col-[2_/_span_14] xl:col-[4_/_span_10]
+   [&>p_.mask-reveal]:!bg-nude-8 [&>p_.mask-reveal]:!w-full [&>p_.mask-reveal]:!h-[115%]
+               [&>p_.mask-reveal]:!absolute [&>p_.mask-reveal]:!left-0 [&>p_.mask-reveal]:!top-[-12%] [&>p_.mask-reveal]:!opacity-90" ref="reveal">
+      <component 
+         :is="props.tag" 
+         class="content__header-title blue-1 w-full p-0" 
+         v-html="titulo">
+      </component>
    </div>
 </template>
 
@@ -28,7 +34,7 @@ const reveal = ref(null);
 
 // Métodos
 const textReveal = async () => {
-   // gsap.registerPlugin(ScrollTrigger, SplitText);
+   gsap.registerPlugin(ScrollTrigger, SplitText);
 
    await nextTick()
 
@@ -81,30 +87,10 @@ onMounted(async () => {
    await rAF()
    setTimeout(() => {
       textReveal()
-   }, 1500);
+   }, 1000);
 })
 </script>
 
 <style lang="scss" scoped>
-:global(.mask-reveal) {
-   --bg: var(--nude-8);
-   width: 100%;
-   height: 115%;
-   position: absolute;
-   background: var(--bg);
-   left: 0;
-   top: -12%;
-   opacity: 0.9;
-}
-
-// .related__posts .content__header-title {
-//    width: 100%;
-//    text-align: center;
-//    padding: 2vh;
-
-//    @media (max-width: 767px) {
-//       padding-bottom: 2rem;
-//       padding-top: 2rem;
-//    }
-// }
+// estilo vacío
 </style>

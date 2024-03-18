@@ -1,8 +1,8 @@
 <template>
-  <div class="divider w-full my-6 min-h-8">
+  <div class="divider w-full my-6 min-h-8 mb-24 xl:mb-0 after:content-[''] after:w-full after:h-[1px] after:bg-blue-1 after:absolute after:basis-1/2 after:opacity-20 after:left-0">
     <svg
       version="1.1"
-      class="sLogo size-10 absolute -bottom-1 left-1/2 -ml-5 opacity-20 fill-[#0a1d37] "
+      class="sLogo size-10 absolute bottom-3 left-1/2 -ml-5 opacity-20 fill-blue-1"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       x="0px"
@@ -25,17 +25,6 @@ export default {
 
 <style lang="scss" scoped>
 .divider {
-  &::after {
-    content: '';
-    width: 100%;
-    height: 1px;
-    background: var(--blue-1);
-    position: absolute;
-    bottom: 50%;
-    opacity: 0.1;
-    left: 0;
-  }
-
   .sLogo {
     animation: rotating 10s infinite;
   }

@@ -1,5 +1,5 @@
 <template>
-   <footer class="footer bg-blue1 px-12 xl:px-24 pt-24 pb-6 flex flex-col justify-center items-center z-[999]">
+   <footer class="footer bg-blue-1 px-12 xl:px-24 pt-24 pb-6 flex flex-col justify-center items-center z-[999]">
       <div class="footer__inner grid grid-cols-3 auto-rows-auto xl:auto-rows-fr items-center gap-4 w-full gap-y-4 xl:gap-y-8 gap-x-4 xl:gap-x-8">
          <div class="footer-logo col-span-3 h-[20vh] flex flex-row justify-center ">
             <img src="~/assets/images/1-navigation/logo-egos.svg" alt="" />
@@ -8,22 +8,24 @@
             <ul class="list-none !mb-0">
                <li v-for="item in footerMenu.items" :key="item.ID">
                   <nuxt-link :to="resolveUrl(item.slug)">
-                     <span class="nude8 uppercase">{{ item.title }}</span>
+                     <span class="text-nude-8 uppercase">{{ item.title }}</span>
                   </nuxt-link>
                </li>
             </ul>
          </div>
-         <div class="flex flex-col col-span-3 xl:col-span-1 justify-center items-center xl:border-x-1 border-y-0 xl:border-solid border-[#c0b5a3]/25">
+         <div class="flex flex-col col-span-3 xl:col-span-1 justify-center items-center xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25
+                     before:content-[''] before:absolute before:w-[1px] before:h-full before:bg-nude-8/20 before:-left-12
+                     after:content-[''] after:absolute after:w-[1px] after:h-full after:bg-nude-8/20 after:-right-12">
             <div id="block-16" class="footer__block">
-               <h2 class="text-center nude8">Hazlo por ti</h2>
-               <p class="text-center nude8"><a href="mailto:info@clinicaegos.com">info@clinicaegos.com</a></p>
+               <h2 class="text-center text-nude-8">Hazlo por ti</h2>
+               <p class="text-center text-nude-8"><a href="mailto:info@clinicaegos.com">info@clinicaegos.com</a></p>
             </div>
          </div>
          <div class="menu-social col-span-3 xl:col-span-1 flex flex-col justify-center items-center xl:items-end text-center xl:text-right">
             <ul class="list-none !mb-0">
                <li v-for="item in socialMenu.items" :key="item.ID">
                   <a :href="item.url" target="_blank">
-                     <span class="nude8 uppercase">{{ item.post_title }}</span>
+                     <span class="text-nude-8 uppercase">{{ item.post_title }}</span>
                   </a>
                </li>
             </ul>
@@ -32,7 +34,7 @@
             <ul class="list-none !mb-0 flex flex-col xl:flex-row justify-center items-center gap-8 w-full">
                <li v-for="item in legalMenu.items" :key="item.ID">
                   <nuxt-link :to="resolveUrl(item.slug)">
-                     <span class="nude8">{{ item.title }}</span>
+                     <span class="text-nude-8">{{ item.title }}</span>
                   </nuxt-link>
                </li>
             </ul>
@@ -44,9 +46,7 @@
 <script setup>
 import { ref } from 'vue';
 import { menuFooter, menuSocial, menuLegal } from '@/composables/useApi';
-// import { NuxtImg } from '@nuxt/image';
 
-const img = useImage()
 
 // Crea una referencia reactiva para los datos del footer
 const footerMenu = ref({});

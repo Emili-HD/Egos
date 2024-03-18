@@ -3,26 +3,39 @@
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  tailwindcss: {
-    cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'first' }],
-    configPath: 'tailwind.config',
-    exposeConfig: {
-      level: 2, // Ajusta el nivel de exposición aquí
+  plugins: [
+    '~/plugins/gtm.js', 
+    '~/plugins/setHtmlLang.js',
+  ],
+  css: [
+    '~/src/styles.css', 
+    '~/assets/css/fonts.css', 
+    '~/assets/css/tailwind.css',
+  ],
+  postcss: {
+    plugins: {
+      'postcss-import': {},
+      'tailwindcss/nesting': 'postcss-nesting',
+      tailwindcss: {
+        configPath: 'tailwind.config',
+        exposeConfig: {
+          level: 2,
+        },
+        config: {},
+        viewer: true,
+      },
+      autoprefixer: {},
     },
-    config: {},
-    viewer: true,
   },
-  plugins: ['~/plugins/gtm.js', '~/plugins/setHtmlLang.js'],
-  css: ['~/src/styles.css'],
   modules: [
-    '@pinia/nuxt',
-    '@nuxtjs/tailwindcss',
     '@nuxt/image',
-    'nuxt-simple-robots',
     '@nuxtjs/sitemap',
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    'nuxt-delay-hydration',
+    'nuxt-simple-robots',
     'nuxt-speedkit',
     'nuxt-swiper',
-    'nuxt-delay-hydration',
     'nuxt-viewport',
   ],
   delayHydration: {

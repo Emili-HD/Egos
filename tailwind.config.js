@@ -1,5 +1,10 @@
+const fontSize = 'tailwindcss/fontSize'
+const fontFamily = 'tailwindcss/typography'
+const colors = 'tailwindcss/colors'
+const keyframes = 'tailwindcss/keyframes'
+
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
@@ -18,22 +23,88 @@ export default {
         '15': '15',
         '16': '16',
         '17': '17',
-      }
+      },
+      backgroundImage: {
+        'gold-gradient-text': "linear-gradient(-35deg, #d0c8ba, #908057, #d0c8ba, #908057, #d0c8ba)",
+        // 'gold-gradient-text': "linear-gradient(to bottom right, #dcc376 0%, #c2a561 17%, #a6854a 40%, #926f3a 62%, #866130 82%, #825c2d 100%)",
+      },
+      colors: {
+        'blue-1': '#1c2c44',
+        'blue-2': '#223552',
+        'blue-3': '#273e60',
+        'blue-4': '#2d476e',
+        'blue-5': '#33507c',
+        'blue-6': '#395989',
+        'gold-1': '#CCB780',
+        'gold-2': '#908057',
+        'gold-3': '#857650',
+        'nude-1': '#c0b5a3',
+        'nude-2': '#c8beaf',
+        'nude-3': '#d0c8ba',
+        'nude-4': '#d8d1c6',
+        'nude-5': '#e0dad2',
+        'nude-6': '#e8e4dd',
+        'nude-7': '#f0ede9',
+        'nude-8': '#f8f7f4',
+      },
+      backgroundColor: {
+        'bg-blue-1': '#1c2c44',
+        'bg-blue-2': '#223552',
+        'bg-blue-3': '#273e60',
+        'bg-blue-4': '#2d476e',
+        'bg-blue-5': '#33507c',
+        'bg-blue-6': '#395989',
+        'bg-gold-1': '#CCB780',
+        'bg-gold-2': '#908057',
+        'bg-gold-3': '#857650',
+        'bg-nude-1': '#c0b5a3',
+        'bg-nude-2': '#c8beaf',
+        'bg-nude-3': '#d0c8ba',
+        'bg-nude-4': '#d8d1c6',
+        'bg-nude-5': '#e0dad2',
+        'bg-nude-6': '#e8e4dd',
+        'bg-nude-7': '#f0ede9',
+        'bg-nude-8': '#f8f7f4',
+      },
+      fontSize: {
+        'clamp-sm': "clamp(0.875rem, 1vw, 1.125rem)",
+        'clamp-base': "clamp(1rem, 1.3vw, 1.5rem)",
+        'clamp-lg': "clamp(1.3rem, 1.6vw, 1.8rem)",
+        'clamp-xl': "clamp(1.6rem, 1.9vw, 2.1rem)",
+        'clamp-2xl': "clamp(1.9rem, 2.2vw, 2.4rem)",
+        'clamp-3xl': "clamp(2.2rem, 2.5vw, 2.7rem)",
+        'clamp-4xl': "clamp(2.5rem, 2.8vw, 3rem)",
+        'clamp-5xl': "clamp(2.8rem, 3.1vw, 3.3rem)",
+        'clamp-6xl': "clamp(3.1rem, 3.4vw, 3.7rem)",
+      },
+      fontFamily: {
+        canela: ['Canela', 'serif'],
+        geomanist: ['Geomanist', 'sans-serif'],
+      },
+      keyframes: {
+        gradient: {
+          '0%': { backgrounPosition: '0 50%' },
+          '50%': { backgrounPosition: '100% 50' },
+          '100%': { backgrounPosition: '0 50%)' },
+        },
+      },
+      animation: {
+        'gradient': 'gradient 7s ease infinite',
+      },
     }
   },
-  plugins: [],
+  plugins: [
+    // require('@tailwindcss/fontSize'),
+    require('@tailwindcss/typography'),
+    // require('@tailwindcss/keyframes'),
+  ],
   content: [
-    "./components/**/*.{vue,js,ts}",
+    "./components/**/*.{js,vue,ts}",
     "./layouts/**/*.vue",
     "./pages/**/*.vue",
-    "./composables/**/*.{js,ts}",
     "./plugins/**/*.{js,ts}",
-    "./utils/**/*.{js,ts}",
-    "./App.{js,ts,vue}",
-    "./app.{js,ts,vue}",
-    "./Error.{js,ts,vue}",
-    "./error.{js,ts,vue}",
-    "./app.config.{js,ts}"
+    "./app.vue",
+    "./error.vue",
   ]
 }
 

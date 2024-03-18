@@ -1,5 +1,5 @@
 <template>
-   <section class="related__posts pt-6">
+   <section class="related__posts pt-6 mb-0">
       <ElementsReveal :titulo="treatmentsData.titulo_posts_relacionados" />
       <div class="post-list" v-if="posts" aria-label="Lista de publicaciones">
          <article v-for="post in posts" :key="post.id" class="card" :aria-labelledby="'post-title-' + post.id">

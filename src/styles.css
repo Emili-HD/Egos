@@ -256,142 +256,6 @@ body {
     --radius-xs: 0.3rem;
   }
 }
-.blue1 {
-  color: var(--blue-1);
-}
-
-.bg-blue1 {
-  background-color: var(--blue-1);
-}
-
-.blue2 {
-  color: var(--blue-2);
-}
-
-.bg-blue2 {
-  background-color: var(--blue-2);
-}
-
-.blue3 {
-  color: var(--blue-3);
-}
-
-.bg-blue3 {
-  background-color: var(--blue-3);
-}
-
-.blue4 {
-  color: var(--blue-4);
-}
-
-.bg-blue4 {
-  background-color: var(--blue-4);
-}
-
-.blue5 {
-  color: var(--blue-5);
-}
-
-.bg-blue5 {
-  background-color: var(--blue-5);
-}
-
-.blue6 {
-  color: var(--blue-6);
-}
-
-.bg-blue6 {
-  background-color: var(--blue-6);
-}
-
-.nude1 {
-  color: var(--nude-1);
-}
-
-.bg-nude1 {
-  background-color: var(--nude-1);
-}
-
-.nude2 {
-  color: var(--nude-2);
-}
-
-.bg-nude2 {
-  background-color: var(--nude-2);
-}
-
-.nude3 {
-  color: var(--nude-3);
-}
-
-.bg-nude3 {
-  background-color: var(--nude-3);
-}
-
-.nude4 {
-  color: var(--nude-4);
-}
-
-.bg-nude4 {
-  background-color: var(--nude-4);
-}
-
-.nude5 {
-  color: var(--nude-5);
-}
-
-.bg-nude5 {
-  background-color: var(--nude-5);
-}
-
-.nude6 {
-  color: var(--nude-6);
-}
-
-.bg-nude6 {
-  background-color: var(--nude-6);
-}
-
-.nude7 {
-  color: var(--nude-7);
-}
-
-.bg-nude7 {
-  background-color: var(--nude-7);
-}
-
-.nude8 {
-  color: var(--nude-8);
-}
-
-.bg-nude8 {
-  background-color: var(--nude-8);
-}
-
-.gold1 {
-  color: var(--gold-1);
-}
-
-.bg-gold1 {
-  background-color: var(--gold-1);
-}
-
-.gold2 {
-  color: var(--gold-2);
-}
-
-.bg-gold2 {
-  background-color: var(--gold-2);
-}
-
-.gold3 {
-  color: var(--gold-3);
-}
-
-.bg-gold3 {
-  background-color: var(--gold-3);
-}
-
 .smooth-corner {
   --size: auto;
   --smooth-corner: 90%;
@@ -541,76 +405,6 @@ h6 small {
   font-family: var(--font-family-headings);
 }
 
-h1,
-.h1 {
-  font-size: calc(var(--font-size) * 3.5);
-  margin-bottom: calc(var(--baseline) * 1.6);
-}
-@media (max-width: 767px) {
-  h1,
-  .h1 {
-    font-size: calc(var(--font-size) * 3);
-  }
-}
-
-h2,
-.h2 {
-  font-size: calc(var(--font-size) * 3);
-  margin-bottom: calc(var(--baseline) * 1.5);
-}
-@media (max-width: 767px) {
-  h2,
-  .h2 {
-    font-size: calc(var(--font-size) * 2.3);
-  }
-}
-
-h3,
-.h3 {
-  font-size: calc(var(--font-size) * 2.4);
-  margin-bottom: var(--baseline);
-}
-@media (max-width: 767px) {
-  h3,
-  .h3 {
-    font-size: calc(var(--font-size) * 1.8);
-  }
-}
-
-h4,
-.h4 {
-  font-size: calc(var(--font-size) * 2);
-  margin-bottom: var(--baseline);
-}
-@media (max-width: 767px) {
-  h4,
-  .h4 {
-    font-size: calc(var(--font-size) * 1.4);
-  }
-}
-
-h5,
-.h5 {
-  font-family: var(--font-family-base);
-  font-size: calc(var(--font-size) * 1.6);
-  font-weight: 400;
-  margin-bottom: var(--baseline);
-}
-
-h6,
-.h6 {
-  font-family: var(--font-family-base);
-  font-size: calc(var(--font-size) * 1.3);
-  font-weight: 400;
-  margin-bottom: var(--baseline);
-}
-@media (max-width: 767px) {
-  h6,
-  .h6 {
-    font-size: calc(var(--font-size) * 0.9);
-  }
-}
-
 small {
   font-size: 80%;
 }
@@ -697,10 +491,6 @@ sub {
 a {
   text-decoration: none;
   transition: 0.5s;
-}
-
-.light #site-header .nav_menu_item {
-  color: var(--text-color-dark);
 }
 
 .mf-cursor {
@@ -845,31 +635,6 @@ a {
     transform: rotate(360deg);
   }
 }
-.heading-divider {
-  width: 100%;
-}
-.heading-divider::before {
-  background-size: contain;
-  bottom: -2%;
-  content: "";
-  height: 1.75rem;
-  left: 50%;
-  opacity: 0.2;
-  position: absolute;
-  translate: -50% -35%;
-  width: 1.75rem;
-}
-.heading-divider::after {
-  background: #1c2c44;
-  bottom: 10%;
-  content: "";
-  height: 1px;
-  left: 0;
-  opacity: 0.1;
-  position: absolute;
-  width: 100%;
-}
-
 .button.dark {
   border: 1px solid rgba(var(--blue-6-rgb), 0.4);
   color: var(--blue-6);
@@ -2453,9 +2218,6 @@ section.cirugia .tratamiento__form .form {
   height: calc(100vh - var(--gap) * 2);
   position: sticky;
   top: var(--gap);
-}
-section.cirugia .answer__content .heading-divider {
-  padding: 7.5vh 0rem 4rem;
 }
 section.cirugia .answer__content ul li {
   margin-left: 1.5rem;

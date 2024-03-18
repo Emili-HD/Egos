@@ -134,30 +134,3 @@ $white: #ffffff;
   }
 }
 
-@for $i from 1 through 6 {
-  .blue#{$i} {
-    color: var(--blue-#{$i});
-  }
-
-  .bg-blue#{$i} {
-    background-color: var(--blue-#{$i});
-  }
-}
-
-@for $i from 1 through 8 {
-  .nude#{$i} {
-    color: var(--nude-#{$i});
-  }
-  .bg-nude#{$i} {
-    background-color: var(--nude-#{$i});
-  }
-}
-
-@for $i from 1 through 3 {
-  .gold#{$i} {
-    color: var(--gold-#{$i});
-  }
-  .bg-gold#{$i} {
-    background-color: var(--gold-#{$i});
-  }
-}

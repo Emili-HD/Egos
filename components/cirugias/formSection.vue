@@ -1,5 +1,5 @@
 <template>
-  <div id="formulario" class="form__wrapper p-8 xl:p-36 col-[1/-1] xl:col-[1/9] bg-[var(--blue-1)] flex flex-col justify-center items-stretch">
+  <div id="formulario" class="form__wrapper p-8 xl:p-36 col-[1/-1] xl:col-[1/9] bg-blue-1 flex flex-col justify-center items-stretch">
     <FormsCirugia :identificador="'formPage'" :portalId="String(data.formulario.portalid)"
       :formId="data.formulario.formid" />
   </div>

@@ -4,8 +4,8 @@
       <ElementsDivider />
       <div class="listado__list mt-4">
          <div class="listado__list--item p-8" v-for="listado in data.informacion.informacion_cirugia" :key="listado.id">
-            <div class="listado__list--item-title">
-               <h3 class="h5" v-html="listado.titulo"></h3>
+            <div class="listado__list--item-title flex flex-row justify-between items-center cursor-pointer">
+               <h3 class="font-geomanist text-clamp-lg" v-html="listado.titulo"></h3>
                <div class="indicator">
                   <svg viewBox="0 0 19 19" fill="none">
                      <line class="iconV" y1="9.5" x2="19" y2="9.5"/>

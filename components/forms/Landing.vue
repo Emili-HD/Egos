@@ -2,7 +2,7 @@
     <div id="hubspotLanding" 
           class="form-landing box-content 
           after:content-[''] 
-          after:border after:border-solid after:border-[#f8f7f4]/[0.1] after:bg-[#f8f7f4]/[0.025]
+          after:border after:border-solid after:border-nude-8/[0.1] after:bg-nude-8/[0.025]
           after:absolute after:-top-6 after:-left-6 after:rounded-2xl
           after:w-[calc(100%+3rem)] after:h-[calc(100%+3rem)] after:pointer-events-none
           rounded-2xl w-auto max-w-full xl:w-full" v-once>

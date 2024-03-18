@@ -3,7 +3,7 @@
       <div class="half-left">
          <ElementsGoogleMap @update-content="handleContentUpdate" @update-options="handleOptionsUpdate" />
       </div>
-      <div id="formulario" class="half-right bg-blue1 p-8 xl:p-12 rounded-xl h-full w-full mb-0 pt-24 absolute top-0">
+      <div id="formulario" class="half-right bg-blue-1 p-8 xl:p-12 rounded-xl h-full w-full mb-0 pt-24 absolute top-0">
          <div v-html="content"></div>
          <div class="form__wrapper">
             <FormsCirugia :identificador="'map'" :portalId="portalId" :formId="formId" />

@@ -11,21 +11,21 @@
             v-for="elem in data.antes_despues.cirugias_relacionadas">
             <h5 class="antesdespues__content-images-title w-full xl:w-auto my-4">{{ elem.cirugia }}</h5>
             <figure
-               class="antes bg-nude8 overflow-hidden min-h-[28lvh] rounded-tl-xl rounded-tr-xl w-full">
+               class="antes bg-nude-6 overflow-hidden min-h-[28lvh] rounded-tl-xl rounded-tr-xl w-full">
                <NuxtImg loading="lazy"
-                  class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-[var(--nude-1)]"
+                  class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-nude-1"
                   :src="elem.imagen_antes.url" :alt="elem.imagen_antes.alt" />
                <figcaption
-                  class="bg-nude1 py-2 px-6 rounded-tl-xl rounded-tr-xl left-1/2 -translate-x-1/2 absolute bottom-0">
+                  class="bg-nude-1 py-2 px-6 rounded-tl-xl rounded-tr-xl left-1/2 -translate-x-1/2 absolute bottom-0">
                   Antes</figcaption>
             </figure>
             <figure
-               class="despues bg-nude8 overflow-hidden min-h-[28lvh] rounded-bl-xl rounded-br-xl w-full">
+               class="despues bg-nude-6 overflow-hidden min-h-[28lvh] rounded-bl-xl rounded-br-xl w-full">
                <NuxtImg loading="lazy"
-                  class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-[var(--nude-1)]"
+                  class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-nude-1"
                   :src="elem.imagen_despues.url" :alt="elem.imagen_despues.alt" />
                <figcaption
-                  class="bg-nude1 py-2 px-6 rounded-tl-xl rounded-tr-xl left-1/2 -translate-x-1/2 absolute bottom-0">
+                  class="bg-nude-1 py-2 px-6 rounded-tl-xl rounded-tr-xl left-1/2 -translate-x-1/2 absolute bottom-0">
                   Después</figcaption>
             </figure>
          </div>
