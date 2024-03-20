@@ -9,30 +9,29 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+
+// Estado reactivo para controlar la activación del menú
+const isActive = ref(false);
 
 const toggleMenu = () => {
-   const burger = document.getElementById('navTrigger')
+   const burger = document.getElementById('navTrigger');
    const nav = document.querySelector('.menu-list');
-   const links = document.querySelectorAll('.nav-link')
 
-   burger.addEventListener('click', function (e) {
-      this.classList.toggle('active');
-      nav.classList.toggle('active');
+   // Toggle para burger
+   burger.addEventListener('click', () => {
+      isActive.value = !isActive.value;
+      burger.classList.toggle('active', isActive.value);
+      nav.classList.toggle('active', isActive.value);
    });
 
-   links.forEach(link => {
-      link.addEventListener('click', function (e) {
-         burger.classList.remove('active')
-         nav.classList.remove('active');
-      });
-   })
 }
 
 onMounted(() => {
-   toggleMenu()
-})
+   toggleMenu();
+});
 </script>
+
 
 <style lang="scss" scoped>
 .navTrigger {
@@ -55,7 +54,7 @@ onMounted(() => {
    @media (max-width: 1200px) {
       display: block;
    }
-   
+
    &:focus {
       outline: none;
    }

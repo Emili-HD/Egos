@@ -23,7 +23,7 @@ const isPromotionPage = computed(() => {
 
 function handleClick() {
   const { $lenis: lenis } = useNuxtApp();
-  console.log('lenis on click', lenis);
+  // console.log('lenis on click', lenis);
   lenis.scrollTo('#formulario', { offset: -20 });
 }
 
@@ -40,8 +40,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+
 html {
-  &.lenis {
+  &.lenis, body {
+    min-height: 100%;
     height: auto;
   }
 }

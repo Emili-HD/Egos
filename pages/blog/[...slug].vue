@@ -1,21 +1,32 @@
 <template>
   <main class="site-main" v-if="post">
     <article>
-      <div class="post__header mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center" :style="`background-image: url(${post[0].featured_image_src.src})`">
+      <div
+        class="post__header before-gradient mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center"
+        :style="`background-image: url(${post[0].featured_image_src.src})`">
         <h1 class="text-nude-8 font-semibold text-center w-full xl:max-w-[60vw]">{{ post[0].title.rendered }}</h1>
       </div>
       <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
         <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-3xl">
           <h4 class="nav-content-title h6 bg-nude-4 p-4">Tabla de contenidos</h4>
           <ul class="pl-6 list-decimal">
-            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25" v-for="(content, index) in post[0].acf.areas_de_contenido" @click.prevent="lenis.scrollTo(`#area-${index}`, {offset: -100})"><span>{{ content.titulo_area }}</span></li>
-            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25" v-if="post[0].acf.post_description.titulo_recomendaciones" @click.prevent="lenis.scrollTo('#recomendaciones', {offset: -100})"><span v-html="post[0].acf.post_description.titulo_recomendaciones"></span></li>
-            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25" v-if="post[0].acf.post_faqs.titulo_faqs" @click.prevent="lenis.scrollTo('#faqs', {offset: -100})"><span v-html="post[0].acf.post_faqs.titulo_faqs"></span></li>
+            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
+              v-for="(content, index) in post[0].acf.areas_de_contenido"
+              @click.prevent="lenis.scrollTo(`#area-${index}`, { offset: -100 })"><span>{{ content.titulo_area }}</span>
+            </li>
+            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
+              v-if="post[0].acf.post_description.titulo_recomendaciones"
+              @click.prevent="lenis.scrollTo('#recomendaciones', { offset: -100 })"><span
+                v-html="post[0].acf.post_description.titulo_recomendaciones"></span></li>
+            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
+              v-if="post[0].acf.post_faqs.titulo_faqs" @click.prevent="lenis.scrollTo('#faqs', { offset: -100 })"><span
+                v-html="post[0].acf.post_faqs.titulo_faqs"></span></li>
           </ul>
         </aside>
         <div class="post__content-areas p-0 xl:py-6 xl:px-10">
           <div v-if="post[0].content.rendered" class="post__content-text pb-4" v-html="post[0].content.rendered"></div>
-          <div class="post__content-text pb-4" v-for="(content, index) in post[0].acf.areas_de_contenido" :id="`area-${index}`">
+          <div class="post__content-text pb-4" v-for="(content, index) in post[0].acf.areas_de_contenido"
+            :id="`area-${index}`">
             <h2 class="area-title">{{ content.titulo_area }}</h2>
             <div v-html="content.contenido_area"></div>
             <div class="post__content-image" v-if="content.imagen_area.url">
@@ -23,17 +34,21 @@
             </div>
           </div>
 
-          <div id="recomendaciones" v-if="post[0].acf.post_description.titulo_recomendaciones" class="post__content-text recomendaciones pb-6">
+          <div id="recomendaciones" v-if="post[0].acf.post_description.titulo_recomendaciones"
+            class="post__content-text recomendaciones pb-6">
             <div class="heading accordion__heading">
-              <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0" v-html="post[0].acf.post_description.titulo_recomendaciones"></h2>
-              <div class="accordion__description pb-2" v-html="post[0].acf.post_description.descripcion_recomendaciones"></div>
+              <h2
+                class="accordion__heading-title area-title [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0"
+                v-html="post[0].acf.post_description.titulo_recomendaciones"></h2>
+              <div class="accordion__description pb-2"
+                v-html="post[0].acf.post_description.descripcion_recomendaciones"></div>
             </div>
             <div class="list accordion__list">
               <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
                           after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25
                           first:before:bg-current first:before:content-[''] first:before:absolute first:before:top-0 first:before:left-0 
-                          first:before:w-full first:before:h-[1px] first:before:opacity-25" 
-              v-for="item in post[0].acf.post_description.secciones_del_post" :key="item.post_subtitle">
+                          first:before:w-full first:before:h-[1px] first:before:opacity-25"
+                v-for="item in post[0].acf.post_description.secciones_del_post" :key="item.post_subtitle">
                 <div class="accordion__list--item-title flex flex-row justify-between items-center
                     [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
                   <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0" v-html="item.post_subtitle"></div>
@@ -42,23 +57,24 @@
                     <path class="iconH" d="M 0,12 H 24" />
                   </svg>
                 </div>
-                <div class="accordion__list--item-descripcion self-end h-0 w-full xl:w-[60%] opacity-0 relative" v-html="item.post_description"></div>
+                <div class="accordion__list--item-descripcion self-end h-0 w-full xl:w-[60%] opacity-0 relative"
+                  v-html="item.post_description"></div>
               </div>
             </div>
           </div>
 
           <div v-if="post[0].acf.post_faqs" class="post__content-text faqs py-12" id="faqs">
             <div class="heading accordion__heading">
-              <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0" v-html="post[0].acf.post_faqs.titulo_faqs"></h2>
+              <h2
+                class="accordion__heading-title area-title [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0"
+                v-html="post[0].acf.post_faqs.titulo_faqs"></h2>
             </div>
             <div class="list accordion__list">
-              <div 
-                class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
+              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
                       after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25
                       first:before:bg-current first:before:content-[''] first:before:absolute first:before:bottom-0 first:before:left-0 
-                      first:before:w-full first:before:h-[1px] first:before:opacity-25" 
-                v-for="contentido in post[0].acf.post_faqs.preguntas_frecuentes" :key="contentido.faq_subtitle"
-              >
+                      first:before:w-full first:before:h-[1px] first:before:opacity-25"
+                v-for="contentido in post[0].acf.post_faqs.preguntas_frecuentes" :key="contentido.faq_subtitle">
                 <div class="accordion__list--item-title flex flex-row justify-between items-center
                     [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
                   <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0" v-html="contentido.faq_subtitle"></div>
@@ -67,15 +83,17 @@
                     <path class="iconH" d="M 0,12 H 24" />
                   </svg>
                 </div>
-                <div class="accordion__list--item-descripcion self-end h-0 w-full xl:w-[60%] opacity-0 relative" v-html="contentido.faq_description"></div>
+                <div class="accordion__list--item-descripcion self-end h-0 w-full xl:w-[60%] opacity-0 relative"
+                  v-html="contentido.faq_description"></div>
               </div>
             </div>
           </div>
 
         </div>
-        <aside class="widgets p-6">
-          <div id="formulario" class="form__wrapper p-2 p-xs-6 [&>*]:!w-auto xl:[&>*]:!sticky !top-0">
-            <FormsCirugia :identificador="'topPage'" :portalId="String(post[0].acf.formulario.portalid)" :formId="post[0].acf.formulario.formid" />
+        <aside class="widgets bg-blue-1 p-6 col-[2/-2] xl:col-[13/17] rounded-3xl">
+          <div id="formulario" class="form__wrapper p-2 p-xs-6 ">
+            <FormsCirugia :identificador="'topPage'" :portalId="String(post[0].acf.formulario.portalid)"
+              :formId="post[0].acf.formulario.formid" />
           </div>
         </aside>
       </section>
@@ -86,7 +104,8 @@
 <script setup>
 import { ref, onMounted, inject, watch } from 'vue';
 import { getSinglePostBySlug } from '@/composables/useApi'
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
@@ -94,13 +113,19 @@ const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 const post = ref(null);
 
 // Acceder a los parámetros de la ruta
+const router = useRouter();
 const route = useRoute();
 const slug = route.params.slug;
 
 const loadSinglePost = async () => {
   try {
     const response = await getSinglePostBySlug(slug)
-    post.value = response.data;
+    // post.value = response.data;
+    if (response.data && response.data.length > 0) {
+      post.value = response.data;
+    } else {
+      router.push('/error');
+    }
   } catch (error) {
     console.error(error);
   }
@@ -112,7 +137,7 @@ watch(() => route.params.slug, async (newSlug, oldSlug) => {
     await loadSinglePost();
   }
 }, { immediate: true });
- 
+
 // Datos YOAST SEO
 useHead(() => {
   // Verifica si el post está cargado y tiene la estructura esperada
@@ -164,71 +189,84 @@ useHead(() => {
 });
 
 const initAccordion = async () => {
-   const groups = gsap.utils.toArray(".accordion__list--item");
-   const animations = [];
+  const groups = gsap.utils.toArray(".accordion__list--item");
+  const animations = [];
 
-   groups.forEach((group, index) => {
-      const title = group.querySelector('.accordion__list--item-title');
-      const description = group.querySelector('.accordion__list--item-descripcion');
-      const iconV = group.querySelector('.iconV');
-      const iconH = group.querySelector('.iconH');
+  groups.forEach((group, index) => {
+    const title = group.querySelector('.accordion__list--item-title');
+    const description = group.querySelector('.accordion__list--item-descripcion');
+    const iconV = group.querySelector('.iconV');
+    const iconH = group.querySelector('.iconH');
 
-      // Establece el estado inicial de manera explícita
-      gsap.set(description, { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 });
-      gsap.set([iconV, iconH], { rotate: 0, transformOrigin: '50% 50%' });
+    // Establece el estado inicial de manera explícita
+    gsap.set(description, { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 });
+    gsap.set([iconV, iconH], { rotate: 0, transformOrigin: '50% 50%' });
 
-      // Usa fromTo para definir explícitamente los estados inicial y final
-      const tl = gsap.timeline({ paused: true, reversed: true })
-         .fromTo(description, 
-            { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 }, 
-            { duration: 0.2, autoAlpha: 1, height: 'auto', marginTop: '2rem', marginBottom: '2rem' }, 0)
-         .fromTo([iconV, iconH], 
-            { rotate: 0, transformOrigin: '50% 50%' },
-            { duration: 0.25, rotate: 45, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
+    // Usa fromTo para definir explícitamente los estados inicial y final
+    const tl = gsap.timeline({ paused: true, reversed: true })
+      .fromTo(description,
+        { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 },
+        { duration: 0.2, autoAlpha: 1, height: 'auto', marginTop: '2rem', marginBottom: '2rem' }, 0)
+      .fromTo([iconV, iconH],
+        { rotate: 0, transformOrigin: '50% 50%' },
+        { duration: 0.25, rotate: 45, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
 
-      animations[index] = tl;
+    animations[index] = tl;
 
-      title.addEventListener('click', () => {
-         if (tl.reversed()) {
-            animations.forEach((anim) => {
-              if (anim !== tl) anim.reverse().then(() => anim.pause());
-            });
-            tl.play();
-         } else {
-            tl.reverse();
-         }
-      });
-   });
+    title.addEventListener('click', () => {
+      if (tl.reversed()) {
+        animations.forEach((anim) => {
+          if (anim !== tl) anim.reverse().then(() => anim.pause());
+        });
+        tl.play();
+      } else {
+        tl.reverse();
+      }
+    });
+  });
 };
 
+const stickyForm = async () => {
+  gsap.registerPlugin(ScrollTrigger)
+
+  let ctx = gsap.context(() => {
+
+    let mm = gsap.matchMedia()
+    mm.add("(min-width: 1025px)", () => {
+      const form = document.querySelector('#formulario')
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".widgets",
+          pin: true,
+          start: "top 10%",
+          //scrub: 0.5,
+          endTrigger: "footer.footer",
+          end: "top bottom",
+          pinSpacing: false,
+          toggleActions: "restart none none reverse",
+          markers: true,
+        }
+      });
+  
+    })
+
+  })
+
+}
 
 await loadSinglePost()
 
 // Ciclo de vida Mounted
-onMounted( async () => {
+onMounted(async () => {
   await initAccordion()
+  await stickyForm()
 });
 </script>
 
 <style lang="scss">
-.post__header {
-
-  &::before {
-    background: linear-gradient(180deg, rgba(var(--blue-1-rgb), 0) 10%, var(--blue-1) 80%);
-    background-blend-mode: multiply;
-    content: "";
-    height: 100%;
-    left: 0;
-    mix-blend-mode: multiply;
-    opacity: .8;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-}
-
 .post__content {
-  
+
   &-image {
     border-radius: var(--radius-m);
     overflow: hidden;
@@ -239,11 +277,13 @@ onMounted( async () => {
       font-weight: 500;
       color: var(--blue-6);
     }
+
     h3 {
       font-family: var(--font-family-base);
       font-size: calc(var(--font-size) * 1.3);
       font-weight: 400;
     }
+
     iframe {
       width: 100% !important;
       aspect-ratio: 16/9;
@@ -262,18 +302,9 @@ onMounted( async () => {
 
     .faqs .accordion__heading,
     .faqs .accordion__list {
-        grid-column: 1/-1;
+      grid-column: 1/-1;
     }
   }
 
-  .widgets {
-    grid-column: 13/17;
-    background-color: var(--blue-1);
-    border-radius: var(--radius-xl);
-
-    @media (max-width: 1024px) and (orientation: portrait) {
-      grid-column: 2/-2;
-    }
-  }
 }
 </style>

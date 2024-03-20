@@ -19,7 +19,7 @@
    </section>
    <section v-if="data.acf.tratamientos_home.categorias_home" class="tratamientos">
 
-      <div class="home__services bg-white flex flex-row justify-start items-center flex-wrap h-[100vh] w-full pt-16 overflow-hidden
+      <div class="home__services bg-white flex flex-row justify-start items-center flex-wrap min-h-[100vh] w-full pt-16 overflow-hidden
                   before:content-[''] before:absolute before:opacity-10 before:z-[-1] before:border before:border-blue-1 before:rounded-s-full
                   before:size-[75vw] before:left-1/2 before:top-1/2 before:translate-y-[5%] before:translate-x-[35%]
                   after:content-[''] after:absolute after:opacity-10 after:z-[-1] after:border after:border-blue-1 after:rounded-s-full
@@ -62,7 +62,7 @@
             @transitionEnd="handleSwipeEnd">
          >
             <SwiperSlide v-for="categoryId in data.acf.tratamientos_home.categorias_home" :key="categoryId">
-               <div class="card__wrapper min-w-full xl:min-w-[33vw] opacity-100 px-2 xl:px-24 relative [&.active]:opacity-100">
+               <div class="card__wrapper min-w-full xl:min-w-[360px] xl:max-w-[400px] opacity-100 px-2 xl:px-0 relative [&.active]:opacity-100">
                   <HomeCategorySlide :categoryId="categoryId" class="[&>.card-wrapper>.card]:h-full  [&>.card-wrapper>.card]:objet-cover [&>.card-wrapper>.card]:object-center [&>.card-wrapper>.card]:w-[90vw] [&>.card-wrapper>.card]:shadow-2xl" />
                </div>
             </SwiperSlide>
@@ -142,4 +142,66 @@ onMounted(() => {
       }
    }
 }
+
+/* .home__services {
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            border: 1px solid $blue-1;
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        &::before {
+            width: 75vw;
+            height: 75vw;
+            left: 50%;
+            top: 50%;
+            translate: 5% -35%;
+        }
+
+        &::after {
+            width: 95vw;
+            height: 95vw;
+            left: 0%;
+            top: 0%;
+            translate: -55% -45%;
+        }
+
+
+        &-inner {
+            
+
+            .card__wrapper {
+            
+                .card {
+                    box-shadow: var(--shadow);
+                    height: auto;
+                    object-fit: cover;
+                    object-position: center;
+                    width: 100%;
+                }
+
+                &.active {
+                    opacity: 1;
+                }
+            }
+        }
+
+        &-description {
+
+            p {
+                text-wrap: balance;
+                width: clamp(35ch, 60vw, 75ch);
+
+                @media (max-width: 767px) {
+                    text-wrap: wrap;
+                    width: 100%;
+                }
+            }
+        }
+    } */
 </style>

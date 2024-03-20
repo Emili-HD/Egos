@@ -3,8 +3,6 @@ section.cirugia {
       .panel {
 
          &.tabla {
-            background-color: var(--blue-1);
-            color: var(--nude-8);
 
             .panel__image {
                grid-column: 11/-1;
@@ -163,33 +161,6 @@ section.cirugia {
                }
             }
          }
-
-         // &__content {
-         // width: 55%;
-         // grid-column: 8/-2;
-         // }
-
-         // &:nth-child(odd) {
-         // .panel__image:has(img) {
-         //    grid-column: 9/-2;
-         //    grid-row: 1;
-
-         //    @media (max-width: 767px) {
-         //       grid-column: 2/-2;
-         //       grid-row: 1;
-         //    }
-         // }
-
-         // .panel__content {
-         //    grid-column: 2/8;
-         //    grid-row: 1;
-
-         //    @media (max-width: 767px) {
-         //       grid-column: 2/-2;
-         //       grid-row: 2;
-         //    }
-         // }
-         // }
       }
 
    }
@@ -350,64 +321,3 @@ u::after {
    }
 }
 
-/* .answer__tabs {
-   @include flex(column, space-between, center, nowrap, .3);
-   // grid-column: 11/-1;
-   width: 100%;
-   border-radius: var(--radius-m);
-   overflow: hidden;
-   // background-color: var(--nude-8);
-
-   &-control {
-      @include flex(row, space-between, center, nowrap, 2);
-      background: var(--blue-6);
-      list-style: none;
-      margin-bottom: 0;
-      // padding: var(--gap);
-      width: 100%;
-
-      .tab {
-         background: var(--blue-6);
-         border-top-left-radius: var(--radius-m);
-         border-top-right-radius: var(--radius-m);
-         color: var(--nude-8);
-         cursor: pointer;
-         padding: calc(var(--gap) * 2);
-         text-align: center;
-         width: 100%;
-
-         &.active {
-            background: var(--gradient-blue);
-         }
-      }
-   }
-
-   &-content {
-      background-color: var(--nude-8);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      border-radius: var(--radius-m);
-      display: none;
-      height: 100%;
-      left: 0;
-      min-height: 20rem;
-      padding: var(--gap);
-      position: absolute;
-      top: 0;
-      width: 100%;
-      z-index: -1;
-
-      &-description {
-         background-color: rgba(var(--nude-9-rgb), .2);
-         -webkit-backdrop-filter: blur(2rem);
-         backdrop-filter: blur(2rem);
-         border-radius: var(--radius-s);
-      }
-
-      &.active {
-         // transition: all 1s ease;
-         @include flex(column, flex-end, center, nowrap, 1);
-      }
-   }
-} */

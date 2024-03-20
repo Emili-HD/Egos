@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   plugins: [
     '~/plugins/gtm.js', 
     '~/plugins/setHtmlLang.js',
+    '~/plugins/scrollToTop.client.js',
   ],
   css: [
     '~/src/styles.css', 
@@ -115,6 +116,8 @@ export default defineNuxtConfig({
     },
   },
   image: {
+    inject: true,
+    // provider: "ipx",
     // Opciones de @nuxt/image
     screens: {
       xs: 320,
@@ -154,8 +157,7 @@ export default defineNuxtConfig({
     public: {
       googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAP_API_KEY,
       wordpressUrl: process.env.WP_URL,
-      frontendSiteUrl:
-        process.env.FRONTEND_DEV_URL || process.env.FRONTEND_PROD_URL,
+      frontendSiteUrl: process.env.FRONTEND_DEV_URL || process.env.FRONTEND_STAGING_URL || process.env.FRONTEND_PROD_URL,
     },
     private: {
       FAUST_SECRET_KEY: process.env.FAUST_KEY,
@@ -171,8 +173,27 @@ export default defineNuxtConfig({
         name: 'tratamiento',
         path: '/:category/:slug',
         file: '~/pages/cirugia/[...slug].vue',
-        // file: resolve(__dirname, 'pages/cirugia/[...slug].vue'),
       })
+      
+      pages.push({
+        name: 'aviso-legal',
+        path: '/aviso-legal',
+        file: '~/pages/legal.vue',
+      });
+
+      // Política de Cookies
+      pages.push({
+        name: 'politica-de-cookies',
+        path: '/politica-de-cookies',
+        file: '~/pages/legal.vue',
+      });
+
+      // Política de Privacidad
+      pages.push({
+        name: 'politica-de-privacidad',
+        path: '/politica-de-privacidad',
+        file: '~/pages/legal.vue',
+      });
     },
   },
   vite: {

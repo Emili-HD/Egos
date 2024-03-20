@@ -22,7 +22,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import gsap from 'gsap';
+// import gsap from 'gsap';
+const { $gsap: gsap } = useNuxtApp();
 
 // Props
 const props = defineProps({

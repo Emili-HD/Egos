@@ -23,7 +23,7 @@
     <section class="caso-real__heading" ref="casoreal">
       <div v-if="casoreal[0].acf.vimeo_video" class="caso-real__heading--video video__player">
         <div class="size-full aspect-[9/16]">
-          <VimeoPlayer :video-id="casoreal[0].acf.vimeo_video" />
+          <VimeoPlayer :videoId="casoreal[0].acf.vimeo_video" />
         </div>
       </div>
       <div class="caso-real__heading--text">
@@ -41,19 +41,24 @@
 <script setup>
 import { ref, onMounted, watch, nextTick } from 'vue';
 import { getSingleTestimonioBySlug } from '@/composables/useApi';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 // Estado reactivo para el post
 const casoreal = ref(null);
 
 // Acceder a los parámetros de la ruta
+const router = useRouter();
 const route = useRoute();
 const slug = route.params.slug;
 
 const getCasoReal = async () => {
   try {
     const response = await getSingleTestimonioBySlug(slug)
-    casoreal.value = response.data;
+    if (response.data && response.data.length > 0) {
+      casoreal.value = response.data;
+    } else {
+      router.push('/error');
+    }
   } catch (error) {
     console.error(error);
   }

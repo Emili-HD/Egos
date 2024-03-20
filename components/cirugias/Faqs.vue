@@ -1,5 +1,5 @@
 <template>
-  <section v-if="faqsData.faqs" class="faqs grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-x-0 gap-y-8 xl:gap-4 py-20" id="faqs">
+  <section v-if="faqsData.faqs" class="faqs grid grid-cols-16 gap-x-0 gap-y-8 xl:gap-4 py-20" id="faqs">
     <div class="faqs__image row-span-2 col-[2_/_span_14] xl:col-[2_/_span_6] overflow-hidden rounded-xl aspect-square">
       <NuxtImg loading="lazy" class="size-full object-cover" :src="faqsData.imagen_faqs.url" :alt="faqsData.imagen_faqs.url" />
     </div>
@@ -29,7 +29,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import gsap from 'gsap';
+// import gsap from 'gsap';
+const { $gsap: gsap } = useNuxtApp();
 
 // Props
 const props = defineProps({

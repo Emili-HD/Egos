@@ -1,10 +1,9 @@
 <template>
-    <header class="egos-header fixed p-3 flex flex-row justify-start items-center gap-8 z-[999]"
-        id="site-header">
+    <header class="egos-header fixed p-3 flex flex-row justify-start items-center gap-8 z-[1000]" id="site-header">
         <div class="header-wrapper flex flex-row justify-between px-1 w-full">
-            <div class="header-brand flex flex-col justify-start items-start p-0">
+            <div class="header-brand flex flex-col justify-start items-start py-2 px-4 bg-blue-1 rounded-2xl">
                 <nuxt-link class="block" to="/" aria-label="Vuelve a la página de inicio">
-                    <img loading="lazy" class="w-full max-w-20 xl:max-w-20 saturate-200" src="/assets/images/icons/logo-egos.svg"
+                    <img loading="lazy" class="w-full max-w-16 xl:max-w-16" src="/assets/images/icons/logo-egos.svg"
                         alt="" />
                 </nuxt-link>
             </div>
@@ -12,7 +11,7 @@
             <div class="header-nav flex flex-row justify-end items-stretch w-full">
                 <nav aria-label="Global"
                     class="nav-categories bg-white rounded-2xl xl:rounded-br-none xl:rounded-tr-none px-8 flex flex-col justify-center items-stretch">
-                    <ul class="menu-list">
+                    <ul class="menu-list" @mouseover="loadImages" ref="menuContainer">
                         <li v-for="tratamiento in menuTratamientosData.items" :key="tratamiento.ID"
                             :class="{ 'hasSubmenu': tratamiento.child_items }">
                             <div class="menu-tab flex flex-row justify-start items-center w-full xl:hidden"
@@ -45,7 +44,8 @@
                                                     active-class="nuxt-link-active">
                                                     {{ subTratamiento.title }}
                                                 </nuxt-link>
-                                                <span class="column cursor-default p-1 hidden xl:block" v-else>{{ subTratamiento.title }}</span>
+                                                <span class="column cursor-default p-1 hidden xl:block" v-else>{{
+                        subTratamiento.title }}</span>
                                                 <!-- SubSubItems -->
                                                 <ul class="list-none"
                                                     v-if="subTratamiento.child_items && subTratamiento.child_items.length > 0">
@@ -91,8 +91,9 @@
                                                 <div class="slide-c"
                                                     v-for="subSubTratamiento in subTratamiento.child_items"
                                                     :key="subSubTratamiento.ID">
-                                                    <img loading="lazy" class="menu-icon inline-svg"
-                                                        :src="subSubTratamiento.acf.icon" alt="" />
+                                                    <!-- <img loading="lazy" class="menu-icon" :src="subSubTratamiento.acf.icon" alt="" /> -->
+                                                    <img loading="lazy" class="menu-icon"
+                                                        :data-src="subSubTratamiento.acf.icon" alt="" />
                                                 </div>
                                             </li>
                                         </ul>
@@ -106,7 +107,7 @@
             </div>
 
             <div class="nav-secondary bg-white min-w-28 p-1 rounded-tr-2xl rounded-br-2xl hidden xl:block">
-                <a class="button pedircita text-center flex flex-col justify-center items-center border-none rounded-xl p-0 w-full h-full z-2"
+                <a class="button pedircita bg-blue-1 text-nude-8 text-center flex flex-col justify-center items-center border-none rounded-xl p-0 w-full h-full z-2"
                     href="#formulario" @click.prevent="handleClick">
                     Pide Cita
                 </a>
@@ -120,16 +121,18 @@ import { ref, nextTick, onMounted } from 'vue';
 import { menuTratamientos } from '@/composables/useApi';
 import { useRoute } from 'vue-router';
 import { useMenuStore } from '@/stores/menu';
+// import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const { $gsap: gsap } = useNuxtApp();
 const route = useRoute();
 const menuStore = useMenuStore();
+const menuContainer = ref(null);
 
 
 function handleClick() {
     const { $lenis: lenis } = useNuxtApp();
-    console.log('lenis on click', lenis);
+    // console.log('lenis on click', lenis);
     lenis.scrollTo('#formulario', { offset: -20 });
 }
 
@@ -174,9 +177,9 @@ const loadDataAndInitializeMenus = async () => {
             console.error('No se encontraron items en los datos de tratamiento.');
         }
 
-        // if (process.client) {
-        await initializeMenus(); // Considera descomentar y asegurar que esta parte se ejecuta correctamente
-        // }
+        if (process.client) {
+            await initializeMenus();
+        }
 
     } catch (error) {
         console.error('Error al cargar datos de WordPress', error);
@@ -367,12 +370,474 @@ function closeAllMenus() {
     });
 }
 
-await loadDataAndInitializeMenus();
+const cerrarMenuMobile = () => {
+    const burger = document.getElementById('navTrigger');
+    const nav = document.querySelector('.menu-list');
+    const links = document.querySelectorAll('.nav-link');
+    // Cierra el menú al hacer clic en un enlace
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            console.log('link clicado');
+            burger.classList.remove('active');
+            nav.classList.remove('active');
+        });
+    });
+
+}
+
+// Función para cargar las imágenes
+const loadImages = (event) => {
+    const images = event.currentTarget.querySelectorAll('img[data-src]');
+    images.forEach(img => {
+        const src = img.getAttribute('data-src');
+        if (src) {
+            img.setAttribute('src', src);
+            img.removeAttribute('data-src');
+        }
+    });
+};
+
+onMounted(async () => {
+    await loadDataAndInitializeMenus();
+    cerrarMenuMobile()
+    if (menuContainer.value) {
+        menuContainer.value.addEventListener('mouseover', loadImages);
+    }
+})
 
 </script>
 
 
 <style lang="scss" scoped>
+.egos-header {
+    --menu-height: 72.5vh;
+    --menu-width: 85vw;
+    height: var(--header-height);
+    max-height: var(--menu-height);
+    width: calc(var(--full-width) - (var(--gap) * 2));
+
+    .header-wrapper {
+
+        .nav-secondary {
+
+            @media (max-width: 1200px) {
+                min-width: 25vw;
+            }
+
+            @media (max-width: 767px) {
+                min-width: 25vw;
+            }
+
+            &:hover .nav-form {
+                .form {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .menu-list {
+            @include flex(row, flex-end, center);
+            font-weight: 300;
+            height: 100%;
+            letter-spacing: 1px;
+            margin-bottom: 0;
+            text-transform: uppercase;
+
+            @media (max-width: 1200px) {
+                align-items: flex-start;
+                background-color: rgba(var(--blue-1-rgb), .85);
+                -webkit-backdrop-filter: blur(1.5rem);
+                backdrop-filter: blur(1.5rem);
+                border-radius: var(--radius-xl);
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                height: calc(100lvh - .6rem);
+                justify-content: flex-start;
+                left: var(--gap);
+                padding: 6rem 1rem 3rem;
+                position: fixed;
+                top: var(--gap);
+                transform: translateX(105%);
+                transition: transform .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                width: calc(100vw - .6rem);
+                z-index: -1;
+
+                &.active {
+                    transform: translateX(0);
+                    overflow-y: scroll
+                }
+            }
+
+            &>li {
+                @include flex(column, center, flex-start);
+                font-weight: 400;
+
+                @media (max-width: 767px) {
+                    width: 100%;
+                    gap: 1rem;
+                    padding: .5rem .75rem;
+                    border-radius: var(--radius-m);
+                    margin-bottom: -1rem;
+
+                    &:nth-child(1) {
+                        background-color: var(--nude-8);
+
+                        .menu-tab::before {
+                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-21.svg);
+                        }
+                    }
+
+                    &:nth-child(2) {
+                        background-color: var(--nude-7);
+
+                        .menu-tab::before {
+                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-06.svg);
+                        }
+                    }
+
+                    &:nth-child(3) {
+                        background-color: var(--nude-6);
+
+                        .menu-tab::before {
+                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-02.svg);
+                        }
+                    }
+
+                    &:nth-child(4) {
+                        background-color: var(--nude-5);
+
+                        .menu-tab::before {
+                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-16.svg);
+                        }
+                    }
+
+                    &:nth-child(5) {
+                        background-color: var(--nude-4);
+
+                        .menu-tab::before {
+                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-07.svg);
+                        }
+                    }
+
+                    &:nth-child(6) {
+                        background-color: var(--nude-3);
+
+                        .menu-tab::before {
+                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-19.svg);
+                        }
+                    }
+
+                    &:nth-child(7) {
+                        background-color: var(--nude-2);
+
+                        .menu-tab::before {
+                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-04.svg);
+                        }
+                    }
+                }
+
+                .menu-tab {
+
+                    @media (max-width: 767px) {
+
+                        &::before {
+                            --size: 3.75rem;
+                            content: "";
+                            height: var(--size);
+                            width: var(--size);
+                            display: inline-block;
+                            position: relative;
+                            background-size: var(--size);
+                            background-repeat: no-repeat;
+                            margin-right: 1rem;
+                            vertical-align: middle;
+                            background-color: #ffffff80;
+                            border-radius: 50%;
+                            background-size: 85%;
+                            background-position: center;
+                        }
+
+                        &::after {
+                            content: attr(data-title);
+                            display: inline-block;
+                            font-size: calc(var(--font-size) * .9);
+                            color: var(--gold-2);
+                            font-weight: 400;
+                            vertical-align: middle;
+                        }
+
+
+                    }
+                }
+
+                @media (max-width: 767px) {
+                    .menu-wrapper {
+                        height: 0;
+                        overflow: hidden;
+                        width: 100%;
+                        padding: 0 1rem;
+                    }
+                }
+
+                & span {
+                    color: var(--gold-2);
+                    cursor: pointer;
+                    z-index: 1;
+
+                    &::before {
+                        background-color: var(--gold-2);
+                        bottom: 0;
+                        content: "";
+                        height: 1px;
+                        left: 0;
+                        max-width: 0;
+                        position: absolute;
+                        transition: max-width .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                        width: 100%;
+                    }
+                }
+
+                &:hover span::before,
+                .router-link-exact-active span::before {
+                    max-width: 100%;
+                }
+            }
+
+            .submenu {
+                // counter-reset: li;
+                height: var(--menu-height);
+                pointer-events: none;
+                width: var(--menu-width);
+
+                @media (max-width: 767px) {
+                    width: 100%;
+                    pointer-events: all;
+                    height: fit-content;
+                }
+
+                &.open {
+                    pointer-events: all;
+                }
+
+                &__left,
+                &__right {
+                    background-color: #1c2c44c7;
+                    box-shadow: var(--shadow);
+                    opacity: 0;
+                    pointer-events: all;
+                    will-change: transform, opacity;
+
+                    @media (max-width: 767px) {
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                    }
+                }
+
+                &__left {
+                    background-color: var(--nude-8);
+                    background-image: url(@/assets/images/hero.avif);
+                    transform: translateY(-120%);
+
+                    @media (max-width: 767px) {
+                        transform: none;
+                        display: none;
+                    }
+                }
+
+                &__right {
+                    transform: translateY(-120%);
+
+                    @media (max-width: 767px) {
+                        transform: none;
+                        background: transparent;
+                        box-shadow: none;
+                    }
+
+                    ul {
+                        &>.submenu-child {
+                            .column {
+                                &::before {
+                                    content: none
+                                }
+                            }
+
+                            .nav-link {
+                                @include flex(column, flex-end, flex-start);
+                                color: var(--nude-8);
+                                font-size: calc(var(--font-size) * .75);
+                                height: 100%;
+                                padding: var(--gap);
+                                width: 100%;
+                                z-index: 99;
+
+                                img {
+                                    display: none;
+                                }
+
+                                @media (max-width: 767px) {
+                                    color: rgba(var(--blue-1-rgb), 0.75);
+                                    font-size: calc(var(--font-size) * 0.9);
+                                    padding: 0.65rem 0rem 1.15rem;
+                                    border-bottom: 1px solid rgba(var(--blue-1-rgb), 0.15);
+                                    flex-direction: row;
+                                    justify-content: space-between;
+                                    align-items: center;
+
+                                    img {
+                                        display: inline-block;
+                                        max-width: 30px;
+                                        max-height: 30px;
+                                    }
+                                }
+
+                                &::after {
+                                    background-color: currentColor;
+                                    bottom: .375rem;
+                                    content: "";
+                                    height: 1px;
+                                    left: var(--gap);
+                                    max-width: 0;
+                                    opacity: .5;
+                                    position: absolute;
+                                    transition: max-width var(--transition);
+                                    width: 100%;
+                                }
+
+                                &:hover::after,
+                                &.router-link-exact-active::after {
+                                    max-width: 100%;
+
+                                    @media (max-width: 767px) {
+                                        bottom: -0.5px;
+                                        left: 0;
+                                    }
+                                }
+                            }
+
+
+                            ul {
+                                @include flex(column, flex-start, flex-start, nowrap, 0);
+                                clip-path: unset;
+                                padding: 0;
+                                position: relative;
+
+                                @media (max-width: 767px) {
+                                    margin: 0;
+                                    gap: .5rem;
+
+                                    &>li {
+                                        width: 100%;
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+
+            }
+
+            a {
+                color: $blue-1;
+                font-size: clamp(0.65rem, 0.7vw, 0.9rem);
+                z-index: 99;
+
+                img {
+                    display: none;
+                }
+
+                @media (max-width: 1200px) {
+                    font-size: calc(var(--font-size) * 1.5);
+                    // display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0.65rem 0rem 1.15rem;
+                    border-bottom: 1px solid rgba(var(--blue-1-rgb), 0.15);
+
+                    img {
+                        display: inline-block;
+                        max-width: 30px;
+                        max-height: 30px;
+                    }
+                }
+
+            }
+        }
+    }
+
+    &.light {
+        --nude-8: $blue-1;
+        --text-color: var(--text-color-dark);
+        --border-color-light: var(--border-color-dark);
+    }
+}
+
+.nav-pages {
+    align-items: center;
+    background: var(--nude-6);
+    border: 1px solid rgba(var(--gold-2-rgb), .1);
+    border-radius: var(--radius-l);
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    left: 0;
+    max-width: 8.25rem;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+
+    .kebab {
+        cursor: pointer;
+        display: block;
+        height: 25px;
+        left: 6rem;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-60%);
+        width: 45px;
+        z-index: 10;
+    }
+
+    .nav-panels {
+        overflow-x: scroll;
+        padding: calc(var(--gap) * 2);
+        padding-left: calc(100vw / 16);
+        padding-right: 1.5rem;
+        width: 100%;
+
+        ul {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            justify-content: center;
+            list-style: none;
+            margin: 0;
+            opacity: 0;
+            padding: 0;
+            visibility: hidden;
+            width: max-content;
+
+            li {
+                border-radius: var(--radius-s);
+                font-size: 90%;
+
+                a {
+                    background: transparent;
+                    color: var(--gold-2);
+                    font-size: calc(var(--font-size) * 0.65);
+                    font-weight: 400;
+                    padding: 0;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+}
 
 ul.submenu__left-slider {
     --clip: 0rem;

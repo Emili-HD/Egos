@@ -1,12 +1,12 @@
 <template>
    <div class="antesdespues col-[1_/_span_16] xl:col-[2_/_span_14] flex flex-col items-center" ref="comparacion">
-      <div class="antesdespues__header w-full text-center">
+      <div class="antesdespues__header w-full text-center p-8">
          <h2>{{ data.antes_despues.titulo_antesdespues }}</h2>
          <ElementsDivider />
          <p v-html="data.antes_despues.subtitulo_antesdespues"></p>
       </div>
 
-      <div class="antesdespues__content flex flex-col xl:flex-row justify-between items-start gap-24 w-full">
+      <div class="antesdespues__content flex flex-col xl:flex-row justify-between items-start gap-24 w-full p-8">
          <div class="antesdespues__content-images text-center w-full flex flex-row xl:flex-col gap-0 flex-wrap"
             v-for="elem in data.antes_despues.cirugias_relacionadas">
             <h5 class="antesdespues__content-images-title w-full xl:w-auto my-4">{{ elem.cirugia }}</h5>

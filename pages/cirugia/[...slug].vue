@@ -1,12 +1,12 @@
 <template>
   <main class="site-main" v-if="tratamiento" ref="componentRef">
-    <section class="cirugia grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-0 xl:p-0">
+    <section class="cirugia grid grid-cols-16 gap-0 xl:p-0">
       <CirugiasEncabezado :data="tratamiento" />
       <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
 
       <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
         <div class="panels w-full">
-          <section :id="processAncla(content.ancla)" class="panel grid grid-cols-[repeat(16,_minmax(0,_1fr))] row-gap-4 xl:gap-2 mb-32" :class="content.fondo, content.opciones_listado"
+          <section :id="processAncla(content.ancla)" class="panel grid grid-cols-16 row-gap-4 xl:gap-2 mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8" :class="content.fondo, content.opciones_listado"
             v-for="content in tratamiento.acf.tabs">
               <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
               <CirugiasTabla :contentData="content" />
@@ -39,8 +39,9 @@
 <script setup>
 import { ref, onMounted, inject, nextTick, watch } from 'vue'
 import { getSingleTratamientoBySlug, egosSettings } from '@/composables/useApi'
-import gsap from 'gsap'
-
+import { useRoute, useRouter } from 'vue-router';
+// import gsap from 'gsap'
+const { $gsap: gsap } = useNuxtApp();
 
 // Props
 const props = defineProps({
@@ -53,6 +54,7 @@ const props = defineProps({
 
 // Estados reactivos
 const tratamiento = ref(null)
+const router = useRouter();
 const route = useRoute()
 const componentRef = ref(null)
 const form = ref({ form_settings: null });
@@ -89,10 +91,9 @@ const loadTratamientoData = async () => {
     if (response.data && response.data.length > 0) {
       tratamiento.value = response.data[0]
       const tabs = tratamiento.value.acf.tabs
-      // await cellHeights()
-      // await mainActive()
     } else {
       console.error('La respuesta de la API no contiene datos válidos.')
+      router.push('/error');
     }
 
     if (responseForm.data && responseForm.data.form_settings) {
@@ -312,9 +313,9 @@ const injectStructuredData = async () => {
   document.head.appendChild(script);
 }
 
-await loadTratamientoData()
 
 onMounted(async () => {
+  await loadTratamientoData()
   await cellHeights()
   await mainActive()
   await mostrarAnchorsMenu()

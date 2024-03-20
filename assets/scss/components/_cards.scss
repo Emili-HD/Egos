@@ -1,12 +1,11 @@
 .card {
     border-radius: var(--radius-m);
-    aspect-ratio: 2/3;
+    /* aspect-ratio: 2/3; */
     overflow: hidden;
 
     picture {
         background-color: #F1F3F0;
         display: block;
-        height: 100%;
 
         img {
             height: 100%;
@@ -48,6 +47,3 @@
     }
 }
 
-.grid-cols-16 {
-    grid-template-columns: repeat(16, minmax(0, 1fr));
-}

@@ -1,17 +1,17 @@
 <template>
-  <div class="destacado rounded-3xl m-auto w-full p-0">
-    <div class="post-list" v-if="posts">
-      <article v-for="post in posts" :key="post.id" class="card">
-        <nuxt-link class="text-blue-1 block font-canela h-full p-16" :to="'/blog/' + post.slug">
+  <div class="destacado rounded-3xl m-auto w-full p-0 col-[2/-2] flex max-w-full min-h-[40vh]">
+    <div class="post-list w-full mt-0 flex" v-if="posts">
+      <article v-for="post in posts" :key="post.id" class="card bg-blue-1 aspect-auto w-full">
+        <nuxt-link class="text-blue-1 font-canela h-full p-0 flex flex-col lg:flex-row" :to="'/blog/' + post.slug">
           <NuxtImg
             loading="lazy"
             v-if="post.featured_image_src"
             :src="post.featured_image_src.src"
-            class="card__image object-cover inset-0 absolute w-full bg-nude-7 rounded-3xl"
+            class="card__image  w-full bg-nude-7 rounded-2xl [.blog_&]:!aspect-[3/2] flex flex-col lg:flex-row p-0 h-full relative"
             :alt="post.featured_image_src.alt"
           />
-          <div class="card__content p-4">
-            <div class="card__content-wrapper">
+          <div class="card__content p-8 text-nude-8 items-start flex flex-col lg:flex-row">
+            <div class="card__content-wrapper text-left">
               <p class="card__content-cat">
                 <span>Categoría: {{ post.categories_names.join(', ') }}</span>
                 <br />

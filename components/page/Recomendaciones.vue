@@ -1,5 +1,5 @@
 <template>
-  <section class="accordion mb-40 col-[2_/_span_14] grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-0 xl:gap-4" v-for="competencias in data.listado_competencias" :key="competencias.id">
+  <section class="accordion mb-40 col-[2_/_span_14] grid grid-cols-16 gap-0 xl:gap-4" v-for="competencias in data.listado_competencias" :key="competencias.id">
     <div class="heading accordion__heading col-[1_/_span_16] xl:col-span-6">
       <h2 class="accordion__heading-title xl:text-center [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0" v-html="competencias.titulo_seccion"></h2>
       <div v-if="competencias.descripcion_seccion" v-html="competencias.descripcion_seccion"></div>
@@ -27,7 +27,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import gsap from 'gsap';
+// import gsap from 'gsap';
+const { $gsap: gsap } = useNuxtApp();
 
 // Props
 const props = defineProps({

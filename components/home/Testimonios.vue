@@ -1,5 +1,5 @@
 <template>
-   <section class="testimonios grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-0 xl:gap-4 py-20">
+   <section class="testimonios grid grid-cols-16 gap-0 xl:gap-4 py-20">
       <div class="testimonios__header col-[1/-1] p-8 xl:col-[4_/_span_10] xl:p-0 flex flex-col justify-center items-center h-fit text-left xl:text-center w-full z-10">
          <h2 class="text-clamp-3xl">Antes y después de nuestras cirugías estéticas y medicina en clínica Egos </h2>
          <p>Cada año, se operan más de 2000 pacientes en Clínica Egos, para nosotros, vuestra satisfacción es nuestro mayor
@@ -11,7 +11,7 @@
          <article v-for="testimonio in testimonios" :key="testimonio.id" class="card rounded-2xl p-2 bg-white !aspect-auto col-[1/-1] xl:col-auto  flex flex-col justify-between items-center gap-8 shadow-2xl shadow-nude-7">
             <div v-if="testimonio.acf.vimeo_video" class="video__player rounded-xl w-full overflow-hidden">
                <div class="size-full aspect-[9/16]">
-                  <VimeoPlayer :video-id="testimonio.acf.vimeo_video" />
+                  <VimeoPlayer :videoId="testimonio.acf.vimeo_video" />
                </div>
             </div>
             <div class="testimonios__content">
@@ -42,4 +42,7 @@ testimoniosData()
 
 <style lang="scss" scoped>
 // empty style
+// v=spf1 +a +mx +a:flamboyant-ardinghelli.89-116-52-173.plesk.page -all
+// v=spf1 include:spf.protection.outlook.com include:143602274.spf08.hubspotemail.net ip4:tu_ip_personalizada ~all 
+// v=spf1 ip4:195.35.3.186 include:143602274.spf08.hubspotemail.net ~all 
 </style>

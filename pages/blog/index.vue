@@ -1,21 +1,21 @@
 <template>
-  <main class="site-main blog" role="main" aria-label="Blog principal">
+  <main class="site-main blog bg-white" role="main" aria-label="Blog principal">
 
     <section class="blog mb-0" v-if="pages" aria-labelledby="page-title">
-      <header class="blog__header section__header pt-40">
-        <h1 class="blog__header-title">{{ pages.title.rendered }}</h1>
-        <div class="blog__header-content" v-html="pages.content.rendered"></div>
+      <header class="blog__header section__header pt-40 grid grid-cols-16 min-h-[40vh] gap-y-8">
+        <h1 class="blog__header-title text-center font-normal mb-0 col-[2/-2] lg:col-[4/-4]">{{ pages.title.rendered }}</h1>
+        <ElementsDivider class="mt-8 !mb-4 col-[2/-2] lg:col-[4/-4]"/>
+        <div class="blog__header-content text-center col-[2/-2] lg:col-[4/-4]" v-html="pages.content.rendered"></div>
         <BlogPostDestacado />
       </header>
-      <ElementsDivider />
 
-      <div class="post-list pb-xs-12" v-if="posts" aria-label="Lista de publicaciones">
-        <article v-for="post in posts" :key="post.id" class="card" :aria-labelledby="'post-title-' + post.id">
-          <nuxt-link :to="'/blog/' + post.slug"
+      <div class="post-list grid grid-cols-16 gap-4 mt-20" v-if="posts" aria-label="Lista de publicaciones">
+        <article v-for="post in posts" :key="post.id" class="card aspect-none bg-nude-6" :aria-labelledby="'post-title-' + post.id">
+          <nuxt-link class="flex flex-col lg:flex-row" :to="'/blog/' + post.slug"
             :aria-label="'Leer más sobre ' + post.title.rendered">
-            <NuxtImg loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src" class="card__image"
+            <NuxtImg class="card__image aspect-square w-[45%] object-cover object-center" loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src"
               :alt="post.featured_image_src.alt" :aria-labelledby="'post-title-' + post.id" />
-            <div class="card__content p-4">
+            <div class="card__content p-4 flex flex-col w-full">
               <div class="card__content-wrapper">
                 <p class="card__content-cat"><span>Categoría: {{ post.categories_names.join(', ') }}</span><br><time :datetime="post.date_gmt">{{ formatDate(post.date_gmt) }}</time></p>
                 <h2 :id="'post-title-' + post.id" class="h6">{{ post.title.rendered }}</h2>
@@ -27,7 +27,7 @@
             </div>
           </nuxt-link>
         </article>
-        <div ref="loadingRef" class="loading-indicator" v-if="showLoadingIndicator">Cargando más posts...</div>
+        <div ref="loadingRef" class="loading-indicator col-[1/-1] text-center text-clamp-xl font-normal p-12" v-if="showLoadingIndicator">Cargando más posts...</div>
       </div>
       
     </section>
@@ -189,14 +189,5 @@ onMounted(async () => {
 
 
 <style lang="scss" scoped>
-.card {
-  &__image {
-    background-color: var(--nude-7);
-    border-radius: var(--radius-s);
-    overflow: hidden;
-    width: 100%;
-    aspect-ratio: 3/2;
-    object-fit: cover;
-  }
-}
+// empty style
 </style>

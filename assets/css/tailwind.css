@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+    *,
+    *::before,
+    *::after {
+        @apply box-border m-0 relative;
+    }
+    
     p {
         @apply mb-6 text-clamp-sm;
     }
@@ -37,7 +43,7 @@
     }
     
     .panel#paciente_ideal {
-        @apply items-center;
+        @apply items-center gap-y-8;
     }
     
     .tabla {
@@ -80,7 +86,7 @@
     }
     
     .panel__image:has(.video__player) {
-        @apply col-[2_/_span_7] rounded-none;
+        @apply col-[2/-2] lg:col-[2_/_span_7] rounded-none;
     }
     
     .skill {
@@ -109,4 +115,8 @@
     #orden-8 { @apply row-start-9; }
     #orden-9 { @apply row-start-10; }
     #orden-10 { @apply row-start-11; }
+
+    .before-gradient {
+        @apply before:content-[''] before:size-full before:absolute before:left-0 before:top-0 before:opacity-80 before:mix-blend-multiply before:bg-gradient-to-b from-transparent from-[10%] to-blue-1;
+    }
 }

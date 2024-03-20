@@ -4,9 +4,7 @@
                 col-[1_/_span_16] xl:col-span-11 
                 flex items-end 
                 bg-cover bg-center
-                before:content-[''] before:size-full before:absolute
-                before:left-0 before:top-0 before:opacity-80 before:mix-blend-multiply
-                before:bg-gradient-to-b from-transparent from-[10%] to-blue-1" 
+                before-gradient" 
                 :style="`background-image: url(${data.featured_image_data.src});`">
     <div class="header__content">
       <p class="desde !text-nude-8 leading-10 text-2xl

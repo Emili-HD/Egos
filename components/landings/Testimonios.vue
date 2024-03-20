@@ -9,7 +9,7 @@
          <figure class="testimonios__videos-item min-w-[25vw]" v-for="testimonio in data.testimonios.videos">
             <div v-if="testimonio.video_vimeo" class="video__player rounded-xl overflow-hidden">
                <div class="size-full aspect-[9/16]">
-                  <VimeoPlayer :video-id="testimonio.video_vimeo" />
+                  <VimeoPlayer :videoId="testimonio.video_vimeo" />
                </div>
             </div>
          </figure>

@@ -41,8 +41,9 @@
 
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import gsap from 'gsap';
+// import gsap from 'gsap';
 
+const { $gsap: gsap } = useNuxtApp();
 // Estado reactivo
 const info = ref(null)
 

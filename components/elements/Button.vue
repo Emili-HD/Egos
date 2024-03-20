@@ -26,4 +26,33 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 // Estilo vacío
+.button {
+     &.dark {
+        @include border($color: rgba(var(--blue-6-rgb), 0.4));
+        color: var(--blue-6);
+    }
+
+    &.pedircita {
+        color: var(--nude-6);
+        font-weight: 400;
+        letter-spacing: .0313rem;
+        background: var(--gradient-blue);
+    }
+
+    &-invert,
+    &-invert.pedircita {
+        background-color: transparent;
+        border: 1px solid rgba($nude-8, .15);
+        color: var(--nude-6);
+    }
+
+    &-blue {
+        background-color: var(--blue-6);
+        border: 1px solid rgba($nude-8, .15);
+        color: var(--nude-6);
+        border-radius: var(--radius-m);
+    }
+
+}
+
 </style>

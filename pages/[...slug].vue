@@ -15,9 +15,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { getSinglePageBySlug } from '@/composables/useApi'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const pages = ref(null)
+const router = useRouter();
 const route = useRoute();
 
 const loadPage = async (slug) => {
@@ -26,6 +27,8 @@ const loadPage = async (slug) => {
       const pageResponse = await getSinglePageBySlug(slug);
       if (pageResponse.data && pageResponse.data.length > 0) {
         pages.value = pageResponse.data[0];
+      } else {
+        router.push('/error');
       }
     } catch (error) {
       console.error(error);

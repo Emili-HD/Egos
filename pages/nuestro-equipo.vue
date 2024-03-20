@@ -25,8 +25,8 @@
             :formId="pages.acf.formid" />
     </div>
 
-    <main class="site-main about bg-nude-6 grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-1">
-        <section class="nosotros section__hero grid grid-cols-[repeat(16,_minmax(0,_1fr))] col-[1_/_-1]" v-if="pages">
+    <main class="site-main about bg-nude-6 grid grid-cols-16 gap-1">
+        <section class="nosotros section__hero grid grid-cols-16 col-[1_/_-1]" v-if="pages">
             <ElementsEncabezadoFull :data="pages" />
         </section>
 
@@ -55,9 +55,9 @@
                                         {{ miembro.title ? miembro.title.rendered : 'No Title' }}
                                     </h3>
                                     <p v-html="miembro.acf.trayectoria.especialidad"></p>
-                                    <div class="button__group">
-                                        <a href="#" @click.prevent="showMemberPanel(miembro)" class="button border border-solid border-blue-1/20 rounded-full py-1">+ Info</a>
-                                        <button class="button bg-blue-1 rounded-full py-1 text-nude-8" v-if="category.form === true"
+                                    <div class="button__group flex flex-row justify-center items-center gap-2 w-full">
+                                        <a href="#" @click.prevent="showMemberPanel(miembro)" class="button border border-solid border-blue-1/20 rounded-full py-1 w-full text-center">+ Info</a>
+                                        <button class="button bg-blue-1 rounded-full py-1 text-nude-8 w-full text-center" v-if="category.form === true"
                                             @click="openPopup">Pedir Cita</button>
                                     </div>
                                 </div>

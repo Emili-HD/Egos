@@ -27,23 +27,12 @@ export default defineNuxtPlugin((nuxtApp) => {
             // infinite: true,
         })
 
-        // const lenisSwiper = new Lenis({
-        //   wrapper: '.swiper', // element which has overflow
-        //   content: '.swiper-wrapper', // usually wrapper's direct child
-        //   duration: 1.2,
-        //   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-        //   direction: 'horizontal', // vertical, horizontal
-        //   gestureDirection: 'horizontal', // vertical, horizontal, both
-        //   smooth: true,
-        //   mouseMultiplier: 1,
-        // })
-
         // Configurar Lenis con GSAP y ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);
-            ScrollTrigger.update()
         });
+        lenis.on('scroll', ScrollTrigger.update)
         gsap.ticker.lagSmoothing(0);
     
         nuxtApp.hook('page:finish', () => {

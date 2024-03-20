@@ -6,7 +6,7 @@
          <img src="../../assets/images/icons/close-icon.svg" alt="" />
       </div>
       <iframe :src="`https://www.tiktok.com/embed/${data.video_id}`" height="800" width="400" title="TikTok Video"
-         allowfullscreen></iframe>
+         allowfullscreen allow="accelerometer"></iframe>
    </div>
 </template>
 

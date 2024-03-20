@@ -5,7 +5,7 @@
         <div class="home__blog--header-content" v-html="blog.content.rendered"></div>
       </header>
       <ElementsDivider />
-      <div class="post-list grid grid-cols-[repeat(16,_minmax(0,_1fr))] gap-4" v-if="posts" aria-label="Lista de publicaciones">
+      <div class="post-list grid grid-cols-16 gap-4" v-if="posts" aria-label="Lista de publicaciones">
         <article v-for="post in posts" :key="post.id" class="card" :aria-labelledby="'post-title-' + post.id">
           <nuxt-link :to="`blog/${post.slug}`" :aria-label="'Leer más sobre ' + post.title.rendered">
             <NuxtImg sizes="90vw md:50vw xl:330px" loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src" class="card__image"

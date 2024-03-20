@@ -1,44 +1,19 @@
 <template>
-  <NuxtLayout>
-    <div class="prose">
-      <template v-if="error.statusCode === 404">
-        <h1>404!</h1>
-        <p>Sorry, that page doesn't exist.</p>
-      </template>
-      <template v-else>
-        <h1>Dang</h1>
-        <p>
-          <strong>{{ error.message }}</strong>
-        </p>
-        <p>It looks like something broke.</p>
-        <p>Sorry about that.</p>
-      </template>
-      <p>
-        Go back to your
-        <NuxtLink to="/">Volver al inicio</NuxtLink>
-      </p>
-    </div>
-  </NuxtLayout>
+  <div class="error-page bg-nude-6 w-full h-[80vh] flex flex-col justify-center items-center">
+    <p class="text-9xl font-bold">404</p>
+    <h1>{{ statusCode === 404 ? 'Page not found' : 'No hemos podido encontrar la página que buscas.' }}</h1>
+    <p class="text-center">No te preocupes, tenemos un montón de contenido que te puede interesar.<br>Navega a través de nuestro menú o vuelve a la página de inicio. </p>
+    <ElementsButton class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl cursor-pointer" @click="handleError">Ir a Clinicaegos</ElementsButton>
+  </div>
 </template>
 
 <script setup>
-// Aquí puedes agregar lógica JavaScript si es necesario
+import { useError, clearError } from 'nuxt/app';
+const error = useError()
+
+const handleError = () => {
+  clearError({
+    redirect: '/',
+  });
+};
 </script>
-
-<style scoped>
-.error-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-h1 {
-  font-size: 5rem;
-}
-
-p {
-  font-size: 1.5rem;
-}
-</style>

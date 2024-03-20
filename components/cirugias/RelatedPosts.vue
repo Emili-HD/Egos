@@ -16,9 +16,9 @@
 
 <script setup>
 import { onMounted, nextTick, ref } from 'vue';
-import gsap from 'gsap';
+// import gsap from 'gsap';
 import { getPostByCategoryId } from '@/composables/useApi'
-
+const { $gsap: gsap } = useNuxtApp();
 // Props
 const props = defineProps({
    treatmentsData: {
@@ -131,3 +131,56 @@ onMounted(async () => {
    await marqueePosts();
 });
 </script>
+
+<style lang="scss" scoped>
+   .related__posts {
+   margin-bottom: 0;
+
+   @media (max-width: 767px) {
+      padding-top: 2rem;
+   }
+
+   .post-list {
+      @include flex(row, center, flex-start, nowrap, 0.5);
+      height: 50%;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      padding-bottom: var(--spacing);
+
+      @media (max-width: 767px) {
+         padding-bottom: 0;
+      }
+
+      .card {
+         align-items: flex-start;
+         display: flex;
+         flex-shrink: 0;
+         height: 100%;
+         justify-content: center;
+         margin: 0;
+         overflow: hidden;
+         padding: 0;
+         position: relative;
+         width: 25%;
+
+         @media (max-width: 767px) {
+            width: 75%;
+         }
+
+         &:last-child {
+            padding-right: var(--gap);
+         }
+
+         img {
+            aspect-ratio: 1;
+            border-radius: var(--radius-xl);
+            height: 100%;
+            object-fit: cover;
+            width: 100%;
+         }
+      }
+   }
+}
+
+</style>

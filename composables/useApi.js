@@ -1,5 +1,7 @@
+// composables.useApi.js
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
+import { useRouter } from 'vue-router';
 
 const DOMAIN_URL = 'https://test.clinicaegos.com';
 const JSON_URL = DOMAIN_URL + '/wp-json';
@@ -10,6 +12,27 @@ const apiClient = axios.create({
         Accept: 'application/json',
         'Content-Type': 'application/json',
     },
+});
+
+// Configura interceptores de respuesta
+apiClient.interceptors.response.use(response => {
+  // Manejo de la respuesta exitosa
+  return response;
+}, error => {
+  // Aquí puedes manejar errores globalmente
+  if (error.response) {
+    // Por ejemplo, para un error 404
+    if (error.response.status === 404) {
+      const router = useRouter();
+      router.push('/error').catch(err => {
+        // Maneja el error de navegación o ignóralo
+        console.error('Error during navigation:', err);
+      });
+    }
+  }
+
+  // Importante: Lanza el error nuevamente para que puedas manejarlo localmente si es necesario
+  return Promise.reject(error);
 });
 
 // Configurar axios-retry en la instancia apiClient
@@ -62,7 +85,7 @@ export const getClinicas = (page = 1, perPage = 20) => {
 
 
 export const menuTratamientos = () => {
-        return apiClient.get(`${JSON_URL}/menus/v1/menus/tratamientos`);
+    return apiClient.get(`${JSON_URL}/menus/v1/menus/tratamientos`);
 };
 
 export const getSingleClinicaBySlug = (slug) => {

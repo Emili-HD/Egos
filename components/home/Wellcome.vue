@@ -100,4 +100,77 @@ onMounted( async () => {
 
 <style lang="scss" scoped>
 // Empty style
+.intro {
+    @include flex(column, flex-end, center, nowrap, 2);
+    background-color: transparent;
+    overflow: hidden;
+    user-select: none;
+    min-height: 100vh;
+
+    &__title {
+        color: var(--nude-7);
+        font-family: var(--font-family-base);
+        font-size: 4vw;
+        font-weight: 650;
+        line-height: 0.9;
+        margin-bottom: 0;
+        margin-top: 15vh;
+        padding-left: calc(var(--spacing) * 2);
+        text-align: left;
+
+        @media (max-width: 767px) {
+            font-size: calc(var(--font-size) * 3);
+            padding-left: calc(var(--spacing) * 1);
+        }
+    }
+
+    &__content {
+        @include flex(column, center, flex-start, nowrap, 1);
+        color: var(--nude-8);
+        padding-left: calc(var(--spacing) * 2);
+
+        .heading h1 {
+            font-family: var(--font-family-base);
+            font-size: clamp(1.6rem, 2vw, 2.3rem);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 767px) {
+            padding-left: calc(var(--spacing) * 1);
+            padding-right: calc(var(--spacing) * 1);
+
+            .heading p {
+                font-size: calc(var(--font-size) * 1.5);
+            }
+        }
+    }
+
+    &__image {
+        @include flex(column, center, flex-start, nowrap, 2);
+        background-color: #16253c;
+        height: 100vh;
+        inset: 0;
+        position: absolute;
+        width: 100vw;
+
+        .girl {
+            height: 100vh;
+            object-fit: cover;
+            position: absolute;
+            width: 100vw;
+            will-change: transform;
+            z-index: 0;
+            left: 25vw;
+
+            @media (max-width: 767px) {
+                left: 0;
+            }
+        }
+    }
+
+    #mask rect {
+        will-change: transform;
+    }
+}
+
 </style>
