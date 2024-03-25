@@ -1,7 +1,5 @@
 <template>
-   <div class="content__header col-[2_/_span_14] xl:col-[4_/_span_10]
-   [&>p_.mask-reveal]:!bg-nude-8 [&>p_.mask-reveal]:!w-full [&>p_.mask-reveal]:!h-[115%]
-               [&>p_.mask-reveal]:!absolute [&>p_.mask-reveal]:!left-0 [&>p_.mask-reveal]:!top-[-12%] [&>p_.mask-reveal]:!opacity-90" ref="reveal">
+   <div class="content__header col-[2_/_span_14] xl:col-[4_/_span_10]" ref="reveal">
       <component 
          :is="props.tag" 
          class="content__header-title blue-1 w-full p-0" 
@@ -38,13 +36,14 @@ const textReveal = async () => {
 
    await nextTick()
 
-   let split = new SplitText(".content__header-title", { type: "lines" });
+   document.querySelector(".content__header-title p").classList.add('text-clamp-3xl')
+   let split = new SplitText(".content__header-title p", { type: "lines" });
    let masks;
    function makeItHappen() {
       masks = [];
       split.lines.forEach((target) => {
          let mask = document.createElement("span");
-         mask.className = "mask-reveal";
+         mask.className = "mask-reveal bg-nude-8 opacity-90 absolute h-[115%] top-[-12%] left-0 w-full";
          target.append(mask);
          masks.push(mask);
          gsap.to(mask, {

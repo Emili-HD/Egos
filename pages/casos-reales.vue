@@ -14,15 +14,15 @@
         </svg>
         </label>
       </div>
-      <div class="testimonios__list px-40 py-20" v-if="testimonios">
-        <article v-for="testimonio in testimonios" :key="testimonio.id" class="card item"
+      <div class="testimonios__list max-w-full px-40 py-20" v-if="testimonios">
+        <article v-for="testimonio in testimonios" :key="testimonio.id" class="card item rounded-3xl overflow-hidden"
           :class="getCategoriesNames(testimonio)">
           <div class="testimonios__image" v-if="testimonio.featured_image_data && testimonio.featured_image_data.src">
             <NuxtImg :src="testimonio.featured_image_data.src" :alt="testimonio.featured_image_data.alt" />
           </div>
-          <div class="testimonios__content">
+          <div class="testimonios__content p-2 pb-4 text-center">
             <h3 class="h6">{{ testimonio.title.rendered }}</h3>
-            <nuxt-link :to="`/opinion/${testimonio.slug}`" class="button button-reverse">Saber más</nuxt-link>
+            <nuxt-link :to="`/opinion-egos/${testimonio.slug}`" class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</nuxt-link>
           </div>
         </article>
       </div>

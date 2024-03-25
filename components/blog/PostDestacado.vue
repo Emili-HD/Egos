@@ -1,7 +1,7 @@
 <template>
   <div class="destacado rounded-3xl m-auto w-full p-0 col-[2/-2] flex max-w-full min-h-[40vh]">
     <div class="post-list w-full mt-0 flex" v-if="posts">
-      <article v-for="post in posts" :key="post.id" class="card bg-blue-1 aspect-auto w-full">
+      <article v-for="post in posts" :key="post.id" class="card bg-blue-1 aspect-auto w-full rounded-3xl overflow-hidden">
         <nuxt-link class="text-blue-1 font-canela h-full p-0 flex flex-col lg:flex-row" :to="'/blog/' + post.slug">
           <NuxtImg
             loading="lazy"

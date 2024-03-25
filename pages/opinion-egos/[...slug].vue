@@ -1,47 +1,33 @@
-<style lang="scss">
-.caso-real {
-  &__heading {
-    display: grid;
-    grid-template-columns: repeat(16, 1fr);
-    min-height: 100vh;
-    margin-bottom: 0;
-
-    &--text {
-      grid-column: 6/11;
-    }
-
-    .form__wrapper {
-      grid-column: 12/-1;
-      background: var(--blue-1);
-    }
-  }
-
-}
-</style>
 <template>
-  <main class="site-main caso-real bg-nude-8" v-if="casoreal">
-    <section class="caso-real__heading" ref="casoreal">
-      <div v-if="casoreal[0].acf.vimeo_video" class="caso-real__heading--video video__player">
-        <div class="size-full aspect-[9/16]">
-          <VimeoPlayer :videoId="casoreal[0].acf.vimeo_video" />
+  <main class="site-main caso-real bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0" v-if="casoreal && casoreal.length > 0">
+    <div class="caso-real__content col-[1/-1] lg:col-span-12 grid grid-cols-subgrid">
+      <header class="caso-real__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-10 group" v-if="casoreal[0] && casoreal[0].title">
+        <h1 class="">{{ casoreal[0].title.rendered }}</h1>
+        <div v-if="casoreal[0].acf.vimeo_video"
+          class="caso-real__video video__player col-start-2 col-span-10 flex flex-row justify-center items-start">
+          <div class="w-full bg-nude-5 h-[max(400px,_65vh)] rounded-2xl">
+            <VimeoPlayer :videoId="casoreal[0].acf.vimeo_video" />
+          </div>
         </div>
-      </div>
-      <div class="caso-real__heading--text">
-        <h1>{{ casoreal[0].title.rendered }}</h1>
+      </header>
+      <section class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-10 row-start-2 py-8 lg:py-20">
         <div v-html="casoreal[0].content.rendered"></div>
-      </div>
-      <div class="form__wrapper p-4 p-xs-12">
-        <FormsCirugia :identificador="'topPage'" :portalId="String(casoreal[0].acf.formulario.portalid)"
-          :formId="casoreal[0].acf.formulario.formid" />
-      </div>
-    </section>
+      </section>
+    </div>
+    <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20" v-if="casoreal[0] && casoreal[0].acf">
+      <FormsCirugia :identificador="'topPage'" :portalId="String(casoreal[0].acf.formulario.portalid)"
+        :formId="casoreal[0].acf.formulario.formid" />
+    </aside>
   </main>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import { getSingleTestimonioBySlug } from '@/composables/useApi';
 import { useRoute, useRouter } from 'vue-router';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
 // Estado reactivo para el post
 const casoreal = ref(null);
@@ -49,37 +35,57 @@ const casoreal = ref(null);
 // Acceder a los parámetros de la ruta
 const router = useRouter();
 const route = useRoute();
-const slug = route.params.slug;
 
 const getCasoReal = async () => {
+  await nextTick()
+  const slug = route.params.slug
   try {
     const response = await getSingleTestimonioBySlug(slug)
     if (response.data && response.data.length > 0) {
       casoreal.value = response.data;
     } else {
-      router.push('/error');
+      // router.push('/error');
     }
   } catch (error) {
     console.error(error);
   }
 };
 
-watch(() => route.params.slug, async (newSlug, oldSlug) => {
-  if (newSlug !== oldSlug) {
-    // console.log("Cambiando slug de", oldSlug, "a", newSlug);
-    await getCasoReal();
-  }
-}, { immediate: true });
+
+const stickyForm = async () => {
+  gsap.registerPlugin(ScrollTrigger)
+
+  let mm = gsap.matchMedia()
+  mm.add("(min-width: 1025px)", () => {
+    const form = document.querySelector('.form-landing')
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".form__wrapper",
+        pin: form,
+        start: "top 5%",
+        //scrub: 0.5,
+        end: "top bottom",
+        endTrigger: "footer.footer",
+        pinSpacing: false,
+        toggleActions: "restart none none reverse",
+        // markers: true,
+      }
+    });
+  })
+
+}
 
 // Ciclo de vida Mounted
 onMounted(async () => {
   await getCasoReal()
+  await stickyForm()
 });
 
 // Datos YOAST SEO
 useHead(() => {
   // Verifica si el post está cargado y tiene la estructura esperada
-  if (!casoreal.value || casoreal.value.length === 0 || !casoreal.value[0].yoast_head_json) {
+  if (!casoreal.value || !casoreal.value.length === 0 || !casoreal.value[0].yoast_head_json) {
     return {
       title: 'Cargando...', // Título temporal mientras se cargan los datos
     };
@@ -127,3 +133,7 @@ useHead(() => {
 });
 
 </script>
+
+<style lang="scss">
+// empty style
+</style>

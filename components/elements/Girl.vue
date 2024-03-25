@@ -1,5 +1,5 @@
 <template>
-   <div class="girl__wrapper h-[100vh] inset-0 events-none absolute w-full -z-[1]">
+   <div class="girl__wrapper h-[100vh] inset-0 events-none absolute w-full z-0">
       <svg class="girl-intro h-[100vh] absolute left-1/2 -bottom-6 -translate-x-1/2" version="1.1" id="girl" xmlns="http://www.w3.org/2000/svg"
          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1032.1 1738.9"
          style="enable-background:new 0 0 1032.1 1738.9;">
@@ -96,6 +96,39 @@
    </div>
 </template>
 
+<script setup>
+import { onMounted } from 'vue';
+import ScrollTrigger from 'gsap/ScrollTrigger'
+import DrawSVGPlugin from 'gsap/DrawSVGPlugin'
+
+const { $gsap: gsap } = useNuxtApp();
+
+const animatedGirl = () => {
+   gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin)
+
+   const chica = document.querySelector('section.girl')
+
+   var tl = gsap.timeline({
+      scrollTrigger: {
+         trigger: chica,
+         scrub: true,
+         start: 'top 35%',
+         end: 'bottom 90%',
+         toggleActions: 'play none reverse none',
+         // pin: '.girl__wrapper',
+      }
+   });
+   tl.from(".oneline-girl", { 
+      duration: 5, 
+      drawSVG: 0 
+   }, 0.1);
+}
+
+onMounted(() => {
+   animatedGirl()
+})
+</script>
 <style lang="scss" scoped>
    // Empty Style
+   
 </style>

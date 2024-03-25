@@ -67,6 +67,7 @@ module.exports = {
         'bg-nude-8': '#f8f7f4',
       },
       fontSize: {
+        'clamp-xs': "clamp(0.65rem, 0.7vw, 0.9rem)",
         'clamp-sm': "clamp(0.875rem, 1vw, 1.125rem)",
         'clamp-base': "clamp(1rem, 1.3vw, 1.5rem)",
         'clamp-lg': "clamp(1.3rem, 1.6vw, 1.8rem)",
@@ -80,6 +81,27 @@ module.exports = {
       fontFamily: {
         canela: ['Canela', 'serif'],
         geomanist: ['Geomanist', 'sans-serif'],
+      },
+      spacing: {
+        'screen/95': '95vh',
+        'screen/90': '90vh',
+        'screen/85': '85vh',
+        'screen/80': '80vh',
+        'screen/75': '75vh',
+        'screen/70': '70vh',
+        'screen/65': '65vh',
+        'screen/60': '60vh',
+        'screen/55': '55vh',
+        'screen/50': '50vh',
+        'screen/45': '45vh',
+        'screen/40': '40vh',
+        'screen/35': '35vh',
+        'screen/30': '30vh',
+        'screen/25': '25vh',
+        'screen/20': '20vh',
+        'screen/15': '15vh',
+        'screen/10': '10vh',
+        'screen/5': '5vh',
       },
       keyframes: {
         gradient: {

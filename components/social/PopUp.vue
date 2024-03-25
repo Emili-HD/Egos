@@ -1,13 +1,15 @@
 <template>
-   <div
-      class="social-video-container absolute top-0 left-0 w-[100vw] h-[100vh] z-[999] flex flex-col justify-center items-center"
-      v-if="data && data.video_id" data-lenis-prevent>
-      <div class="close absolute top-20 right-12 cursor-pointer" @click="close">
-         <img src="../../assets/images/icons/close-icon.svg" alt="" />
+   <Teleport to="body">
+      <div
+         class="social-video-container fixed top-0 left-0 w-[100vw] h-[100vh] z-[999] flex flex-col justify-center items-center"
+         v-if="data && data.video_id" data-lenis-prevent>
+         <div class="close absolute top-20 right-12 cursor-pointer" @click="close">
+            <img src="../../assets/images/icons/close-icon.svg" alt="" />
+         </div>
+         <iframe :src="`https://www.tiktok.com/embed/${data.video_id}`" height="800" width="400" title="TikTok Video"
+            allowfullscreen allow="accelerometer"></iframe>
       </div>
-      <iframe :src="`https://www.tiktok.com/embed/${data.video_id}`" height="800" width="400" title="TikTok Video"
-         allowfullscreen allow="accelerometer"></iframe>
-   </div>
+   </Teleport>
 </template>
 
 <script setup>

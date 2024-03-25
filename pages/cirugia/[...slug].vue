@@ -6,7 +6,7 @@
 
       <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
         <div class="panels w-full">
-          <section :id="processAncla(content.ancla)" class="panel grid grid-cols-16 row-gap-4 xl:gap-2 mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8" :class="content.fondo, content.opciones_listado"
+          <section :id="processAncla(content.ancla)" class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8" :class="content.fondo, content.opciones_listado"
             v-for="content in tratamiento.acf.tabs">
               <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
               <CirugiasTabla :contentData="content" />
@@ -25,7 +25,7 @@
     <DelayHydration>
       <LazyCirugiasRelatedTreatments :treatmentsData="tratamiento.acf" :relatedId="tratamiento.acf.cirugias_relacionadas" :category="category" />
     </DelayHydration>
-    <section class="oferta__form py-24 mb-0" v-for="setting in form.form_settings" :key="setting.formid">
+    <section class="oferta__form py-12 xl:py-24 mb-0" v-for="setting in form.form_settings" :key="setting.formid">
       <div class="oferta" v-if="setting.ubicacion === 'oferta'">
         <FormsOferta :data="setting" :portalId="setting.portalid" :formId="setting.formid" />
       </div>

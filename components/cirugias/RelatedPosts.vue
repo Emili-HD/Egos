@@ -2,7 +2,7 @@
    <section class="related__posts pt-6 mb-0">
       <ElementsReveal :titulo="treatmentsData.titulo_posts_relacionados" />
       <div class="post-list" v-if="posts" aria-label="Lista de publicaciones">
-         <article v-for="post in posts" :key="post.id" class="card" :aria-labelledby="'post-title-' + post.id">
+         <article v-for="post in posts" :key="post.id" class="card rounded-3xl overflow-hidden" :aria-labelledby="'post-title-' + post.id">
             <nuxt-link :to="`/blog/${post.slug}`"
                :aria-label="'Leer más sobre ' + post.title.rendered">
                <NuxtImg loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src" class="card__image"

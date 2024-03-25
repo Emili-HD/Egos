@@ -6,7 +6,7 @@
       </DelayHydration>
       <FormsPiceCita :titulo="`¿No encuentras tu cirugía?`" :portalId="String(pages.acf.formulario.portalid)" :formId="pages.acf.formulario.formid" />
       <section class="quote font-base text-balance normal-case font-semibold leading-5 py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid" >
-          <ElementsReveal :titulo="pages.acf.hero.texto_imagen" tag="p" />
+          <ElementsReveal :titulo="pages.acf.hero.texto_imagen" tag="div" />
       </section>
       <PageRecomendaciones :data="pages.acf" />
   </main>

@@ -11,7 +11,7 @@
                v-for="skill in data.acf.loquehacemos" :key="skill.id">
                <img loading="lazy" class="sLogo max-w-full w-28 xl:w-24 border border-current rounded-xl"
                   :src="skill.icono.url" alt="">
-               <div class="[&>*]:!leading-6 [&>h3]:!font-semibold [&>h3]:!mb-1 [&>h3]:!text-xl [&>p]:!mb-0"
+               <div class="[&>*]:!leading-6 [&>h3]:!font-canela [&>h3]:!font-semibold [&>h3]:!mb-1 [&>h3]:!text-xl [&>p]:!mb-0"
                   v-html="skill.skill"></div>
             </div>
          </div>
@@ -53,7 +53,7 @@
             }" 
              
             :modules="[ SwiperMousewheel, SwiperFreeMode, SwiperScrollbar]" 
-            class="swiperHorizontal [&>.swiper-scrollbar]:!w-[calc(100%-2*20%)] [&>.swiper-scrollbar]:!left-[20%] [&>.swiper-scrollbar]:!bg-nude-1/25 [&>.swiper-scrollbar>.swiper-scrollbar-drag]:!bg-gold-2/50"
+            class="swiperHorizontal !pl-12 w-full [&>.swiper-scrollbar]:!w-[calc(100%-2*20%)] [&>.swiper-scrollbar]:!left-[20%] [&>.swiper-scrollbar]:!bg-nude-1/25 [&>.swiper-scrollbar>.swiper-scrollbar-drag]:!bg-gold-2/50"
             @swiper="onSwiper"
             @touchStart="handleSwipeStart"
             @sliderMove="handleSwipeStart"
@@ -61,7 +61,7 @@
             @transitionStart="handleSwipeStart"
             @transitionEnd="handleSwipeEnd">
          >
-            <SwiperSlide v-for="categoryId in data.acf.tratamientos_home.categorias_home" :key="categoryId">
+            <SwiperSlide class="text-left flex flex-col justify-start items-start p-8 [&>h3]:!text-clamp-sm" v-for="categoryId in data.acf.tratamientos_home.categorias_home" :key="categoryId">
                <div class="card__wrapper min-w-full xl:min-w-[360px] xl:max-w-[400px] opacity-100 px-2 xl:px-0 relative [&.active]:opacity-100">
                   <HomeCategorySlide :categoryId="categoryId" class="[&>.card-wrapper>.card]:h-full  [&>.card-wrapper>.card]:objet-cover [&>.card-wrapper>.card]:object-center [&>.card-wrapper>.card]:w-[90vw] [&>.card-wrapper>.card]:shadow-2xl" />
                </div>
@@ -76,6 +76,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
+
 // import { Swiper, SwiperSlide } from 'swiper/vue';
 // import SwiperCore, { SwiperPagination, SwiperMousewheel, SwiperFreeMode, SwiperScrollbar } from 'swiper';
 
@@ -115,93 +119,4 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 // estilo vacío
-.swiper {
-   width: 100%;
-   // height: max(400px, 40lvh);
-
-   &-slide {
-      text-align: left;
-      // background: var(--nude-8);
-      // border-radius: var(--radius-s);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      padding: 2rem;
-
-      h3 {
-         margin-bottom: 1rem;
-      }
-
-      .stars svg {
-         width: 6rem;
-      }
-
-      &>p {
-         font-size: calc(var(--font-size) * .8);
-      }
-   }
-}
-
-/* .home__services {
-
-        &::before,
-        &::after {
-            content: "";
-            position: absolute;
-            border: 1px solid $blue-1;
-            border-radius: 50%;
-            z-index: -1;
-            opacity: 0.1;
-        }
-
-        &::before {
-            width: 75vw;
-            height: 75vw;
-            left: 50%;
-            top: 50%;
-            translate: 5% -35%;
-        }
-
-        &::after {
-            width: 95vw;
-            height: 95vw;
-            left: 0%;
-            top: 0%;
-            translate: -55% -45%;
-        }
-
-
-        &-inner {
-            
-
-            .card__wrapper {
-            
-                .card {
-                    box-shadow: var(--shadow);
-                    height: auto;
-                    object-fit: cover;
-                    object-position: center;
-                    width: 100%;
-                }
-
-                &.active {
-                    opacity: 1;
-                }
-            }
-        }
-
-        &-description {
-
-            p {
-                text-wrap: balance;
-                width: clamp(35ch, 60vw, 75ch);
-
-                @media (max-width: 767px) {
-                    text-wrap: wrap;
-                    width: 100%;
-                }
-            }
-        }
-    } */
 </style>

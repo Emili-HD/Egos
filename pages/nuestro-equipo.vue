@@ -1,6 +1,8 @@
 <template>
     <div
-        class="team__panel pt-24 px-16 pb-16 bg-white rounded-3xl fixed right-0 top-20 w-[vw] h-[calc(100vh-var(--header-height)-1rem)] z-[999] translate-x-[100%] transition-[translate] duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]">
+        class="team__panel pt-24 px-16 pb-16 bg-white rounded-3xl fixed right-0 top-20 
+              w-[100vw] xl:w-[70vw] h-[calc(100vh-var(--header-height)-1rem)] z-[999] 
+              translate-x-[100%] transition-[translate] duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]">
         <div class="team__panel-content overscroll-contain" v-if="panelVisible">
             <div class="close absolute top-0 right-0 z-10" @click="panelVisible = false">
                 <svg class="close-icon size-16 fill-blue-1" viewBox="0 0 1024 1024" version="1.1"
@@ -25,7 +27,7 @@
             :formId="pages.acf.formid" />
     </div>
 
-    <main class="site-main about bg-nude-6 grid grid-cols-16 gap-1">
+    <main class="site-main about grid grid-cols-16 gap-1">
         <section class="nosotros section__hero grid grid-cols-16 col-[1_/_-1]" v-if="pages">
             <ElementsEncabezadoFull :data="pages" />
         </section>
@@ -75,7 +77,7 @@ import { ref, onMounted, onUnmounted, computed, watch, inject } from 'vue';
 import { getSinglePage, getEspecialidades, getEquipo } from '@/composables/useApi';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
-const { $gsap: gsap } = useNuxtApp();
+const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
 // Estados reactivos
 const pages = ref(null);
@@ -163,6 +165,7 @@ const doctorByCategory = (categoryId) => {
 function showMemberPanel(miembro) {
     selectedMemberInfo.value = miembro;
     panelVisible.value = true;
+    lenis
 }
 
 const pinTitles = async () => {

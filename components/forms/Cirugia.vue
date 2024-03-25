@@ -4,13 +4,15 @@
           after:content-[''] 
           after:border after:border-solid after:border-nude-8/[0.1] after:bg-nude-8/[0.025]
           after:absolute after:-top-6 after:-left-6 after:rounded-2xl
-          after:w-[calc(100%+3rem)] after:h-[calc(100%+3rem)] after:pointer-events-none
-          rounded-2xl w-auto max-w-full" v-once>
-          </div>
+          after:w-[calc(100%+3rem)] after:h-[calc(650px+3rem)] after:pointer-events-none
+          rounded-2xl w-auto max-w-full"  v-once v-resize>
+    </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref, nextTick } from 'vue'
+
+const isHubSpotLoaded = ref(false)
 
 // Props
 const props = defineProps({
@@ -19,27 +21,28 @@ const props = defineProps({
   identificador: String,
 });
 
-onMounted(() => {
-    const script = document.createElement("script");
-    script.src="https://js.hsforms.net/forms/v2.js";
-    document.body.appendChild(script);
-    
-    script.addEventListener("load", () => {
-      if (window.hbspt) {
-        window.hbspt.forms.create({
-          portalId: props.portalId, // Usa el prop portalId
-          formId: props.formId, // Usa el prop formId
-          target: '#' + props.identificador
-        })
-      }
-    })
+onMounted( async () => {
+  const script = document.createElement("script");
+  script.src="https://js.hsforms.net/forms/v2.js";
+  document.body.appendChild(script);
+  
+  script.addEventListener("load", () => {
+    if (window.hbspt) {
+      window.hbspt.forms.create({
+        portalId: props.portalId, // Usa el prop portalId
+        formId: props.formId, // Usa el prop formId
+        target: '#' + props.identificador
+      })
+      isHubSpotLoaded.value = true;
+      console.log('form iniciado');
+    }
+  })
 })
 </script>
 
-<style lang="scss">
 
-.form-landing {
-  position: relative;
-}
+<style lang="scss" scoped>
+/* empty style */
+
 </style>
 

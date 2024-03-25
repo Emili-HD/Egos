@@ -10,7 +10,7 @@
       </header>
 
       <div class="post-list grid grid-cols-16 gap-4 mt-20" v-if="posts" aria-label="Lista de publicaciones">
-        <article v-for="post in posts" :key="post.id" class="card aspect-none bg-nude-6" :aria-labelledby="'post-title-' + post.id">
+        <article v-for="post in posts" :key="post.id" class="card aspect-none bg-nude-6 rounded-3xl overflow-hidden" :aria-labelledby="'post-title-' + post.id">
           <nuxt-link class="flex flex-col lg:flex-row" :to="'/blog/' + post.slug"
             :aria-label="'Leer más sobre ' + post.title.rendered">
             <NuxtImg class="card__image aspect-square w-[45%] object-cover object-center" loading="lazy" v-if="post.featured_image_src" :src="post.featured_image_src.src"

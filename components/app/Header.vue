@@ -1,5 +1,5 @@
 <template>
-    <header class="egos-header fixed p-3 flex flex-row justify-start items-center gap-8 z-[1000]" id="site-header">
+    <header class="egos-header fixed p-3 flex flex-row justify-start items-center gap-8 z-[1000] max-h-screen/70 w-screen/85" id="site-header">
         <div class="header-wrapper flex flex-row justify-between px-1 w-full">
             <div class="header-brand flex flex-col justify-start items-start py-2 px-4 bg-blue-1 rounded-2xl">
                 <nuxt-link class="block" to="/" aria-label="Vuelve a la página de inicio">
@@ -25,15 +25,15 @@
                                     alt="">
                             </div>
                             <div class="menu-wrapper">
-                                <nuxt-link :to="tratamiento.url" class="nav-link hidden xl:block"
+                                <nuxt-link :to="tratamiento.url" class="nav-link hidden xl:block text-clamp-xs"
                                     active-class="router-link-active">
-                                    <span>{{ tratamiento.title }}</span>
+                                    <span class="">{{ tratamiento.title }}</span>
                                     <img src="../../assets/images/icons/arrow-up.svg" alt="">
                                 </nuxt-link>
                                 <div class="submenu mt-1 xl:fixed top-0 left-0 xl:right-0 xl:top-12 xl:m-auto z-0"
                                     v-if="tratamiento.child_items">
                                     <div
-                                        class="submenu__right h-fit xl:h-[var(--menu-height)] right-0 xl:-right xl:w-[calc(var(--menu-width)*0.625)] top-0 rounded-2xl w-full xl:absolute xl:w-50 xl:backdrop-blur-xl">
+                                        class="submenu__right h-fit xl:h-screen/70 right-0 xl:-right xl:w-[calc(var(--menu-width)*0.625)] top-0 rounded-2xl w-full xl:absolute xl:w-50 xl:backdrop-blur-xl">
                                         <ul
                                             class="list-none p-0 h-full has-[.column]:flex flex-row xl:content-center justify-center xl:justify-center items-start flex-wrap xl:absolute gap-4 xl:gap-0 w-full top-0 left-0">
                                             <li class="submenu-child w-full xl:w-fit xl:flex flex-col justify-between items-start flex-nowrap"
@@ -44,8 +44,7 @@
                                                     active-class="nuxt-link-active">
                                                     {{ subTratamiento.title }}
                                                 </nuxt-link>
-                                                <span class="column cursor-default p-1 hidden xl:block" v-else>{{
-                        subTratamiento.title }}</span>
+                                                <span class="column cursor-default p-1 hidden xl:block" v-else>{{ subTratamiento.title }}</span>
                                                 <!-- SubSubItems -->
                                                 <ul class="list-none"
                                                     v-if="subTratamiento.child_items && subTratamiento.child_items.length > 0">
@@ -83,16 +82,15 @@
                                         </ul>
                                     </div>
                                     <div
-                                        class="anchorLink submenu__left xl:h-[var(--menu-height)] hidden xl:block bg-cover bg-center w-full xl:w-[calc(var(--menu-width)*0.375)] top-0 -left-1 rounded-2xl xl:absolute xl:w-50">
-                                        <ul class="submenu__left-slider ">
-                                            <li class="before-after"
+                                        class="anchorLink submenu__left xl:h-screen/70 hidden xl:block bg-cover bg-center w-full xl:w-[calc(var(--menu-width)*0.375)] top-0 -left-1 rounded-2xl xl:absolute xl:w-50">
+                                        <ul class="submenu__left-slider flex flex-col overflow-hidden rounded-2xl h-screen/70">
+                                            <li class="before-after flex h-screen/70 absolute top-0 left-0"
                                                 v-for="(subTratamiento, index) in tratamiento.child_items"
                                                 :key="subTratamiento.id" :data-index="index">
-                                                <div class="slide-c"
+                                                <div class="slide-c absolute left-0 top-0 opacity-0 z-0 h-full w-full will-change-transform"
                                                     v-for="subSubTratamiento in subTratamiento.child_items"
                                                     :key="subSubTratamiento.ID">
-                                                    <!-- <img loading="lazy" class="menu-icon" :src="subSubTratamiento.acf.icon" alt="" /> -->
-                                                    <img loading="lazy" class="menu-icon"
+                                                    <img loading="lazy" class="menu-icon object-cover object-center min-h-full min-w-full"
                                                         :data-src="subSubTratamiento.acf.icon" alt="" />
                                                 </div>
                                             </li>
@@ -740,9 +738,9 @@ onMounted(async () => {
             }
 
             a {
-                color: $blue-1;
-                font-size: clamp(0.65rem, 0.7vw, 0.9rem);
-                z-index: 99;
+                // color: $blue-1;
+                // font-size: clamp(0.65rem, 0.7vw, 0.9rem);
+                // z-index: 99;
 
                 img {
                     display: none;
@@ -840,44 +838,25 @@ onMounted(async () => {
 }
 
 ul.submenu__left-slider {
-    --clip: 0rem;
-    --round: var(--radius-xxl);
-    clip-path: inset(var(--clip) round var(--round));
-    display: flex;
-    height: var(--menu-height);
-    flex-direction: column;
-    overflow: hidden;
-
-    &>li {
-        height: var(--menu-height);
-        position: absolute;
-        top: 0;
-        left: 0;
-
-    }
 
     .before-after {
-        display: flex;
-        width: calc(var(--menu-width) / 2.666667);
-        height: var(--menu-height);
-
         &>.slide-c {
             width: calc(var(--menu-width) / 2.666667);
-            height: var(--menu-height);
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            scale: 1;
-            will-change: opacity;
-            z-index: 0;
+            // height: var(--menu-height);
+            // position: absolute;
+            // left: 0;
+            // top: 0;
+            // opacity: 0;
+            // scale: 1;
+            // will-change: opacity;
+            // z-index: 0;
 
-            img {
-                object-fit: cover;
-                object-position: center;
-                height: var(--full-height);
-                min-width: calc(var(--menu-width) / 2.666667);
-            }
+            // img {
+            //     object-fit: cover;
+            //     object-position: center;
+            //     height: var(--full-height);
+            //     min-width: calc(var(--menu-width) / 2.666667);
+            // }
         }
     }
 }

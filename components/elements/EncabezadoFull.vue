@@ -1,5 +1,5 @@
 <template>
-  <header class="header full-width p-12 mb-0 col-[1/12] !bg-transparent" :style="`background-image: url(${data.featured_image_data.src});`">
+  <header class="header full-width p-12 mb-0 col-[1/-1] lg:col-[1/12] !bg-transparent" :style="`background-image: url(${data.featured_image_data.src});`">
   </header>
   <div class="header__content p-12 bg-nude-6 blue-1 flex flex-col justify-center items-center col-[1/-1] xl:col-[12/17]">
     <h1>{{ data.title.rendered }}</h1>

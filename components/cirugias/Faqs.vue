@@ -84,17 +84,5 @@ onMounted(initAccordion)
 </script>
 
 <style lang="scss">
-.faqs {
-  margin-bottom: 0;
-  // margin-top: calc(var(--header-height) + var(--spacing));
-
-  .content__header-title {
-    color: var(--nude-8);
-  }
-
-  .mask-reveal {
-    background: var(--blue-1);
-    opacity: .6;
-  }
-}
+// empty style
 </style>

@@ -8,34 +8,38 @@
     *::after {
         @apply box-border m-0 relative;
     }
+
+    body {
+        @apply font-geomanist font-light antialiased;
+    }
     
     p {
-        @apply mb-6 text-clamp-sm;
+        @apply mb-6 text-clamp-base lg:text-clamp-sm font-geomanist font-thin;
     }
     h1, .h1 {
-        @apply mb-6 text-clamp-6xl;
+        @apply mb-6 text-clamp-6xl font-thin;
     }
     h2, .h2 {
-        @apply mb-6 text-clamp-5xl;
+        @apply mb-6 text-clamp-5xl font-thin;
     }
     h3, .h3 {
-        @apply mb-6 text-clamp-4xl;
+        @apply mb-6 text-clamp-4xl font-thin;
     }
     h4, .h4 {
-        @apply mb-6 text-clamp-3xl;
+        @apply mb-6 text-clamp-3xl font-thin;
     }
     h5, .h5 {
-        @apply mb-6 text-clamp-2xl;
+        @apply mb-6 text-clamp-2xl font-thin;
     }
     h6, .h6 {
-        @apply mb-6 text-clamp-xl;
+        @apply mb-6 text-clamp-xl font-thin;
     }
 }
 
 @layer components {
 
     .site-main {
-        @apply bg-nude-8 overflow-hidden w-[100vw] will-change-transform;
+        @apply bg-nude-8 overflow-hidden w-[100vw];
     }
     
     .panel#cuidados {

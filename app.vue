@@ -41,37 +41,37 @@ onMounted(() => {
 
 <style lang="scss">
 
-html {
-  &.lenis, body {
-    min-height: 100%;
-    height: auto;
-  }
-}
+// html {
+//   &.lenis, body {
+//     min-height: 100%;
+//     height: auto;
+//   }
+// }
 
-.lenis {
-  &.lenis-smooth {
-    scroll-behavior: auto;
+// .lenis {
+//   &.lenis-smooth {
+//     scroll-behavior: auto;
 
-    [data-lenis-prevent] {
-      overscroll-behavior: contain;
-    }
+//     [data-lenis-prevent] {
+//       overscroll-behavior: contain;
+//     }
 
-    [data-lenis-prevent-wheel] {
-      @media (max-width: 1024px) {
-        scroll-behavior: auto;
-        overscroll-behavior: auto;
-      }
-    }
-  }
+//     [data-lenis-prevent-wheel] {
+//       @media (max-width: 1024px) {
+//         scroll-behavior: auto;
+//         overscroll-behavior: auto;
+//       }
+//     }
+//   }
 
-  &.lenis-scrolling {
-    iframe {
-      pointer-events: none;
-    }
-  }
+//   &.lenis-scrolling {
+//     iframe {
+//       pointer-events: none;
+//     }
+//   }
 
-  &.lenis-stopped {
-    overflow: hidden;
-  }
-}
+//   &.lenis-stopped {
+//     overflow: hidden;
+//   }
+// }
 </style>

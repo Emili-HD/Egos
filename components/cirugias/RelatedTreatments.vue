@@ -1,11 +1,11 @@
 <template>
-  <section class="tratamientos__wrapper py-24 my-0" id="relacionadas" ref="related">
-    <div class="tratamientos__services" data-color="#ffffff">
-      <div class="cards__title mb-12">
+  <section class="tratamientos__wrapper py-12 xl:py-24 my-0" id="relacionadas" ref="related">
+    <div class="tratamientos__services grid grid-cols-16 gap-0 lg:gap-4" data-color="#ffffff">
+      <div class="cards__title mb-12 col-[2/-2]">
         <h2 class="h3">{{ treatmentsData.titulo_relacionados }}</h2>
       </div>
-      <div class="tratamientos__relacionados">
-        <div class="card__wrapper" v-for="categoryId in treatmentsData.cirugias_relacionadas" :key="categoryId">
+      <div class="tratamientos__relacionados col-[2/-2] flex flex-row flex-wrap gap-4">
+        <div class="card__wrapper w-full max-w-[100vw] lg:max-w-[40vw] xl:max-w-[20vw]" v-for="categoryId in treatmentsData.cirugias_relacionadas" :key="categoryId">
           <HomeCategorySlide :categoryId="categoryId" />
         </div>
       </div>
@@ -28,46 +28,3 @@ const props = defineProps({
 const related = ref(null);
 
 </script>
-
-<style>
-.tratamientos {
-  padding: unset;
-}
-
-.tratamientos__services {
-  display: grid;
-  grid-template-columns: repeat(16, 1fr);
-  gap: 1rem;
-  
-  .cards__title {
-    grid-column: 1/-1;
-    text-align: center;
-
-    h2 {
-      font-size: calc(var(--font-size) * 2.5);
-    }
-  }
-  
-  .tratamientos__relacionados {
-    grid-column: 2/-2;
-    display: grid;
-    grid-template-columns: repeat(16, 1fr);
-    gap: 1rem;
-    
-    .card__wrapper {
-      grid-column: span 4;
-
-      .card {
-        display: flex;
-
- 
-      }
-
-      @media (max-width: 767px) {
-        grid-column: span 16;
-      }
-    }
-  }
-  
-}
-</style>

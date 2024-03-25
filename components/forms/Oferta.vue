@@ -3,7 +3,7 @@
     <div class="oferta__img p-24 m-0" :style="`background-image: url(${data.formimg})`">
       <div v-if="data.texto_form" v-html="data.texto_form"></div>
     </div>
-    <div id="ofertaForm" class="oferta__form py-12 px-12 m-0" v-once></div>
+    <div id="ofertaForm" class="oferta__form py-12 px-12 m-0" v-once v-resize></div>
   </div>
 </template>
 

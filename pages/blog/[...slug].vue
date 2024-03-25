@@ -238,21 +238,18 @@ const stickyForm = async () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: ".widgets",
-          pin: true,
+          pin: form,
           start: "top 10%",
           //scrub: 0.5,
           endTrigger: "footer.footer",
           end: "top bottom",
           pinSpacing: false,
           toggleActions: "restart none none reverse",
-          markers: true,
+          // markers: true,
         }
       });
-  
     })
-
   })
-
 }
 
 await loadSinglePost()
