@@ -17,7 +17,6 @@
             <div class="testimonios__content p-2 pb-4 text-center font-canela ">
                <h3 class="h6 text-clamp-xl">{{ testimonio.title.rendered }}</h3>
                <!-- <nuxt-link to="/" class="button button-reverse">Ver más</nuxt-link> -->
-               <!-- <div v-html="testimonio.content.rendered"></div> -->
             </div>
          </article>
       </div>
@@ -33,8 +32,8 @@ const testimonios = ref([]);
 
 // Métodos
 const testimoniosData = async () => {
-   const response = await getTestimonios();
-   testimonios.value = response.data
+   const response = await getTestimonios(1, 4);
+   testimonios.value = response.data.filter(testimonio => testimonio.acf.destacado && testimonio.acf.destacado.includes("Destacar"));
 };
 
 testimoniosData()
@@ -42,7 +41,4 @@ testimoniosData()
 
 <style lang="scss" scoped>
 // empty style
-// v=spf1 +a +mx +a:flamboyant-ardinghelli.89-116-52-173.plesk.page -all
-// v=spf1 include:spf.protection.outlook.com include:143602274.spf08.hubspotemail.net ip4:tu_ip_personalizada ~all 
-// v=spf1 ip4:195.35.3.186 include:143602274.spf08.hubspotemail.net ~all 
 </style>

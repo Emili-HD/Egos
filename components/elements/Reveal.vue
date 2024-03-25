@@ -2,7 +2,7 @@
    <div class="content__header col-[2_/_span_14] xl:col-[4_/_span_10]" ref="reveal">
       <component 
          :is="props.tag" 
-         class="content__header-title blue-1 w-full p-0" 
+         class="content__header-title blue-1 w-full p-0 [&>p]:font-semibold leading-normal" 
          v-html="titulo">
       </component>
    </div>

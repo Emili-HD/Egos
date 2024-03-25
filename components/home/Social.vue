@@ -26,11 +26,11 @@
          <SwiperSlide class="text-center bg-white rounded-xl overflow-hidden flex flex-col justify-center items-center cursor-pointer" v-for="tt in tiktokData.posts" :key="tt.index" @click="openPopup(tt.video_id)">
             <div class="tiktok-feed-item" :title="tt.description">
                <div class="tiktok-post-hover flex flex-col justify-center items-center absolute w-full h-[37.5rem] bg-blue-1/50 top-0 left-0 opacity-0 z-10 hover:opacity-100 transition-[opacity]">
-                  <img class="w-6 h-6 text-white" src="~/assets/images/icons/play-tiktok.svg" />
+                  <img class="w-6 h-6 text-white" src="~/assets/images/icons/play-tiktok.svg"  width="24" height="24" />
                </div>
                <div class="tiktok-play-count-container"></div>
                <div :id="`tiktok-${tt.video_id}`">
-                  <img class="object-cover object-center min-h-[37.5rem] w-full" :src="tt.thumbnail_url" alt="" />
+                  <img class="object-cover object-center min-h-[37.5rem] w-full" :src="tt.thumbnail_url" alt=""  width="422" height="750" />
                </div>
             </div>
          </SwiperSlide>

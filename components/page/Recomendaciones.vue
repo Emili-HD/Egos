@@ -5,15 +5,12 @@
       <div v-if="competencias.descripcion_seccion" v-html="competencias.descripcion_seccion"></div>
     </div>
     <div class="list accordion__list col-[8_/_span_9] row-1">
-      <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
-                  after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25
-                  first:before:bg-current first:before:content-[''] first:before:absolute first:before:top-0 first:before:left-0 
-                  first:before:w-full first:before:h-[1px] first:before:opacity-25" 
+      <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista" 
               v-for="listado in competencias.seccion_competencias" :key="listado.id"
             >
         <div class="accordion__list--item-title flex flex-row justify-between items-center
                     [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-          <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0" v-html="listado.titulo"></div>
+          <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist" v-html="listado.titulo"></div>
           <svg class="h-6 w-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
             <path class="iconV" d="M 12,0 V 24" />
             <path class="iconH" d="M 0,12 H 24" />

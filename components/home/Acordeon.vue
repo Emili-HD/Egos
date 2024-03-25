@@ -7,15 +7,12 @@
          </div>
          
          <div class="list accordion__list ">
-            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
-                        after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25
-                        first:before:bg-current first:before:content-[''] first:before:absolute first:before:top-0 first:before:left-0 
-                        first:before:w-full first:before:h-[1px] first:before:opacity-25" 
+            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista" 
               v-for="content in data.items" :key="content.titulo"
               >
                <div class="accordion__list--item-title flex flex-row justify-between items-center
                     [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0" v-html="content.titulo"></div>
+                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist" v-html="content.titulo"></div>
                   <svg class="h-6 w-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                      <path class="iconV" d="M 12,0 V 24" />
                      <path class="iconH" d="M 0,12 H 24" />
@@ -33,9 +30,9 @@
          </div>
       </div>
    
-      <div class="panel__image col-[2_/_span_14] xl:col-[9_/_span_7] sm:row-1 xl:row-1 aspect-square w-full overflow-hidden rounded-3xl">
-         <figure class="panel__image-img" v-for="image in data.items">
-            <NuxtImg loading="lazy" v-if="image.imagen.url" :src="image.imagen.url" alt="" />
+      <div class="panel__image col-[2_/_span_14] xl:col-[9_/_span_7] sm:row-1 xl:row-1 aspect-square w-full overflow-hidden rounded-3xl self-center">
+         <figure class="panel__image-img" v-for="(image, index) in data.items" :key="index" v-show="activeIndex === index">
+            <NuxtImg loading="lazy" :src="image.imagen.url" :alt="image.imagen.alt" />
          </figure>
       </div>
    </section>
@@ -55,7 +52,7 @@ const props = defineProps({
 })
 
 // Estado reactivo para la categoría
-// const category = ref(null);
+const activeIndex = ref(0); // índice del elemento activo
 
 // Métodos
 const initAccordion = async () => {
@@ -68,38 +65,37 @@ const initAccordion = async () => {
       const iconV = group.querySelector('.iconV');
       const iconH = group.querySelector('.iconH');
 
-      // Establece el estado inicial de manera explícita
       gsap.set(description, { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 });
       gsap.set([iconV, iconH], { rotate: 0, transformOrigin: '50% 50%' });
 
-      // Usa fromTo para definir explícitamente los estados inicial y final
       const tl = gsap.timeline({ paused: true, reversed: true })
-         .fromTo(description, 
-            { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 }, 
-            { duration: 0.2, autoAlpha: 1, height: 'auto', marginTop: '2rem', marginBottom: '2rem' }, 0)
-         .fromTo([iconV, iconH], 
-            { rotate: 0, transformOrigin: '50% 50%' },
-            { duration: 0.25, rotate: 45, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
+         .fromTo(description, { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 }, { duration: 0.2, autoAlpha: 1, height: 'auto', marginTop: '2rem', marginBottom: '2rem' }, 0)
+         .fromTo([iconV, iconH], { rotate: 0, transformOrigin: '50% 50%' }, { duration: 0.25, rotate: 45, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
 
       animations[index] = tl;
+      
 
       title.addEventListener('click', () => {
          if (tl.reversed()) {
-            animations.forEach((anim) => {
-              if (anim !== tl) anim.reverse().then(() => anim.pause());
-            });
-            tl.play();
+         animations.forEach((anim, animIndex) => {
+            if (anim !== tl) anim.reverse().then(() => anim.pause());
+         });
+         tl.play();
+         activeIndex.value = index; // Actualizar el índice activo al abrir
          } else {
-            tl.reverse();
+         tl.reverse();
+         activeIndex.value = 0; // Resetea el índice activo al cerrar
          }
       });
    });
+   return { activeIndex };
 };
 
 
 onMounted(async() => {
    await initAccordion()
 })
+
 </script>
 
 <style lang="scss" scoped>

@@ -10,29 +10,32 @@
     }
 
     body {
-        @apply font-geomanist font-light antialiased;
+        @apply font-geomanist font-light text-clamp-base lg:text-clamp-sm  antialiased overflow-x-hidden;
     }
     
     p {
         @apply mb-6 text-clamp-base lg:text-clamp-sm font-geomanist font-thin;
     }
+    li {
+        @apply mb-0 text-clamp-base lg:text-clamp-sm font-geomanist font-thin;
+    }
     h1, .h1 {
-        @apply mb-6 text-clamp-6xl font-thin;
+        @apply mb-6 text-clamp-6xl font-thin font-canela leading-tight;
     }
     h2, .h2 {
-        @apply mb-6 text-clamp-5xl font-thin;
+        @apply mb-6 text-clamp-5xl font-thin font-canela leading-tight;
     }
     h3, .h3 {
-        @apply mb-6 text-clamp-4xl font-thin;
+        @apply mb-6 text-clamp-4xl font-thin font-canela leading-tight;
     }
     h4, .h4 {
-        @apply mb-6 text-clamp-3xl font-thin;
+        @apply mb-6 text-clamp-3xl font-thin font-canela leading-tight;
     }
     h5, .h5 {
-        @apply mb-6 text-clamp-2xl font-thin;
+        @apply mb-6 text-clamp-2xl font-thin font-canela leading-tight;
     }
     h6, .h6 {
-        @apply mb-6 text-clamp-xl font-thin;
+        @apply mb-6 text-clamp-xl font-thin font-canela leading-tight;
     }
 }
 
@@ -104,7 +107,11 @@
     }
     
     .team__form .form-landing {
-        @apply max-w-full w-[max(360px,40vw)] bg-blue-1 p-8 rounded-2xl border-nude-1/20 top-[20vh];
+        @apply max-w-full h-screen md:h-auto w-[max(360px,40vw)] bg-blue-1 p-8 rounded-2xl border-nude-1/20 top-0 flex justify-center items-center;
+    }
+
+    .form-after {
+        @apply after:content-[''] after:border after:border-solid after:border-nude-8/[0.1] after:bg-nude-8/[0.025] after:absolute after:-top-6 after:-left-6 after:rounded-2xl after:w-[calc(100%+3rem)] after:h-[calc(100%+3rem)] after:pointer-events-none;
     }
 }
 
@@ -122,5 +129,21 @@
 
     .before-gradient {
         @apply before:content-[''] before:size-full before:absolute before:left-0 before:top-0 before:opacity-80 before:mix-blend-multiply before:bg-gradient-to-b from-transparent from-[10%] to-blue-1;
+    }
+
+    .span-gradient {
+        @apply text-clamp-6xl bg-[length:80%] xl:bg-[length:30%] font-semibold block bg-clip-text text-transparent bg-gold-gradient-text leading-tight;
+    }
+
+    .blue-gradient-full {
+        @apply before:absolute before:inset-0 before:bg-gradient-to-b before:from-blue-1 before:via-blue-1/0 before:to-blue-1 before:bg-opacity-25 before:mix-blend-multiply
+    }
+    
+    .overlay-blue {
+        @apply before:absolute before:inset-0 before:bg-blue-1 before:bg-opacity-75 before:mix-blend-multiply
+    }
+
+    .separador-lista {
+        @apply after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25 first:before:bg-current first:before:content-[''] first:before:absolute first:before:top-0 first:before:left-0  first:before:w-full first:before:h-[1px] first:before:opacity-25;
     }
 }

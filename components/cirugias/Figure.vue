@@ -20,7 +20,7 @@
             <VimeoPlayer :videoId="videoItem.video" />
          </div>
       </div>
-      <NuxtImg loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" alt="" />
+      <NuxtImg loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" :alt="contentData.side_image.alt" />
    </figure>
    <!-- </DelayHydration> -->
    <div class="panel__content col-[2/-2] lg:col-[10_/_span_6] has-[.accordion]:col-[2_/_span_6] row-start-2 lg:row-start-1"

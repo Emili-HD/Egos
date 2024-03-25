@@ -7,7 +7,6 @@ export default defineNuxtConfig({
     '~/plugins/gtm.js', 
     '~/plugins/setHtmlLang.js',
     '~/plugins/scrollToTop.client.js',
-    { src: '~/plugins/iframe-resize', mode: 'client' },
   ],
   css: [
     '~/src/styles.css', 

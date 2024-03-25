@@ -7,7 +7,7 @@
             <div class="notes flex flex-col justify-between items-start aspect-square rounded-2xl overflow-hidden p-8 w-[40vh] will-change-transform 
                         [&:nth-child(1)]:!bg-nude-7 [&:nth-child(2)]:!bg-nude-5 [&:nth-child(3)]:!bg-nude-4" 
                   v-for="skill in data.acf.loquehacemos" :key="skill.id">
-               <img loading="lazy" class="sLogo max-w-full w-28 xl:w-24 border border-current rounded-xl" :src="skill.icono.url" alt="">
+               <img loading="lazy" class="sLogo max-w-full w-28 xl:w-24 border border-current rounded-xl" :src="skill.icono.url" :alt="skill.icono.alt" width="96" height="96">
                <div class="[&>*]:!leading-6 [&>h3]:!font-semibold [&>h3]:!mb-1 [&>h3]:!text-xl [&>p]:!mb-0" v-html="skill.skill"></div>
             </div>
          </div>

@@ -44,14 +44,11 @@
                 v-html="post[0].acf.post_description.descripcion_recomendaciones"></div>
             </div>
             <div class="list accordion__list">
-              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
-                          after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25
-                          first:before:bg-current first:before:content-[''] first:before:absolute first:before:top-0 first:before:left-0 
-                          first:before:w-full first:before:h-[1px] first:before:opacity-25"
+              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista"
                 v-for="item in post[0].acf.post_description.secciones_del_post" :key="item.post_subtitle">
                 <div class="accordion__list--item-title flex flex-row justify-between items-center
                     [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0" v-html="item.post_subtitle"></div>
+                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist" v-html="item.post_subtitle"></div>
                   <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                     <path class="iconV" d="M 12,0 V 24" />
                     <path class="iconH" d="M 0,12 H 24" />
@@ -70,14 +67,11 @@
                 v-html="post[0].acf.post_faqs.titulo_faqs"></h2>
             </div>
             <div class="list accordion__list">
-              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer
-                      after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25
-                      first:before:bg-current first:before:content-[''] first:before:absolute first:before:bottom-0 first:before:left-0 
-                      first:before:w-full first:before:h-[1px] first:before:opacity-25"
+              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista"
                 v-for="contentido in post[0].acf.post_faqs.preguntas_frecuentes" :key="contentido.faq_subtitle">
                 <div class="accordion__list--item-title flex flex-row justify-between items-center
                     [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0" v-html="contentido.faq_subtitle"></div>
+                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist" v-html="contentido.faq_subtitle"></div>
                   <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                     <path class="iconV" d="M 12,0 V 24" />
                     <path class="iconH" d="M 0,12 H 24" />

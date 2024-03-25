@@ -1,27 +1,28 @@
 <template>
   <main class="site-main casos-reales" v-if="testimonios">
-    <section class="testimonios section__hero">
-      <div class="testimonios__header min-h-[60vh] flex flex-col justify-center align-center p-40">
+    <section class="testimonios section__hero gap-x-1 lg:gap-x-4 lg:gap-y-8">
+      <div class="testimonios__header min-h-[60vh] flex flex-col justify-center align-center p-8 lg:p-40 text-center">
         <h1>{{ pages.title.rendered }}</h1>
         <div v-html="pages.content.rendered"></div>
       </div>
-      <div class="categories__list checkboxes" v-if="categorias">
-        <div class="categories__list-title">Filtros</div>
-        <label v-for="categoria in categorias" :key="categoria.id"><input type="checkbox" :id="categoria.slug" class="filter" >{{ categoria.name }}
-        <svg viewBox="0 0 64 64" height="1em" width="1em">
-            <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
-                pathLength="575.0541381835938" class="path"></path>
-        </svg>
+        <div class="categories__list checkboxes p-4 flex flex-row-reverse flex-wrap justify-between md:justify-center items-center gap-1" v-if="categorias">
+        <div class="categories__list-title w-full text-center font-medium uppercase">Filtros</div>
+        <label class="bg-nude-5 text-xs text-gold-2 uppercase font-medium px-4 py-2 w-[32%] md:w-32 rounded-2xl flex items-center justify-evenly transition-all has-[input:checked]:bg-blue-1 has-[input:checked]:text-nude-8" v-for="categoria in categorias" :key="categoria.id">
+          <input type="checkbox" :id="categoria.slug" class="filter hidden" >{{ categoria.name }}
+          <svg class="overflow-visible bg-nude-1/50 rounded-2xl  has-[input:checked]" viewBox="0 0 64 64" height="1em" width="1em">
+              <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                  pathLength="575.0541381835938" class="path"></path>
+          </svg>
         </label>
       </div>
-      <div class="testimonios__list max-w-full px-40 py-20" v-if="testimonios">
-        <article v-for="testimonio in testimonios" :key="testimonio.id" class="card item rounded-3xl overflow-hidden"
+      <div class="testimonios__list max-w-full min-h-screen p-8 lg:px-40 lg:py-20 grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4" v-if="testimonios">
+        <article v-for="testimonio in testimonios" :key="testimonio.id" class="card item rounded-3xl overflow-hidden flex flex-col justify-between items-center gap-2 lg:gap-8 bg-nude-6 p-0"
           :class="getCategoriesNames(testimonio)">
-          <div class="testimonios__image" v-if="testimonio.featured_image_data && testimonio.featured_image_data.src">
-            <NuxtImg :src="testimonio.featured_image_data.src" :alt="testimonio.featured_image_data.alt" />
+          <div class="testimonios__image overflow-hidden w-full h-[60%]" v-if="testimonio.featured_image_data && testimonio.featured_image_data.src">
+            <NuxtImg class="object-cover w-full min-h-full" :src="testimonio.featured_image_data.src" :alt="testimonio.featured_image_data.alt" />
           </div>
-          <div class="testimonios__content p-2 pb-4 text-center">
-            <h3 class="h6">{{ testimonio.title.rendered }}</h3>
+          <div class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-between items-center">
+            <h3 class="h6 text-clamp-base font-medium">{{ testimonio.title.rendered }}</h3>
             <nuxt-link :to="`/opinion-egos/${testimonio.slug}`" class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</nuxt-link>
           </div>
         </article>
@@ -62,12 +63,17 @@ const loadData = async () => {
   }
 };
 
-function getCategoriesNames(testimonio) {
+const removeAccents = (str) => {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+const getCategoriesNames = (testimonio) => {
   if (!testimonio.categories_names || !testimonio.categories_names.length) {
     return '';
   }
-  return testimonio.categories_names.map(name => name.toLowerCase()).join(' '); // Usa ' ' como delimitador
+  return testimonio.categories_names.map(name => removeAccents(name).toLowerCase()).join(' '); // Usa ' ' como delimitador
 }
+
 
 const filtros = async () => {
   
@@ -170,24 +176,6 @@ useHead(() => {
 
 <style lang="scss" scoped>
 .checkboxes {
-    // @include flex(row, flex-start, center, nowrap, 1);
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    cursor: pointer;
-    color: var(--text-color);
-
-    input {
-        display: none;
-    }
-
-    svg {
-        overflow: visible;
-        background-color: rgba(var(--blue-1-rgb), 0.1);
-        border-radius: 1rem;
-    }
-
     .path {
         fill: none;
         stroke: var(--gold);
@@ -206,140 +194,5 @@ useHead(() => {
         stroke-dashoffset: -262.2723388671875;
     }
 
-}
-
-.testimonios {
-  column-gap: 1em;
-  row-gap: 2em;
-
-  @media (max-width: 767px) {
-    column-gap: 0.2em;
-    // padding: 0 .5em;
-  }
-
-  &__header {
-    grid-column: 3/-3;
-    text-align: center;
-  }
-
-  &__list {
-    grid-column: 2/16;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2em;
-    max-width: var(--full-width);
-
-    @media (max-width: 767px) {
-      grid-column: 2/-2;
-      grid-template-columns: repeat(2, 1fr);
-      gap: .5em;
-    }
-
-    .card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: nowrap;
-      gap: 2em;
-      aspect-ratio: unset;
-      background-color: var(--nude-8);
-      border-radius: var(--radius-xl);
-      padding: 0;
-
-      @media (max-width: 767px) {
-        gap: 0.5em;
-      }
-    }
-  }
-
-  &__image {
-    overflow: hidden;
-    width: 100%;
-    aspect-ratio: 3/2;
-
-    img {
-      object-fit: cover;
-      width: 100%;
-      min-height: 100%;
-    }
-  }
-
-  &__content {
-    padding: 1.5em;
-    width: 100%;
-    text-align: center;
-
-    @media (max-width: 767px) {
-      padding: 0.5em 0.5em 1.5em;
-    }
-  }
-}
-
-.categories__list {
-  grid-column: 3/-3;
-  list-style: none;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
-  flex-wrap: wrap;
-
-  &-title {
-    width: 100%;
-    text-align: center;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 767px) {
-    justify-content: space-between;
-    column-gap: 0.3em;
-    row-gap: 0.4em;
-  }
-
-  @media (max-width: 767px) {
-    grid-column: 2/-2;
-  }
-
-
-    label {
-      border-radius: var(--radius-xl);
-      padding: .5em 1em;
-      background-color: var(--nude-5);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-evenly;
-      text-transform: uppercase;
-      font-size: calc(var(--font-size) * 0.7);
-      color: var(--gold-2);
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-align: center;
-      transition: background-color var(--transition), color var(--transition);
-      width: 7.5em;
-
-      @media (max-width: 767px) {
-        width: 28vw;
-      }
-
-      svg {
-        overflow: visible;
-        background-color: rgba(var(--blue-1-rgb), 0.1);
-        border-radius: 1em;
-      }
-
-      &:has(input:checked) {
-        background-color: var(--blue-1);
-        color: var(--nude-8);
-
-        svg {
-            background-color: rgba(var(--nude-8-rgb), 0.15);
-        }
-    }
-    }
-  
 }
 </style>

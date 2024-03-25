@@ -1,7 +1,7 @@
 <template>
     <section class="intro min-h-[100vh]">
         <div class="intro__image bg-[#16253c] h-[100vh] inset-0 absolute w-[100vw] flex flex-col justify-center items-start gap-8">
-            <img provider="ipx" loading="lazy" class="girl h-fit object-fit absolute w-[100vw] z-0 left-0 lg:left-[25vw]" src="/assets/images/2-intro/chica.avif" alt="" />
+            <img provider="ipx" loading="lazy" class="girl h-screen object-cover absolute z-0 left-0 lg:left-[25vw]" src="/assets/images/2-intro/chica.avif" alt=""  width="1792" height="1008" />
             <p class="intro__title font-geomanist font-semibold text-clamp-6xl 
                       lg:text-[4vw] text-nude-7 leading-[0.9] mb-0 mt-[15vh] pl-8 lg:pl-16 text-left
                       [&>span]:!text-gold-2 [&>span]:w-full [&>span]:block lg:[&>span]:inline-block">

@@ -1,10 +1,9 @@
 <template>
-    <header class="egos-header fixed p-3 flex flex-row justify-start items-center gap-8 z-[1000] max-h-screen/70 w-screen/85" id="site-header">
+    <header class="egos-header fixed p-3 flex flex-row justify-start items-center gap-8 z-[1000] max-h-screen/70 w-screen md:w-screen/85" id="site-header">
         <div class="header-wrapper flex flex-row justify-between px-1 w-full">
             <div class="header-brand flex flex-col justify-start items-start py-2 px-4 bg-blue-1 rounded-2xl">
                 <nuxt-link class="block" to="/" aria-label="Vuelve a la página de inicio">
-                    <img loading="lazy" class="w-full max-w-16 xl:max-w-16" src="/assets/images/icons/logo-egos.svg"
-                        alt="" />
+                    <img loading="lazy" class="w-full max-w-16 xl:max-w-16" src="/assets/images/icons/logo-egos.svg" alt="Egos" />
                 </nuxt-link>
             </div>
 
@@ -22,13 +21,13 @@
                                 </nuxt-link>
                                 <img class="arrow-down max-w-4 order-2 absolute right-4 opacity-50"
                                     src="../../assets/images/icons/arrow-down.svg" v-if="tratamiento.child_items"
-                                    alt="">
+                                    alt="Abrir menú">
                             </div>
                             <div class="menu-wrapper">
                                 <nuxt-link :to="tratamiento.url" class="nav-link hidden xl:block text-clamp-xs"
                                     active-class="router-link-active">
                                     <span class="">{{ tratamiento.title }}</span>
-                                    <img src="../../assets/images/icons/arrow-up.svg" alt="">
+                                    <img src="../../assets/images/icons/arrow-up.svg" alt="Cerrar menú">
                                 </nuxt-link>
                                 <div class="submenu mt-1 xl:fixed top-0 left-0 xl:right-0 xl:top-12 xl:m-auto z-0"
                                     v-if="tratamiento.child_items">
@@ -59,23 +58,20 @@
                                                             :class="subSubTratamiento.classes"
                                                             active-class="nuxt-link-active">
                                                             {{ subSubTratamiento.title }}
-                                                            <img src="../../assets/images/icons/arrow-up.svg" alt="">
+                                                            <img src="../../assets/images/icons/arrow-up.svg" alt="Cerrar menú" />
                                                         </nuxt-link>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <div class="logros">
                                                 <div class="mejorValorada">
-                                                    <img id="google-icon"
-                                                        src="../../assets/images/icons/google-icon.svg" alt="">
+                                                    <img id="google-icon" src="../../assets/images/icons/google-icon.svg" alt="Clínica mejor valorada en google"  width="36" height="36" />
                                                     <span>Clínica mejor valorada</span>
                                                 </div>
                                                 <div class="operaciones">
-                                                    <img id="laurel-iz" src="../../assets/images/icons/laurel-iz.svg"
-                                                        alt="">
+                                                    <img id="laurel-iz" src="../../assets/images/icons/laurel-iz.svg" alt="" width="16" height="32" />
                                                     <span>+2000</span>
-                                                    <img id="laurel-der" src="../../assets/images/icons/laurel-der.svg"
-                                                        alt="">
+                                                    <img id="laurel-der" src="../../assets/images/icons/laurel-der.svg" alt="" width="16" height="32" />
                                                     <span id="pacientes">pacientes intervenidos al año</span>
                                                 </div>
                                             </div>
@@ -91,7 +87,7 @@
                                                     v-for="subSubTratamiento in subTratamiento.child_items"
                                                     :key="subSubTratamiento.ID">
                                                     <img loading="lazy" class="menu-icon object-cover object-center min-h-full min-w-full"
-                                                        :data-src="subSubTratamiento.acf.icon" alt="" />
+                                                        :data-src="subSubTratamiento.acf.icon" alt=""  width="571" height="706" />
                                                 </div>
                                             </li>
                                         </ul>
@@ -415,9 +411,7 @@ onMounted(async () => {
     width: calc(var(--full-width) - (var(--gap) * 2));
 
     .header-wrapper {
-
         .nav-secondary {
-
             @media (max-width: 1200px) {
                 min-width: 25vw;
             }
@@ -773,7 +767,7 @@ onMounted(async () => {
     }
 }
 
-.nav-pages {
+/* .nav-pages {
     align-items: center;
     background: var(--nude-6);
     border: 1px solid rgba(var(--gold-2-rgb), .1);
@@ -835,28 +829,13 @@ onMounted(async () => {
             }
         }
     }
-}
+} */
 
 ul.submenu__left-slider {
 
     .before-after {
         &>.slide-c {
             width: calc(var(--menu-width) / 2.666667);
-            // height: var(--menu-height);
-            // position: absolute;
-            // left: 0;
-            // top: 0;
-            // opacity: 0;
-            // scale: 1;
-            // will-change: opacity;
-            // z-index: 0;
-
-            // img {
-            //     object-fit: cover;
-            //     object-position: center;
-            //     height: var(--full-height);
-            //     min-width: calc(var(--menu-width) / 2.666667);
-            // }
         }
     }
 }

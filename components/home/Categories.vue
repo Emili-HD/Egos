@@ -10,7 +10,7 @@
                         [&:nth-child(1)]:!bg-nude-7 [&:nth-child(2)]:!bg-nude-5 [&:nth-child(3)]:!bg-nude-4"
                v-for="skill in data.acf.loquehacemos" :key="skill.id">
                <img loading="lazy" class="sLogo max-w-full w-28 xl:w-24 border border-current rounded-xl"
-                  :src="skill.icono.url" alt="">
+                  :src="skill.icono.url" :alt="skill.icono.alt" width="96" height="96" />
                <div class="[&>*]:!leading-6 [&>h3]:!font-canela [&>h3]:!font-semibold [&>h3]:!mb-1 [&>h3]:!text-xl [&>p]:!mb-0"
                   v-html="skill.skill"></div>
             </div>
@@ -67,8 +67,8 @@
                </div>
             </SwiperSlide>
          </Swiper>
-         <div class="home__services-description w-full pt-12 px-10 xl:px-24 pb-12">
-            <p class="text-balance w-full lg:w-1/2" v-html="data.acf.tratamientos_home.descripcion_categorias"></p>
+         <div class="home__services-description w-full pt-12 px-10 xl:px-24 pb-12 text-center">
+            <p class="text-balance w-full" v-html="data.acf.tratamientos_home.descripcion_categorias"></p>
          </div>
       </div>
    </section>

@@ -7,7 +7,7 @@
         :modules="[SwiperFreeMode, SwiperScrollbar, SwiperMousewheel]" class="swiperColumn w-full h-fit lg:h-[34rem] p-0 lg:py-8 pointer-events-none lg:pointer-events-auto [&>h2]:text-clamp-xl">
         <SwiperSlide class="h-auto box-border pr-8">
           <h2 class="h4" v-html="column.list_title"></h2>
-          <div class="[&>ul>li]:text-clamp-base [&>ul>li]:mb-6" v-html="column.content_list"></div>
+          <div class="[&>ul]:list-disc [&>ul>li]:mb-6" v-html="column.content_list"></div>
         </SwiperSlide>
       </Swiper>
     </div>

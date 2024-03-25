@@ -16,7 +16,7 @@
          </div>
       </div>
       <div class="promociones__featured pt-12 text-center">
-         <p class="h5 !text-3xl text-balance">{{ data.promocion.destacado }}</p>
+         <p class="h5 !text-3xl text-balance font-geomanist text-nude-8">{{ data.promocion.destacado }}</p>
       </div>
    </section>
 </template>
