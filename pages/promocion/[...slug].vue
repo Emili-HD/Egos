@@ -3,68 +3,75 @@
       <ElementsButton class="gold" href="#hubspotLanding" @click.prevent="handleClick">Cita con el cirujano
       </ElementsButton>
    </div>
-   <main class="site-main landing-main" v-if="landing && landing[0].acf">
+   <main class="site-main landing-main" v-if="landingData && landingData.value && landingData.value.acf">
       <section class="hero m-0">
-         <LandingsHeader :data="landing[0]" />
+         <LandingsHeader :data="landingData.value" />
          <div id="formulario" class="hero__form p-12 xl:p-16">
             <div class="insignia mb-8 flex flex-row justify-center">
-               <NuxtImg loading="lazy" :src="landing[0].acf.insignia.url" alt="" />
+               <NuxtImg loading="lazy" :src="landingData.value.acf.insignia.url" alt="" />
             </div>
-            <FormsLanding :portalId="String(landing[0].acf.form[0].portalid)" :formId="landing[0].acf.form[0].formid" />
+            <FormsLanding :portalId="String(landingData.value.acf.form[0].portalid)" :formId="landingData.value.acf.form[0].formid" />
          </div>
       </section>
 
-      <LandingsDetalles :data="landing[0].acf" />
-      <LandingsAntesDespues :data="landing[0].acf" />
-      <LandingsDestacado :data="landing[0].acf" />
-      <LandingsPromociones :data="landing[0].acf" />
-      <LandingsFinanciacion :data="landing[0].acf" />
-      <LandingsPasos :data="landing[0].acf" />
-      <LandingsInformacion :data="landing[0].acf" />
-      <LandingsTestimonios :data="landing[0].acf" />
-      <LandingsResenas :data="landing[0].acf" />
+      <LandingsDetalles :data="landingData.value.acf" />
+      <LandingsAntesDespues :data="landingData.value.acf" />
+      <LandingsDestacado :data="landingData.value.acf" />
+      <LandingsPromociones :data="landingData.value.acf" />
+      <LandingsFinanciacion :data="landingData.value.acf" />
+      <LandingsPasos :data="landingData.value.acf" />
+      <LandingsInformacion :data="landingData.value.acf" />
+      <LandingsTestimonios :data="landingData.value.acf" />
+      <LandingsResenas :data="landingData.value.acf" />
    </main>
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted } from 'vue';
-import { getLanding } from '@/composables/useApi';
-import { useRoute } from 'vue-router';
+import { watch } from 'vue';
+import { useAsyncData, useRoute } from 'nuxt/app';
+import { getLanding } from '@/composables/useFetch';
 
-// Estado reactivo
-const landing = ref(null);
 const route = useRoute();
+
+// Estado reactivo para almacenar los datos de la página de aterrizaje
+let landingData = ref(null);
+
+// Función para cargar los datos
+async function loadLandingData(slug) {
+  const { data: landing, error: landingError, pending: landingPending } = await useAsyncData(`landing-${slug}`, () => getLanding(slug), { initialCache: false });
+
+  // Asignar los datos cargados al estado reactivo
+  landingData.value = landing;
+}
+
+// Iniciar la carga de datos basados en el slug actual de la ruta
+loadLandingData(route.params.slug);
+
+// Observar cambios en el parámetro de la ruta y recargar los datos cuando cambie
+watch(() => route.params.slug, (newSlug) => {
+  if (newSlug) {
+    loadLandingData(newSlug);
+  }
+}, { immediate: true });
 
 function handleClick() {
    const { $lenis: lenis } = useNuxtApp();
-   // console.log('lenis on click', lenis);
    lenis.scrollTo('#hubspotLanding', { offset: -20 });
 }
-
-const loadLanding = async () => {
-   try {
-      const slug = route.params.slug;
-      const landingResponse = await getLanding(slug);
-      landing.value = landingResponse.data;
-   } catch (error) {
-      console.error("Error loading landing:", error);
-   }
-}
-
-await loadLanding()
 
 // Datos YOAST SEO
 useHead(() => {
    // Verifica si el post está cargado y tiene la estructura esperada
-   if (!landing.value || landing.value.length === 0 || !landing.value[0].yoast_head_json) {
+   if (!landingData.value || !landingData.value.yoast_head_json) {
       return {
          title: 'Cargando...', // Título temporal mientras se cargan los datos
       };
    }
 
    // Accede al primer elemento del arreglo para obtener los datos de YOAST SEO
-   const yoast = landing.value[0].yoast_head_json;
+   const yoast = landingData.value.yoast_head_json;
 
+   const link = [{ rel: 'canonical', href: yoast.canonical }]
    const metaTags = [
       { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
       { property: 'og:title', content: yoast.og_title },
@@ -79,7 +86,7 @@ useHead(() => {
       // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
       { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
       // Canonical
-      { rel: 'canonical', href: yoast.canonical },
+      // { rel: 'canonical', href: yoast.canonical },
       // Robots
       {
          name: 'robots',
@@ -99,6 +106,7 @@ useHead(() => {
 
    return {
       title: yoast.title || 'Título del Post',
+      link: link,
       meta: metaTags,
    };
 });

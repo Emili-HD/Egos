@@ -18,7 +18,6 @@
                 <h3 class="h6 text-center uppercase text-clamp-sm font-semibold mb-0">{{ category.title.rendered }}</h3>
                 <div v-html="category.excerpt.rendered" class="[&>p]:text-sm [&>p]:mb-0 [&>p]:text-center [&>p]:text-balance"></div>
                 <ElementsButton class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</ElementsButton>
-                <!-- <button class="button dark">Saber más</button> -->
             </div>
         </nuxt-link>
     </div>
@@ -28,8 +27,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { getSingleTratamientoById } from '@/composables/useApi'
+import { computed } from 'vue';
+import { useAsyncData } from 'nuxt/app';
+import { getTratamiento } from '@/composables/useFetch';
 
 // Definir props
 const props = defineProps({
@@ -42,9 +42,6 @@ const props = defineProps({
   }
 });
 
-// Estado reactivo para la categoría
-const category = ref(null);
-
 // Propiedad computada
 const processedLink = computed(() => {
   if (category.value && category.value.link) {
@@ -54,16 +51,6 @@ const processedLink = computed(() => {
   return ''; // Devuelve una ruta vacía si no hay URL
 });
 
-// Función para cargar la categoría
-const loadCategory = async () => {
-  try {
-    const categoryResponse = await getSingleTratamientoById(props.categoryId);
-    category.value = categoryResponse.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+const { data: category, error, pending } = await useAsyncData(`tratamiento-${props.categoryId}`, () => getTratamiento({ id: props.categoryId }));
 
-// Ciclo de vida creado
-loadCategory();
 </script>

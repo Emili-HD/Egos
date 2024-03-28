@@ -29,7 +29,7 @@ onMounted( async () => {
         target: '#' + props.identificador
       })
       isHubSpotLoaded.value = true;
-      console.log('form iniciado');
+      // console.log('form iniciado');
     }
   })
 })

@@ -61,7 +61,7 @@
             @transitionStart="handleSwipeStart"
             @transitionEnd="handleSwipeEnd">
          >
-            <SwiperSlide class="text-left flex flex-col justify-start items-start p-8 [&>h3]:!text-clamp-sm" v-for="categoryId in data.acf.tratamientos_home.categorias_home" :key="categoryId">
+            <SwiperSlide class="text-left flex flex-col justify-start items-start p-8 [&>h3]:!text-clamp-sm" v-for="(categoryId, index) in data.acf.tratamientos_home.categorias_home" :key="`category-${categoryId}-${index}`">
                <div class="card__wrapper min-w-full xl:min-w-[360px] xl:max-w-[400px] opacity-100 px-2 xl:px-0 relative [&.active]:opacity-100">
                   <HomeCategorySlide :categoryId="categoryId" class="[&>.card-wrapper>.card]:h-full  [&>.card-wrapper>.card]:objet-cover [&>.card-wrapper>.card]:object-center [&>.card-wrapper>.card]:w-[90vw] [&>.card-wrapper>.card]:shadow-2xl" />
                </div>
@@ -96,25 +96,22 @@ const props = defineProps({
       required: true,
    }
 })
+// console.log('datos de acf:',props.data.acf.tratamientos_home.categorias_home);
 
 const onSwiper = (swiper) => {
-    console.log('swiper horizontal activado');
+   //  console.log('swiper horizontal activado');
 };
 
 const handleSwipeStart = () => {
     document.querySelector('.home__services').setAttribute('data-lenis-prevent', '');
-    console.log('slide move');
+   //  console.log('slide move');
 };
 
 const handleSwipeEnd = () => {
     document.querySelector('.home__services').removeAttribute('data-lenis-prevent');
-    console.log('slide end');
+   //  console.log('slide end');
 };
 
-
-onMounted(() => {
-   // 
-})
 </script>
 
 <style lang="scss" scoped>

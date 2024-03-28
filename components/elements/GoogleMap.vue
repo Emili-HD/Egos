@@ -1,63 +1,71 @@
 <template>
-  <GoogleMap :api-key="apiKey" class="clinicas__egos-map size-full" ref="mapRef" :center="centerMap"
-    :zoom="zoom" :styles="mapStyles">
-    <CustomControl position="LEFT_CENTER" class="clinics">
-      <ul class="clinics">
-        <li v-for="location in locations" :key="location.id">
-          <button class="custom-btn" @click="() => updateMapAndContent(location.id)" v-html=" location.title.rendered"></button>
-        </li>
-      </ul>
-    </CustomControl>
-    <Marker v-for="(location, i) in locations" :options="{ position: { lat: location.acf.lat, lng: location.acf.lng }, anchorPoint: 'BOTTOM_CENTER', icon: markerIcon,}" :key="i" />
-  </GoogleMap>
+  <ClientOnly >
+    <GoogleMap
+      :api-key="apiKey"
+      class="size-full [&>.gmnoprint]:!hidden"
+      ref="mapRef"
+      :center="centerMap"
+      :zoom="zoom"
+      :styles="mapStyles"
+    >
+      <CustomControl position="LEFT_CENTER" class="clinics ">
+        <ul class="clinics p-8 hidden lg:flex flex-col">
+          <li v-for="location in locations" :key="location.id" class="mb-1">
+            <button
+              class="custom-btn m-0 py-1 px-3 font-light text-sm appearance-none cursor-pointer select-none text-nude-8 bg-blue-1 rounded-md"
+              @click="() => updateMapAndContent(location.id)"
+              v-html="location.title.rendered"
+            ></button>
+          </li>
+        </ul>
+      </CustomControl>
+      <Marker
+        v-for="(location, i) in locations"
+        :options="{
+          position: { lat: location.acf.lat, lng: location.acf.lng },
+          anchorPoint: 'BOTTOM_CENTER',
+          icon: markerIcon,
+        }"
+        :key="i"
+      />
+    </GoogleMap>
+  </ClientOnly>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { getClinicas } from '@/composables/useApi'
-const apiKey = useRuntimeConfig().public.googleMapsApiKey;
+import { getClinicas } from '@/composables/useFetch'
+const apiKey = useRuntimeConfig().public.googleMapsApiKey
 
-import {
-  GoogleMap,
-  Marker,
-  CustomControl,
-} from 'vue3-google-map'
+import { GoogleMap, Marker, CustomControl } from 'vue3-google-map'
 
-let markerIcon;
+let markerIcon
 import('/images/marker_1.png').then((module) => {
-  markerIcon = module.default;
-});
-let imageCenter;
+  markerIcon = module.default
+})
+let imageCenter
 import('/images/egos/egos-balmes.jpg').then((module) => {
-  imageCenter = module.default;
-});
+  imageCenter = module.default
+})
 
 // Propiedades reactivas
 const mapRef = ref(null)
-const locations = ref([])
-const centerMap = ref({ lat: 40.855242, lng: -0.486289 });
-const zoom = ref(7.25);
-const emit = defineEmits(['update-content']);
+const centerMap = ref({ lat: 40.855242, lng: -0.486289 })
+const zoom = ref(7.25)
+const emit = defineEmits(['update-content'])
 
 // Métodos
 const updateMapAndContent = (locationId) => {
   // Buscar por el ID numérico del objeto, que es location.id
-  const location = locations.value.find(loc => loc.id === locationId);
+  const location = locations.value.find((loc) => loc.id === locationId)
   if (location) {
-    centerMap.value = { lat: location.acf.lat, lng: location.acf.lng };
-    zoom.value = 15;
-    emit('update-content', location.content.rendered);
-  }
-};
-
-const loadClinicas = async () => {
-  try {
-    const postsResponse = await getClinicas()
-    locations.value = postsResponse.data
-  } catch (error) {
-    console.error(error)
+    centerMap.value = { lat: location.acf.lat, lng: location.acf.lng }
+    zoom.value = 15
+    emit('update-content', location.content.rendered)
   }
 }
+
+const { data: locations, error: locationsError, pending: locationsPending } = await useAsyncData(() => getClinicas())
 
 // Diseño del mapa
 const mapStyles = [
@@ -408,61 +416,8 @@ const mapStyles = [
   },
 ]
 
-// Ciclo de vida
-onMounted(async () => {
-  await loadClinicas()
-})
 </script>
 
-<style lang="scss">
-.clinicas__egos-map {
-  .gm-style .gm-style-iw-d,
-  .gm-style .gm-style-iw-d,
-  .gm-style .gm-style-iw-c,
-  .gm-style .gm-style-iw-t {
-    color: var(--blue-1);
-  }
-}
-
-.gm-style .gm-style-iw-a {
-  margin-top: -50px;
-}
-
-.gm-style .gm-style-iw-c {
-  width: 350px !important;
-  top: 0px !important;
-  left: 0px !important;
-}
-
-.custom-control-wrapper {
-  margin-left: calc(var(--spacing) - var(--gap));
-  display: flex !important;
-  flex-direction: column;
-
-  @media (max-width: 767px), (max-width: 1024px) and (orientation: portrait) {
-    display: none !important;
-  }
-
-  .clinics {
-    list-style: none;
-    margin-bottom: 0;
-
-    li {
-      margin-bottom: 0.3rem;
-    }
-  }
-
-  .custom-btn {
-    margin: 0px;
-    padding: 3px 12px;
-    font-weight: 300;
-    font-size: 0.85rem;
-    appearance: none;
-    cursor: pointer;
-    user-select: none;
-    color: var(--nude-8);
-    background-color: var(--blue-1);
-    border-radius: .25rem;
-  }
-}
+<style lang="scss" scoped>
+// empty style
 </style>

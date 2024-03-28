@@ -1,5 +1,7 @@
 <template>
-  <main class="site-main" v-if="home">
+  <div v-if="pending">Cargando...</div>
+  <div v-else-if="error">Error al cargar los datos: {{ error }}</div>
+  <main v-else class="site-main" v-if="home">
       <HomeWellcome critical :data="home" />
       <DelayHydration>
         <LazyHomeCategories :data="home" />
@@ -21,17 +23,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getSinglePage } from '@/composables/useApi';
+import { onMounted, computed } from 'vue';
+import { useAsyncData } from 'nuxt/app'
+import { getPage } from '@/composables/useFetch';
 
-// Estado reactivo para el contenido de la página
-const home = ref(null);
+const { data: home, error, pending } = await useAsyncData(() => getPage(8), {initialCache: false})
+// console.log(home.value.acf.tratamientos_home.categorias_home);
 
-// Obtener datos de la API al crear el componente
-const fetchData = async (id) => {
-    const { data } = await getSinglePage(id);
-    home.value = data; 
-};
+const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);
+
 
 // Datos YOAST SEO
 useHead(() => {
@@ -43,6 +43,7 @@ useHead(() => {
 
   const yoast = home.value.yoast_head_json;
 
+  const link = [{ rel: 'canonical', href: yoast.canonical }]
   const metaTags = [
     { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
     { property: 'og:title', content: yoast.og_title },
@@ -57,7 +58,7 @@ useHead(() => {
     // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
     { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
     // Canonical
-    { rel: 'canonical', href: yoast.canonical },
+    // { rel: 'canonical', href: yoast.canonical },
     // Robots
     {
       name: 'robots',
@@ -77,6 +78,7 @@ useHead(() => {
 
   return {
     title: yoast.title,
+    link: link,
     meta: metaTags,
   };
 });
@@ -110,7 +112,6 @@ const injectStructuredData = () => {
   document.head.appendChild(script);
 };
 
-await fetchData(8)
 onMounted(() => {
   injectStructuredData()
 })

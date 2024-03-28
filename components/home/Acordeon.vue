@@ -12,7 +12,7 @@
               >
                <div class="accordion__list--item-title flex flex-row justify-between items-center
                     [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist" v-html="content.titulo"></div>
+                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist text-clamp-base mb-0 !font-light" v-html="content.titulo"></div>
                   <svg class="h-6 w-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                      <path class="iconV" d="M 12,0 V 24" />
                      <path class="iconH" d="M 0,12 H 24" />

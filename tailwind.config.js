@@ -78,10 +78,10 @@ module.exports = {
         'clamp-5xl': "clamp(2.8rem, 3.1vw, 3.3rem)",
         'clamp-6xl': "clamp(3.1rem, 3.4vw, 3.7rem)",
       },
-      fontFamily: {
-        canela: ['Canela', 'serif'],
-        geomanist: ['Geomanist', 'sans-serif'],
-      },
+      // fontFamily: {
+      //   canela: ['Canela', 'serif'],
+      //   geomanist: ['Geomanist', 'sans-serif'],
+      // },
       spacing: {
         'screen/95': '95vh',
         'screen/90': '90vh',
@@ -117,7 +117,7 @@ module.exports = {
   },
   plugins: [
     // require('@tailwindcss/fontSize'),
-    require('@tailwindcss/typography'),
+    // require('@tailwindcss/typography'),
     // require('@tailwindcss/keyframes'),
   ],
   content: [

@@ -32,36 +32,23 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue';
-import { getTestimonios, getSinglePage, getTestimoniosCategories } from '@/composables/useApi';
+import { ref, nextTick, onMounted } from 'vue';
+import { useAsyncData } from 'nuxt/app';
+import { getTestimonios, getPage } from '@/composables/useFetch';
 import { Flip } from 'gsap/Flip';
 
 const { $gsap: gsap } = useNuxtApp();
-
-// estado reactivo
-const testimonios = ref(null)
-const pages = ref(null)
-const categorias = ref([]);
 const categoriasSeleccionadas = ref({});
 
-// Métodos
-const loadData = async () => {
-  try {
-    // Operaciones en paralelo para cargar especialidades y página única
-    const [testimoniossResponse, singlePageResponse, categoriasResponse] = await Promise.all([
-      getTestimonios(),
-      getSinglePage(16851),
-      getTestimoniosCategories(),
-    ]);
+// Cargar testimonios
+const { data: testimonios, error: testimoniosError, pending: testimoniosPending } = await useAsyncData('testimonios', () => getTestimonios({ page: 1, perPage: 100 }));
 
-    // Actualiza las respuestas de especialidades y página
-    testimonios.value = testimoniossResponse.data;
-    pages.value = singlePageResponse.data;
-    categorias.value = categoriasResponse.data
-  } catch (error) {
-    console.error("Error loading data:", error);
-  }
-};
+// Cargar página específica (p.ej., la información de la página de testimonios)
+const pageId = 16851; // Asume que este es el ID de tu página de testimonios
+const { data: pages, error: pagesError, pending: pagesPending } = await useAsyncData(`page-${pageId}`, () => getPage(pageId), {initialCache: false});
+
+// Cargar categorías de testimonios
+const { data: categorias, error: categoriasError, pending: categoriasPending } = await useAsyncData('categoriasTestimonios', () => getTestimonios({ categories: true }));
 
 const removeAccents = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -115,8 +102,6 @@ const filtros = async () => {
   filters.forEach(btn => btn.addEventListener('click', updateFilters));
 }
 
-await loadData()
-
 onMounted(async () => {
   await nextTick()
   await filtros()
@@ -135,6 +120,7 @@ useHead(() => {
 
   const yoast = pages.value.yoast_head_json;
 
+  const link = [{ rel: 'canonical', href: yoast.canonical }]
   const metaTags = [
     { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
     { property: 'og:title', content: yoast.og_title },
@@ -149,7 +135,7 @@ useHead(() => {
     // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
     { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
     // Canonical
-    { rel: 'canonical', href: yoast.canonical },
+    // { rel: 'canonical', href: yoast.canonical },
     // Robots
     {
       name: 'robots',
@@ -169,6 +155,7 @@ useHead(() => {
 
   return {
     title: yoast.title,
+    link: link,
     meta: metaTags,
   };
 });

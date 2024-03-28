@@ -63,18 +63,18 @@
                                                     </li>
                                                 </ul>
                                             </li>
-                                            <div class="logros">
-                                                <div class="mejorValorada">
+                                            <li class="logros text-nude-8 text-clamp-xs hidden lg:flex justify-center items-center absolute bottom-0 w-full h-24">
+                                                <div class="mejorValorada flex items-center gap-1">
                                                     <img id="google-icon" src="../../assets/images/icons/google-icon.svg" alt="Clínica mejor valorada en google"  width="36" height="36" />
-                                                    <span>Clínica mejor valorada</span>
+                                                    <span class="!text-nude-8 after:content-none before:!content-none" >Clínica mejor valorada</span>
                                                 </div>
-                                                <div class="operaciones">
+                                                <div class="operaciones flex items-center">
                                                     <img id="laurel-iz" src="../../assets/images/icons/laurel-iz.svg" alt="" width="16" height="32" />
-                                                    <span>+2000</span>
+                                                    <span class="!text-nude-8 after:content-none before:!content-none" >+2000</span>
                                                     <img id="laurel-der" src="../../assets/images/icons/laurel-der.svg" alt="" width="16" height="32" />
-                                                    <span id="pacientes">pacientes intervenidos al año</span>
+                                                    <span class="!text-nude-8 after:content-none before:!content-none" id="pacientes left-2">pacientes intervenidos al año</span>
                                                 </div>
-                                            </div>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div
@@ -111,9 +111,9 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted } from 'vue';
-import { menuTratamientos } from '@/composables/useApi';
-import { useRoute } from 'vue-router';
+import { watch } from 'vue';
+import { useAsyncData, useRoute } from 'nuxt/app';
+import { getMenu } from '@/composables/useFetch'; // Asegúrate de que esta ruta sea correcta
 import { useMenuStore } from '@/stores/menu';
 // import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -121,67 +121,50 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const { $gsap: gsap } = useNuxtApp();
 const route = useRoute();
 const menuStore = useMenuStore();
-const menuContainer = ref(null);
 
 
 function handleClick() {
     const { $lenis: lenis } = useNuxtApp();
-    // console.log('lenis on click', lenis);
     lenis.scrollTo('#formulario', { offset: -20 });
 }
 
-// State
-const menuTratamientosData = ref({});
-const tratamientoTabs = ref({});
-
 // Métodos
-const loadDataAndInitializeMenus = async () => {
-    try {
-        // Cargar datos de WordPress
-        const response = await menuTratamientos(); // Asegúrate de usar `await` aquí
-        const resTratamientos = response.data; // Accede a los datos con response.data
-        // console.log('Tratamientos: ', resTratamientos);
-
-        // Ahora usa resTratamientos directamente, ya que contiene los datos resueltos
-        if (resTratamientos && resTratamientos.items) {
-            menuTratamientosData.value = resTratamientos;
-            resTratamientos.items.forEach((item) => {
-                // console.log('item url', item.url);
-                if (item.url && item.url.startsWith('http')) {
-                    item.url = new URL(item.url).pathname;
-                }
-
-                if (item.child_items && item.child_items.length > 0) {
-                    // console.log('Subitem url', item.child_items[0].child_items.url);
-                    item.child_items.forEach((subItem) => {
-                        // console.log('Subitem url', subItem.child_items);
-                        subItem.child_items.forEach((subSubItem) => {
-
-                            if (subSubItem.url && subSubItem.url.startsWith('http')) {
-                                // console.log('subSubItem url', subSubItem.url);
-                                subSubItem.url = new URL(subSubItem.url).pathname;
-                                // console.log('subSubItem url', subSubItem.url);
-                            }
-
-                        })
-                    });
-                }
-            });
-        } else {
-            console.error('No se encontraron items en los datos de tratamiento.');
-        }
-
-        if (process.client) {
-            await initializeMenus();
-        }
-
-    } catch (error) {
-        console.error('Error al cargar datos de WordPress', error);
+const processMenuItems = (items) => {
+  items.forEach((item) => {
+    if (item.url && item.url.startsWith('http')) {
+      item.url = new URL(item.url).pathname;
     }
+    if (item.child_items && item.child_items.length > 0) {
+      item.child_items.forEach((subItem) => {
+        if (subItem.child_items) {
+          subItem.child_items.forEach((subSubItem) => {
+            if (subSubItem.url && subSubItem.url.startsWith('http')) {
+              subSubItem.url = new URL(subSubItem.url).pathname;
+            }
+          });
+        }
+      });
+    }
+  });
 };
 
+// Utiliza `useAsyncData` para cargar los datos del menú, incluyendo `initialCache: false`
+const { data: menuTratamientosData, refresh, error: menuTratamientosError, pending: menuTratamientosPending } = await useAsyncData('menuTratamientos', async () => {
+  const menuData = await getMenu('tratamientos');
+  // Asume que getMenu ya devuelve la propiedad .data directamente, si no, ajusta según sea necesario
+  if (menuData && menuData.items) {
+    processMenuItems(menuData.items);
+  }
+  return menuData;
+}, { initialCache: false });
+
+// Observador para refrescar los datos cuando cambia la ruta
+watch(() => route.path, async () => {
+  await refresh();
+}, { immediate: true });
+
 const initializeMenus = async () => {
-    if (process.client) {
+    if (process.client && !menuTratamientosPending.value) {
         await nextTick()
 
         let mm = gsap.matchMedia();
@@ -345,7 +328,7 @@ const initializeMenus = async () => {
     }
 };
 
-function closeAllMenus() {
+const closeAllMenus = () => {
     document.querySelectorAll('.submenu.open').forEach(openMenu => {
         let subRight = openMenu.querySelector('.submenu__right');
         let subLeft = openMenu.querySelector('.submenu__left');
@@ -371,7 +354,7 @@ const cerrarMenuMobile = () => {
     // Cierra el menú al hacer clic en un enlace
     links.forEach(link => {
         link.addEventListener('click', () => {
-            console.log('link clicado');
+            // console.log('link clicado');
             burger.classList.remove('active');
             nav.classList.remove('active');
         });
@@ -392,10 +375,10 @@ const loadImages = (event) => {
 };
 
 onMounted(async () => {
-    await loadDataAndInitializeMenus();
+    // await loadDataAndInitializeMenus();
     cerrarMenuMobile()
-    if (menuContainer.value) {
-        menuContainer.value.addEventListener('mouseover', loadImages);
+    if (!menuTratamientosPending.value) {
+        initializeMenus();
     }
 })
 
@@ -403,6 +386,15 @@ onMounted(async () => {
 
 
 <style lang="scss" scoped>
+@mixin flex($direction: row, $justify: flex-start, $align: center, $wrap: nowrap, $gap: 2) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+    gap: $gap+rem;
+}
+
 .egos-header {
     --menu-height: 72.5vh;
     --menu-width: 85vw;

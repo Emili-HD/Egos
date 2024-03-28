@@ -23,7 +23,9 @@
       </section>
     </section>
     <DelayHydration>
-      <LazyCirugiasRelatedTreatments :treatmentsData="tratamiento.acf" :relatedId="tratamiento.acf.cirugias_relacionadas" :category="category" />
+      <ClientOnly >
+        <LazyCirugiasRelatedTreatments :treatmentsData="tratamiento.acf" :relatedId="tratamiento.acf.cirugias_relacionadas" :category="category" />
+      </ClientOnly>
     </DelayHydration>
     <section class="oferta__form py-12 xl:py-24 mb-0" v-for="setting in form.form_settings" :key="setting.formid">
       <div class="oferta" v-if="setting.ubicacion === 'oferta'">
@@ -37,10 +39,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject, nextTick, watch } from 'vue'
-import { getSingleTratamientoBySlug, egosSettings } from '@/composables/useApi'
-import { useRoute, useRouter } from 'vue-router';
-// import gsap from 'gsap'
+import { ref, onMounted, nextTick, watch } from 'vue'
+import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
+import { getTratamiento, egosSettings } from '@/composables/useFetch';
+
+const router = useRouter();
+const route = useRoute();
 const { $gsap: gsap } = useNuxtApp();
 
 // Props
@@ -53,56 +57,71 @@ const props = defineProps({
 })
 
 // Estados reactivos
-const tratamiento = ref(null)
-const router = useRouter();
-const route = useRoute()
 const componentRef = ref(null)
 const form = ref({ form_settings: null });
 
 // Métodos
 
 // Observar el DOM
-const observeDOM = () => {
-  const observer = new MutationObserver((mutations, obs) => {
-    const panels = document.querySelectorAll('.treatment-panel')
-    if (panels.length) {
-      obs.disconnect()
-    }
-  })
+// const observeDOM = () => {
+//   // Asegurarse de que este código se ejecute solo en el cliente
+//   if (process.client) {
+//     const observer = new MutationObserver((mutations, obs) => {
+//       const panels = document.querySelectorAll('.treatment-panel');
+//       if (panels.length) {
+//         obs.disconnect();
+//       }
+//     });
 
-  if (componentRef.value) {
-    observer.observe(componentRef.value, {
-      childList: true,
-      subtree: true,
-    })
-  } else {
-    console.error('Elemento a observar no está disponible')
-  }
-}
+//     if (componentRef.value) {
+//       observer.observe(componentRef.value, {
+//         childList: true,
+//         subtree: true,
+//       });
+//     } else {
+//       console.error('Elemento a observar no está disponible');
+//     }
+//   }
+// };
 
-// Cargar los datos del tratamiento
-const loadTratamientoData = async () => {
-  await nextTick()
-  const slug = route.params.slug
+const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(`tratamiento-${route.params.slug}`, () => {
+  return getTratamiento({ slug: route.params.slug });
+}, { watch: [() => route.params.slug], initialCache: false });
+
+const { data: formData, refresh: refreshFormData } = await useAsyncData('formSettings', () => {
+  return egosSettings('form_settings');
+}, { initialCache: false });
+
+const isLoading = ref(false);
+const errorMessage = ref("");
+
+watch(() => route.params.slug, async (newSlug) => {
+  isLoading.value = true;
+  errorMessage.value = "";
   try {
-    const response = await getSingleTratamientoBySlug(slug)
-    const responseForm = await egosSettings('form_settings');
-
-    if (response.data && response.data.length > 0) {
-      tratamiento.value = response.data[0]
-      const tabs = tratamiento.value.acf.tabs
-    } else {
-      console.error('La respuesta de la API no contiene datos válidos.')
-      router.push('/error');
-    }
-
-    if (responseForm.data && responseForm.data.form_settings) {
-      form.value = responseForm.data;
-    }
+    // Refresca los datos tanto del tratamiento como de los ajustes del formulario.
+    await refreshTratamiento();
+    await refreshFormData();
   } catch (error) {
-    console.error(error)
+    errorMessage.value = "No se pudo cargar la información.";
+  } finally {
+    isLoading.value = false;
   }
+}, { immediate: true });
+
+watch(tratamiento, (nuevoValor) => {
+  // Si 'tratamiento' es nulo o indefinido, redirige a '/error'.
+  if (!nuevoValor) {
+    router.push('/error');
+  }
+}, { immediate: true });
+
+
+// Si no se encuentra el tratamiento, redirecciona a '/error'
+if (!tratamiento.value) {
+  router.push('/error');
 }
+
 
 const mainActive = async () => {
   await nextTick()
@@ -238,6 +257,7 @@ useHead(() => {
 
   const yoast = tratamiento.value.yoast_head_json;
 
+  const link = [{ rel: 'canonical', href: yoast.canonical }]
   const metaTags = [
     { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
     { property: 'og:title', content: yoast.og_title },
@@ -252,7 +272,7 @@ useHead(() => {
     // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
     { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
     // Canonical
-    { rel: 'canonical', href: yoast.canonical },
+    // { rel: 'canonical', href: yoast.canonical },
     // Robots
     {
       name: 'robots',
@@ -272,6 +292,7 @@ useHead(() => {
 
   return {
     title: yoast.title,
+    link: link,
     meta: metaTags,
   };
 });
@@ -315,12 +336,11 @@ const injectStructuredData = async () => {
 
 
 onMounted(async () => {
-  await loadTratamientoData()
   await cellHeights()
   await mainActive()
   await mostrarAnchorsMenu()
   await injectStructuredData()
-  observeDOM()
+  // observeDOM()
 })
 </script>
 

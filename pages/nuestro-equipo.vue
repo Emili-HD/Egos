@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="team__form fixed size-full z-[999999] bg-blue-1/50 flex flex-col justify-start items-center" v-if="showPopup">
+    <div class="team__form fixed size-full z-[999999] bg-blue-1/50 flex flex-col justify-center items-center" v-if="showPopup">
         <div class="close absolute top-4 right-4 md:top-24 md:right-12 cursor-pointer z-10" @click="closePopup">
             <svg class="close-icon size-16 fill-nude-8" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -73,18 +73,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed, watch, inject } from 'vue';
-import { getSinglePage, getEspecialidades, getEquipo } from '@/composables/useApi';
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
+import { useAsyncData } from 'nuxt/app';
+import { getEspecialidades, getPage, getEquipo } from '@/composables/useFetch';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
 const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
 // Estados reactivos
-const pages = ref(null);
-const categoriesResponse = ref([]);
-const doctor = ref([]);
-const currentPage = ref(1);
-const totalPages = ref(1);
 const panelVisible = ref(false);
 const selectedMemberInfo = ref({
     title: { rendered: '' }, // Valores predeterminados vacíos
@@ -92,14 +88,13 @@ const selectedMemberInfo = ref({
 });
 const showPopup = ref(false);
 
-
 // Funciones computadas
 const categories = computed(() => {
     const uniqueCategories = [
         ...new Set(doctor.value.flatMap((d) => d.especialidad)),
     ];
     return uniqueCategories.map((categoryId) => {
-        const category = categoriesResponse.value.find((cat) => cat.id === categoryId);
+        const category = especialidades.value.find((cat) => cat.id === categoryId);
         return {
             id: categoryId,
             name: category ? category.name : 'Unknown Category',
@@ -111,52 +106,10 @@ const categories = computed(() => {
     });
 });
 
-// Métodos
-
-const loadData = async () => {
-    try {
-        // Operaciones en paralelo para cargar especialidades y página única
-        const [especialidadesResponse, singlePageResponse] = await Promise.all([
-            getEspecialidades(),
-            getSinglePage(562)
-        ]);
-
-        // Actualiza las respuestas de especialidades y página
-        categoriesResponse.value = especialidadesResponse.data;
-        pages.value = singlePageResponse.data;
-
-        // Operación secuencial para cargar doctores
-        await loadDoctor();
-        // if (process.client) {
-        //     await pinTitles()
-        // }
-    } catch (error) {
-        console.error("Error loading data:", error);
-    }
-};
-
-const loadDoctor = async () => {
-    doctor.value = []; // Reinicia el arreglo de doctores
-    let currentPage = 1;
-
-    try {
-        let doctorsResponse = await getEquipo(currentPage);
-        totalPages.value = parseInt(doctorsResponse.headers['x-wp-totalpages'], 10);
-
-        while (doctorsResponse.data.length > 0 && currentPage <= totalPages.value) {
-            doctor.value = doctor.value.concat(doctorsResponse.data);
-
-            if (currentPage < totalPages.value) {
-                currentPage++;
-                doctorsResponse = await getEquipo(currentPage);
-            } else {
-                break; // Sale del bucle si alcanza la última página
-            }
-        }
-    } catch (error) {
-        console.error("Error loading team:", error);
-    }
-};
+// Obtener datos
+const { data: especialidades, error: especialidadesError, pending: especialidadesPending } = await useAsyncData('especialidades', getEspecialidades, {initialCache: false});
+const { data: pages, error: paginaError, pending: paginaPending } = await useAsyncData('paginaEspecial', () => getPage(562), {initialCache: false});
+const { data: doctor, error: equipoError, pending: equipoPending } = await useAsyncData('equipo', () => getEquipo({ perPage: 20 }), {initialCache: false});
 
 const doctorByCategory = (categoryId) => {
     return doctor.value.filter((d) => d.especialidad.includes(categoryId));
@@ -177,7 +130,7 @@ const pinTitles = async () => {
             gsap.to(titulo, {
                 scrollTrigger: {
                     trigger: seccion,
-                    start: "top 5%",
+                    start: "top 25%",
                     end: "70% 25%",
                     scrub: true,
                     pin: titulo,
@@ -188,7 +141,6 @@ const pinTitles = async () => {
         });
     })
 }
-
 
 const closePanelOnClickOutside = (event) => {
     const teamPanel = document.querySelector('.team__panel');
@@ -214,12 +166,10 @@ watch(panelVisible, (newValue) => {
         // Retrasa la adición del manejador de eventos para evitar que el clic de apertura lo active
         setTimeout(() => {
             document.addEventListener('click', closePanelOnClickOutside);
-            // console.log('Manejador de clic fuera añadido');
-        }, 100); // Un retraso de 100ms es generalmente suficiente
+        }, 100);
     } else {
         // Panel se ha ocultado, asegúrate de remover el manejador de clics inmediatamente
         document.removeEventListener('click', closePanelOnClickOutside);
-        // console.log('Manejador de clic fuera removido');
     }
 });
 
@@ -233,6 +183,7 @@ useHead(() => {
 
     const yoast = pages.value.yoast_head_json;
 
+    const link = [{ rel: 'canonical', href: yoast.canonical }]
     const metaTags = [
         { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
         { property: 'og:title', content: yoast.og_title },
@@ -247,7 +198,7 @@ useHead(() => {
         // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
         { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
         // Canonical
-        { rel: 'canonical', href: yoast.canonical },
+        // { rel: 'canonical', href: yoast.canonical },
         // Robots
         {
             name: 'robots',
@@ -267,12 +218,10 @@ useHead(() => {
 
     return {
         title: yoast.title,
+        link: link,
         meta: metaTags,
     };
 });
-
-// Ciclo de vida
-await loadData();
 
 onMounted(async () => {
     await pinTitles()

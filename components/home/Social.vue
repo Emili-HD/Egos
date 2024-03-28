@@ -1,5 +1,7 @@
 <template>
-    <section class="social py-40 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
+  <div v-if="tiktokPending">Cargando videos de TikTok...</div>
+  <div v-else-if="tiktokError">Error al cargar los videos de TikTok.</div>
+    <section v-else class="social py-40 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
       <SocialPopUp v-if="showPopup" :data="{ video_id: selectedVideoId }" @close="closePopup" />
       <h2 class="social__title col-[2_/_span_14] text-center">#BellezaSinFiltros: la realidad detrás de la estética</h2>
       <Swiper
@@ -30,55 +32,49 @@
                </div>
                <div class="tiktok-play-count-container"></div>
                <div :id="`tiktok-${tt.video_id}`">
-                  <img class="object-cover object-center min-h-[37.5rem] w-full" :src="tt.thumbnail_url" alt=""  width="422" height="750" />
+                  <SpeedkitImage
+                    class="object-cover object-center min-h-[37.5rem] w-full"
+                    :src="tt.thumbnail_url"
+                    :title="tt.description"
+                    :formats="['avif', 'webp', 'jpg']"
+                    :sizes="['(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw']"
+                    :alt="tt.description"
+                  />
                </div>
             </div>
          </SwiperSlide>
-      </Swiper>        
+      </Swiper>
     </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { tiktok } from '@/composables/useApi';
-import PlayIcon from '~/assets/images/icons/play-tiktok.svg'
+import { useAsyncData } from 'nuxt/app';
+import { getTikTok } from '@/composables/useFetch'; // Asegúrate de que esta ruta sea correcta
+import SpeedkitImage from '#speedkit/components/SpeedkitImage';
+// import PlayIcon from '~/assets/images/icons/play-tiktok.svg';
 
 const { $lenis: lenis } = useNuxtApp();
-
-const social = ref(null)
-const tiktokData = ref({ posts: [] });
 const selectedVideoId = ref('');
 const showPopup = ref(false);
 
+// Uso de useAsyncData para cargar datos de TikTok
+const { data: tiktokData, error: tiktokError, pending: tiktokPending } = await useAsyncData(getTikTok);
 
 // Función para manejar clic en un slide
 const openPopup = (videoId) => {
   selectedVideoId.value = videoId;
   showPopup.value = true;
-  lenis.scrollTo('.social', {offset: 0, duration: 0.2})
+  lenis.scrollTo('.social', { offset: 0, duration: 0.2 });
   setTimeout(() => {
-    lenis.stop()
+    lenis.stop();
   }, 200);
 };
 
 // Ejemplo de cómo podrías cerrar el popup, necesitarás implementar esta lógica
 const closePopup = () => {
   showPopup.value = false;
-  lenis.start()
+  lenis.start();
 };
-
-const socialData = async () => {
-  try {
-    const tiktokResponse = await tiktok.getTikTok();
-    tiktokData.value = { ...tiktokResponse, posts: tiktokResponse.posts.slice(0, 10) };
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-onMounted(() => {
-  socialData();
-});
-
 </script>
+
 

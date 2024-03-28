@@ -2,7 +2,7 @@
   <main class="page site-main grid grid-cols-[repeat(16,_minmax(0,_1fr))]" v-if="pages">
       <PageHeading :data="pages" />
       <DelayHydration>
-        <LazyPageCatRelacionadas  :data="pages.acf" />
+        <LazyPageCatRelacionadas :data="pages.acf" />
       </DelayHydration>
       <FormsPiceCita :titulo="`¿No encuentras tu cirugía?`" :portalId="String(pages.acf.formulario.portalid)" :formId="pages.acf.formulario.formid" />
       <section class="quote font-base text-balance normal-case font-semibold py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid" >
@@ -13,27 +13,26 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getSinglePageBySlug } from '@/composables/useApi'
-import { useRoute, useRouter } from 'vue-router';
+import { watch, onMounted } from 'vue';
+import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
+import { getPage } from '@/composables/useFetch';
 
-const pages = ref(null)
 const router = useRouter();
 const route = useRoute();
 
-const loadPage = async (slug) => {
-  slug = route.params.slug;
-    try {
-      const pageResponse = await getSinglePageBySlug(slug);
-      if (pageResponse.data && pageResponse.data.length > 0) {
-        pages.value = pageResponse.data[0];
-      } else {
-        router.push('/error');
-      }
-    } catch (error) {
-      console.error(error);
-    } 
-};
+// Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
+const { data: pages, refresh } = await useAsyncData(`pages-${route.params.slug}`, () => {
+  return getPage(route.params.slug);
+}, { watch: [() => route.params.slug], initialCache: false });
+
+watch(() => route.params.slug, async (newSlug, oldSlug) => {
+  if (newSlug !== oldSlug) {
+    // Llamar explícitamente a `refresh` para recargar los datos
+    await refresh();
+  }
+  // Aquí puedes incluir cualquier lógica adicional necesaria cuando cambie el slug
+}, { immediate: true });
+
 
 // Métodos
 const textReveal = async () => {
@@ -92,6 +91,9 @@ onMounted(async () => {
     // Datos disponibles
        textReveal()
   } 
+  if (!pages.value) {
+    router.push('/error');
+  }
 })
 
 // Datos YOAST SEO
@@ -104,6 +106,7 @@ useHead(() => {
 
   const yoast = pages.value.yoast_head_json;
 
+  const link = [{ rel: 'canonical', href: yoast.canonical }]
   const metaTags = [
     { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
     { property: 'og:title', content: yoast.og_title },
@@ -118,7 +121,7 @@ useHead(() => {
     // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
     { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
     // Canonical
-    { rel: 'canonical', href: yoast.canonical },
+    // { rel: 'canonical', href: yoast.canonical },
     // Robots
     {
       name: 'robots',
@@ -138,13 +141,8 @@ useHead(() => {
   
   return {
     title: yoast.title,
+    link: link,
     meta: metaTags,
   };
 });
-
-onMounted( async () => {
-  await loadPage()
-})
 </script>
-
-

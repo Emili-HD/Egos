@@ -2,6 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Canela';
+  src: url('~/assets/fonts/canela/Canela-Bold.woff') format('woff'),
+       url('~/assets/fonts/canela/Canela-Bold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('~/assets/fonts/canela/Canela-Regular.woff') format('woff'),
+       url('~/assets/fonts/canela/Canela-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('~/assets/fonts/canela/Canela-Light.woff') format('woff'),
+       url('~/assets/fonts/canela/Canela-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('~/assets/fonts/canela/Canela-Thin.woff') format('woff'),
+       url('~/assets/fonts/canela/Canela-Thin.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url("~/assets/fonts/geomanist/hinted-Geomanist-Light.woff2") format("woff2"),
+       url("~/assets/fonts/geomanist/hinted-Geomanist-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url("~/assets/fonts/geomanist/hinted-Geomanist-Book.woff2") format("woff2"),
+       url("~/assets/fonts/geomanist/hinted-Geomanist-Book.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url("~/assets/fonts/geomanist/hinted-Geomanist-Bold.woff2") format("woff2"),
+       url("~/assets/fonts/geomanist/hinted-Geomanist-Bold.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url("~/assets/fonts/geomanist/hinted-Geomanist-Black.woff2") format("woff2"),
+       url("~/assets/fonts/geomanist/hinted-Geomanist-Black.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
     *,
     *::before,
@@ -9,8 +81,16 @@
         @apply box-border m-0 relative;
     }
 
+    .font-geomanist {
+        font-family: Geomanist, sans-serif;
+    }
+
+    .font-canela {
+        font-family: Canela, serif;
+    }
+
     body {
-        @apply font-geomanist font-light text-clamp-base lg:text-clamp-sm  antialiased overflow-x-hidden;
+        @apply font-geomanist font-light text-clamp-base lg:text-clamp-sm text-blue-1 antialiased overflow-x-hidden;
     }
     
     p {
@@ -37,6 +117,11 @@
     h6, .h6 {
         @apply mb-6 text-clamp-xl font-thin font-canela leading-tight;
     }
+
+    u {
+        @apply no-underline border-b-[1px] border-b-nude-8/50
+    }
+
 }
 
 @layer components {

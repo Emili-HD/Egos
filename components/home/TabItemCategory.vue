@@ -1,47 +1,46 @@
 <template>
-    <div class="list__item-cirugia-title pb-0" v-if="category">
-        <nuxt-link :to="processedLink">
-                <p><strong>{{ category.title.rendered }}:</strong> <span v-html="category.acf.descripcion_cirugias_home"></span></p>
-        </nuxt-link>
-    </div>
-    <div v-else>
-        <p>Cargando categoría...</p>
-    </div>
+  <div v-if="categoryPending">Cargando categoría...</div>
+  <div v-else-if="categoryError">Error al cargar la categoría.</div>
+  <div v-else class="list__item-cirugia-title pb-0" v-if="category && category.value && category.value.title">
+    <nuxt-link :to="processedLink">
+      <p><strong>{{ category.value.title.rendered }}:</strong> <span v-html="category.value.acf.descripcion_cirugias_home"></span></p>
+    </nuxt-link>
+  </div>
+  <div v-else>
+    <p>La categoría no está disponible.</p>
+  </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue';
-import { getSingleTratamientoById } from '@/composables/useApi';
 
-// Definir props
+<script setup>
+import { useAsyncData } from 'nuxt/app';
+import { getTratamiento } from '@/composables/useFetch';
+
 const props = defineProps({
-  categoryId: {
-    type: Number,
-    required: true
-  }
+  categoryId: Number,
 });
 
-// Estado reactivo para la categoría
-const category = ref(null);
+const { data: category, error: categoryError, pending: categoryPending } = await useAsyncData(
+  () => `category-${props.categoryId}`,
+  async () => {
+    const result = await getTratamiento({ id: props.categoryId });
+    // Verifica o transforma 'result' según sea necesario aquí
+    return result;
+  }
+);
 
-// Propiedad computada
 const processedLink = computed(() => {
   if (category.value && category.value.link) {
-    const url = new URL(category.value.link);
-    return url.pathname; // Devuelve solo la ruta
+    try {
+      const url = new URL(category.value.link);
+      return url.pathname;
+    } catch (error) {
+      console.error("Error creating URL object:", error);
+      // Devuelve una ruta alternativa o maneja el error como consideres adecuado
+      return '';
+    }
   }
-  return ''; // Devuelve una ruta vacía si no hay URL
+  return '';
 });
-
-// Función para cargar la categoría
-const loadCategory = async () => {
-  try {
-    const categoryResponse = await getSingleTratamientoById(props.categoryId);
-    category.value = categoryResponse.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-loadCategory();
 </script>
+

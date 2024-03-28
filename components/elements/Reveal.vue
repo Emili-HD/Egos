@@ -36,44 +36,48 @@ const textReveal = async () => {
 
    await nextTick()
 
-   document.querySelector(".content__header-title p").classList.add('text-clamp-3xl')
-   let split = new SplitText(".content__header-title p", { type: "lines" });
-   let masks;
-   function makeItHappen() {
-      masks = [];
-      split.lines.forEach((target) => {
-         let mask = document.createElement("span");
-         mask.className = "mask-reveal bg-nude-8 opacity-90 absolute h-[115%] top-[-12%] left-0 w-full";
-         target.append(mask);
-         masks.push(mask);
-         gsap.to(mask, {
-            scaleX: 0,
-            transformOrigin: "right center",
-            ease: "none",
-            scrollTrigger: {
-               trigger: target,
-               scrub: true,
-               start: "top center",
-               end: "bottom center",
-               pinSpacing: false,
-               // markers: true
-            }
+   const tituloContent = document.querySelector(".content__header-title p")
+   if (tituloContent) {
+      tituloContent.classList.add('text-clamp-3xl')
+
+      let split = new SplitText(tituloContent, { type: "lines" });
+      let masks;
+      function makeItHappen() {
+         masks = [];
+         split.lines.forEach((target) => {
+            let mask = document.createElement("span");
+            mask.className = "mask-reveal bg-nude-8 opacity-90 absolute h-[115%] top-[-12%] left-0 w-full";
+            target.append(mask);
+            masks.push(mask);
+            gsap.to(mask, {
+               scaleX: 0,
+               transformOrigin: "right center",
+               ease: "none",
+               scrollTrigger: {
+                  trigger: target,
+                  scrub: true,
+                  start: "top center",
+                  end: "bottom center",
+                  pinSpacing: false,
+                  // markers: true
+               }
+            });
          });
-      });
-   }
-
-   window.addEventListener("resize", newTriggers);
-
-   function newTriggers() {
-      ScrollTrigger.getAll().forEach((trigger, i) => {
-         trigger.kill();
-         masks[i].remove();
-      });
-      split.split();
+      }
+      window.addEventListener("resize", newTriggers);
+   
+      function newTriggers() {
+         ScrollTrigger.getAll().forEach((trigger, i) => {
+            trigger.kill();
+            masks[i].remove();
+         });
+         split.split();
+         makeItHappen();
+      }
+   
       makeItHappen();
    }
 
-   makeItHappen();
 }
 
 const rAF = () => {
