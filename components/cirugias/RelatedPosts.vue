@@ -3,11 +3,11 @@
   <div v-else-if="postsError">Error al cargar los posts.</div>
   <section v-else class="related__posts pt-6 mb-0">
     <h2 class="text-center">{{ treatmentsData.titulo_posts_relacionados }}</h2>
-    <div class="post-list" aria-label="Lista de publicaciones" v-if="posts">
+    <div class="post-list flex justify-center items-start gap-2 pb-0 lg:pb-8 h-1/2 w-full overflow-hidden" aria-label="Lista de publicaciones" v-if="posts">
       <article
         v-for="post in posts"
         :key="post.id"
-        class="card rounded-3xl overflow-hidden col-[2/-2] lg:[&:nth-child(2n-1)]:col-[2/9] lg:[&:nth-child(2n)]:col-[9/16]"
+        class="card rounded-3xl overflow-hidden col-[2/-2] lg:[&:nth-child(2n-1)]:col-[2/9] lg:[&:nth-child(2n)]:col-[9/16] flex flex-shrink-0 justify-center items-start h-full w-3/4 lg:w-1/4"
         :aria-labelledby="'post-title-' + post.id"
       >
         <nuxt-link
@@ -20,7 +20,7 @@
             loading="lazy"
             v-if="post.featured_image_src && post.featured_image_src.src"
             :src="post.featured_image_src.src"
-            class="card__image rounded-2xl"
+            class="card__image rounded-2xl size-full aspect-square rounded-2xl object-cover"
             :alt="post.featured_image_src ? post.featured_image_src.alt : ''"
             :aria-labelledby="'post-title-' + post.id"
           />
@@ -36,16 +36,16 @@
 <script setup>
 import { onMounted, nextTick } from 'vue'
 import { getPosts } from '@/composables/useFetch' // Asegúrate de que estás importando desde el lugar correcto
-const { $gsap: gsap } = useNuxtApp()
-// Props
-const props = defineProps({
-  treatmentsData: {
-    type: Object,
-    required: true,
-  },
-  categoryId: {
-    type: Number,
-  },
+  const { $gsap: gsap } = useNuxtApp()
+  // Props
+  const props = defineProps({
+    treatmentsData: {
+      type: Object,
+      required: true,
+    },
+    categoryId: {
+      type: Number,
+    },
 })
 
 const categoryId = computed(() => props.treatmentsData.posts_relacionados)
@@ -193,68 +193,5 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-@mixin flex(
-  $direction: row,
-  $justify: flex-start,
-  $align: center,
-  $wrap: nowrap,
-  $gap: 2
-) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: $justify;
-  align-items: $align;
-  flex-wrap: $wrap;
-  gap: $gap + rem;
-}
-
-.related__posts {
-  margin-bottom: 0;
-
-  @media (max-width: 767px) {
-    padding-top: 2rem;
-  }
-
-  .post-list {
-    @include flex(row, center, flex-start, nowrap, 0.5);
-    height: 50%;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    padding-bottom: var(--spacing);
-
-    @media (max-width: 767px) {
-      padding-bottom: 0;
-    }
-
-    .card {
-      align-items: flex-start;
-      display: flex;
-      flex-shrink: 0;
-      height: 100%;
-      justify-content: center;
-      margin: 0;
-      overflow: hidden;
-      padding: 0;
-      position: relative;
-      width: 25%;
-
-      @media (max-width: 767px) {
-        width: 75%;
-      }
-
-      &:last-child {
-        padding-right: var(--gap);
-      }
-
-      img {
-        aspect-ratio: 1;
-        border-radius: var(--radius-xl);
-        height: 100%;
-        object-fit: cover;
-        width: 100%;
-      }
-    }
-  }
-}
+// empty style
 </style>

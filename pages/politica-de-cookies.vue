@@ -15,6 +15,12 @@ import { getPage } from '@/composables/useFetch'; // Asegúrate de que useFetch 
 
 const { data: legal, error, pending } = await useAsyncData(() => getPage(16119))
 
+definePageMeta({
+  title: 'Política de Cookies - Clínica EGOS',
+  link: [
+    { rel: 'canonical', href: 'https://www.clinicaegos.com/politica-de-cookies/' }
+  ]
+});
 </script>
 
 

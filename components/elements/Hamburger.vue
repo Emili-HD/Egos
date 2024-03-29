@@ -1,121 +1,91 @@
 <template>
-   <button class="navTrigger" id="navTrigger" aria-labelledby="menu-list">
-      <svg viewBox="0 0 64 48">
-         <path d="M19,15 L45,15 C70,15 58,-2 49.0177126,7 L19,37"></path>
-         <path d="M19,24 L45,24 C61.2371586,24 57,49 41,33 L32,24"></path>
-         <path d="M45,33 L19,33 C-8,33 6,-2 22,14 L45,37"></path>
-      </svg>
-   </button>
+  <button
+    class="navTrigger absolute z-[1000] top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 
+           size-9 bg-transparent lg:hidden focus:outline-none
+           border-none outline-none cursor-pointer appearance-none tap-"
+    id="navTrigger"
+    aria-label="Abrir menú"
+  >
+    <svg class= "size-16 -top-3.5 -left-3.5
+                 stroke-blue-1 stroke-[1px] fill-none block absolute" viewBox="0 0 64 48">
+      <path d="M19,15 L45,15 C70,15 58,-2 49.0177126,7 L19,37"></path>
+      <path d="M19,24 L45,24 C61.2371586,24 57,49 41,33 L32,24"></path>
+      <path d="M45,33 L19,33 C-8,33 6,-2 22,14 L45,37"></path>
+    </svg>
+  </button>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 
 // Estado reactivo para controlar la activación del menú
-const isActive = ref(false);
+const isActive = ref(false)
 
 const toggleMenu = () => {
-   const burger = document.getElementById('navTrigger');
-   const nav = document.querySelector('.menu-list');
+  const burger = document.getElementById('navTrigger')
+  const nav = document.querySelector('.menu-list')
 
-   // Toggle para burger
-   burger.addEventListener('click', () => {
-      isActive.value = !isActive.value;
-      burger.classList.toggle('active', isActive.value);
-      nav.classList.toggle('active', isActive.value);
-   });
-
+  // Toggle para burger
+  burger.addEventListener('click', () => {
+    isActive.value = !isActive.value
+    burger.classList.toggle('active', isActive.value)
+    nav.classList.toggle('active', isActive.value)
+  })
 }
 
 onMounted(() => {
-   toggleMenu();
-});
+  toggleMenu()
+})
 </script>
-
 
 <style lang="scss" scoped>
 .navTrigger {
-   position: absolute;
-   top: 50%;
-   translate: 50% -50%;
-   right: 50%;
-   z-index: 1000;
-   width: 36px;
-   height: 36px;
-   background: none;
-   border: 0;
-   outline: none;
-   border: none;
-   cursor: pointer;
-   -webkit-appearence: none;
-   -webkit-tap-highlight-color: transparent;
-   display: none;
+  svg {
+    path {
+      transition: stroke-dasharray var(--duration, 0.85s) var(--easing, ease)
+          var(--delay, 0s),
+        stroke-dashoffset var(--duration, 0.85s) var(--easing, ease)
+          var(--delay, 0s);
+      stroke-dasharray: var(--array-1, 26px) var(--array-2, 100px);
+      stroke-dashoffset: var(--offset, 126px);
+      transform: translateZ(0);
 
-   @media (max-width: 1200px) {
-      display: block;
-   }
+      &:nth-child(2) {
+        --duration: 0.7s;
+        --easing: ease-in;
+        --offset: 100px;
+        --array-2: 74px;
+      }
 
-   &:focus {
-      outline: none;
-   }
+      &:nth-child(3) {
+        --offset: 133px;
+        --array-2: 107px;
+      }
+    }
+  }
 
-   svg {
-      width: 64px;
-      height: 48px;
-      top: -6px;
-      left: -14px;
-      stroke: var(--blue-1);
-      stroke-width: 1px;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-      display: block;
-      position: absolute;
-
+  &.active {
+    svg {
       path {
-         transition: stroke-dasharray var(--duration, .85s) var(--easing, ease) var(--delay, 0s), stroke-dashoffset var(--duration, .85s) var(--easing, ease) var(--delay, 0s);
-         stroke-dasharray: var(--array-1, 26px) var(--array-2, 100px);
-         stroke-dashoffset: var(--offset, 126px);
-         transform: translateZ(0);
+        --offset: 57px;
 
-         &:nth-child(2) {
-            --duration: .7s;
-            --easing: ease-in;
-            --offset: 100px;
-            --array-2: 74px;
-         }
+        &:nth-child(1),
+        &:nth-child(3) {
+          --delay: 0.15s;
+          --easing: cubic-bezier(0.2, 0.4, 0.2, 1.1);
+        }
 
-         &:nth-child(3) {
-            --offset: 133px;
-            --array-2: 107px;
-         }
+        &:nth-child(2) {
+          --duration: 0.4s;
+          --offset: 2px;
+          --array-1: 1px;
+        }
+
+        &:nth-child(3) {
+          --offset: 58px;
+        }
       }
-   }
-
-   &.active {
-      svg {
-         stroke: var(--blue-1);
-
-         path {
-            --offset: 57px;
-
-            &:nth-child(1),
-            &:nth-child(3) {
-               --delay: .15s;
-               --easing: cubic-bezier(.2, .4, .2, 1.1);
-            }
-
-            &:nth-child(2) {
-               --duration: .4s;
-               --offset: 2px;
-               --array-1: 1px;
-            }
-
-            &:nth-child(3) {
-               --offset: 58px;
-            }
-         }
-      }
-   }
+    }
+  }
 }
 </style>

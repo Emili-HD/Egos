@@ -1,5 +1,5 @@
 <template>
-   <section class="informacion bg-white px-8 xl:px-24 py-10 xl:py-20 mb-0" ref="info">
+   <section v-if="data.informacion" class="informacion bg-white px-8 xl:px-24 py-10 xl:py-20 mb-0" ref="info">
       <h2 class="informacion__title">{{ data.informacion.titulo_informacion }}</h2>
       <ElementsDivider />
       <div class="listado__list mt-4">
@@ -15,7 +15,7 @@
             </div>
             <div class="listado__list--item-content">
                <div class="listado__list--item-content-img">
-                  <NuxtImg loading="lazy" class="w-full object-center object-cover" :src="listado.imagen.url" :alt="listado.imagen.alt" />
+                  <NuxtImg v-if="listado.imagen && listado.imagen.url" loading="lazy" class="w-full object-center object-cover" :src="listado.imagen.url" :alt="listado.imagen.alt" />
                </div>
                <div class="listado__list--item-content-description">
                   <div class="listado__list-grid mb-12">

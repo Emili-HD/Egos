@@ -26,25 +26,41 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useAsyncData } from 'nuxt/app';
+import { onMounted, ref } from 'vue';
+import { useLazyAsyncData } from 'nuxt/app';
 import { getTestimonios } from '@/composables/useFetch';
 
-// Uso de useAsyncData para cargar los datos de los testimonios
 // Definir explícitamente los valores de page y perPage
 const page = 1;
 const perPage = 4;
 
-// Usar esos valores para construir uniqueId y para la llamada a getTestimonios
+// UniqueId para la llamada a getTestimonios
 const uniqueId = `testimonios-${page}-${perPage}`;
 
-const { data: testimoniosData, error: testimoniosError, pending: testimoniosPending } = await useAsyncData(uniqueId, () => getTestimonios({ page, perPage }));
+// Inicialización de useLazyAsyncData sin ejecutar la llamada inmediatamente
+const { data: testimoniosData, error: testimoniosError, pending: testimoniosPending, execute } = useLazyAsyncData(uniqueId, () => getTestimonios({ page, perPage }));
 
-// Filtro para testimonios destacados, ahora movido a una propiedad computada
+// Filtro para testimonios destacados
 const testimoniosDestacados = computed(() => {
   return testimoniosData.value ? testimoniosData.value.filter(testimonio => testimonio.acf.destacado && testimonio.acf.destacado.includes("Destacar")) : [];
 });
+
+// Función para manejar el evento de scroll y cargar los datos cuando sea apropiado
+const handleScroll = () => {
+  // Puedes ajustar esta lógica para determinar cuándo quieres cargar los datos,
+  // por ejemplo, verificar si el usuario ha hecho scroll más allá de cierto punto.
+  const scrollPosition = window.scrollY + window.innerHeight;
+  if (scrollPosition > document.body.offsetHeight - 500) {
+    execute();
+    window.removeEventListener('scroll', handleScroll); // Eliminar el listener después de cargar los datos
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
 </script>
+
 
 
 <style lang="scss" scoped>

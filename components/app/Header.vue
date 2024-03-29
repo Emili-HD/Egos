@@ -26,7 +26,7 @@
                             <div class="menu-wrapper">
                                 <nuxt-link :to="tratamiento.url" class="nav-link hidden xl:block text-clamp-xs"
                                     active-class="router-link-active">
-                                    <span class="">{{ tratamiento.title }}</span>
+                                    <span class="text-gold-3 cursor-pointer z-[1] before:content-[''] before:bg-gold-3 before:h-[1px] before:w-full before:max-w-0 before:absolute before:bottom-0 before:left-0 before:transition-[max-width]">{{ tratamiento.title }}</span>
                                     <img src="../../assets/images/icons/arrow-up.svg" alt="Cerrar menú">
                                 </nuxt-link>
                                 <div class="submenu mt-1 xl:fixed top-0 left-0 xl:right-0 xl:top-12 xl:m-auto z-0"
@@ -43,7 +43,7 @@
                                                     active-class="nuxt-link-active">
                                                     {{ subTratamiento.title }}
                                                 </nuxt-link>
-                                                <span class="column cursor-default p-1 hidden xl:block" v-else>{{ subTratamiento.title }}</span>
+                                                <span class="column cursor-default p-1 hidden xl:block text-gold-3 font-normal text-clamp-base" v-else>{{ subTratamiento.title }}</span>
                                                 <!-- SubSubItems -->
                                                 <ul class="list-none"
                                                     v-if="subTratamiento.child_items && subTratamiento.child_items.length > 0">
@@ -148,20 +148,13 @@ const processMenuItems = (items) => {
   });
 };
 
-// Utiliza `useAsyncData` para cargar los datos del menú, incluyendo `initialCache: false`
-const { data: menuTratamientosData, refresh, error: menuTratamientosError, pending: menuTratamientosPending } = await useAsyncData('menuTratamientos', async () => {
+const { data: menuTratamientosData, error: menuTratamientosError, pending: menuTratamientosPending } = await useAsyncData('menuTratamientos', async () => {
   const menuData = await getMenu('tratamientos');
-  // Asume que getMenu ya devuelve la propiedad .data directamente, si no, ajusta según sea necesario
   if (menuData && menuData.items) {
     processMenuItems(menuData.items);
   }
   return menuData;
-}, { initialCache: false });
-
-// Observador para refrescar los datos cuando cambia la ruta
-watch(() => route.path, async () => {
-  await refresh();
-}, { immediate: true });
+});
 
 const initializeMenus = async () => {
     if (process.client && !menuTratamientosPending.value) {
@@ -375,7 +368,6 @@ const loadImages = (event) => {
 };
 
 onMounted(async () => {
-    // await loadDataAndInitializeMenus();
     cerrarMenuMobile()
     if (!menuTratamientosPending.value) {
         initializeMenus();
@@ -561,24 +553,6 @@ onMounted(async () => {
                         overflow: hidden;
                         width: 100%;
                         padding: 0 1rem;
-                    }
-                }
-
-                & span {
-                    color: var(--gold-2);
-                    cursor: pointer;
-                    z-index: 1;
-
-                    &::before {
-                        background-color: var(--gold-2);
-                        bottom: 0;
-                        content: "";
-                        height: 1px;
-                        left: 0;
-                        max-width: 0;
-                        position: absolute;
-                        transition: max-width .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                        width: 100%;
                     }
                 }
 

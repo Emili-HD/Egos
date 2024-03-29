@@ -31,7 +31,7 @@
         >
           <nuxt-link
             class="flex flex-col lg:flex-row h-full"
-            :to="'/blog/' + post.slug"
+            :to="'/blog/' + post.slug + '/'"
             :aria-label="'Leer más sobre ' + post.title.rendered"
           >
             <NuxtImg
@@ -44,7 +44,7 @@
             />
             <div class="card__content p-4 flex flex-col w-full">
               <div class="card__content-wrapper text-left [&_h2,&_h3]:text-clamp-xl [&_h2,&_h3]:font-light">
-                <p class="card__content-cat text-gold-2 font-normal text-clamp-base w-full">
+                <p class="card__content-cat text-gold-3 font-normal text-clamp-base w-full">
                   <span>Categoría: {{ post.categories_names.join(', ') }}</span>
                   <br />
                   <time :datetime="post.date_gmt">
@@ -150,7 +150,19 @@ useHead(() => {
 
   const yoast = blogPage.value.yoast_head_json
 
-  const link = [{ rel: 'canonical', href: yoast.canonical }]
+  const link = [
+    { 
+      rel: 'canonical',
+      href: (() => {
+        // Añadir "www." si no está presente y no es una subdominio diferente
+        let canonical = yoast.canonical.startsWith('https://www.') ? yoast.canonical :
+                        yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
+        // Asegurar que la URL termina con "/"
+        canonical = canonical.endsWith('/') ? canonical : `${canonical}/`;
+        return canonical;
+      })() 
+    }
+  ];
   const metaTags = [
     {
       name: 'description',
@@ -168,8 +180,6 @@ useHead(() => {
     { name: 'twitter:card', content: yoast.twitter_card },
     // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
     { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
-    // Canonical
-    // { rel: 'canonical', href: yoast.canonical },
     // Robots
     {
       name: 'robots',

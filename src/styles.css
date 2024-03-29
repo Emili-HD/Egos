@@ -106,6 +106,27 @@ section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .answer__tabla
   display: grid;
   gap: 2rem;
   grid-template-columns: 170px 1fr 1fr 1fr;
+  /* .image_container {
+     align-items: center;
+     display: flex;
+     flex-direction: column;
+     overflow: hidden;
+     // aspect-ratio: 4/5;
+     min-height: 300px;
+     width: 100%;
+
+     img {
+        max-width: 250px;
+     }
+
+     h4 {
+        font-size: calc(var(--font-size) * 1.05);
+     }
+
+     p {
+        font-size: calc(var(--font-size) * .85);
+     }
+  } */
 }
 @media (max-width: 767px) {
   section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .answer__tabla {
@@ -114,41 +135,6 @@ section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .answer__tabla
   section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .answer__tabla .row0 {
     display: none;
   }
-}
-section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .answer__tabla .image_container {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 300px;
-  width: 100%;
-}
-section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .answer__tabla .image_container img {
-  max-width: 250px;
-}
-section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .answer__tabla .image_container h4 {
-  font-size: calc(var(--font-size) * 1.05);
-}
-section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .answer__tabla .image_container p {
-  font-size: calc(var(--font-size) * 0.85);
-}
-section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .contenido_tabla {
-  display: grid;
-  grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
-}
-section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .contenido_tabla > div::before {
-  background-color: currentColor;
-  content: "";
-  height: 1px;
-  left: 0;
-  opacity: 0.2;
-  position: absolute;
-  top: -1.5rem;
-  width: 100%;
-}
-section.cirugia .tratamiento__content .panel.tabla .tabla_wrapper .contenido_tabla > div * {
-  font-size: calc(var(--font-size) * 0.85);
-  margin-bottom: 0;
 }
 section.cirugia .tratamiento__content .panel.columnas {
   padding-bottom: 0;

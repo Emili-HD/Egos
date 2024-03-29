@@ -43,7 +43,7 @@ import { ref, onMounted, nextTick } from 'vue'
 
 const { $gsap: gsap } = useNuxtApp()
 // Importa los estilos de Swiper
-import 'swiper/css'
+// import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/scrollbar'
 

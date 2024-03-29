@@ -501,7 +501,7 @@ export default defineNuxtConfig({
     UserAgent: '*',
     Disallow: '/admin',
     Allow: '/',
-    Sitemap: 'https://clinicaegos.com/sitemap.xml',
+    Sitemap: 'https://www.clinicaegos.com/sitemap.xml',
     // Puedes añadir más líneas según necesites
   },
   sitemap: {

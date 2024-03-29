@@ -1,5 +1,5 @@
 <template>
-   <div class="antesdespues col-[1_/_span_16] xl:col-[2_/_span_14] flex flex-col items-center" ref="comparacion">
+   <div class="antesdespues col-[2_/_span_14] xl:col-[2_/_span_14] flex flex-col items-center" ref="comparacion">
       <div class="antesdespues__header w-full text-center p-0">
          <h2>{{ data.antes_despues.titulo_antesdespues }}</h2>
          <ElementsDivider />

@@ -63,12 +63,11 @@
          >
             <SwiperSlide class="text-left flex flex-col justify-start items-start p-8 [&>h3]:!text-clamp-sm" v-for="(categoryId, index) in data" :key="`category-${categoryId}-${index}`">
                <div class="card__wrapper min-w-full xl:min-w-[360px] xl:max-w-[400px] opacity-100 px-2 xl:px-0 relative [&.active]:opacity-100">
-                  <ClientOnly>
-                     <CirugiasCategorySlide :categoryId="categoryId" class="[&>.card-wrapper>.card]:h-full  [&>.card-wrapper>.card]:objet-cover [&>.card-wrapper>.card]:object-center [&>.card-wrapper>.card]:w-[90vw] [&>.card-wrapper>.card]:shadow-2xl" />
-                  </ClientOnly>
+                  <CirugiasCategorySlide :categoryId="categoryId" class="[&>.card-wrapper>.card]:h-full  [&>.card-wrapper>.card]:objet-cover [&>.card-wrapper>.card]:object-center [&>.card-wrapper>.card]:w-[90vw] [&>.card-wrapper>.card]:shadow-2xl" />
                </div>
             </SwiperSlide>
          </Swiper>
+            
          <div class="home__services-description w-full pt-12 px-10 xl:px-24 pb-12 text-center">
             <p class="text-balance w-full" v-html="data.acf.tratamientos_home.descripcion_categorias"></p>
          </div>
@@ -87,8 +86,8 @@
 
 // import { useSwiper } from 'swiper/vue';
 
-import 'swiper/css';
-import 'swiper/css/pagination';
+// import 'swiper/css';
+// import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
 import 'swiper/css/scrollbar';
 

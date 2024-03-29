@@ -15,6 +15,12 @@ import { getPage } from '@/composables/useFetch'; // Asegúrate de que useFetch 
 
 const { data: legal, error, pending } = await useAsyncData(() => getPage(16092))
 
+definePageMeta({
+  title: 'Política de Privacidad - Clínica EGOS',
+  link: [
+    { rel: 'canonical', href: 'https://www.clinicaegos.com/politica-de-privacidad/' }
+  ]
+});
 </script>
 
 

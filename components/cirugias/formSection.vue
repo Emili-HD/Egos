@@ -17,5 +17,5 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-  #formulario {position: relative;}
+// empty style
 </style>

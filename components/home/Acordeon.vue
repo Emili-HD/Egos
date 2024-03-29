@@ -22,7 +22,13 @@
                   <p class="pb-1">{{ content.descripcion }}</p>
                   <ul class="accordion__relacionados">
                      <li class="list__wrapper" v-for="categoryId in content.relacionadas" :key="categoryId">
-                        <HomeTabItemCategory :categoryId="categoryId" />
+                        <ClientOnly >
+                           <NuxtLink v-if="categoriasPorId[categoryId] && categoriasPorId[categoryId].link" :to="getProcessedLink(categoriasPorId[categoryId].link)">
+                              <p><strong>{{ categoriasPorId[categoryId]?.title.rendered }}: </strong> 
+                                 <span v-html="categoriasPorId[categoryId]?.acf.descripcion_cirugias_home"></span>
+                              </p>
+                           </NuxtLink>
+                        </ClientOnly>
                      </li>
                   </ul>
                </div>
@@ -40,18 +46,45 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useAsyncData } from 'nuxt/app';
+import { getTratamiento } from '@/composables/useFetch';
+
 // import gsap from 'gsap';
 const { $gsap: gsap } = useNuxtApp();
 
 // Props
 const props = defineProps({
-   data: {
-      type: Object,
-      required: true
-   }
-})
+  data: Object
+});
 
-// Estado reactivo para la categoría
+const categoriasPorId = ref({});
+
+watch(() => props.data.items, async (nuevosItems) => {
+  // Por cada grupo en data.items, haz las consultas para sus categorías relacionadas
+  nuevosItems.forEach(async (item) => {
+    item.relacionadas.forEach(async (categoryId) => {
+      // Evita realizar la consulta si ya tenemos los datos de esta categoría
+      if (!categoriasPorId.value[categoryId]) {
+        const { data } = await useAsyncData(`tratamiento-${categoryId}`, () => getTratamiento({ id: categoryId }));
+        categoriasPorId.value[categoryId] = data.value;
+      }
+    });
+  });
+}, { immediate: true, deep: true });
+
+const getProcessedLink = (link) => {
+  if (!link) {
+    return ''; // Devuelve una cadena vacía si el link es undefined o nulo
+  }
+  try {
+    const url = new URL(link);
+    return url.pathname;
+  } catch (error) {
+    console.error("Error creating URL object:", error);
+    return ''; // Devuelve una cadena vacía en caso de error
+  }
+};
+
 const activeIndex = ref(0); // índice del elemento activo
 
 // Métodos

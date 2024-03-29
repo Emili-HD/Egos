@@ -6,7 +6,7 @@
     v-if="detallesData"
   >
     <div
-      class="detalles__intervencion bg-blue-2 rounded-xl p-4 w-[46.5%] xl:w-[12.5%] h-full
+      class="detalles__intervencion bg-blue-2 rounded-xl p-4 w-[46.5%] xl:w-[12.5%]
       flex flex-col [.columnas_&]:lg:flex-row justify-center items-center gap-2
       [.columnas_&]:flex-row [.columnas_&]:bg-gold-3/50 [.columnas_&]:even:bg-blue-1/50 [.columnas_&]:w-full xl:[.columnas_&]:w-60
       [&_p]:text-nude-4 [&_p]:mb-0 [&_p]:flex [&_p]:flex-col [&_strong]:font-semibold"

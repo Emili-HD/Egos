@@ -10,7 +10,7 @@
       >
         <nuxt-link
           class="text-blue-1 font-canela h-full p-0 flex flex-col lg:flex-row"
-          :to="'/blog/' + post.slug"
+          :to="'/blog/' + post.slug + '/'"
         >
           <NuxtImg
             loading="lazy"

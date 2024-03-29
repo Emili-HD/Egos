@@ -21,7 +21,7 @@
         :aria-labelledby="'post-title-' + post.id"
       >
         <nuxt-link
-          :to="`blog/${post.slug}`"
+          :to="`blog/${post.slug}/`"
           :aria-label="'Leer más sobre ' + post.title.rendered"
         >
           <NuxtImg

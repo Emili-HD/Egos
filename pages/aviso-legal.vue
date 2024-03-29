@@ -15,6 +15,12 @@ import { getPage } from '@/composables/useFetch'; // Asegúrate de que useFetch 
 
 const { data: legal, error, pending } = await useAsyncData(() => getPage(445))
 
+definePageMeta({
+  title: 'Aviso Legal - Clínica EGOS',
+  link: [
+    { rel: 'canonical', href: 'https://www.clinicaegos.com/aviso-legal/' }
+  ]
+});
 </script>
 
 

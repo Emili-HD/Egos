@@ -105,7 +105,19 @@ useHead(() => {
   // Accede al primer elemento del arreglo para obtener los datos de YOAST SEO
   const yoast = casoreal.value.yoast_head_json;
 
-  const link = [{ rel: 'canonical', href: yoast.canonical }]
+  const link = [
+    { 
+      rel: 'canonical',
+      href: (() => {
+        // Añadir "www." si no está presente y no es una subdominio diferente
+        let canonical = yoast.canonical.startsWith('https://www.') ? yoast.canonical :
+                        yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
+        // Asegurar que la URL termina con "/"
+        canonical = canonical.endsWith('/') ? canonical : `${canonical}/`;
+        return canonical;
+      })() 
+    }
+  ];
   const metaTags = [
     { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
     { property: 'og:title', content: yoast.og_title },
@@ -119,8 +131,6 @@ useHead(() => {
     { name: 'twitter:card', content: yoast.twitter_card },
     // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
     { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
-    // Canonical
-    // { rel: 'canonical', href: yoast.canonical },
     // Robots
     {
       name: 'robots',

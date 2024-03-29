@@ -33,7 +33,7 @@
          <CirugiasTabs :contentData="contentData" />
       </div>
    </div>
-   <div class="answer__destacado flex flex-col lg:flex-row justify-between items-center col-[2/-2]" v-if="contentData.opciones_listado === 'tabla' && contentData.texto_destacado">
+   <div class="answer__destacado flex flex-col lg:flex-row justify-between items-center gap-8 col-[2/-2]" v-if="contentData.opciones_listado === 'tabla' && contentData.texto_destacado">
       <div class="answer__content p-8 bg-blue-2 text-left rounded-lg" v-for="destacado in contentData.texto_destacado" :key="destacado.frase_destacada"
          v-html="destacado.frase_destacada"></div>
    </div>

@@ -37,7 +37,7 @@ section.cirugia {
                      }
                   }
 
-                  .image_container {
+                  /* .image_container {
                      align-items: center;
                      display: flex;
                      flex-direction: column;
@@ -57,32 +57,10 @@ section.cirugia {
                      p {
                         font-size: calc(var(--font-size) * .85);
                      }
-                  }
+                  } */
 
                }
 
-               .contenido_tabla {
-                  display: grid;
-                  grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
-
-                  &>div {
-                     &::before {
-                        background-color: currentColor;
-                        content: "";
-                        height: 1px;
-                        left: 0;
-                        opacity: .2;
-                        position: absolute;
-                        top: -1.5rem;
-                        width: 100%;
-                     }
-
-                     & * {
-                        font-size: calc(var(--font-size) * .85);
-                        margin-bottom: 0;
-                     }
-                  }
-               }
             }
 
          }
