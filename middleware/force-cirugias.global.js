@@ -1,4 +1,9 @@
 export default function ({ path, query, hash }) {
+  // Ignorar el middleware para archivos .xml
+  if (path.endsWith(".xml")) {
+    return;
+  }
+  
   let nextPath = path;
 
   // Verificar si la ruta actual es una ruta de promoción

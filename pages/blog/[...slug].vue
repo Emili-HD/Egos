@@ -1,12 +1,10 @@
 <template>
-  <div v-if="postPending">Cargando post...</div>
-  <div v-else-if="postError">Error al cargar el post.</div>
-  <main v-else class="site-main" v-if="post">
+  <main class="site-main" v-if="post">
     <article>
       <div
         class="post__header before-gradient mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center"
         :style="`background-image: url(${post.featured_image_src.src})`">
-        <h1 class="text-nude-8 font-semibold text-center w-full xl:max-w-[60vw]">{{ post.title.rendered }}</h1>
+        <h1 v-if="isCritical" class="text-nude-8 font-semibold text-center w-full xl:max-w-[60vw]">{{ post.title.rendered }}</h1>
       </div>
       <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
         <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-3xl">
@@ -103,6 +101,9 @@ import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
 import { getPosts } from '@/composables/useFetch';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import useCritical from '#speedkit/composables/critical';
+const { isCritical } = useCritical({critical: true});
+
 const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
 // Acceder a los parámetros de la ruta
@@ -116,7 +117,7 @@ const loadData = () => {
 };
 
 // Utiliza `useAsyncData` con un key dinámico y dependencias de reactividad
-const { data: post, error: postError, pending: postPending, refresh } = await useAsyncData(`post-${route.params.slug}`, loadData, { watch: [route.params.slug], initialCache: false });
+const { data: post, refresh } = await useAsyncData(`post-${route.params.slug}`, loadData, { watch: [route.params.slug], initialCache: false });
 
 // Observador para manejar la recarga de datos cuando cambia el parámetro de ruta
 watch(() => route.params.slug, async (newSlug, oldSlug) => {
@@ -131,7 +132,6 @@ watch(post, (newPost) => {
     router.push('/error');
   }
 }, { immediate: true });
-
 
 // Datos YOAST SEO
 useHead(() => {

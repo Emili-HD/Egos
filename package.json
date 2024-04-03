@@ -18,6 +18,8 @@
     "mouse-follower": "^1.1.2",
     "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.7",
+    "sitemap": "^7.1.1",
+    "undici": "^6.10.2",
     "vue": "^3.4.19",
     "vue-router": "^4.2.5"
   },
@@ -30,6 +32,7 @@
     "nuxt-simple-robots": "^4.0.0-rc.16",
     "nuxt-speedkit": "^3.0.0-next.51",
     "nuxt-viewport": "^2.1.4",
+    "puppeteer": "^22.6.2",
     "sass": "^1.72.0",
     "sass-loader": "^14.1.1",
     "vue3-google-map": "^0.20.0"

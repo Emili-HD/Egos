@@ -1,7 +1,6 @@
 <template>
-  <div v-if="casorealPending">Cargando caso real...</div>
-  <div v-else-if="casorealError">Error al cargar el caso real.</div>
-  <main v-else class="site-main caso-real bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0" v-if="casoreal">
+
+  <main class="site-main caso-real bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
     <div class="caso-real__content col-[1/-1] lg:col-span-12 grid grid-cols-subgrid">
       <header class="caso-real__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-10 group" v-if="casoreal && casoreal.title">
         <h1 class="">{{ casoreal.title.rendered }}</h1>
@@ -12,7 +11,7 @@
           </div>
         </div>
       </header>
-      <section class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-10 row-start-2 py-8 lg:py-20">
+      <section class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-10 row-start-2 py-8 lg:py-20"  v-if="casoreal && casoreal.content">
         <div v-html="casoreal.content.rendered"></div>
       </section>
     </div>
@@ -27,42 +26,31 @@
 import { ref, watch } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getTestimonios } from '@/composables/useFetch';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 
 const router = useRouter();
 const route = useRoute();
 const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
-// Estado reactivo para almacenar los datos del testimonio
-const casorealData = ref(null);
-const casorealError = ref(null);
-const casorealPending = ref(true);
+// Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
+const { data: casoreal, refresh } = await useAsyncData(`casoreal-${route.params.slug}`, () => {
+  // Asegúrate de pasar un objeto con la propiedad `slug` a `getTestimonios`
+  return getTestimonios({ slug: route.params.slug });
+}, { watch: [() => route.params.slug], initialCache: false });
 
-// Función para cargar los datos
-async function loadCasorealData(slug) {
-  // Restablecer el estado a los valores iniciales cada vez que se carga un nuevo testimonio
-  casorealData.value = null;
-  casorealError.value = null;
-  casorealPending.value = true;
-  
-  const { data: casoreal, error, pending } = await useAsyncData(`casoreal-${slug}`, () => getTestimonios({ slug }), { initialCache: false });
 
-  casorealData.value = casoreal;
-  casorealError.value = error;
-  casorealPending.value = pending;
+watch(
+  () => route.params.slug,
+  async (newSlug, oldSlug) => {
+    if (newSlug !== oldSlug) {
+      await refresh();
+    }
+  },
+  { immediate: true }
+);
 
-  // Redirecciona si el testimonio no se encuentra
-  if (!casoreal.value) {
-    router.push('/error');
-  }
-}
-
-// Observar el parámetro de ruta 'slug' y recargar los datos cuando cambie
-watch(() => route.params.slug, (newSlug) => {
-  if (newSlug) {
-    loadCasorealData(newSlug);
-  }
-}, { immediate: true });
-
+// console.log(casoreal.value);
+   
 
 const stickyForm = async () => {
   gsap.registerPlugin(ScrollTrigger)

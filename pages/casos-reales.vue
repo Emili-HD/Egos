@@ -1,11 +1,11 @@
 <template>
   <main class="site-main casos-reales" v-if="testimonios">
     <section class="testimonios section__hero gap-x-1 lg:gap-x-4 lg:gap-y-8">
-      <div class="testimonios__header min-h-[60vh] flex flex-col justify-center align-center p-8 lg:p-40 text-center">
-        <h1>{{ pages.title.rendered }}</h1>
-        <div v-html="pages.content.rendered"></div>
+      <div class="testimonios__header min-h-[30vh] flex flex-col justify-center align-center p-8 lg:px-40 lg:pt-40 text-center">
+        <h1 class="mb-0">{{ pages.title.rendered }}</h1>
+        <!-- <div v-html="pages.content.rendered"></div> -->
       </div>
-        <div class="categories__list checkboxes p-4 flex flex-row-reverse flex-wrap justify-between md:justify-center items-center gap-1" v-if="categorias">
+      <div class="categories__list checkboxes p-4 flex flex-row-reverse flex-wrap justify-between md:justify-center items-center gap-1" v-if="categorias">
         <div class="categories__list-title w-full text-center font-medium uppercase">Filtros</div>
         <label class="bg-nude-5 text-xs text-gold-2 uppercase font-medium px-4 py-2 w-[32%] md:w-32 rounded-2xl flex items-center justify-evenly transition-all has-[input:checked]:bg-blue-1 has-[input:checked]:text-nude-8" v-for="categoria in categorias" :key="categoria.id">
           <input type="checkbox" :id="categoria.slug" class="filter hidden" >{{ categoria.name }}
@@ -27,6 +27,11 @@
           </div>
         </article>
       </div>
+
+      <div class="testimonios__header min-h-[60vh] flex flex-col justify-center align-center p-8 lg:p-40 text-center">
+        <div v-html="pages.content.rendered"></div>
+      </div>
+
     </section>
   </main>
 </template>

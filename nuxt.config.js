@@ -2,14 +2,16 @@
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  site: {
+    url: 'https://www.clinicaegos.com/',
+    trailingSlash: true,
+  },
   plugins: [
     '~/plugins/gtm.js', 
     '~/plugins/setHtmlLang.js',
     '~/plugins/scrollToTop.client.js',
   ],
   css: [
-    '~/src/styles.css', 
-    // '~/assets/css/fonts.css', 
     '~/assets/css/tailwind.css',
   ],
   postcss: {
@@ -252,9 +254,9 @@ export default defineNuxtConfig({
       googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAP_API_KEY,
     },
     private: {
-      wordpressUrl: process.env.WP_URL,
-      frontendSiteUrl: process.env.FRONTEND_DEV_URL || process.env.FRONTEND_PROD_URL,
-      FAUST_SECRET_KEY: process.env.FAUST_KEY,
+      wordpressUrl: process.env.NUXT_API_WP_URL,
+      frontendSiteUrl: process.env.NUXT_PUBLIC_DEV_URL || process.env.NUXT_PUBLIC_SITE_URL,
+      FAUST_SECRET_KEY: process.env.FAUST_SECRET_KEY,
     },
   },
   experimental: {
@@ -357,7 +359,7 @@ export default defineNuxtConfig({
     '/formulario-de-registro/': { redirect: { to: '/', statusCode: 308 } },
     '/contacto/': { redirect: { to: '/', statusCode: 308 } },
     '/servicios-2/': { redirect: { to: '/', statusCode: 308 } },
-    '/medicina-estetica/': { redirect: { to: '/', statusCode: 308 } },
+    // '/medicina-estetica/': { redirect: { to: '/', statusCode: 308 } },
     '/cirugia-estetica-badalona/': { redirect: { to: '/', statusCode: 308 } },
     '/cirugia-estetica-en-tarragona/': { redirect: { to: '/', statusCode: 308 } },
     '/servicios-sabadell-y-sant-cugat/': { redirect: { to: '/', statusCode: 308 } },
@@ -485,16 +487,6 @@ export default defineNuxtConfig({
     '/cirugia-estetica-facial/bichectomia-barcelona/': { redirect: { to: '/estetica-facial/bichectomia/', statusCode: 308 } },
     '/cirugia-estetica-facial/cirugia-de-papada/': { redirect: { to: '/estetica-facial/eliminar-papada/', statusCode: 308 } },
   },
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData:
-            '@import "@/assets/scss/abstracts/_abstracts-dir.scss";',
-        },
-      },
-    },
-  },
   // Configuración de nuxt-simple-robots
   robots: {
     // Opciones de configuración
@@ -505,134 +497,69 @@ export default defineNuxtConfig({
     // Puedes añadir más líneas según necesites
   },
   sitemap: {
-    hostname: process.env.NUXT_PUBLIC_SITE_URL,
+    exclude: [
+      '/doctor/**',
+      '/clinica/**',
+      '/**/&amp;',
+      '/**/&',
+      '/inicio',
+      '/contacto',
+      '/error'
+    ],
+    sources: [
+      '/api/sitemap/pages',
+      '/api/sitemap/cirugias',
+      '/api/sitemap/testimonios',
+      '/api/sitemap/posts',
+      '/api/sitemap/landings',
+      '/api/sitemap/clinicas',
+      '/api/sitemap/equipo',
+    ],
     sitemaps: {
-      posts: {
-        sources: ['/api/sitemap/posts'],
-      },
       pages: {
-        sources: ['/api/sitemap/pages'],
-      },
-      clinicas: {
-        sources: ['/api/sitemap/clinicas'],
-      },
-      equipo: {
-        sources: ['/api/sitemap/equipo'],
+        sources : [
+          '/api/sitemap/pages',
+        ],
+        defaults: { changefreq: 'weekly', priority: 1.0 },
       },
       cirugias: {
-        sources: ['/api/sitemap/cirugias'],
+        sources : [
+          '/api/sitemap/cirugias',
+        ],
+        defaults: { changefreq: 'weekly', priority: 0.9 },
       },
       testimonios: {
-        sources: ['/api/sitemap/testimonios'],
+        sources : [
+          '/api/sitemap/testimonios',
+        ],
+        defaults: { changefreq: 'weekly', priority: 0.9 },
       },
       landings: {
-        sources: ['/api/sitemap/landings'],
+        sources : [
+          '/api/sitemap/landings',
+        ],
+        defaults: { changefreq: 'weekly', priority: 0.8 },
+      },
+      posts: {
+        sources : [
+          '/api/sitemap/posts',
+        ],
+        defaults: { changefreq: 'weekly', priority: 0.7 },
       },
     },
   },
   nitro: {
     preset: 'node-server',
     prerender: {
+      crawlLinks: true,
       routes: [
-        // Listado de páginas
         '/',
-        '/nuestras-clinicas/',
-        '/nuestro-equipo/',
-        '/aviso-legal/',
-        '/politica-de-cookies/',
-        '/politica-de-privacidad/',
-
-        // // Listado de estetica corporal
-        '/estetica-corporal/',
-        '/estetica-corporal/abdominoplastia/',
-        '/estetica-corporal/aumento-de-gluteos/',
-        '/estetica-corporal/lifting-de-brazos-braquioplastia/',
-        '/estetica-corporal/lifting-de-muslos/',
-        '/estetica-corporal/lipoescultura/',
-        '/estetica-corporal/liposuccion/',
-        '/estetica-corporal/cirugia-mommy-makeover/',
-        '/estetica-corporal/tratamiento-de-morpheus-8/',
-        '/estetica-corporal/tratamiento-varices-sin-cirugia/',
-        '/estetica-corporal/hip-dips/',
-
-        '/injerto-capilar/injerto-capilar/',
-
-        // // Listado de cirugia de pechos
-        '/cirugia-de-pechos/',
-        '/cirugia-de-pechos/aumento-de-pecho/',
-        '/cirugia-de-pechos/cambio-implantes-mamarios/',
-        '/cirugia-de-pechos/correccion-de-la-cicatriz-de-aumento-de-pecho/',
-        '/cirugia-de-pechos/eliminar-cicatrices/',
-        '/cirugia-de-pechos/ginecomastia/',
-        '/cirugia-de-pechos/mamas-tuberosas/',
-        '/cirugia-de-pechos/mastopexia/',
-        '/cirugia-de-pechos/reconstruccion-mamaria/',
-        '/cirugia-de-pechos/reduccion-de-areolas-o-pezon/',
-        '/cirugia-de-pechos/reduccion-de-pecho/',
-
-        // // Listado de obesidad
-        '/obesidad/',
-        '/obesidad/balon-gastrico/',
-        '/obesidad/sleeve-gastrico/',
-        '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/',
-        '/obesidad/bypass-gastrico/',
-        '/obesidad/tratamiento-farmacologico-obesidad/',
-
-        // // Listado de estetica facial
-        '/estetica-facial/',
-        '/estetica-facial/aumento-de-labios/',
-        '/estetica-facial/aumento-de-pomulos/',
-        '/estetica-facial/bichectomia/',
-        '/estetica-facial/blefaroplastia/',
-        '/estetica-facial/eliminar-papada/',
-        '/estetica-facial/lifting-facial/',
-        '/estetica-facial/lobuloplastia/',
-        '/estetica-facial/mentoplastia/',
-        '/estetica-facial/otoplastia/',
-        '/estetica-facial/rinomodelacion/',
-        '/estetica-facial/rinoplastia-ultrasonica/',
-        '/estetica-facial/tratamiento-antiarrugas/',
-
-        // // Listado de cirugia íntima
-        '/cirugia-intima/',
-        '/cirugia-intima/himenoplastia-cirugia-de-reconstruccion-el-himen/',
-        '/cirugia-intima/labioplastia-o-ninfoplastia/',
-        '/cirugia-intima/vaginoplastia/',
-
-        // // Listado de Blog
-        '/blog/',
-        '/blog/tratamientos-signos-de-la-edad/',
-        '/blog/tipos-de-liposuccion/',
-        '/blog/rinomodelacion-con-el-acido-hialuronico/',
-        '/blog/tipos-de-operaciones-de-pecho/',
-        '/blog/protesis-mamarias-opcion-segura/',
-        '/blog/mejorar-cicatriz-de-una-abdominoplastia/',
-        '/blog/postoperatorio-de-aumento-de-mamas/',
-        '/blog/ejercicio-despues-aumento-pecho/',
-        '/blog/mejorar-cicatriz-de-un-aumento-de-pecho/',
-        '/blog/todo-lo-que-debes-saber-la-cirugia-capilar/',
-        '/blog/cuanto-cuesta-un-injerto-de-pelo/',
-        '/blog/precio-aumento-de-pecho/',
-        '/blog/rinoplastia-de-nariz-ancha/',
-        '/blog/paniculectomia/',
-        '/blog/braquioplastia-lifting-de-brazos/',
-        '/blog/cuanto-cuesta-una-otoplastia/',
-        '/blog/lifting-facial-todo-lo-que-debes-saber/',
-        '/blog/la-mirada-cansada-causas-y-como-prevenir/',
-        '/blog/cicatriz-de-mastopexia-1-a-6-meses/',
-        '/blog/tratamientos-para-tonificar-el-abdomen/',
-        '/blog/que-es-una-liposcultura/',
-        '/blog/mar-regueras-visita-clinica-egos/',
-        '/blog/rinoplastia-sin-cirugia/',
-        '/blog/como-conseguir-un-vientre-plano/',
-        '/blog/aumento-de-gluteos-opciones/',
-        '/blog/es-compatible-el-embarazo-si-llevo-implantes-mamarios/',
-        '/blog/que-es-un-peeling-facial/',
-        '/blog/pecho-mas-hinchado-despues-de-aumento/',
-        '/blog/lipo-vaser-que-es-y-beneficios/',
-        '/blog/recuperacion-de-una-liposuccion/',
-        '/blog/5-trucos-prevenir-la-aparicion-de-arrugas/',
-        '/blog/mommy-makeover/',
+        '/sitemap.xml', 
+        '/pages-sitemap.xml', 
+        '/cirugias-sitemap.xml', 
+        '/posts-sitemap.xml', 
+        '/testimonios-sitemap.xml', 
+        '/landings-sitemap.xml', 
       ]
     }
   },

@@ -2,6 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --blue-1: #1c2c44;
+  --blue-2: #223552;
+  --blue-3: #273e60;
+  --blue-4: #2d476e;
+  --blue-5: #33507c;
+  --blue-6: #395989;
+  --gold-1: #CCB780;
+  --gold-2: #908057;
+  --gold-3: #857650;
+  --nude-1: #c0b5a3;
+  --nude-2: #c8beaf;
+  --nude-3: #d0c8ba;
+  --nude-4: #d8d1c6;
+  --nude-5: #e0dad2;
+  --nude-6: #e8e4dd;
+  --nude-7: #f0ede9;
+  --nude-8: #f8f7f4;
+  --white: #ffffff;
+  --blue-1-rgb: 28, 44, 68;
+  --blue-2-rgb: 34, 53, 82;
+  --blue-3-rgb: 39, 62, 96;
+  --blue-4-rgb: 45, 71, 110;
+  --blue-5-rgb: 51, 80, 124;
+  --blue-6-rgb: 57, 89, 137;
+  --gold-1-rgb: 204, 183, 128;
+  --gold-2-rgb: 144, 128, 87;
+  --gold-3-rgb: 133, 118, 80;
+  --nude-1-rgb: 192, 181, 163;
+  --nude-2-rgb: 200, 190, 175;
+  --nude-3-rgb: 208, 200, 186;
+  --nude-4-rgb: 216, 209, 198;
+  --nude-5-rgb: 224, 218, 210;
+  --nude-6-rgb: 232, 228, 221;
+  --nude-7-rgb: 240, 237, 233;
+  --nude-8-rgb: 248, 247, 244;
+  --white-rgb: 255, 255, 255;
+  --gradient-blue: linear-gradient(150deg, var(--blue-1), var(--blue-4));
+  --gradient-gold: linear-gradient(-35deg, var(--nude-3), var(--gold-2), var(--nude-3), var(--gold-2), var(--nude-3));
+  --background-gradient: linear-gradient(135deg, var(--gold), var(--nude-6));
+  --background-gradient-cards: linear-gradient(180deg, rgba(var(--gold-rgb), 0) 0%, var(--nude-7) 50%);
+  --gradient: radial-gradient(117% 90% at 31% 74%, rgba(220, 227, 230, 0.3) -10%, rgba(220, 227, 230, 0.1) 40%, rgba(220, 227, 230, 0) 60%),
+    radial-gradient(53% 108% at 60% 121%, rgba(139, 145, 148, 0.8) 0%, rgba(139, 145, 148, 0) 80%),
+    radial-gradient(180% 180% at 174% -112%, rgb(139, 145, 148) 0%, rgb(139, 145, 148) 70%, rgba(139, 145, 148, 0) 95%),
+    linear-gradient(41deg, rgba(220, 227, 230, 0) 0%, rgba(220, 227, 230, 0) 70%, rgba(220, 227, 230, 0.6) 110%),
+    radial-gradient(58% 49% at -8% 55%, rgb(192, 199, 202) 0%, rgba(192, 199, 202, 0) 100%),
+    radial-gradient(40% 27% at -4% 13%, rgb(192, 199, 202) 0%, rgba(192, 199, 202, 0) 90%);
+  --shadow: 0 16px 8px rgba(160, 156, 151, 0.07),
+    0 32px 16px rgba(160, 156, 151, 0.11);
+  --dropShadow: drop-shadow(0 2px 1px rgba(160, 156, 151, 0.11)) drop-shadow(0 4px 2px rgba(160, 156, 151, 0.13)) drop-shadow(0 8px 4px rgba(160, 156, 151, 0.15)) drop-shadow(0 16px 8px rgba(160, 156, 151, 0.17)) drop-shadow(0 32px 16px rgba(160, 156, 151, 0.21));
+  --text-color: var(--blue-1);
+  --text-color-dark: var(--blue-1);
+  --link-color-hover: var(--gold);
+  --header-height: 4.8125rem;
+  --full-width: 100vw;
+  --full-height: 100vh;
+  --spacing: 2rem;
+  --margin: 1.5em;
+  --gap: .3rem;
+  --border-color-light: rgba(var(--nude-3-rgb), 0.4);
+  --border-color-dark: rgba(var(--blue-1-rgb), 0.4);
+  --border-blue-light: rgba(var(--blue-6-rgb), 0.4);
+  --border-radius: 1;
+  --radius-xxl: 2.1rem;
+  --radius-xl: 1.8rem;
+  --radius-l: 1.5rem;
+  --radius-m: 1.2rem;
+  --radius-s: 0.9rem;
+  --radius-xs: 0.6rem;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --clip: var(--gap);
+  --round: var(--radius-xl);
+  --clipPath: inset(var(--clip) round var(--round));
+}
+
+@media (max-width: 767px) {
+  :root {
+    --radius-xxl: 1.9rem;
+    --radius-xl: 1.5rem;
+    --radius-l: 1.2rem;
+    --radius-m: .9rem;
+    --radius-s: 0.6rem;
+    --radius-xs: 0.3rem;
+  }
+}
+
 @font-face {
   font-family: 'Canela';
   src: url('~/assets/fonts/canela/Canela-Bold.woff') format('woff'),
@@ -140,6 +226,10 @@
     
     .tabla {
         @apply py-40; 
+
+        .panel__content {
+            @apply col-[2/-2] lg:col-[4/14] row-start-1 w-full text-center;
+        }
     }
     
     .related__posts h3 > div {
@@ -170,10 +260,24 @@
             @apply row-start-3 xl:row-start-1 col-[1_/_-1] xl:col-[12_/_17] xl:-left-20;
         }
     }
+
+    .answer__content ul li {
+        @apply ml-6;
+    }
     
     .video__player {
         .plyr {
             @apply rounded-2xl;
+        }
+    }
+
+    .vHorizontal {
+        .panel__image {
+            @apply aspect-video col-[2/-2] lg:col-[2/11]
+        }
+
+        .panel__content {
+            @apply col-[2/-2] lg:col-[12/-2]
         }
     }
     
@@ -197,6 +301,12 @@
 
     .form-after {
         @apply after:content-[''] after:border after:border-solid after:border-nude-8/[0.1] after:bg-nude-8/[0.025] after:absolute after:-top-6 after:-left-6 after:rounded-2xl after:w-[calc(100%+3rem)] after:h-[calc(100%+3rem)] after:pointer-events-none;
+    }
+
+    .swiperColumn {
+        .swiper-slide {
+            @apply h-auto box-border;
+        }
     }
 }
 

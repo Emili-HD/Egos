@@ -1,7 +1,7 @@
 import { asSitemapUrl, defineSitemapEventHandler } from '#imports';
 
 export default defineSitemapEventHandler(async () => {
-  const wpBaseUrl = process.env.WP_URL;
+  const wpBaseUrl = 'https://test.clinicaegos.com/';
   let allPages = [];
   let perPage = 100;
   let page = 1;

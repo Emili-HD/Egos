@@ -1,11 +1,11 @@
 <template>
-  <div class="tabla_wrapper" v-if="contentData.opciones_listado == 'tabla'">
+  <div class="tabla_wrapper col-[2/-2]" v-if="contentData.opciones_listado == 'tabla'">
     <div
-      class="answer__tabla"
+      class="answer__tabla grid grid-cols-1 lg:grid-cols-[170px_1fr_1fr_1fr] gap-8"
       v-for="table in contentData.list_tabs"
       :key="table.tabla"
     >
-      <div class="row row0">
+      <div class="row row0 hidden lg:block">
         <div class="image_container mb-2 flex flex-col items-center overflow-hidden min-h-[300px] w-full"></div>
         <div class="contenido_tabla">
           <div

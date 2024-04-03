@@ -9,7 +9,11 @@
             z-2
             has-[img]:aspect-square
             has-[img]:col-[9_/_span_7]
-            has-[img]:row-start-1 gap-8" v-if="contentData.fondo != 'sin'">
+            has-[img]:row-start-1 gap-8
+            [.tabla_&]:col-[11/-1] [.tabla_&]:row-start-1 [.tabla_&]:w-full
+            [.columnas_&]:col-[2/-2] [.columnas_&]:row-start-2 [.columnas_&]:p-0 [.columnas_&]:aspect-square [.columnas_&]:h-full
+            [.columnas_&]:lg:col-[6/12] [.columnas_&]:lg:row-start-1 [.columnas_&]:lg:px-16 [.columnas_&]:lg:aspect-[2/3]" 
+            v-if="contentData.fondo != 'sin'">
       <div v-if="contentData.fondo == 'vHorizontal'" class="video__player aspect-video">
          <div class="size-full">
             <VimeoPlayer :videoId="contentData.video" />
@@ -20,7 +24,7 @@
             <VimeoPlayer :videoId="videoItem.video" />
          </div>
       </div>
-      <NuxtImg loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" :alt="contentData.side_image.alt" />
+      <NuxtImg class="rounded-xl size-full object-cover object-center" loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" :alt="contentData.side_image.alt" />
    </figure>
    <!-- </DelayHydration> -->
    <div class="panel__content col-[2/-2] lg:col-[10_/_span_6] has-[.accordion]:col-[2_/_span_6] row-start-2 lg:row-start-1"
