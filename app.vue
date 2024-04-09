@@ -1,7 +1,7 @@
 <template>
   <div
     class="fixed-button bg-blue-1 fixed top-[calc(100%-4.5rem)] w-full p-4 z-[998] flex flex-row justify-center items-center xl:hidden">
-    <ElementsButton class="gold" href="#formulario" @click.prevent="handleClick">
+    <ElementsButton class="gold" href="#formulario" @click.passive="handleClick">
       Cita con el cirujano</ElementsButton>
   </div>
   <DelayHydration>

@@ -38,7 +38,7 @@
                      <clipPath id="SVGID_2_">
                         <use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
                      </clipPath>
-                     <rect class="bg-stars" x="0.7" y="0.1" :width="calculateWidth(comment.valoracion)" height="33.5" fill="#CCB780"/>
+                     <rect class="bg-stars [clip-path:url(#SVGID_2_)] fill-gold-1" x="0.7" y="0.1" :width="calculateWidth(comment.valoracion)" height="33.5" fill="#CCB780"/>
                      <use xlink:href="#SVGID_1_"  style="overflow:visible;fill:none;stroke:#CCB780;stroke-miterlimit:10;"/>
                   </g>
                </svg>
@@ -72,7 +72,7 @@ function calculateWidth(valoracion) {
 
 <style lang="scss" scoped>
 
-.bg-stars{clip-path:url(#SVGID_2_);fill:#CCB780;}
+// .bg-stars{clip-path:url(#SVGID_2_);fill:#CCB780;}
 .resenas {
    background-color: var(--nude-5);
    min-height: 80lvh;
@@ -96,7 +96,7 @@ function calculateWidth(valoracion) {
 
 .swiper {
   width: 100%;
-  height: max(400px, 40lvh);
+//   height: max(400px, 40lvh);
   
   &-slide {
     text-align: left;

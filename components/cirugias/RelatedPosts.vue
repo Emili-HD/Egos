@@ -15,12 +15,13 @@
           :aria-label="
             post.title ? 'Leer más sobre ' + post.title.rendered : 'Leer más'
           "
+          class="size-full"
         >
           <NuxtImg
             loading="lazy"
             v-if="post.featured_image_src && post.featured_image_src.src"
             :src="post.featured_image_src.src"
-            class="card__image rounded-2xl size-full aspect-square rounded-2xl object-cover"
+            class="card__image rounded-2xl size-full aspect-square object-cover"
             :alt="post.featured_image_src ? post.featured_image_src.alt : ''"
             :aria-labelledby="'post-title-' + post.id"
           />

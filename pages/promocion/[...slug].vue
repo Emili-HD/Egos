@@ -3,7 +3,7 @@
   <div v-else-if="landingError">Error al cargar la Promoción.</div>
    <main v-else class="site-main landing-main" v-if="landing && landing.acf">
       <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
-         <a class="gold" href="#hubspotLanding" @click.prevent="handleClick">Cita con el cirujano
+         <a class="gold" href="#hubspotLanding" @click.passive="handleClick">Cita con el cirujano
          </a>
       </div>
       <section class="hero m-0 p-0 min-h-screen flex flex-col lg:flex-row justify-between items-stretch">
@@ -42,19 +42,19 @@ const loadData = () => {
 };
 
 // Función para cargar los datos
-const { data: landing, error: landingError, pending: landingPending, refresh } = await useAsyncData(`landing-${route.params.slug}`, loadData, { watch: [route.params.slug], initialCache: false });
+const { data: landing, error: landingError, pending: landingPending, refresh } = await useAsyncData(`landing-${route.params.slug}`, loadData, { initialCache: false });
 
 
-watch(
-   () => route.params.slug,
-   async (newSlug, oldSlug) => {
-      if (newSlug !== oldSlug) {
-         await refresh();
-      }
-   },
-   { immediate: true }
-);
-console.log(landing.value);
+// watch(
+//    () => route.params.slug,
+//    async (newSlug, oldSlug) => {
+//       if (newSlug !== oldSlug) {
+//          await refresh();
+//       }
+//    },
+//    { immediate: true }
+// );
+// console.log(landing.value);
    
 function handleClick() {
    const { $lenis: lenis } = useNuxtApp();
@@ -130,6 +130,42 @@ useHead(() => {
       meta: metaTags,
    };
 });
+
+const injectStructuredData = async () => {
+   if (landing.value && landing.value.acf && landing.value.acf.datos) {}
+    const structuredData = {
+      "@context": "http://schema.org",
+      "@type": landing.value.acf.datos.type,
+      "name": landing.value.acf.datos.name,
+      "address": [
+        {
+          "@type": landing.value.acf.datos.adress.type,
+         //  "streetAddress": landing.value.acf.datos.adress.streetaddress,
+         //  "postalCode": landing.value.acf.datos.adress.postalcode,
+         //  "addressLocality": landing.value.acf.datos.adress.addresslocality,
+         //  "addressRegion": landing.value.acf.datos.adress.addressregion,
+         //  "addressCountry": landing.value.acf.datos.adress.addresscountry,
+          "name": landing.value.acf.datos.adress.addresscountry,
+        }
+      ],
+      "offers": [
+        {
+          "@type": landing.value.acf.datos.offers.type,
+          "price": landing.value.acf.datos.offers.price,
+          "priceCurrency": landing.value.acf.datos.offers.pricecurrency,
+          "availability": landing.value.acf.datos.offers.availability,
+        }
+      ],
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+}
+
+onMounted(async () => {
+   await injectStructuredData()
+})
 </script>
 
 <style lang="scss" scoped>

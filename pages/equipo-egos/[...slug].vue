@@ -1,31 +1,35 @@
 <template>
 
-  <main class="site-main caso-real bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
-    <div class="caso-real__content col-[1/-1] lg:col-span-12 grid grid-cols-subgrid">
-      <header class="caso-real__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-10 group" v-if="casoreal && casoreal.title">
-        <h1 class="">{{ casoreal.title.rendered }}</h1>
-        <div v-if="casoreal.acf.vimeo_video"
-          class="caso-real__video video__player col-start-2 col-span-10 flex flex-row justify-center items-start">
-          <div class="w-full bg-nude-5 h-[max(400px,_65vh)] rounded-2xl">
-            <VimeoPlayer :videoId="casoreal.acf.vimeo_video" />
+  <main class="site-main doctor bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
+    <div class="doctor__content col-[1/-1] lg:col-span-12 grid grid-cols-subgrid">
+      <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-10 group" v-if="doctor && doctor.title">
+        <h1 class="">{{ doctor.title.rendered }}</h1>
+        <div v-if="doctor.featured_image_src"
+          class="doctor__media col-start-2 col-span-10 flex flex-row justify-center items-start">
+          <div class="w-full bg-nude-5 h-[max(400px,_65vh)] rounded-2xl overflow-hidden">
+            <NuxtImg :src="doctor.featured_image_src.src" :alt="doctor.featured_image_src.alt" class="object-cover object-center size-full absolute" />
           </div>
         </div>
       </header>
-      <section class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-10 row-start-2 py-8 lg:py-20"  v-if="casoreal && casoreal.content">
-        <div v-html="casoreal.content.rendered"></div>
+      <section class="doctor__description lg:col-start-2 col-[2_/_span_14] lg:col-span-10 row-start-2 py-8 lg:py-20"  v-if="doctor && doctor.content">
+        <div v-html="doctor.content.rendered"></div>
       </section>
+      <section class="col-[2/-2] lg:col-start-2 lg:col-span-10 bg-transparent">
+        <DoctorResenas :data="reviews" />
+      </section>
+      <ElementsReviews :ruta="route.params.slug[1]" />
     </div>
-    <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20" v-if="casoreal && casoreal.acf">
-      <FormsCirugia :identificador="'topPage'" :portalId="String(casoreal.acf.formulario.portalid)"
-        :formId="casoreal.acf.formulario.formid" />
+    <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20" v-if="doctor && doctor.acf">
+      <FormsCirugia :identificador="'formulario'" :portalId="String(doctor.acf.portalid)"
+        :formId="doctor.acf.formid" />
     </aside>
   </main>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, watchEffect } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
-import { getTestimonios } from '@/composables/useFetch';
+import { getEquipo, getReviews } from '@/composables/useFetch';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
 const router = useRouter();
@@ -33,23 +37,33 @@ const route = useRoute();
 const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
 // Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
-const { data: casoreal, refresh } = await useAsyncData(`casoreal-${route.params.slug}`, () => {
+const { data: doctor, refresh: refreshDoctor } = await useAsyncData(`doctor-${route.params.slug}`, () => {
   // Asegúrate de pasar un objeto con la propiedad `slug` a `getTestimonios`
-  return getTestimonios({ slug: route.params.slug });
-}, { watch: [() => route.params.slug], initialCache: false });
+  return getEquipo({ slug: route.params.slug });
+}, { watch: [() => route.params.slug] });
 
+// Carga las reseñas del doctor basado en el mismo slug
+const { data: reviews, refresh: refreshReviews } = useAsyncData(`reviews-${route.params.slug[1]}`, () => getReviews({ slug: route.params.slug[1] }), {
+  watch: [() => route.params.slug[1]]
+});
 
+watchEffect(() => {
+  // console.log('Slug:', route.params.slug[1]);
+  // console.log('Reseñas', reviews.value);
+});
+
+// Refresca tanto los datos del doctor como las reseñas si cambia el slug
 watch(
   () => route.params.slug,
   async (newSlug, oldSlug) => {
     if (newSlug !== oldSlug) {
-      await refresh();
+      await Promise.all([refreshDoctor(), refreshReviews()]);
     }
   },
   { immediate: true }
 );
 
-// console.log(casoreal.value);
+// console.log(doctor.value);
    
 
 const stickyForm = async () => {
@@ -85,14 +99,14 @@ onMounted(async () => {
 // Datos YOAST SEO
 useHead(() => {
   // Verifica si el post está cargado y tiene la estructura esperada
-  if (!casoreal.value || !casoreal.value.yoast_head_json) {
+  if (!doctor.value || !doctor.value.yoast_head_json) {
     return {
       title: 'Cargando...', // Título temporal mientras se cargan los datos
     };
   }
 
   // Accede al primer elemento del arreglo para obtener los datos de YOAST SEO
-  const yoast = casoreal.value.yoast_head_json;
+  const yoast = doctor.value.yoast_head_json;
 
   const link = [
     { 
@@ -147,24 +161,24 @@ useHead(() => {
 const injectStructuredData = async () => {
     const structuredData = {
       "@context": "http://schema.org",
-      "@type": casoreal.value.acf.datos.type,
-      "name": casoreal.value.acf.datos.name,
+      "@type": doctor.value.acf.datos.type,
+      "name": doctor.value.acf.datos.name,
       "address": [
         {
-          "@type": casoreal.value.acf.datos.adress.type,
-          // "streetAddress": casoreal.value.acf.datos.adress.streetaddress,
-          // "postalCode": casoreal.value.acf.datos.adress.postalcode,
-          // "addressLocality": casoreal.value.acf.datos.adress.addresslocality,
-          // "addressRegion": casoreal.value.acf.datos.adress.addressregion,
-          // "name": casoreal.value.acf.datos.adress.addresscountry,
-          "name": casoreal.value.acf.datos.adress.addresscountry,
+          "@type": doctor.value.acf.datos.adress.type,
+          // "streetAddress": doctor.value.acf.datos.adress.streetaddress,
+          // "postalCode": doctor.value.acf.datos.adress.postalcode,
+          // "addressLocality": doctor.value.acf.datos.adress.addresslocality,
+          // "addressRegion": doctor.value.acf.datos.adress.addressregion,
+          // "name": doctor.value.acf.datos.adress.addresscountry,
+          "name": doctor.value.acf.datos.adress.addresscountry,
         }
       ],
       "aggregateRating": [
         {
-          "@type": casoreal.value.acf.datos.aggregaterating.type,
-          "ratingValue": casoreal.value.acf.datos.aggregaterating.ratingvalue,
-          "reviewCount": casoreal.value.acf.datos.aggregaterating.reviewcount,
+          "@type": doctor.value.acf.datos.aggregaterating.type,
+          "ratingValue": doctor.value.acf.datos.aggregaterating.ratingvalue,
+          "reviewCount": doctor.value.acf.datos.aggregaterating.reviewcount,
         }
       ],
     };

@@ -135,12 +135,13 @@ export const getClinicas = async ({ page = 1, perPage = 100, slug = null } = {})
 
 export const getTestimonios = async ({ page = 1, perPage = 100, slug = null, categories = false } = {}) => {
     let endpoint = 'wp/v2';
+    const timestamp = new Date().getTime();
     // Si se solicitan las categorías de testimonios
     if (categories) {
         endpoint += '/categoria-opinion';
     } else {
         // Para testimonios o un testimonio específico por slug
-        endpoint += `/testimonio${slug ? `?slug=${slug}` : `?per_page=${perPage}&page=${page}`}`;
+        endpoint += `/testimonio${slug ? `?slug=${slug}` : `?per_page=${perPage}&page=${page}&timestamp=${timestamp}`}`;
     }
 
     const url = `${JSON_URL}/${endpoint}`;
@@ -174,7 +175,8 @@ export const getTratamiento = async ({ id = null, slug = null } = {}) => {
     }
 
     let endpoint = 'wp/v2/tratamiento';
-    let queryParameters = id ? `/${id}` : `?slug=${slug}`;
+    const timestamp = new Date().getTime();
+    let queryParameters = id ? `/${id}` : `?slug=${slug}&timestamp=${timestamp}`;
 
     const url = `${JSON_URL}/${endpoint}${queryParameters}`;
 
@@ -222,12 +224,45 @@ export const getEspecialidades = async () => {
 };
 
 // ***************************************************************************************************
+// Función para obtener reseñas de doctores
+// ***************************************************************************************************
+
+export const getReviews = async ({ slug }) => {
+    const page = 1;
+    const perPage = 100;
+    let url = `https://test.clinicaegos.com/wp-json/wp/v2/review?page=${page}&per_page=${perPage}`;
+
+    // Si se proporciona un slug, añádelo a la URL como filtro
+    if (slug) {
+        url += `&publicar_en=${slug}`;
+    }
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Fetch error: ", error);
+        throw error;
+    }
+};
+
+
+// ***************************************************************************************************
 // Función para obtener miembros del equipo, con soporte para paginación
 // ***************************************************************************************************
 
-export const getEquipo = async ({ page = 1, perPage = 20, slug = null } = {}) => {
+export const getEquipo = async ({ page = 1, perPage = 100, slug = null } = {}) => {
     let endpoint = 'wp/v2/doctor';
-    let queryParameters = `?per_page=${perPage}&page=${page}`;
+    const timestamp = new Date().getTime();
+    let queryParameters = `?per_page=${perPage}&page=${page}&timestamp=${timestamp}`;
 
     if (slug) {
         queryParameters += `&slug=${slug}`;

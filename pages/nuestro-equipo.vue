@@ -49,17 +49,20 @@
                             <div class="card__member block relative size-full overflow-hidden">
                                 <NuxtImg loading="lazy" v-if="miembro.featured_image_src"
                                     :src="miembro.featured_image_src.src"
-                                    class="card__image absolute w-full -top-[10%] object-center object-cover min-h-full overflow-hidden rounded-3xl"
+                                    class="card__image absolute w-full object-center object-cover min-h-full overflow-hidden rounded-3xl"
                                     :alt="miembro.featured_image_src.alt" />
                                 <div
-                                    class="card__description bg-nude-6 p-4 absolute bottom-0 rounded-3xl w-full z-10 flex flex-col justify-end items-center gap-2">
-                                    <h3 class="card__title h6 !mb-0">
-                                        {{ miembro.title ? miembro.title.rendered : 'No Title' }}
-                                    </h3>
-                                    <p v-html="miembro.acf.trayectoria.especialidad"></p>
+                                    class="card__description text-nude-6 bg-gold-3/10 p-4 absolute bottom-0 rounded-3xl size-full z-10 flex flex-col justify-between items-start gap-2">
+                                    <div>
+                                        <h3 class="card__title h6 !mb-0 font-normal">
+                                            {{ miembro.title ? miembro.title.rendered : 'No Title' }}
+                                        </h3>
+                                        <p class="font-normal" v-html="miembro.acf.trayectoria.especialidad"></p>
+                                    </div>
                                     <div class="button__group flex flex-row justify-center items-center gap-2 w-full">
-                                        <a href="#" @click.prevent="showMemberPanel(miembro)" class="button border border-solid border-blue-1/20 rounded-full py-1 w-full text-center">+ Info</a>
-                                        <button class="button bg-blue-1 rounded-full py-1 text-nude-8 w-full text-center" v-if="category.form === true"
+                                        <a v-if="category.form === false" href="#" @click.passive="showMemberPanel(miembro)" class="button border border-solid bg-nude-1 border-nude-1/20 rounded-full py-1 w-full text-center">+ Info</a>
+                                        <NuxtLink :to="processedPath(miembro.link)" class="button bg-nude-1 rounded-full py-1 text-nude-8 w-full text-center" v-if="category.form === true">+ Info</NuxtLink>
+                                        <button class="button bg-gold-3 rounded-full py-1 text-nude-8 w-full text-center" v-if="category.form === true"
                                             @click="openPopup">Pedir Cita</button>
                                     </div>
                                 </div>
@@ -109,10 +112,16 @@ const categories = computed(() => {
 // Obtener datos
 const { data: especialidades, error: especialidadesError, pending: especialidadesPending } = await useAsyncData('especialidades', getEspecialidades, {initialCache: false});
 const { data: pages, error: paginaError, pending: paginaPending } = await useAsyncData('paginaEspecial', () => getPage(562), {initialCache: false});
-const { data: doctor, error: equipoError, pending: equipoPending } = await useAsyncData('equipo', () => getEquipo({ perPage: 20 }), {initialCache: false});
+const { data: doctor, error: equipoError, pending: equipoPending } = await useAsyncData('equipo', () => getEquipo({ perPage: 100 }), {initialCache: false});
 
 const doctorByCategory = (categoryId) => {
     return doctor.value.filter((d) => d.especialidad.includes(categoryId));
+};
+
+const processedPath = (fullUrl) => {
+  if (!fullUrl) return ''; // Retorna una cadena vacía si fullUrl no está definido
+  const url = new URL(fullUrl);
+  return url.pathname; // Devuelve solo la parte de la ruta de la URL
 };
 
 function showMemberPanel(miembro) {

@@ -1,20 +1,26 @@
 <template>
-  <ClientOnly >
-    <div class="relative overflow-hidden size-full rounded-xl" v-if="videoId">
+  <ClientOnly>
+    <div class="relative overflow-hidden size-full rounded-xl" v-if="videoId" v-intersect="loadIframe">
       <iframe
+        v-if="iframeLoaded"
         :src="iframeSrc"
         :title="titulo"
         class="absolute top-0 left-0 w-full h-full"
         frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture"
+        muted
+        webkitallowfullscreen
+        mozallowfullscreen
         allowfullscreen
+        width="100%"
+        height="100%"
+        data-chromatic="ignore"
       ></iframe>
     </div>
   </ClientOnly>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
   videoId: {
@@ -26,7 +32,11 @@ const props = defineProps({
   },
 });
 
-const iframeSrc = computed(() => {
-  return `${props.videoId}?autoplay=0&loop=1`;
-});
+const iframeSrc = computed(() => `${props.videoId}`);
+const iframeLoaded = ref(false);
+
+const loadIframe = () => {
+  iframeLoaded.value = true;
+};
 </script>
+

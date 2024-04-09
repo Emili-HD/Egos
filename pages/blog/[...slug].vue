@@ -6,23 +6,29 @@
         :style="`background-image: url(${post.featured_image_src.src})`">
         <h1 v-if="isCritical" class="text-nude-8 font-semibold text-center w-full xl:max-w-[60vw]">{{ post.title.rendered }}</h1>
       </div>
+      <div class="breadcrumbs flex gap-4 px-4 divide-x divide-blue-1/50">
+        <NuxtLink class="pl-4 mb-0 leading-3 font-normal" to="/">Inicio</NuxtLink>
+        <NuxtLink class="pl-4 mb-0 leading-3 font-normal" to="/blog/">Blog</NuxtLink>
+        <div class="pl-4 mb-0 leading-3 italic">{{ post.title.rendered }}</div>
+      </div>
       <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
         <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-3xl">
           <h4 class="nav-content-title h6 bg-nude-4 p-4">Tabla de contenidos</h4>
           <ul class="pl-6 list-decimal">
             <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
               v-for="(content, index) in post.acf.areas_de_contenido"
-              @click.prevent="lenis.scrollTo(`#area-${index}`, { offset: -100 })"><span>{{ content.titulo_area }}</span>
+              @click.passive="lenis.scrollTo(`#area-${index}`, { offset: -100 })"><span>{{ content.titulo_area }}</span>
             </li>
             <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
               v-if="post.acf.post_description.titulo_recomendaciones"
-              @click.prevent="lenis.scrollTo('#recomendaciones', { offset: -100 })"><span
+              @click.passive="lenis.scrollTo('#recomendaciones', { offset: -100 })"><span
                 v-html="post.acf.post_description.titulo_recomendaciones"></span></li>
             <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-              v-if="post.acf.post_faqs.titulo_faqs" @click.prevent="lenis.scrollTo('#faqs', { offset: -100 })"><span
+              v-if="post.acf.post_faqs.titulo_faqs" @click.passive="lenis.scrollTo('#faqs', { offset: -100 })"><span
                 v-html="post.acf.post_faqs.titulo_faqs"></span></li>
           </ul>
         </aside>
+        
         <div class="post__content-areas p-0 xl:py-6 xl:px-10">
           <div v-if="post.content.rendered" class="post__content-text pb-4" v-html="post.content.rendered"></div>
           <div class="post__content-text pb-4" v-for="(content, index) in post.acf.areas_de_contenido"

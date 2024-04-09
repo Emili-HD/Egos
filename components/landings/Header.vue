@@ -9,7 +9,7 @@
          <h1 class="header__landing-content-title [&>span]:span-gradient [&>span]:border-b-[1px] [&>span]:border-b-white/20 [&>span]:block" v-html="data.acf.titulo_landing"></h1>
          <div class="precio flex flex-col items-center">
             <p class="h3 [&>span]:span-gradient">desde <span>{{ data.acf.precio }}€/mes</span></p>
-            <ElementsButton class="gold md:hidden text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-fit h-fit" href="#hubspotLanding" @click.prevent="handleClick">Más Información</ElementsButton>
+            <ElementsButton class="gold md:hidden text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-fit h-fit" href="#hubspotLanding" @click.passive="handleClick">Más Información</ElementsButton>
          </div>
       </div>
    </div>

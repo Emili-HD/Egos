@@ -2,10 +2,20 @@
   
     <div class="card rounded-3xl overflow-hidden" :class="props.classes" v-if="category">
         <nuxt-link :to="processedLink" class="w-full h-full block" aria-label="Ver detalles de cirugía">
-            <picture class="h-[35.625rem] bg-nude-8 block min-h-full">
+            <picture class="h-[35.625rem] bg-nude-8 block min-h-full" v-if="category.acf && category.acf.imagen_cards && category.acf.imagen_cards.url">
                 <NuxtImg loading="lazy"
                     class="size-full object-cover object-center"
-                    v-if="category.featured_image_data"
+                    :src="category.acf.imagen_cards.url"
+                    :alt="category.acf.imagen_cards.alt"
+                    :placeholder="[50, 25, 75, 5]"
+                    sizes="100vw md:50vw xl:380px"
+                    width="380"
+                    height="570"
+                />
+            </picture>
+            <picture class="h-[35.625rem] bg-nude-8 block min-h-full" v-else-if="category.featured_image_data">
+                <NuxtImg loading="lazy"
+                    class="size-full object-cover object-center"
                     :src="category.featured_image_data.src"
                     :alt="category.featured_image_data.alt"
                     :placeholder="[50, 25, 75, 5]"

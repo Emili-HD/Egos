@@ -43,7 +43,7 @@
               class="col-[2/-2] lg:col-[7/-2] row-start-1 pointer-events-none rounded-3xl overflow-hidden lg:[.card:nth-child(even)>&]:col-[2/11]"
               :to="`/nuestras-clinicas/${clinica.slug}`"
               :aria-label="'Leer más sobre ' + clinica.title.rendered"
-              @click.prevent
+              @click.passive
             >
               <NuxtImg
                 loading="lazy"

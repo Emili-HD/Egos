@@ -18,19 +18,26 @@
       <div class="testimonios__list max-w-full min-h-screen p-8 lg:px-40 lg:py-20 grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4" v-if="testimonios">
         <article v-for="testimonio in testimonios" :key="testimonio.id" class="card item rounded-3xl overflow-hidden flex flex-col justify-between items-center gap-2 lg:gap-8 bg-nude-6 p-0"
           :class="getCategoriesNames(testimonio)">
-          <div class="testimonios__image overflow-hidden w-full h-[60%]" v-if="testimonio.featured_image_data && testimonio.featured_image_data.src">
-            <NuxtImg class="object-cover w-full min-h-full" :src="testimonio.featured_image_data.src" :alt="testimonio.featured_image_data.alt" />
-          </div>
-          <div class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-between items-center">
-            <h3 class="h6 text-clamp-base font-medium">{{ testimonio.title.rendered }}</h3>
-            <nuxt-link :to="`/opinion-egos/${testimonio.slug}`" class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</nuxt-link>
-          </div>
+          <nuxt-link :to="`/opinion-egos/${testimonio.slug}`" class="size-full">
+            <div class="testimonios__image overflow-hidden w-full h-[60%]" v-if="testimonio.featured_image_data && testimonio.featured_image_data.src">
+              <NuxtImg class="object-cover w-full min-h-full" :src="testimonio.featured_image_data.src" :alt="testimonio.featured_image_data.alt" />
+            </div>
+            <div class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-between items-center">
+              <h3 class="h6 text-clamp-base font-medium">{{ testimonio.title.rendered }}</h3>
+              <div class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</div>
+            </div>
+          </nuxt-link>
         </article>
       </div>
 
       <div class="testimonios__header min-h-[60vh] flex flex-col justify-center align-center p-8 lg:p-40 text-center">
         <div v-html="pages.content.rendered"></div>
       </div>
+
+      <section class="bg-blue-1 p-12 xl:p-24 mb-0" v-if="pages.acf">
+        <FormsCirugia :identificador="'formulario'" :portalId="String(pages.acf.portalid)"
+        :formId="pages.acf.formid" />
+      </section>
 
     </section>
   </main>
@@ -39,7 +46,7 @@
 <script setup>
 import { ref, nextTick, onMounted } from 'vue';
 import { useAsyncData } from 'nuxt/app';
-import { getTestimonios, getPage } from '@/composables/useFetch';
+import { getTestimonios, getPage, egosSettings } from '@/composables/useFetch';
 import { Flip } from 'gsap/Flip';
 
 const { $gsap: gsap } = useNuxtApp();
@@ -65,7 +72,6 @@ const getCategoriesNames = (testimonio) => {
   }
   return testimonio.categories_names.map(name => removeAccents(name).toLowerCase()).join(' '); // Usa ' ' como delimitador
 }
-
 
 const filtros = async () => {
   
@@ -174,6 +180,8 @@ useHead(() => {
     meta: metaTags,
   };
 });
+
+
 </script>
 
 <style lang="scss" scoped>

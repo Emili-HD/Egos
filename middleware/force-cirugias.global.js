@@ -33,6 +33,8 @@ export default function ({ path, query, hash }) {
         nextPath = nextPath.replace('/intima/', '/cirugia-intima/');
       } else if (nextPath.includes('/pechos/')) {
         nextPath = nextPath.replace('/pechos/', '/cirugia-de-pechos/');
+      } else if (nextPath.includes('/cirugia-mamaria/')) {
+        nextPath = nextPath.replace('/cirugia-mamaria/', '/cirugia-de-pechos/');
       } else if (nextPath.includes('/cirugia-bariatrica/')) {
         nextPath = nextPath.replace('/cirugia-bariatrica/', '/obesidad/');
       }

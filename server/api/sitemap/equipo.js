@@ -10,15 +10,34 @@ export default defineSitemapEventHandler(async () => {
   while (morePagesAvailable) {
     const fetchedMiembros = await $fetch(`${wpBaseUrl}/wp-json/wp/v2/doctor?per_page=${perPage}&page=${page}`).then(miembros =>
       miembros.map(miembro => {
-        // Extrae la ruta desde el campo `link`
         const url = new URL(miembro.link);
         const path = url.pathname; // Obtiene solo el pathname
 
-        return asSitemapUrl({
-          loc: path, // Usa directamente el pathname extraído
-          lastmod: miembro.modified_gmt,
-        });
+        // Prepara las imágenes para el sitemap
+        const images = miembro.featured_image_src ? [{
+          loc: miembro.featured_image_src.src, // URL de la imagen
+          caption: miembro.featured_image_src.caption, // Pie de foto de la imagen
+          title: miembro.featured_image_src.alt, // Título (alt text) de la imagen
+        }] : [];
+
+        return {
+          path, // Guarda el path para verificarlo más adelante
+          sitemapUrl: asSitemapUrl({
+            loc: path, // Usa directamente el pathname extraído
+            lastmod: miembro.modified_gmt,
+            images
+          })
+        };
       })
+    ).then(urls => 
+      // Filtra los miembros que no deben aparecer en el sitemap
+      urls.filter(({ path }) => 
+        !path.includes('atencion-al-paciente') 
+        && !path.includes('enfermeria') 
+        && !path.includes('asesoramiento-al-paciente')
+        && !path.includes('fisioterapia')  
+        && !path.includes('direccion-y-administracion')
+      ).map(({ sitemapUrl }) => sitemapUrl)
     );
 
     allMiembros = [...allMiembros, ...fetchedMiembros];

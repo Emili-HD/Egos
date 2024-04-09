@@ -102,7 +102,7 @@
 
             <div class="nav-secondary bg-white min-w-28 p-1 rounded-tr-2xl rounded-br-2xl hidden xl:block">
                 <a class="button pedircita bg-blue-1 text-nude-8 text-center flex flex-col justify-center items-center border-none rounded-xl p-0 w-full h-full z-2"
-                    href="#formulario" @click.prevent="handleClick">
+                    href="#formulario" @click.passive="handleClick">
                     Pide Cita
                 </a>
             </div>
@@ -195,7 +195,7 @@ const initializeMenus = async () => {
                         tl.play();
                         setTimeout(() => {
                             gsap.to(scroller, { duration: 1, scrollTo: { y: title, offsetY: 90 } })
-                        }, 200);
+                        }, 150);
                     } else {
                         tl.reverse();
                     }
@@ -293,7 +293,7 @@ const initializeMenus = async () => {
                         // Inicialmente ocultar todos los slides
                         hideAllSlidesAndStopAnimations();
 
-                    }, 300); // Retraso de 300 ms
+                    }, 200); // Retraso de 300 ms
 
                     // Evento de mouseleave
                     menu.addEventListener('mouseleave', () => {
