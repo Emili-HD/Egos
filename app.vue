@@ -1,21 +1,33 @@
 <template>
   <div
-    class="fixed-button bg-blue-1 fixed top-[calc(100%-4.5rem)] w-full p-4 z-[998] flex flex-row justify-center items-center xl:hidden">
-    <ElementsButton class="gold" href="#formulario" @click.passive="handleClick">
-      Cita con el cirujano</ElementsButton>
+    v-if="!isGraciasPage && viewport.isLessThan('lg')"
+    class="fixed-button bg-blue-1 fixed top-[calc(100%-4.5rem)] w-full p-4 z-[998] flex flex-row justify-center items-center xl:hidden"
+  >
+    <ElementsButton
+      class="gold"
+      href="#formulario"
+      @click.passive="handleClick"
+    >
+      Cita con el cirujano
+    </ElementsButton>
   </div>
-  <DelayHydration>
-    <AppHeader critical v-if="!isPromotionPage" />
-  </DelayHydration>
+  <AppHeader critical v-if="!isPromotionPage" />
   <NuxtPage />
   <AppFooter />
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
+const viewport = useViewport()
+
+watch(viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
+  console.log('Breakpoint updated:', oldBreakpoint, '->', newBreakpoint)
+})
+
 const route = useRoute();
+const isGraciasPage = ref(false);
 
 const isPromotionPage = computed(() => {
   return route.path.startsWith('/promocion/');
@@ -35,6 +47,8 @@ onMounted(() => {
   script.defer = true;
   script.src = '//js-eu1.hs-scripts.com/143602274.js';
   document.body.appendChild(script);
+
+  isGraciasPage.value = route.path === '/gracias/';
 });
 
 </script>

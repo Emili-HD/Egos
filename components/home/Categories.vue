@@ -52,14 +52,8 @@
                   sensitivity: 4,
                }" 
                 
-               :modules="[ SwiperMousewheel, SwiperFreeMode, SwiperScrollbar]" 
+               :modules="[ SwiperMousewheel, SwiperScrollbar]" 
                class="swiperHorizontal !pl-0 lg:!pl-20 w-full [&>.swiper-scrollbar]:!w-[calc(100%-2*20%)] [&>.swiper-scrollbar]:!left-[20%] [&>.swiper-scrollbar]:!bg-nude-1/25 [&>.swiper-scrollbar>.swiper-scrollbar-drag]:!bg-gold-2/50"
-               @swiper="onSwiper"
-               @touchStart="handleSwipeStart"
-               @sliderMove="handleSwipeStart"
-               @touchEnd="handleSwipeEnd"
-               @transitionStart="handleSwipeStart"
-               @transitionEnd="handleSwipeEnd">
             >
                <SwiperSlide class="text-left flex flex-col justify-start items-start p-4 [&>h3]:!text-clamp-sm" v-for="(categoryId, index) in data.acf.tratamientos_home.categorias_home" :key="`category-${categoryId}-${index}`">
                   <div class="card__wrapper min-w-full xl:min-w-[360px] xl:max-w-[400px] opacity-100 px-2 xl:px-0 relative [&.active]:opacity-100">
@@ -76,18 +70,15 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import ScrollTrigger from 'gsap/ScrollTrigger'
-
-const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
 // import { Swiper, SwiperSlide } from 'swiper/vue';
 // import SwiperCore, { SwiperPagination, SwiperMousewheel, SwiperFreeMode, SwiperScrollbar } from 'swiper';
 
-import { useSwiper } from 'swiper/vue';
+// import { useSwiper } from 'swiper/vue';
 
 // import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/scrollbar';
+// import 'swiper/css/free-mode';
+// import 'swiper/css/scrollbar';
 
 const props = defineProps({
    data: {
@@ -95,21 +86,6 @@ const props = defineProps({
       required: true,
    }
 })
-// console.log('datos de acf:',props.data.acf.tratamientos_home.categorias_home);
-
-const onSwiper = (swiper) => {
-   //  console.log('swiper horizontal activado');
-};
-
-const handleSwipeStart = () => {
-    document.querySelector('.home__services').setAttribute('data-lenis-prevent', '');
-   //  console.log('slide move');
-};
-
-const handleSwipeEnd = () => {
-    document.querySelector('.home__services').removeAttribute('data-lenis-prevent');
-   //  console.log('slide end');
-};
 
 </script>
 

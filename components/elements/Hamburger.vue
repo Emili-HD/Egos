@@ -1,5 +1,6 @@
 <template>
   <button
+    type="button"
     class="navTrigger absolute z-[1000] top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 
            size-9 bg-transparent lg:hidden focus:outline-none
            border-none outline-none cursor-pointer appearance-none tap-"

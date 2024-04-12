@@ -16,23 +16,30 @@ const props = defineProps({
   identificador: String,
 });
 
-onMounted( async () => {
+onMounted(() => {
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(loadHubSpotForm);
+  } else {
+    loadHubSpotForm();
+  }
+});
+
+function loadHubSpotForm() {
   const script = document.createElement("script");
-  script.src="https://js.hsforms.net/forms/v2.js";
+  script.src = "https://js.hsforms.net/forms/v2.js";
   document.body.appendChild(script);
-  
-  script.addEventListener("load", () => {
+
+  script.onload = () => {
     if (window.hbspt) {
       window.hbspt.forms.create({
         portalId: props.portalId, // Usa el prop portalId
         formId: props.formId, // Usa el prop formId
         target: '#' + props.identificador
-      })
-      isHubSpotLoaded.value = true;
-      // console.log('form iniciado');
+      });
+      isHubSpotLoaded.value = true; // Asume que tienes una referencia reactiva para indicar que HubSpot se cargó
     }
-  })
-})
+  };
+}
 </script>
 
 

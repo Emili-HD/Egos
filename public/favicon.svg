@@ -1,17 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 25.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#EFEFEF;}
-	.st1{fill:#0A1D37;}
-</style>
-<circle class="st0" cx="256" cy="255.7" r="245"/>
-<path class="st1" d="M252.4,84.3c21.7,0,25.2,17.5,25.2,42.4v68.7c0,2,1.6,3.7,3.7,3.7h21.4c2,0,3.7-1.6,3.7-3.7V125
-	C306.3,98,288.2,84.3,252.4,84.3"/>
-<path class="st1" d="M219.8,56.3c-15.8,60.3-4.3,118.1,39.3,164c4.4,4.6,9.5,9.7,13.6,14.5c3.2,3.7,6.7,7.8,9.6,11.7
-	c25.7,33.1,44,74.8,41.5,117.4c-2,42.1-28.5,80.4-70.7,91.2c65.1-50.6,45-126.5,2-184.4c-6.9-9.5-14.8-18.6-22.7-27.4
-	c-1.8-2.1-4.4-5.3-6.1-7.5c-27.9-35.6-40.6-82.2-30.6-126.4C200.2,90.3,207.6,71.8,219.8,56.3"/>
-<path class="st1" d="M260.9,415.5c-21.7,0-25.2-17.5-25.2-42.4v-71.5c0-2-1.6-3.7-3.7-3.7h-21.4c-2,0-3.7,1.6-3.7,3.7v73.2
-	C207,401.8,225.1,415.5,260.9,415.5"/>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="512" height="512" fill="#1C2C44"/>
+<path d="M249.897 53.6823C275.254 53.6823 279.371 74.2487 279.371 103.559V184.358C279.371 186.746 281.286 188.673 283.659 188.673H308.702C311.075 188.673 312.99 186.746 312.99 184.358V101.517C312.99 71.9476 294.551 55.9546 258.187 53.9124C255.529 53.7685 252.784 53.6823 249.926 53.6823" fill="url(#paint0_linear_2034_653)"/>
+<path d="M260.168 445.42C234.209 445.42 230.024 424.682 230.024 395.156V310.407C230.024 307.999 228.063 306.056 225.634 306.056H199.997C197.568 306.056 195.607 307.999 195.607 310.407V397.244C195.607 429.235 217.323 445.449 260.168 445.449" fill="url(#paint1_linear_2034_653)"/>
+<path d="M210.661 19.9635C191.786 91.4538 205.497 159.872 257.569 214.207C262.849 219.655 268.858 225.712 273.788 231.391C277.61 235.738 281.752 240.636 285.253 245.214C315.912 284.48 337.704 333.889 334.728 384.341C332.336 434.213 300.743 479.593 250.393 492.402C328.077 432.416 304.04 342.582 252.814 273.961C244.529 262.717 235.136 251.966 225.772 241.447C223.642 238.926 220.55 235.188 218.537 232.551C185.281 190.416 170.141 135.125 182.014 82.8471C187.177 60.1859 196.045 38.278 210.602 19.9346L210.661 19.9635Z" fill="url(#paint2_linear_2034_653)"/>
+<defs>
+<linearGradient id="paint0_linear_2034_653" x1="-212.912" y1="-235.255" x2="500.944" y2="273.195" gradientUnits="userSpaceOnUse">
+<stop stop-color="#706544"/>
+<stop offset="0.19" stop-color="#97875E"/>
+<stop offset="0.4" stop-color="#BBA876"/>
+<stop offset="0.51" stop-color="#CAB580"/>
+<stop offset="1" stop-color="#847851"/>
+</linearGradient>
+<linearGradient id="paint1_linear_2034_653" x1="-364.075" y1="-44.7456" x2="359.225" y2="478.324" gradientUnits="userSpaceOnUse">
+<stop stop-color="#706544"/>
+<stop offset="0.19" stop-color="#97875E"/>
+<stop offset="0.4" stop-color="#BBA876"/>
+<stop offset="0.51" stop-color="#CAB580"/>
+<stop offset="1" stop-color="#847851"/>
+</linearGradient>
+<linearGradient id="paint2_linear_2034_653" x1="-304.543" y1="-124.756" x2="417.594" y2="396.246" gradientUnits="userSpaceOnUse">
+<stop stop-color="#706544"/>
+<stop offset="0.19" stop-color="#97875E"/>
+<stop offset="0.4" stop-color="#BBA876"/>
+<stop offset="0.51" stop-color="#CAB580"/>
+<stop offset="1" stop-color="#847851"/>
+</linearGradient>
+</defs>
 </svg>
