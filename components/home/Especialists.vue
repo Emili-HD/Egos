@@ -13,18 +13,10 @@
       <section v-for="category in categories" :key="category.id" :class="`equipo ${category.slug}`"
           class="pt-20 pb-20 xl:pt-32 w-screen" :id="`orden-${category.order}`">
           <article class="">
-              <ul class="grid grid-cols-3 xl:grid-cols-12 gap-4 lg:gap-8 px-12 lg:px-32">
+              <ul class="grid grid-cols-4 xl:grid-cols-12 gap-4 lg:gap-8 px-12 lg:px-32">
                   <li v-for="miembro in doctorByCategory(category.id)" :key="miembro.id"
-                      class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden col-span-3">
+                      class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden col-span-4 md:col-span-2 xl:col-span-3">
                       <div class="card__member block relative size-full overflow-hidden">
-                        <!-- <BoosterImage
-                          class="object-cover object-cente w-full"
-                          :src="miembro.featured_image_src.src"
-                          :formats="['webp']"
-                          :sizes="['(max-width: 768px) 90vw, (max-width: 1024px) 50vw, 20vw']"
-                          :alt="miembro.featured_image_src.alt"
-                          :title="miembro.featured_image_src.alt"
-                        /> -->
                           <NuxtImg loading="lazy" v-if="miembro.featured_image_src"
                               :src="miembro.featured_image_src.src"
                               class="card__image absolute w-full object-center object-cover min-h-full overflow-hidden rounded-3xl"
@@ -54,6 +46,9 @@
                   </li>
               </ul>
           </article>
+          <div class="flex flex-col items-center p-12">
+            <NuxtLink class="button px-6 pt-3 pb-2 bg-nude-1 rounded-full text-blue-1 text-center w-fit uppercase leading-none" to="/nuestro-equipo" >Ver todo nuestro equipo</NuxtLink>
+          </div>
       </section>
   </template>
 </template>
@@ -92,7 +87,7 @@ const categories = computed(() => {
 // Obtener datos
 const { data: especialidades, error: especialidadesError, pending: especialidadesPending } = await useAsyncData('especialidades', getEspecialidades, {initialCache: false});
 const { data: pages, error: paginaError, pending: paginaPending } = await useAsyncData('paginaEspecial', () => getPage(562), {initialCache: false});
-const { data: doctor, error: equipoError, pending: equipoPending } = await useAsyncData('equipo', () => getEquipo({ perPage: 100 }), {initialCache: false});
+const { data: doctor, error: equipoError, pending: equipoPending } = await useAsyncData('equipo', () => getEquipo({ perPage: 4 }), {initialCache: false});
 
 const doctorByCategory = (categoryId) => {
     return doctor.value.filter((d) => d.especialidad.includes(categoryId));
