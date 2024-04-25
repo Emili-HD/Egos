@@ -17,7 +17,7 @@
         v-for="post in stickyPosts"
         :key="post.id"
         class="card rounded-3xl overflow-hidden col-[2/-2]
-               lg:[&:nth-child(2n-1)]:col-[2/9] lg:[&:nth-child(2n)]:col-[9/16]"
+               lg:[&:nth-child(2n-1)]:col-[2/9] lg:[&:nth-child(2n)]:col-[9/16] bg-nude-8"
         :aria-labelledby="'post-title-' + post.id"
       >
         <nuxt-link
@@ -136,7 +136,8 @@ const stickyPosts = computed(() => postsData.value ? postsData.value.filter((pos
   .post-list {
     .card {
       aspect-ratio: unset;
-      background-color: var(--nude-6);
+      background-color: var(--nude-7);
+      box-shadow: var(--shadow);
 
       a {
         display: flex;
@@ -179,7 +180,7 @@ const stickyPosts = computed(() => postsData.value ? postsData.value.filter((pos
         justify-content: space-between;
 
         &-cat {
-          color: var(--gold-2);
+          color: var(--gold-3);
           font-weight: 400;
 
           span {

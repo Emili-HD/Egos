@@ -3,7 +3,7 @@
     class="pidecita w-screen grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-screen py-0 lg:gap-0"
   >
     <div class="col-span-full lg:col-span-11 min-h-screen/60">
-      <ElementsGoogleMap
+      <LazyElementsGoogleMap
         @update-content="handleContentUpdate"
         @update-options="handleOptionsUpdate"
       />

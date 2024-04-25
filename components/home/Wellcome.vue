@@ -5,7 +5,7 @@
               <p class="intro__title font-geomanist font-semibold text-clamp-6xl 
                         lg:text-[4vw] text-nude-7 leading-[0.9] mb-0 mt-[15vh] pl-8 lg:pl-16 text-left
                         [&>span]:!text-gold-2 [&>span]:w-full [&>span]:block lg:[&>span]:inline-block">
-                  Más de 2000<br><span id="a">pacientes</span> <span id="b">intervenidos</span> <br>al año
+                  Más de 3000<br><span id="a">pacientes</span> <span id="b">intervenidos</span> <br>al año
               </p>
             <div class="intro__content pl-8 lg:pl-16 text-nude-8 flex flex-col justify-center items-start gap-4">
                 <div class="heading [&>h1]:font-geomanist [&>h1]:text-clamp-xl" v-html="data.content.rendered"></div>

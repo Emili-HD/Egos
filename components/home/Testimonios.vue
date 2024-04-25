@@ -4,7 +4,7 @@
    <section v-else class="testimonios grid grid-cols-16 gap-0 xl:gap-4 py-20">
       <div class="testimonios__header col-[1/-1] p-8 xl:col-[4_/_span_10] xl:p-0 flex flex-col justify-center items-center h-fit text-left xl:text-center w-full z-10">
          <h2 class="text-clamp-3xl">Antes y después de nuestras cirugías estéticas y medicina en clínica Egos </h2>
-         <p>Cada año, se operan más de 2000 pacientes en Clínica Egos, para nosotros, vuestra satisfacción es nuestro mayor
+         <p>Cada año, se operan más de 3000 pacientes en Clínica Egos, para nosotros, vuestra satisfacción es nuestro mayor
             logro. Hemos hablado con diferentes pacientes de la clínica para que nos cuenten cómo fue su paso, cómo se
             encuentran ahora y qué han mejorado tras la intervención.</p>
          <ElementsDivider />

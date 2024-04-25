@@ -37,7 +37,7 @@ module.exports = {
         'blue-6': '#395989',
         'gold-1': '#CCB780',
         'gold-2': '#908057',
-        'gold-3': '#857650',
+        'gold-3': '#6e5922',
         'nude-1': '#c0b5a3',
         'nude-2': '#c8beaf',
         'nude-3': '#d0c8ba',
@@ -56,7 +56,7 @@ module.exports = {
         'bg-blue-6': '#395989',
         'bg-gold-1': '#CCB780',
         'bg-gold-2': '#908057',
-        'bg-gold-3': '#857650',
+        'bg-gold-3': '#6e5922',
         'bg-nude-1': '#c0b5a3',
         'bg-nude-2': '#c8beaf',
         'bg-nude-3': '#d0c8ba',
@@ -78,10 +78,10 @@ module.exports = {
         'clamp-5xl': "clamp(2.8rem, 3.1vw, 3.3rem)",
         'clamp-6xl': "clamp(3.1rem, 3.4vw, 3.7rem)",
       },
-      // fontFamily: {
-      //   canela: ['Canela', 'serif'],
-      //   geomanist: ['Geomanist', 'sans-serif'],
-      // },
+      fontFamily: {
+        canela: ['Canela', 'serif'],
+        geomanist: ['Geomanist', 'sans-serif'],
+      },
       spacing: {
         'screen/95': '95vh',
         'screen/90': '90vh',

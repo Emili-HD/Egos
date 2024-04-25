@@ -34,9 +34,15 @@
                   <div class="tiktok-play-count-container"></div>
                   <div :id="`tiktok-${tt.video_id}`">
                      <NuxtImg
-                        class="object-cover object-center min-h-[37.5rem] w-full"
+                        class="object-cover object-center max-h-[37.5rem] h-full w-full"
                         :src="tt.thumbnail_url"
                         :alt="tt.description"
+                        :placeholder="[300, 211, 60, 5]"
+                        sizes="100vw sm:50vw md:422px"
+                        loading="lazy"
+                        format="avif"
+                        width="600"
+                        height="422"
                      ></NuxtImg>
                   </div>
                </div>

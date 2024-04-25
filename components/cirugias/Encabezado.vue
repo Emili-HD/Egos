@@ -7,7 +7,7 @@
                 before-gradient" 
                 :style="`background-image: url(${data.featured_image_data.src});`">
     <div class="header__content">
-      <p class="desde !text-nude-8 leading-10 text-2xl [&>span]:span-gradient" 
+      <p class="desde !text-nude-8 leading-10 text-2xl [&>span]:span-gradient bg-blue-1/60 backdrop-blur-lg p-8 w-fit rounded-2xl" 
          v-if="data.acf.precio_desde" v-html="data.acf.precio_desde"
       ></p>
       <h1 class="text-nude-8 mb-10 text-clamp-6xl"><u>{{ data.title.rendered }}</u></h1>

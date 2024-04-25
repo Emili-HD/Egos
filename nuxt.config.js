@@ -40,9 +40,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'nuxt-delay-hydration',
     'nuxt-simple-robots',
-    'nuxt-speedkit',
+    'nuxt-booster',
     'nuxt-swiper',
-    'nuxt-viewport',
+    // 'nuxt-viewport',
     // '@nuxtjs/html-validator',
     // '@nuxtjs/web-vitals',
   ],
@@ -63,7 +63,7 @@ export default defineNuxtConfig({
       'casos-reales/',
     ],
   },
-  speedkit: {
+  booster: {
     detection: {
       performance: true,
       browserSupport: true,
@@ -94,6 +94,7 @@ export default defineNuxtConfig({
   image: {
     inject: true,
     provider: 'ipx',
+    domains: ['test.clinicaegos.com', 'images.sociablekit.com'],
     ipx: {
         maxAge: 3600
     },
@@ -118,24 +119,6 @@ export default defineNuxtConfig({
       cacheMaxAgeSeconds: 60 * 60 * 24 * 7 * 1000 // 7 days
     }
   },
-  viewport: {
-    breakpoints: {
-      xs: 320,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-      '2xl': 1536,
-    },
-
-    defaultBreakpoints: {
-      desktop: 'lg',
-      mobile: 'xs',
-      tablet: 'md',
-    },
-
-    fallbackBreakpoint: 'lg',
-  },
   components: true,
   runtimeConfig: {
     public: {
@@ -150,6 +133,7 @@ export default defineNuxtConfig({
   },
   experimental: {
     watcher: 'chokidar',
+    payloadExtraction: true,
   },
   hooks: {
     'pages:extend'(pages) {
@@ -385,6 +369,7 @@ export default defineNuxtConfig({
     // Puedes añadir más líneas según necesites
   },
   sitemap: {
+    cacheMaxAgeSeconds: 3600, // 1 hour
     exclude: [
       // '/doctor/**',
       '/clinica/**',
@@ -444,7 +429,6 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'node-server',
     prerender: {
-      // crawlLinks: true,
       routes: [
         '/sitemap.xml', 
         '/pages-sitemap.xml', 
@@ -454,14 +438,11 @@ export default defineNuxtConfig({
         '/landings-sitemap.xml', 
         '/',
         '/aviso-legal/',
-        // '/blog/',
         '/cirugia-de-pechos/',
         '/cirugia-intima/',
         '/estetica-corporal/',
         '/estetica-facial/',
         '/medicina-estetica/',
-        // '/nuestras-clinicas/',
-        // '/nuestro-equipo/',
         '/obesidad/',
         '/politica-de-cookies/',
         '/politica-de-privacidad/',
@@ -473,13 +454,11 @@ export default defineNuxtConfig({
         '/promocion/cirugia-de-pechos-en-andorra/',
         '/promocion/cirugia-de-pechos-en-badalona/',
         '/promocion/cirugia-de-pechos-en-barcelona/',
-        '/promocion/cirugia-de-pechos-en-castelldefels/',
         '/promocion/cirugia-de-pechos-en-girona/',
         '/promocion/cirugia-de-pechos-en-granollers/',
         '/promocion/cirugia-de-pechos-en-lleida/',
         '/promocion/cirugia-de-pechos-en-madrid/',
         '/promocion/cirugia-de-pechos-en-sabadell/',
-        '/promocion/cirugia-de-pechos-en-santcugat/',
         '/promocion/cirugia-de-pechos-en-tarragona/',
         '/promocion/cirugia-facial/',
         '/promocion/cirugia-facial-barcelona/',
@@ -493,23 +472,19 @@ export default defineNuxtConfig({
         '/promocion/ginecomastia-en-andorra/',
         '/promocion/ginecomastia-en-badalona/',
         '/promocion/ginecomastia-en-barcelona/',
-        '/promocion/ginecomastia-en-castelldefels/',
         '/promocion/ginecomastia-en-girona/',
         '/promocion/ginecomastia-en-granollers/',
         '/promocion/ginecomastia-en-lleida/',
         '/promocion/ginecomastia-en-madrid/',
         '/promocion/ginecomastia-en-sabadell/',
-        '/promocion/ginecomastia-en-sant-cugat/',
         '/promocion/ginecomastia-en-tarragona/',
         '/promocion/lifting-facial-en-andorra/',
         '/promocion/lifting-facial-en-badalona/',
-        '/promocion/lifting-facial-en-castelldefels/',
         '/promocion/lifting-facial-en-girona/',
         '/promocion/lifting-facial-en-granollers/',
         '/promocion/lifting-facial-en-lleida/',
         '/promocion/lifting-facial-en-madrid/',
         '/promocion/lifting-facial-en-sabadell/',
-        '/promocion/lifting-facial-en-santcugat/',
         '/promocion/lifting-facial-en-tarragona/',
         '/promocion/ligting-facial-barcelona/',
         '/promocion/perdida-de-peso/',
@@ -521,102 +496,21 @@ export default defineNuxtConfig({
         '/promocion/rinoplastia-en-granollers/',
         '/promocion/rinoplastia-en-lleida/',
         '/promocion/rinoplastia-en-madrid/',
-        '/promocion/rinoplastia-en-sant-cugat/',
         '/promocion/rinoplastia-en-tarragona/',
 
-        // '/opinion-egos/gabriella-isla-clinica-egos/',
-        // '/opinion-egos/opinion-de-brian-cros-en-su-blefaroplastia-y-lipovaser/',
-        // '/opinion-egos/opinion-de-claudia-en-rinoplastia-en-clinica-egos/',
-        // '/opinion-egos/opinion-de-ludy-en-su-abdominoplastia-en-clinica-egos/',
-        // '/opinion-egos/opinion-de-marta-aumento-pecho-natural/',
-        // '/opinion-egos/opinion-de-marta-en-cirugia-de-nariz-en-clinica-egos/',
-        // '/opinion-egos/opinion-de-melody-en-aumento-de-mamas-en-clinica-egos/',
-        // '/opinion-egos/opinion-de-paula-en-aumento-de-pechos-en-clinica-egos/',
-        // '/opinion-egos/opinion-de-paula-en-rinoplastia-ultrasonica-en-clinica-egos/',
-        // '/opinion-egos/opinion-de-ruben-con-su-tratamientos-de-obesidad-en-clinica-egos/',
-        // '/opinion-egos/opinion-de-sandra-en-su-mommy-makeover-en-clinica-egos/',
-        // '/opinion-egos/opinion-de-sara-en-su-lipopapada-en-clinica-egos/',
-        // '/opinion-egos/opinion-grabiel-cirugia-de-parpados/',
-        // '/opinion-egos/opinion-lip-up-erik-putzbach/',
-        // '/opinion-egos/opinion-lipoescultura-sofia/',
-        // '/opinion-egos/opinion-lipopapada-thais-clinica-egos/',
-        // '/opinion-egos/opinion-morpheus8/',
-        // '/opinion-egos/opinion-rejuvenecimiento-facial/',
-        // '/opinion-egos/opinion-sara-quesadilla-cirugia-estetica-nasal/',
-        // '/opinion-egos/opinion-tratamiento-balon-gastrico/',
-        // '/opinion-egos/opinion-vaginoplastia/',
-        // '/opinion-egos/opiniones-morpheus-8/',
-        // '/opinion-egos/testimonio-roser-en-aumento-de-pecho-egos/',
-        
-        // '/blog/5-beneficios-de-la-blefaroplastia/',
-        // '/blog/5-trucos-prevenir-la-aparicion-de-arrugas/',
-        // '/blog/adelgazar-con-tratamiento-obesidad/',
-        // '/blog/alimentacion-despues-de-la-cirugia-bariatrica/',
-        // '/blog/allurion-que-es/',
-        // '/blog/aumento-de-gluteos-opciones/',
-        // '/blog/braquioplastia-lifting-de-brazos/',
-        // '/blog/cicatriz-de-mastopexia-1-a-6-meses/',
-        // '/blog/clinica-egos-aumenta-presencia-grupo-quiron/',
-        // '/blog/como-conseguir-un-vientre-plano/',
-        // '/blog/como-eliminar-las-cartucheras/',
-        // '/blog/cuanto-cuesta-un-injerto-de-pelo/',
-        // '/blog/cuanto-cuesta-una-otoplastia/',
-        // '/blog/dudas-balon-gastrico/',
-        // '/blog/ejercicio-despues-aumento-pecho/',
-        // '/blog/es-compatible-el-embarazo-si-llevo-implantes-mamarios/',
-        // '/blog/la-mirada-cansada-causas-y-como-prevenir/',
-        // '/blog/la-otoplastia-esta-recomendada-para-ninos/',
-        // '/blog/lifting-facial-todo-lo-que-debes-saber/',
-        // '/blog/lipo-vaser-que-es-y-beneficios/',
-        // '/blog/mar-regueras-visita-clinica-egos/',
-        // '/blog/mejorar-cicatriz-de-un-aumento-de-pecho/',
-        // '/blog/mejorar-cicatriz-de-una-abdominoplastia/',
-        // '/blog/menopausia/',
-        // '/blog/mommy-makeover/',
-        // '/blog/morpheus-8-medicina-estetica-revolucionaria/',
-        // '/blog/paciente-ideal-de-la-cirugia-capilar/',
-        // '/blog/paniculectomia/',
-        // '/blog/parpados-caidos/',
-        // '/blog/pecho-mas-hinchado-despues-de-aumento/',
-        // '/blog/perder-peso-rapido-guia-definitiva/',
-        // '/blog/perdida-de-peso-despues-del-verano/',
-        // '/blog/postoperatorio-de-aumento-de-mamas/',
-        // '/blog/precio-aumento-de-pecho/',
-        // '/blog/protesis-mamarias-opcion-segura/',
-        // '/blog/que-es-un-peeling-facial/',
-        // '/blog/que-es-una-liposcultura/',
-        // '/blog/recuperacion-de-una-liposuccion/',
-        // '/blog/recuperacion-de-una-rinoplastia/',
-        // '/blog/remedios-para-las-estrias/',
-        // '/blog/rinomodelacion-con-el-acido-hialuronico/',
-        // '/blog/rinomodelacion-sin-cirugia/',
-        // '/blog/rinoplastia-de-nariz-ancha/',
-        // '/blog/rinoplastia-sin-cirugia/',
-        // '/blog/rinoplastia-ultrasonica/',
-        // '/blog/tipos-de-liposuccion/',
-        // '/blog/tipos-de-operaciones-de-pecho/',
-        // '/blog/todo-lo-que-debes-saber-la-cirugia-capilar/',
-        // '/blog/tratamientos-para-el-sobrepeso/',
-        // '/blog/tratamientos-para-la-obesidad/',
-        // '/blog/tratamientos-para-tonificar-el-abdomen/',
-        // '/blog/tratamientos-signos-de-la-edad/',
-        // '/blog/cicatriz-de-mastopexia-1-a-6-meses/',
-        // '/blog/perder-peso-rapido-guia-definitiva/',
-        // '/blog/evolucion-cicatriz-abdominoplastia/',
-
-        // '/equipo-egos/cirugia-estetica/dr-adriano-hug/',
-        // '/equipo-egos/cirugia-estetica/dr-francisco-mora/',
-        // '/equipo-egos/cirugia-estetica/dr-holidey-cano/',
-        // '/equipo-egos/cirugia-estetica/dr-javier-paez/',
-        // '/equipo-egos/cirugia-estetica/dr-jose-sarria/',
-        // '/equipo-egos/cirugia-estetica/dr-munoz-del-olmo/',
-        // '/equipo-egos/cirugia-estetica/dr-santiago-elvira/',
-        // '/equipo-egos/cirugia-estetica/dr-tiago-gomes/',
-        // '/equipo-egos/cirugia-estetica/dra-lorena-vives/',
-        // '/equipo-egos/medicina-estetica/dra-andrea-briceno/',
-        // '/equipo-egos/medicina-estetica/tenille-ferreira/',
-        // '/equipo-egos/unidad-obesidad/dr-carlos-rodriguez/',
-        // '/equipo-egos/unidad-obesidad/dr-ricard-sorio/',
+        '/equipo-egos/cirugia-estetica/dr-adriano-hug/',
+        '/equipo-egos/cirugia-estetica/dr-francisco-mora/',
+        '/equipo-egos/cirugia-estetica/dr-holidey-cano/',
+        '/equipo-egos/cirugia-estetica/dr-javier-paez/',
+        '/equipo-egos/cirugia-estetica/dr-jose-sarria/',
+        '/equipo-egos/cirugia-estetica/dr-munoz-del-olmo/',
+        '/equipo-egos/cirugia-estetica/dr-santiago-elvira/',
+        '/equipo-egos/cirugia-estetica/dr-tiago-gomes/',
+        '/equipo-egos/cirugia-estetica/dra-lorena-vives/',
+        '/equipo-egos/medicina-estetica/dra-andrea-briceno/',
+        '/equipo-egos/medicina-estetica/tenille-ferreira/',
+        '/equipo-egos/unidad-obesidad/dr-carlos-rodriguez/',
+        '/equipo-egos/unidad-obesidad/dr-ricard-sorio/',
 
         '/cirugia-de-pechos/aumento-de-pecho/',
         '/cirugia-de-pechos/cambio-implantes-mamarios/',
@@ -655,12 +549,12 @@ export default defineNuxtConfig({
         '/estetica-facial/rinoplastia-ultrasonica/',
         '/estetica-facial/tratamiento-antiarrugas/',
         '/injerto-capilar/injerto-capilar/',
+        '/estetica-facial/queiloplastia/',
         '/obesidad/balon-gastrico/',
         '/obesidad/bypass-gastrico/',
         '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/',
         '/obesidad/sleeve-gastrico/',
-        '/obesidad/tratamiento-farmacologico-obesidad/',
-        
+        '/obesidad/tratamiento-farmacologico-obesidad/',  
       ]
     },
     // routeRules: {
@@ -673,4 +567,16 @@ export default defineNuxtConfig({
       }
     }
   },
+  app: {
+    head: {
+      script: [
+        {
+          hid: 'cookieyes',
+          src: 'https://cdn-cookieyes.com/client_data/3bd14708645aa2dea13c85b7/script.js',
+          type: 'text/javascript',
+          async: true
+        }
+      ]
+    }
+  }
 })

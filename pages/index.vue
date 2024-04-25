@@ -14,10 +14,10 @@
         <LazyHomeAcordeon :data="home.acf.acordeon_cirugias" />
       </DelayHydration>
       <DelayHydration>
-        <LazyHomeBlog />
+        <LazyHomeEspecialists />
       </DelayHydration>
       <DelayHydration>
-        <LazyHomeSocial />
+        <HomeTiktok />
       </DelayHydration>
   </main>
 </template>

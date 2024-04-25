@@ -1,7 +1,7 @@
 <template>
 
   <main class="site-main doctor bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
-    <div class="doctor__content col-[1/-1] lg:col-span-12 grid grid-cols-subgrid">
+    <div class="doctor__content col-[1/-1] lg:col-span-12 grid grid-cols-subgrid w-fit min-h-fit">
       <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-10 group" v-if="doctor && doctor.title">
         <h1 class="">{{ doctor.title.rendered }}</h1>
         <div v-if="doctor.featured_image_src"
@@ -14,10 +14,12 @@
       <section class="doctor__description lg:col-start-2 col-[2_/_span_14] lg:col-span-10 row-start-2 py-8 lg:py-20"  v-if="doctor && doctor.content">
         <div v-html="doctor.content.rendered"></div>
       </section>
-      <section class="col-[2/-2] lg:col-start-2 lg:col-span-10 bg-transparent">
+      <section class="col-[2/-2] lg:col-start-2 lg:col-span-10 bg-transparent min-h-max">
         <DoctorResenas :data="reviews" />
       </section>
-      <ElementsReviews :ruta="route.params.slug[1]" />
+      <DelayHydration>
+        <LazyElementsReviews :ruta="route.params.slug[1]" />
+      </DelayHydration>
     </div>
     <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20" v-if="doctor && doctor.acf">
       <FormsCirugia :identificador="'formulario'" :portalId="String(doctor.acf.portalid)"
@@ -27,10 +29,11 @@
 </template>
 
 <script setup>
-import { ref, watch, watchEffect } from 'vue';
+import { watch, onMounted, nextTick } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getEquipo, getReviews } from '@/composables/useFetch';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useScrollStore } from '@/stores/scrollStore';
 
 const router = useRouter();
 const route = useRoute();
@@ -47,10 +50,6 @@ const { data: reviews, refresh: refreshReviews } = useAsyncData(`reviews-${route
   watch: [() => route.params.slug[1]]
 });
 
-watchEffect(() => {
-  // console.log('Slug:', route.params.slug[1]);
-  // console.log('Reseñas', reviews.value);
-});
 
 // Refresca tanto los datos del doctor como las reseñas si cambia el slug
 watch(
@@ -61,10 +60,7 @@ watch(
     }
   },
   { immediate: true }
-);
-
-// console.log(doctor.value);
-   
+);   
 
 const stickyForm = async () => {
   gsap.registerPlugin(ScrollTrigger)
@@ -90,10 +86,21 @@ const stickyForm = async () => {
 
 }
 
+
 // Ciclo de vida Mounted
 onMounted(async () => {
   await stickyForm()
   await injectStructuredData()
+  // Utilizar nextTick para asegurarse de que todas las mutaciones DOM y el estado Vue estén actualizados
+  nextTick(async () => {
+    const { $lenis } = useNuxtApp();
+    const scrollStore = useScrollStore(); // Asegúrate de que el store se inicialice correctamente aquí
+
+    if (scrollStore.scrollToForm) {
+      $lenis.scrollTo('#formulario', { offset: -20 });
+      scrollStore.setScrollToForm(false); // Resetea el estado
+    }
+  });
 });
 
 // Datos YOAST SEO

@@ -1,30 +1,32 @@
 <template>
   <main class="site-main" v-if="tratamiento" ref="componentRef">
-    <section class="cirugia grid grid-cols-16 gap-0 xl:p-0">
+    <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
       <CirugiasEncabezado :data="tratamiento" />
       <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
 
       <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
         <div class="panels w-full">
-          <section :id="processAncla(content.ancla)" class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8" :class="content.fondo, content.opciones_listado"
-            v-for="content in tratamiento.acf.tabs">
-              <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
-              <CirugiasTabla :contentData="content" />
-              <CirugiasColumnas :contentData="content" />
-              <LandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
+          <section :id="processAncla(content.ancla)"
+            class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8"
+            :class="content.fondo, content.opciones_listado" v-for="content in tratamiento.acf.tabs">
+            <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
+            <CirugiasTabla :contentData="content" />
+            <CirugiasColumnas :contentData="content" />
+            <LandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
           </section>
 
           <CirugiasFaqs :faqsData="tratamiento.acf" />
         </div>
       </div>
 
-      <section class="form__page grid grid-cols-subgrid col-[1/-1]">
+      <div class="form__page grid grid-cols-subgrid col-[1/-1]">
         <CirugiasFormSection :data="tratamiento.acf" />
-      </section>
+      </div>
     </section>
     <DelayHydration>
-      <ClientOnly >
-        <LazyCirugiasRelatedTreatments :treatmentsData="tratamiento.acf" :relatedId="tratamiento.acf.cirugias_relacionadas" :category="category" />
+      <ClientOnly>
+        <LazyCirugiasRelatedTreatments :treatmentsData="tratamiento.acf"
+          :relatedId="tratamiento.acf.cirugias_relacionadas" :category="category" />
       </ClientOnly>
     </DelayHydration>
     <section class="oferta__form py-12 xl:py-24 mb-0" v-for="setting in form.form_settings" :key="setting.formid">
@@ -212,7 +214,7 @@ const mostrarAnchorsMenu = async () => {
     })
 
     mm.add("(max-width: 767px)", () => {
-      let menuAbierto = false; 
+      let menuAbierto = false;
       button.addEventListener('click', () => {
         // console.log('botón clicado');
 
@@ -258,16 +260,16 @@ useHead(() => {
   const yoast = tratamiento.value.yoast_head_json;
 
   const link = [
-    { 
+    {
       rel: 'canonical',
       href: (() => {
         // Añadir "www." si no está presente y no es una subdominio diferente
         let canonical = yoast.canonical.startsWith('https://www.') ? yoast.canonical :
-                        yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
+          yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
         // Asegurar que la URL termina con "/"
         canonical = canonical.endsWith('/') ? canonical : `${canonical}/`;
         return canonical;
-      })() 
+      })()
     }
   ];
   const metaTags = [

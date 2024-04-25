@@ -1,54 +1,57 @@
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin((nuxtApp) => {
   if (process.server) {
     return;
   }
 
-  // Utilizamos requestIdleCallback para cargar scripts de analíticas cuando el navegador esté inactivo
-  requestIdleCallback(() => {
-    // GTM para el <head>
-    loadGTM('GTM-WPQFH9GD');
-    
-    // Google Analytics gtag.js
-    loadAnalytics('G-K4KDQ4HZCX');
-    
-    // GTM para el <body>
-    loadBodyGTM('G-K4KDQ4HZCX');
+  // Configurar el consentimiento inicial para Google Analytics
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag("consent", "default", {
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: "denied",
+    functionality_storage: "denied",
+    personalization_storage: "denied",
+    security_storage: "granted",
+    wait_for_update: 2000,
   });
 
-  function loadGTM(id) {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      'gtm.start': new Date().getTime(), event: 'gtm.js'
-    });
-    const gtmScript = document.createElement('script');
-    gtmScript.defer = true;
-    gtmScript.src = 'https://www.googletagmanager.com/gtm.js?id=' + id;
-    document.head.appendChild(gtmScript);
+  gtag("set", "ads_data_redaction", true);
+  gtag("set", "url_passthrough", true);
+
+  // Escuchar el consentimiento de cookies para cargar scripts usando el nuevo método
+  window.addEventListener('cookieyes-consent', function (event) {
+    const consent = event.detail;
+    if (consent.categories.includes('analytics')) {
+      loadScriptsWhenIdle();
+    }
+  });
+
+  function loadScriptsWhenIdle() {
+    requestIdleCallback(() => {
+      loadAnalytics('G-K4KDQ4HZCX');
+
+      window.dataLayer.push({
+        'event': 'afterLoad'
+      });
+    }, { timeout: 2000 });
   }
 
   function loadAnalytics(id) {
     const gtagScript = document.createElement('script');
-    gtagScript.defer = true;
+    gtagScript.async = true;
     gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
     document.head.appendChild(gtagScript);
-    
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
+
     gtag('js', new Date());
-    gtag('config', id);
+    gtag('config', id, {
+      // Asegúrate de respetar el consentimiento para no almacenar o procesar datos hasta que sea permitido
+      'storage': 'denied'
+    });
   }
-
-  function loadBodyGTM(id) {
-    const bodyScript = document.createElement('noscript');
-    const iframe = document.createElement('iframe');
-    iframe.src = 'https://www.googletagmanager.com/ns.html?id=' + id;
-    iframe.height = 0;
-    iframe.width = 0;
-    iframe.style.display = 'none';
-    iframe.style.visibility = 'hidden';
-    bodyScript.appendChild(iframe);
-    document.body.insertBefore(bodyScript, document.body.firstChild);
-  }
-
 });
 

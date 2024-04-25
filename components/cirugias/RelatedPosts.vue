@@ -24,6 +24,8 @@
             class="card__image rounded-2xl size-full aspect-square object-cover"
             :alt="post.featured_image_src ? post.featured_image_src.alt : ''"
             :aria-labelledby="'post-title-' + post.id"
+            width="400"
+            height="400"
           />
           <h2 v-if="post.title" :id="'post-title-' + post.id" class="h6">
             {{ post.title.rendered }}

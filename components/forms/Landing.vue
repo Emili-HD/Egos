@@ -16,6 +16,8 @@ const props = defineProps({
 onMounted(() => {
     const script = document.createElement("script");
     script.src="https://js.hsforms.net/forms/v2.js";
+    script.async = true;
+    script.defer = true;
     document.body.appendChild(script);
     
     script.addEventListener("load", () => {

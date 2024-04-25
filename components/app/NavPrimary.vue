@@ -23,7 +23,7 @@
                                     tratamiento.title }}</span>
                             <ArrowUpRightIcon
                                 class="arrow-up size-8 p-2 rounded-full order-2 absolute lg:hidden right-4 opacity-50 text-blue-1"
-                                alt="Cerra menú" />
+                                alt="Cerrar menú" />
                         </nuxt-link>
                         
                         <div class="submenu mt-1 xl:fixed top-0 left-0 xl:right-0 xl:top-12 xl:m-auto z-0 h-fit md:h-screen/75 w-full md:w-[85vw] md:pointer-events-none [&.open]:pointer-events-auto"
@@ -74,12 +74,12 @@
                                                     {{ subSubTratamiento.title }}
                                                     <ArrowUpRightIcon
                                                         class="arrow-up size-8 p-2 rounded-full order-2 absolute lg:hidden right-0 bg-white opacity-50 text-blue-1"
-                                                        alt="Cerra menú" />
+                                                        alt="Cerrar menú" />
                                                 </nuxt-link>
                                             </li>
                                         </ul>
                                     </li>
-                                    <ElementsLogros v-if="viewport.isGreaterThan('lg')" />
+                                    <ElementsLogros class="hidden xl:flex" />
                                 </ul>
                             </div>
 
@@ -97,12 +97,6 @@ import { ArrowUpRightIcon, ArrowDownRightIcon } from '@heroicons/vue/24/outline'
 const { $gsap: gsap } = useNuxtApp();
 const route = useRoute();
 const menuStore = useMenuStore();
-
-const viewport = useViewport()
-
-watch(viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
-  console.log('Breakpoint updated:', oldBreakpoint, '->', newBreakpoint)
-})
 
 
 // Métodos
