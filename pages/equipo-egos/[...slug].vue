@@ -15,7 +15,7 @@
         <div v-html="doctor.content.rendered"></div>
       </section>
       <section class="col-[2/-2] lg:col-start-2 lg:col-span-10 bg-transparent min-h-max">
-        <DoctorResenas :data="reviews" />
+        <DoctorResenas :data="reviews" :name="doctor.title.rendered" />
       </section>
       <DelayHydration>
         <LazyElementsReviews :ruta="route.params.slug[1]" />

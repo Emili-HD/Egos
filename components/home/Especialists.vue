@@ -47,7 +47,7 @@
               </ul>
           </article>
           <div class="flex flex-col items-center p-12">
-            <NuxtLink class="button px-6 pt-3 pb-2 bg-nude-1 rounded-full text-blue-1 text-center w-fit uppercase leading-none" to="/nuestro-equipo" >Ver todo nuestro equipo</NuxtLink>
+            <NuxtLink class="button px-6 pt-3 pb-2 bg-blue-1 rounded-full text-nude-1 text-center w-fit uppercase leading-none" to="/nuestro-equipo" >Ver todo nuestro equipo</NuxtLink>
           </div>
       </section>
   </template>

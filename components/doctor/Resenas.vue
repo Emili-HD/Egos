@@ -1,7 +1,7 @@
 <template>
    <section v-if="data" class="resenas p-0 mb-0 !bg-transparent" ref="resenas">
       <div class="resenas__header">
-         <h2>Reseñas</h2>
+         <h2>Opiniones {{ name }}</h2>
          <ElementsDivider />
       </div>
       <article v-for="comment in data" class="bg-white p-8 rounded-2xl mb-6">
@@ -40,6 +40,9 @@ const resenas = ref(null)
 const props = defineProps({
    data: {
       type: Array,
+   },
+   name: {
+      type: String,
    }
 })
 

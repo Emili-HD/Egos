@@ -18,6 +18,7 @@
       </DelayHydration>
       <DelayHydration>
         <HomeTiktok />
+        <ElementsInfluencers />
       </DelayHydration>
   </main>
 </template>

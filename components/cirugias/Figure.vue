@@ -27,7 +27,7 @@
       <NuxtImg class="rounded-xl size-full object-cover object-center" loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" :alt="contentData.side_image.alt" />
    </figure>
    <!-- </DelayHydration> -->
-   <div class="panel__content col-[2/-2] lg:col-[10_/_span_6] has-[.accordion]:col-[2_/_span_6] row-start-2 lg:row-start-1"
+   <div class="panel__content col-[2/-2] lg:col-[10_/_span_6] has-[.accordion]:col-[2_/_span_6] row-start-2 lg:row-start-1 [#precio_&]:col-start-2 [#precio_&]:col-end-8"
       v-if="contentData && contentData.opciones_listado != 'columnas' && contentData.opciones_listado != 'antesdespues'">
       <h2 class="text-clamp-2xl mb-8">{{ contentData.heading }}</h2>
       <div class="answer p-0">

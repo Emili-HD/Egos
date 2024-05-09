@@ -512,7 +512,7 @@ export default defineNuxtConfig({
         '/equipo-egos/unidad-obesidad/dr-carlos-rodriguez/',
         '/equipo-egos/unidad-obesidad/dr-ricard-sorio/',
 
-        '/cirugia-de-pechos/aumento-de-pecho/',
+        // '/cirugia-de-pechos/aumento-de-pecho/',
         '/cirugia-de-pechos/cambio-implantes-mamarios/',
         '/cirugia-de-pechos/correccion-de-la-cicatriz-de-aumento-de-pecho/',
         '/cirugia-de-pechos/eliminar-cicatrices/',

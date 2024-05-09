@@ -2,35 +2,46 @@
   
     <div class="card rounded-3xl overflow-hidden" :class="props.classes" v-if="category">
         <nuxt-link :to="processedLink" class="w-full h-full block" aria-label="Ver detalles de cirugía">
-            <picture class="h-[35.625rem] bg-nude-8 block min-h-full" v-if="category.acf && category.acf.imagen_cards && category.acf.imagen_cards.url">
+          <div v-if="category.acf && category.acf.badge">
+            <p class="absolute top-2 left-2 bg-blue-6 text-white px-4 pt-2 pb-1 rounded-2xl z-10">{{ category.acf.badge }}</p>
+          </div>
+            <picture class="h-[42rem] bg-nude-8 block min-h-full" v-if="category.acf && category.acf.imagen_cards && category.acf.imagen_cards.url">
                 <NuxtImg loading="lazy"
                     class="size-full object-cover object-center"
                     :src="category.acf.imagen_cards.url"
                     :alt="category.acf.imagen_cards.alt"
-                    :placeholder="[50, 25, 75, 5]"
-                    sizes="100vw md:50vw xl:380px"
                     width="380"
                     height="570"
                 />
             </picture>
-            <picture class="h-[35.625rem] bg-nude-8 block min-h-full" v-else-if="category.featured_image_data">
-                <NuxtImg loading="lazy"
-                    class="size-full object-cover object-center"
-                    :src="category.featured_image_data.src"
-                    :alt="category.featured_image_data.alt"
-                    :placeholder="[50, 25, 75, 5]"
-                    sizes="100vw md:50vw xl:380px"
-                    width="380"
-                    height="570"
-                />
-            </picture>
-            <div class="category__title bg-nude-8/50 backdrop-blur transform-[translateZ(0)] will-change-transform bg-opacity-80 flex flex-col justify-end items-center gap-4 bottom-2 p-6 absolute w-[calc(100%-1rem)] m-auto left-0 right-0 rounded-xl overflow-hidden">
+            <div 
+              v-if="category.acf.oferta_desde"
+              class="category__title bg-nude-8/50 backdrop-blur transform-[translateZ(0)] will-change-transform bg-opacity-80 flex flex-col justify-end items-center gap-2 bottom-2 p-6 absolute w-[calc(100%-1rem)] m-auto left-0 right-0 rounded-xl overflow-hidden"
+            >
                 <h3 class="h6 text-center uppercase text-clamp-sm font-semibold mb-0">{{ category.title.rendered }}</h3>
+
+                <div class="flex gap-2">
+                  <div class="desde !text-gold-3 text-clamp-base drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline [&>span]:text-red-600 [&>span]:opacity-50" 
+                    v-if="category.acf.precio_desde" 
+                    v-html="category.acf.precio_desde"
+                  ></div>
+                  <div class="desde !text-gold-3 text-clamp-base drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline" 
+                    v-if="category.acf.rebaja" 
+                    v-html="category.acf.rebaja"
+                  ></div>
+                </div>
+                <ElementsCountDown :data="category.acf" />
+                <div class="pt-1 px-6 mt-2 border border-solid border-blue-1/25 text-center uppercase rounded-3xl bg-blue-1 text-nude-1">Saber más</div>
+            </div>
+            <div v-else class="category__title bg-nude-8/50 backdrop-blur transform-[translateZ(0)] will-change-transform bg-opacity-80 flex flex-col justify-end items-center gap-2 bottom-2 p-6 absolute w-[calc(100%-1rem)] m-auto left-0 right-0 rounded-xl overflow-hidden">
+                <h3 class="h6 text-center uppercase text-clamp-sm font-semibold mb-0">{{ category.title.rendered }}</h3>
+
                 <p class="desde !text-gold-3 text-clamp-base drop-shadow lowercase font-normal mb-0" 
-                  v-if="category.acf.precio_desde" v-html="category.acf.precio_desde"
+                  v-if="category.acf.precio_desde" 
+                  v-html="category.acf.precio_desde"
                 ></p>
                 <div v-html="category.excerpt.rendered" class="[&>p]:text-sm [&>p]:mb-0 [&>p]:text-center [&>p]:text-balance"></div>
-                <div class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</div>
+                <div class="py-1 px-6 mb-2 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</div>
             </div>
         </nuxt-link>
     </div>
