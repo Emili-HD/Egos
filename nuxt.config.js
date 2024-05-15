@@ -554,7 +554,8 @@ export default defineNuxtConfig({
         '/obesidad/bypass-gastrico/',
         '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/',
         '/obesidad/sleeve-gastrico/',
-        '/obesidad/tratamiento-farmacologico-obesidad/',  
+        '/obesidad/tratamiento-farmacologico-obesidad/',
+        '/obesidad/metodo-endomanga-mega/',
       ]
     },
     // routeRules: {

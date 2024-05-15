@@ -17,7 +17,7 @@
         <LazyHomeEspecialists />
       </DelayHydration>
       <DelayHydration>
-        <HomeTiktok />
+        <!-- <HomeTiktok /> -->
         <ElementsInfluencers />
       </DelayHydration>
   </main>

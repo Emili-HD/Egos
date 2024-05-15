@@ -17,7 +17,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import { egosSettings } from '@/composables/useFetch.js'; // Ajusta la ruta según donde tengas el archivo
+import { egosSettings } from '@/composables/useFetch.js';
 
 const influencers = ref([]);
 

@@ -17,7 +17,7 @@
          </div>
       </div>
    </section>
-   <section v-if="data.acf.tratamientos_home.categorias_home" class="tratamientos">
+   <section v-if="data.acf.tratamientos_home.categorias_home" class="tratamientos" id="tratamientos">
 
       <div class="home__services bg-white flex flex-row justify-center items-center flex-wrap min-h-[100vh] w-full xl:px-20 pt-16 overflow-hidden">
          <div class="home__services-description w-full pt-12 px-10 xl:px-24 pb-12 text-center">
