@@ -3,12 +3,12 @@
         <div class="intro__image bg-[#16253c] h-[100vh] inset-0 absolute w-[100vw] flex flex-col justify-center items-start gap-8">
             <img provider="ipx" class="girl h-screen object-cover absolute z-0 left-0 lg:left-[25vw]" src="/assets/images/2-intro/chica.avif" alt=""  width="1792" height="1008" />
               <p class="intro__title font-geomanist font-semibold text-clamp-6xl 
-                        lg:text-[4vw] text-nude-7 leading-[0.9] mb-0 mt-[15vh] pl-8 lg:pl-16 text-left
+                        lg:text-[10vw] xl:text-[4vw] text-nude-7 leading-[0.9] mb-0 mt-[15vh] pl-8 lg:pl-16 text-left
                         [&>span]:!text-gold-2 [&>span]:w-full [&>span]:block lg:[&>span]:inline-block">
-                  Más de 3000<br><span id="a">pacientes</span> <span id="b">intervenidos</span> <br>al año
+                  Más de 3000<span id="a">pacientes</span> <span id="b">intervenidos</span> al año
               </p>
             <div class="intro__content pl-8 lg:pl-16 text-nude-8 flex flex-col justify-center items-start gap-4">
-                <div class="heading [&>h1]:font-geomanist [&>h1]:text-clamp-xl" v-html="data.content.rendered"></div>
+                <div class="heading [&>h1]:font-geomanist [&>h1]:!text-clamp-2xl 2xl:![&>h1]:text-clamp-xl " v-html="data.content.rendered"></div>
                 <ElementsButton class="gold text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-auto" href="#formulario" @click.passive="handleClick">Cumple tu sueño</ElementsButton>
             </div>
         </div>
@@ -97,6 +97,16 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-// Empty style
+<style scoped>
+@media (min-width: 768px) and (max-width: 1366px) and (orientation: portrait) {
+    .girl {
+        @apply left-0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1180px) and (orientation: landscape) {
+    .intro__title {
+        @apply text-[6vw];
+    }
+}
 </style>

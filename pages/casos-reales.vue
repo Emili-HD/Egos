@@ -53,14 +53,14 @@ const { $gsap: gsap } = useNuxtApp();
 const categoriasSeleccionadas = ref({});
 
 // Cargar testimonios
-const { data: testimonios, error: testimoniosError, pending: testimoniosPending } = await useAsyncData('testimonios', () => getTestimonios({ page: 1, perPage: 100 }));
+const { data: testimonios, error: testimoniosError } = await useAsyncData('testimonios', () => getTestimonios({ page: 1, perPage: 100 }));
 
 // Cargar página específica (p.ej., la información de la página de testimonios)
 const pageId = 16851; // Asume que este es el ID de tu página de testimonios
-const { data: pages, error: pagesError, pending: pagesPending } = await useAsyncData(`page-${pageId}`, () => getPage(pageId), {initialCache: false});
+const { data: pages, error: pagesError } = await useAsyncData(`page-${pageId}`, () => getPage(pageId), {initialCache: false});
 
 // Cargar categorías de testimonios
-const { data: categorias, error: categoriasError, pending: categoriasPending } = await useAsyncData('categoriasTestimonios', () => getTestimonios({ categories: true }));
+const { data: categorias, error: categoriasError } = await useAsyncData('categoriasTestimonios', () => getTestimonios({ categories: true }));
 
 const removeAccents = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");

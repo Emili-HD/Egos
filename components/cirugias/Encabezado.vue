@@ -1,6 +1,6 @@
 <template>
   <header class="header-gradient min-h-[90vh] xl:min-h-screen 
-                px-8 xl:px-16 py-6 xl:py-12 mb-0 
+                px-8 xl:px-16 pt-[40vh] pb-6 xl:py-12 mb-0 
                 col-[1_/_span_16] xl:col-span-11 
                 flex items-end 
                 bg-cover bg-center

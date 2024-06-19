@@ -22,8 +22,8 @@
 <script setup>
 import { getMenu } from '@/composables/useFetch'; 
 
-const { data: principalMenuData, error: principalMenuError, pending: principalMenuPending } = await useAsyncData(() => getMenu('menu-principal'));
-const { data: imageData, error: imageError, pending: imagePending } = await useFetch('https://test.clinicaegos.com/wp-json/wp/v2/media/17406');
+const { data: principalMenuData, error: principalMenuError } = await useAsyncData(() => getMenu('menu-principal'));
+const { data: imageData, error: imageError } = await useFetch('https://test.clinicaegos.com/wp-json/wp/v2/media/17406');
 
 // Función auxiliar para resolver URLs
 const resolveUrl = (slug) => {

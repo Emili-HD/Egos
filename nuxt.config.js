@@ -11,10 +11,12 @@ export default defineNuxtConfig({
     '~/plugins/setHtmlLang.js',
     '~/plugins/scrollToTop.client.js',
     '~/plugins/intersect.js',
-    {
-      src: '~/plugins/recaptcha.js'
-    },
+    '~/plugins/device-classes.js',
+    { src: '~/plugins/recaptcha.js' },
   ],
+  device: {
+    refreshOnResize: true
+  },
   css: [
     '~/assets/css/tailwind.css',
   ],
@@ -37,6 +39,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/device',
     '@pinia/nuxt',
     'nuxt-delay-hydration',
     'nuxt-simple-robots',
@@ -536,6 +539,9 @@ export default defineNuxtConfig({
         '/estetica-corporal/liposuccion/',
         '/estetica-corporal/tratamiento-de-morpheus-8/',
         '/estetica-corporal/tratamiento-varices-sin-cirugia/',
+        '/estetica-corporal/carboxiterapia/',
+        '/estetica-corporal/mesoterapia/',
+        '/estetica-corporal/presoterapia/',
         '/estetica-facial/aumento-de-labios/',
         '/estetica-facial/aumento-de-pomulos/',
         '/estetica-facial/bichectomia/',
@@ -548,8 +554,10 @@ export default defineNuxtConfig({
         '/estetica-facial/rinomodelacion/',
         '/estetica-facial/rinoplastia-ultrasonica/',
         '/estetica-facial/tratamiento-antiarrugas/',
-        '/injerto-capilar/injerto-capilar/',
         '/estetica-facial/queiloplastia/',
+        '/estetica-facial/sonrisa-gingival/',
+        '/estetica-facial/hidratacion-de-labios/',
+        '/injerto-capilar/injerto-capilar/',
         '/obesidad/balon-gastrico/',
         '/obesidad/bypass-gastrico/',
         '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/',

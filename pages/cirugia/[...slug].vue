@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <div class="form__page grid grid-cols-subgrid col-[1/-1]">
+      <div class="form__page grid grid-cols-subgrid col-[1/-1] mb-12">
         <CirugiasFormSection :data="tratamiento.acf" />
       </div>
     </section>
@@ -67,7 +67,7 @@ const form = ref({ form_settings: null });
 // Observar el DOM
 const observeDOM = () => {
   // Asegurarse de que este código se ejecute solo en el cliente
-  if (process.client) {
+  if (import.meta.client) {
     const observer = new MutationObserver((mutations, obs) => {
       const panels = document.querySelectorAll('.treatment-panel');
       if (panels.length) {

@@ -9,8 +9,6 @@
                   v-if="category.featured_image_data"
                   :src="category.featured_image_data.src"
                   :alt="category.featured_image_data.alt"
-                  :placeholder="[50, 25, 75, 5]"
-                  sizes="100vw md:50vw xl:380px"
                   width="380"
                   height="570"
               />

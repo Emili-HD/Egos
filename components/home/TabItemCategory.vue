@@ -1,6 +1,5 @@
 <template>
-  <div v-if="categoryPending">Cargando categoría...</div>
-  <div v-else-if="categoryError">Error al cargar la categoría.</div>
+  <div v-if="categoryError">Error al cargar la categoría.</div>
   <div v-else class="list__item-cirugia-title pb-0" v-if="category && category.value && category.value.title">
     <nuxt-link :to="processedLink">
       <p><strong>{{ category.value.title.rendered }}:</strong> <span v-html="category.value.acf.descripcion_cirugias_home"></span></p>
@@ -20,7 +19,7 @@ const props = defineProps({
   categoryId: Number,
 });
 
-const { data: category, error: categoryError, pending: categoryPending } = await useAsyncData(
+const { data: category, error: categoryError } = await useAsyncData(
   () => `category-${props.categoryId}`,
   async () => {
     const result = await getTratamiento({ id: props.categoryId });

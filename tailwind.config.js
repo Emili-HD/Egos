@@ -67,6 +67,7 @@ module.exports = {
         'bg-nude-8': '#f8f7f4',
       },
       fontSize: {
+        'clamp-2xs': "clamp(0.65rem, 0.6vw, 0.8rem)",
         'clamp-xs': "clamp(0.75rem, 0.7vw, 0.9rem)",
         'clamp-sm': "clamp(0.875rem, 1vw, 1.125rem)",
         'clamp-base': "clamp(1rem, 1.3vw, 1.5rem)",
@@ -112,6 +113,13 @@ module.exports = {
       },
       animation: {
         'gradient': 'gradient 7s ease infinite',
+      },
+      screens: {
+        'max-2xl': {'max': '1535px'},
+        'max-xl': {'max': '1279px'},
+        'max-lg': {'max': '1023px'},
+        'max-md': {'max': '767px'},
+        'max-sm': {'max': '639px'},
       },
     }
   },

@@ -85,9 +85,9 @@ const categories = computed(() => {
 });
 
 // Obtener datos
-const { data: especialidades, error: especialidadesError, pending: especialidadesPending } = await useAsyncData('especialidades', getEspecialidades, {initialCache: false});
-const { data: pages, error: paginaError, pending: paginaPending } = await useAsyncData('paginaEspecial', () => getPage(562), {initialCache: false});
-const { data: doctor, error: equipoError, pending: equipoPending } = await useAsyncData('equipo', () => getEquipo({ perPage: 4 }), {initialCache: false});
+const { data: especialidades, error: especialidadesError } = await useAsyncData('especialidades', getEspecialidades, {initialCache: false});
+const { data: pages, error: paginaError } = await useAsyncData('paginaEspecial', () => getPage(562), {initialCache: false});
+const { data: doctor, error: equipoError } = await useAsyncData('equipo', () => getEquipo({ perPage: 4 }), {initialCache: false});
 
 const doctorByCategory = (categoryId) => {
     return doctor.value.filter((d) => d.especialidad.includes(categoryId));

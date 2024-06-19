@@ -1,14 +1,6 @@
 <template>
-  <button
-    type="button"
-    class="navTrigger absolute z-[1000] top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 
-           size-9 bg-transparent lg:hidden focus:outline-none
-           border-none outline-none cursor-pointer appearance-none tap-"
-    id="navTrigger"
-    aria-label="Abrir menú"
-  >
-    <svg class= "size-16 -top-3.5 -left-3.5
-                 stroke-blue-1 stroke-[1px] fill-none block absolute" viewBox="0 0 64 48">
+  <button type="button" class="navTrigger" id="navTrigger" aria-label="Abrir menú">
+    <svg class="size-16 stroke-blue-1 stroke-[1px] fill-none block absolute" viewBox="0 0 64 48">
       <path d="M19,15 L45,15 C70,15 58,-2 49.0177126,7 L19,37"></path>
       <path d="M19,24 L45,24 C61.2371586,24 57,49 41,33 L32,24"></path>
       <path d="M45,33 L19,33 C-8,33 6,-2 22,14 L45,37"></path>
@@ -40,13 +32,23 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.is-desktop:not(.is-ipad-pro, .is-tablet) .navTrigger {
+  @apply hidden;
+}
+
 .navTrigger {
+  @apply xl:hidden;
+}
+
+.is-ipad-pro .navTrigger,
+.is-tablet .navTrigger,
+.is-mobile .navTrigger {
+  @apply absolute z-[1000] right-0 size-16  flex justify-center items-center focus:outline-none border-none outline-none cursor-pointer appearance-none rounded-xl xl:hidden;
+
   svg {
     path {
-      transition: stroke-dasharray var(--duration, 0.85s) var(--easing, ease)
-          var(--delay, 0s),
-        stroke-dashoffset var(--duration, 0.85s) var(--easing, ease)
-          var(--delay, 0s);
+      transition: stroke-dasharray var(--duration, 0.85s) var(--easing, ease) var(--delay, 0s),
+        stroke-dashoffset var(--duration, 0.85s) var(--easing, ease) var(--delay, 0s);
       stroke-dasharray: var(--array-1, 26px) var(--array-2, 100px);
       stroke-dashoffset: var(--offset, 126px);
       transform: translateZ(0);
@@ -88,5 +90,6 @@ onMounted(() => {
       }
     }
   }
+
 }
 </style>

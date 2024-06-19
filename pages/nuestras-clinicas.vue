@@ -66,10 +66,10 @@ import { useAsyncData } from 'nuxt/app'
 import { getPage, getClinicas } from '@/composables/useFetch'
 
 // Uso de useAsyncData para cargar la página por su ID
-const { data: pages, error: pageError, pending: pagePending } = await useAsyncData(() => getPage(13618), {initialCache: false})
+const { data: pages, error: pageError } = await useAsyncData(() => getPage(13618), {initialCache: false})
 
 // Uso de useAsyncData para cargar clínicas sin parámetros adicionales
-const { data: clinicasData, error: clinicasError, pending: clinicasPending } = await useAsyncData(() => getClinicas(), {initialCache: false})
+const { data: clinicasData, error: clinicasError } = await useAsyncData(() => getClinicas(), {initialCache: false})
 
 // Datos YOAST SEO
 useHead(() => {

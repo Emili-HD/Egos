@@ -6,11 +6,11 @@ import { SplitText } from "gsap/SplitText";
 import { TextPlugin } from "gsap/TextPlugin";
 import { Flip } from "gsap/Flip";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
-import Lenis from "@studio-freight/lenis";
+import Lenis from "lenis";
 import { defineNuxtPlugin } from "#app";
 
 export default defineNuxtPlugin((nuxtApp) => {
-    if (process.client) {
+    if (import.meta.client) {
 
         if (typeof window !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger, SplitText, Flip, DrawSVGPlugin, TextPlugin, ScrollToPlugin);
@@ -38,7 +38,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         nuxtApp.hook('page:finish', () => {
             setTimeout(() => {
                 lenis.scrollTo(0, { immediate: true })
-            }, 1000)
+            }, 200)
         })
 
         nuxtApp.provide('lenis', lenis);

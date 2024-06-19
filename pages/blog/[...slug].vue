@@ -107,8 +107,8 @@ import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
 import { getPosts } from '@/composables/useFetch';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import useCritical from '#booster/composables/critical';
-const { isCritical } = useCritical({critical: true});
+// import useCritical from '#booster/composables/critical';
+const { isCritical } = useBoosterCritical({critical: true});
 
 const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 

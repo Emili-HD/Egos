@@ -29,10 +29,7 @@ import { useAsyncData } from 'nuxt/app'
 import { getPage } from '@/composables/useFetch';
 
 const { data: home, error, pending } = await useAsyncData(() => getPage(8), {initialCache: false})
-// console.log(home.value.acf.tratamientos_home.categorias_home);
-
 const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);
-
 
 // Datos YOAST SEO
 useHead(() => {

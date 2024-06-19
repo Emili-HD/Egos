@@ -1,6 +1,5 @@
 <template>
-  <div v-if="tiktokPending">Cargando videos de TikTok...</div>
-  <div v-else-if="tiktokError">Error al cargar los videos de TikTok.</div>
+  <div v-if="tiktokError">Error al cargar los videos de TikTok.</div>
     <section v-else class="social py-40 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
       <SocialPopUp v-if="showPopup" :data="{ video_id: selectedVideoId }" @close="closePopup" />
       <h2 class="social__title col-[2_/_span_14] text-center">#BellezaSinFiltros: la realidad detrás de la estética</h2>
@@ -63,7 +62,7 @@ const selectedVideoId = ref('');
 const showPopup = ref(false);
 
 // Uso de useAsyncData para cargar datos de TikTok
-const { data: tiktokData, error: tiktokError, pending: tiktokPending } = await useAsyncData(getTikTok);
+const { data: tiktokData, error: tiktokError } = await useAsyncData(getTikTok);
 
 // Función para manejar clic en un slide
 const openPopup = (videoId) => {

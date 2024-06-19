@@ -1,6 +1,5 @@
 <template>
-   <div v-if="testimoniosPending">Cargando testimonios...</div>
-   <div v-else-if="testimoniosError">Error al cargar los testimonios.</div>
+   <div v-if="testimoniosError">Error al cargar los testimonios.</div>
    <section v-else class="testimonios grid grid-cols-16 gap-0 xl:gap-4 py-20">
       <div class="testimonios__header col-[1/-1] p-8 xl:col-[4_/_span_10] xl:p-0 flex flex-col justify-center items-center h-fit text-left xl:text-center w-full z-10">
          <h2 class="text-clamp-3xl">Antes y después de nuestras cirugías estéticas y medicina en clínica Egos </h2>
@@ -41,7 +40,7 @@ const perPage = 50;
 const uniqueId = `testimonios-${page}-${perPage}`;
 
 // Inicialización de useLazyAsyncData sin ejecutar la llamada inmediatamente
-const { data: testimoniosData, error: testimoniosError, pending: testimoniosPending, execute } = useLazyAsyncData(uniqueId, () => getTestimonios({ page, perPage }));
+const { data: testimoniosData, error: testimoniosError, execute } = useLazyAsyncData(uniqueId, () => getTestimonios({ page, perPage }));
 
 // Filtro para testimonios destacados
 const testimoniosDestacados = computed(() => {

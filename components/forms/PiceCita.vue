@@ -10,12 +10,12 @@
     </div>
     <div
       id="formulario"
-      class="half-right bg-blue-1 p-8 xl:p-12 h-full w-full mb-0 top-0
-            min-h-screen flex flex-col justify-center 
+      class="half-right bg-blue-1 p-8 xl:p-12 h-fit lg:h-full w-full mb-0 top-0
+            lg:min-h-screen flex flex-col justify-center 
             col-span-full lg:col-[12/17] row-start-2 lg:row-start-1"
     >
       <div class="-mx-4 mb-12" v-html="content"></div>
-      <div class="form__wrapper">
+      <div class="form__wrappe p-4 mb-12 lg:p-12 xl:p-0">
         <FormsCirugia
           :identificador="'map'"
           :portalId="portalId"

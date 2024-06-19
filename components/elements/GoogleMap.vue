@@ -65,7 +65,7 @@ const updateMapAndContent = (locationId) => {
   }
 }
 
-const { data: locations, error: locationsError, pending: locationsPending } = await useAsyncData(() => getClinicas())
+const { data: locations, error: locationsError } = await useAsyncData(() => getClinicas())
 
 // Diseño del mapa
 const mapStyles = [

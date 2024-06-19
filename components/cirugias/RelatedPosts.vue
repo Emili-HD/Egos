@@ -1,6 +1,5 @@
 <template>
-  <div v-if="postsPending">Cargando posts...</div>
-  <div v-else-if="postsError">Error al cargar los posts.</div>
+  <div v-if="postsError">Error al cargar los posts.</div>
   <section v-else class="related__posts pt-6 mb-0">
     <h2 class="text-center">{{ treatmentsData.titulo_posts_relacionados }}</h2>
     <div class="post-list flex justify-center items-start gap-2 pb-0 lg:pb-8 h-1/2 w-full overflow-hidden" aria-label="Lista de publicaciones" v-if="posts">
@@ -54,7 +53,7 @@ import { getPosts } from '@/composables/useFetch' // Asegúrate de que estás im
 const categoryId = computed(() => props.treatmentsData.posts_relacionados)
 // console.log('categoryId:', categoryId.value)
 
-const { data: posts, error: postsError, pending: postsPending } = await useAsyncData(
+const { data: posts, error: postsError } = await useAsyncData(
   'unique-key-based-on-categoryId', // Este es el identificador único para el caché
   () => getPosts(categoryId.value) // Función para obtener los posts
 );

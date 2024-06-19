@@ -86,10 +86,10 @@ const blogId = 934;
 const postsParams = { per_page: 100, page: 1 };
 
 // Uso de useAsyncData para cargar la información de la página del blog
-const { data: blogData, error: blogError, pending: blogPending } = await useAsyncData(() => getPage(blogId));
+const { data: blogData, error: blogError } = await useAsyncData(() => getPage(blogId));
 
 // Uso de useAsyncData para cargar los posts, aplicando un filtro a los resultados
-const { data: postsData, error: postsError, pending: postsPending } = await useAsyncData('blog-posts', () => getPosts(postsParams));
+const { data: postsData, error: postsError } = await useAsyncData('blog-posts', () => getPosts(postsParams));
 // console.log(postsData.value); // Verificar la estructura y contenido de los datos originales
 
 // Filtrar posts "sticky" usando una propiedad computada

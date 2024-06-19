@@ -5,7 +5,7 @@
           <div v-if="category.acf && category.acf.badge">
             <p class="absolute top-2 left-2 bg-blue-6 text-white px-4 pt-2 pb-1 rounded-2xl z-10">{{ category.acf.badge }}</p>
           </div>
-            <picture class="h-[42rem] bg-nude-8 block min-h-full" v-if="category.acf && category.acf.imagen_cards && category.acf.imagen_cards.url">
+            <picture class="h-[42rem] xl:max-h-screen/70 bg-nude-8 block min-h-full" v-if="category.acf && category.acf.imagen_cards && category.acf.imagen_cards.url">
                 <NuxtImg loading="lazy"
                     class="size-full object-cover object-center"
                     :src="category.acf.imagen_cards.url"

@@ -1,5 +1,4 @@
 <template>
-   <!-- <DelayHydration> -->
    <figure class="
             panel__image 
             h-fit 
@@ -13,7 +12,9 @@
             [.tabla_&]:col-[11/-1] [.tabla_&]:row-start-1 [.tabla_&]:w-full
             [.columnas_&]:col-[2/-2] [.columnas_&]:row-start-2 [.columnas_&]:p-0 [.columnas_&]:aspect-square [.columnas_&]:h-full
             [.columnas_&]:lg:col-[6/12] [.columnas_&]:lg:row-start-1 [.columnas_&]:lg:px-16 [.columnas_&]:lg:aspect-[2/3]
-            [#precio_&]:col-[2/-2] [#precio_&]:mb-8 [#precio_&]:lg:col-start-9 [#precio_&]:lg:mb-0" 
+            [#precio_&]:col-[2/-2] [#precio_&]:mb-8 [#precio_&]:lg:col-start-9 [#precio_&]:lg:mb-0
+            [#paciente\_ideal_&]:has-[img]:col-[2/-2] [#paciente\_ideal_&]:has-[img]:lg:col-[2/_span_7]
+            [#caso-real_&]:col-[2/-2] [#caso-real_&]:lg:col-[9/-2] [#caso-real_&]:mb-8 [#caso-real_&]:lg:mb-0" 
             v-if="contentData.fondo != 'sin'">
       <div v-if="contentData.fondo == 'vHorizontal'" class="video__player aspect-video">
          <div class="size-full">
@@ -27,9 +28,9 @@
       </div>
       <NuxtImg class="rounded-xl size-full object-cover object-center" loading="lazy" v-else-if="contentData.fondo == 'imagen'" :src="contentData.side_image.url" :alt="contentData.side_image.alt" />
    </figure>
-   <!-- </DelayHydration> -->
+
    <div class="panel__content col-[2/-2] lg:col-[10_/_span_6] has-[.accordion]:col-[2_/_span_6] row-start-2 lg:row-start-1 [#precio_&]:col-start-2 
-               [#precio_&]:lg:col-end-8 [#precio_&]:flex [#precio_&]:flex-col [#precio_&]:justify-center"
+               [#precio_&]:lg:col-end-8 [#precio_&]:flex [#precio_&]:flex-col [#precio_&]:justify-center [#caso-real_&]:col-[2/-2] [#caso-real_&]:lg:col-[2/_span_6] [#caso-real_&]:self-center"
       v-if="contentData && contentData.opciones_listado != 'columnas' && contentData.opciones_listado != 'antesdespues'">
       <h2 class="text-clamp-2xl mb-8">{{ contentData.heading }}</h2>
       <div class="answer p-0">

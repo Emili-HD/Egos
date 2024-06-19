@@ -1,6 +1,5 @@
 <template>
-  <div v-if="landingPending">Cargando Promoción...</div>
-  <div v-else-if="landingError">Error al cargar la Promoción.</div>
+  <div v-if="landingError">Error al cargar la Promoción.</div>
    <main v-else class="site-main landing-main" v-if="landing && landing.acf">
       <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
          <a class="gold" href="#hubspotLanding" @click.passive="handleClick">Cita con el cirujano
@@ -42,7 +41,7 @@ const loadData = () => {
 };
 
 // Función para cargar los datos
-const { data: landing, error: landingError, pending: landingPending, refresh } = await useAsyncData(`landing-${route.params.slug}`, loadData, { initialCache: false });
+const { data: landing, error: landingError, refresh } = await useAsyncData(`landing-${route.params.slug}`, loadData, { initialCache: false });
 
 
 // watch(

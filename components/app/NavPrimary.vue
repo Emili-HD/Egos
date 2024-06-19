@@ -1,41 +1,30 @@
 <template>
-    <div class="header-nav flex flex-row justify-end items-stretch size-full">
-        <nav aria-label="Global"
-            class="nav-categories bg-white rounded-2xl xl:rounded-br-none xl:rounded-tr-none px-8 flex flex-col justify-center items-stretch xl:w-[960px]">
-            <!--  -->
-            <ul class="menu-list flex justify-center items-center gap-8 font-light h-full mb-0 uppercase tracking-wider" @mouseover="loadImages" ref="menuContainer">
+    <div class="header-nav flex flex-row justify-end items-stretch size-full" v-if="menuTratamientosData && menuTratamientosData.items">
+        <nav aria-label="Global" class="nav-categories">
+            <ul class="menu-list" @mouseover="loadImages" ref="menuContainer">
                 <li v-for="tratamiento in menuTratamientosData.items" :key="tratamiento.ID"
                     :class="{ 'hasSubmenu': tratamiento.child_items }">
-                    <div class="menu-tab flex flex-row justify-start items-center w-full xl:hidden"
-                        :data-title="tratamiento.title">
-                        <nuxt-link :to="tratamiento.url" class="nav-title hidden xl:flex"
-                            active-class="router-link-active">
+                    <div class="menu-tab" :data-title="tratamiento.title">
+                        <nuxt-link :to="tratamiento.url" class="nav-title" active-class="router-link-active">
                             <span>{{ tratamiento.title }}</span>
                         </nuxt-link>
-                        <ArrowDownRightIcon class="arrow-down max-w-4 order-2 absolute right-4 opacity-50 text-blue-1"
+                        <ArrowDownRightIcon class="arrow-down"
                             v-if="tratamiento.child_items" alt="Abrir menú" />
                     </div>
                     <div class="menu-wrapper">
-                        <nuxt-link :to="tratamiento.url" class="nav-link hidden xl:block text-clamp-xs"
-                            active-class="router-link-active">
-                            <span
-                                class="text-gold-3 cursor-pointer z-[1] before:content-[''] before:bg-gold-3 before:h-[1px] before:w-full before:max-w-0 before:absolute before:bottom-0 before:left-0 before:transition-[max-width]">{{
-                                    tratamiento.title }}</span>
+                        <nuxt-link :to="tratamiento.url" class="nav-link" active-class="router-link-active">
+                            <span class="">{{ tratamiento.title }}</span>
                             <ArrowUpRightIcon
                                 class="arrow-up size-8 p-2 rounded-full order-2 absolute lg:hidden right-4 opacity-50 text-blue-1"
                                 alt="Cerrar menú" />
                         </nuxt-link>
-                        
-                        <div class="submenu mt-1 xl:fixed top-0 left-0 xl:right-0 xl:top-12 xl:m-auto z-0 h-fit md:h-screen/75 w-full md:w-[85vw] md:pointer-events-none [&.open]:pointer-events-auto"
-                            v-if="tratamiento.child_items">
-                            <div
-                                class="anchorLink submenu__left xl:h-screen/70 hidden xl:block bg-cover bg-center w-full xl:w-[calc(85vw*0.375)] top-0 -left-1 rounded-2xl xl:absolute xl:w-50">
-                                <ul class="submenu__left-slider flex flex-col overflow-hidden rounded-2xl h-screen/70">
-                                    <li class="before-after flex h-screen/70 absolute top-0 left-0"
-                                        v-for="(subTratamiento, index) in tratamiento.child_items"
+
+                        <div class="submenu" v-if="tratamiento.child_items">
+                            <div class="anchorLink submenu__left">
+                                <ul class="submenu__left-slider">
+                                    <li class="before-after" v-for="(subTratamiento, index) in tratamiento.child_items"
                                         :key="subTratamiento.id" :data-index="index">
-                                        <div class="slide-c absolute left-0 top-0 opacity-0 z-0 h-full w-full will-change-transform lg:w-[calc(85vw/2.666667)]"
-                                            v-for="subSubTratamiento in subTratamiento.child_items"
+                                        <div class="slide-c" v-for="subSubTratamiento in subTratamiento.child_items"
                                             :key="subSubTratamiento.ID">
                                             <img loading="lazy"
                                                 class="menu-icon object-cover object-center min-h-full min-w-full"
@@ -45,22 +34,18 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div
-                                class="submenu__right h-fit xl:h-screen/70 right-0 xl:-right xl:w-[calc(85vw*0.625)] top-0 rounded-2xl w-full xl:absolute xl:w-50 xl:backdrop-blur-xl">
-                                <ul
-                                    class="list-none p-0 h-full has-[.column]:flex flex-row xl:content-center justify-center xl:justify-center items-start flex-wrap xl:absolute gap-4 xl:gap-0 w-full top-0 left-0">
-                                    <li class="submenu-child w-full xl:w-fit xl:flex flex-col justify-between items-start flex-nowrap"
-                                        v-for="(subTratamiento, index) in tratamiento.child_items"
+                            <div class="submenu__right">
+                                <!-- SubItems -->
+                                <ul class="submenu__right-list">
+                                    <li class="submenu-child" v-for="(subTratamiento, index) in tratamiento.child_items"
                                         :key="subTratamiento.ID" :data-index="index">
                                         <nuxt-link v-if="!subTratamiento.child_items" :to="subTratamiento.url"
                                             class="nav-link" :class="subTratamiento.classes"
                                             active-class="nuxt-link-active">
                                             {{ subTratamiento.title }}
                                         </nuxt-link>
-                                        <span
-                                            class="column cursor-default p-1 hidden xl:block text-gold-3 font-normal text-clamp-base"
-                                            v-else>{{ subTratamiento.title }}</span>
-                                        
+                                        <span class="column" v-else>{{ subTratamiento.title }}</span>
+
                                         <!-- SubSubItems -->
                                         <ul class="list-none"
                                             v-if="subTratamiento.child_items && subTratamiento.child_items.length > 0">
@@ -68,18 +53,18 @@
                                                 v-for="(subSubTratamiento, subIndex) in subTratamiento.child_items"
                                                 :key="subSubTratamiento.ID" :data-index="subIndex">
 
-                                                <nuxt-link :to="subSubTratamiento.url"
-                                                    class="nav-link text-balance tracking-normal flex flex-col justify-end items-start text-blue-1/75 lg:text-nude-8 pt-2 pb-4 lg:py-1"
+                                                <nuxt-link :to="subSubTratamiento.url" class="nav-link"
                                                     :class="subSubTratamiento.classes" active-class="nuxt-link-active">
                                                     {{ subSubTratamiento.title }}
                                                     <ArrowUpRightIcon
-                                                        class="arrow-up size-8 p-2 rounded-full order-2 absolute lg:hidden right-0 bg-white opacity-50 text-blue-1"
+                                                        class="arrow-up"
                                                         alt="Cerrar menú" />
                                                 </nuxt-link>
                                             </li>
                                         </ul>
+                                        <!-- /SubSubItems -->
                                     </li>
-                                    <ElementsLogros class="hidden xl:flex" />
+                                    <ElementsLogros class="element-logros" />
                                 </ul>
                             </div>
 
@@ -98,6 +83,7 @@ const { $gsap: gsap } = useNuxtApp();
 const route = useRoute();
 const menuStore = useMenuStore();
 
+// const menuTratamientosData = ref(null)
 
 // Métodos
 const processMenuItems = (items) => {
@@ -119,7 +105,7 @@ const processMenuItems = (items) => {
     });
 };
 
-const { data: menuTratamientosData, error: menuTratamientosError, pending: menuTratamientosPending } = await useAsyncData('menuTratamientos', async () => {
+const { data: menuTratamientosData, error: menuTratamientosError } = await useAsyncData('menuTratamientos', async () => {
     const menuData = await getMenu('tratamientos');
     if (menuData && menuData.items) {
         processMenuItems(menuData.items);
@@ -128,7 +114,7 @@ const { data: menuTratamientosData, error: menuTratamientosError, pending: menuT
 });
 
 const initializeMenus = async () => {
-    if (process.client && !menuTratamientosPending.value) {
+   
         await nextTick()
 
         let mm = gsap.matchMedia();
@@ -289,7 +275,7 @@ const initializeMenus = async () => {
             });
 
         })
-    }
+    
 };
 
 const closeAllMenus = () => {
@@ -340,9 +326,7 @@ const loadImages = (event) => {
 
 onMounted(async () => {
     cerrarMenuMobile()
-    if (!menuTratamientosPending.value) {
-        initializeMenus();
-    }
+    initializeMenus();
 })
 const props = defineProps({
     data: {
@@ -351,290 +335,326 @@ const props = defineProps({
 })
 </script>
 
-<style lang="scss">
+<style>
+/* .is-desktop:not(.is-ipad-pro, .is-tablet) { */
+    .is-desktop:not(.is-ipad-pro, .is-tablet) .egos-header, .egos-header {
+        .nav-categories {
+            @apply bg-white rounded-bl-xl rounded-tl-xl px-8 flex flex-col justify-center items-stretch w-fit;
+        }
 
-.egos-header {
+        .header-wrapper {
 
-    .header-wrapper {
-        .menu-list {
-            
-
-            @media (max-width: 1200px) {
-                align-items: flex-start;
-                background-color: rgba(var(--blue-1-rgb), .85);
-                -webkit-backdrop-filter: blur(1.5rem);
-                backdrop-filter: blur(1.5rem);
-                border-radius: var(--radius-xl);
-                display: flex;
-                flex-direction: column;
-                gap: 0;
-                height: calc(100lvh - .6rem);
-                justify-content: flex-start;
-                left: var(--gap);
-                padding: 6rem 1rem 3rem;
-                position: fixed;
-                top: var(--gap);
-                transform: translateX(105%);
-                transition: transform .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                width: calc(100vw - .6rem);
-                z-index: -1;
+            .menu-list {
+                @apply flex justify-end items-center gap-8 font-light h-full mb-0 uppercase tracking-wider;
 
                 &.active {
-                    transform: translateX(0);
-                    overflow-y: scroll
-                }
-            }
-
-            &>li {
-                display: flex;
-                flex-direction: column;
-                justify-items: center;
-                align-items: flex-start;
-                gap: 2rem;
-                font-weight: 400;
-
-                @media (max-width: 767px) {
-                    width: 100%;
-                    gap: 1rem;
-                    padding: .5rem .75rem;
-                    border-radius: var(--radius-m);
-                    margin-bottom: -1rem;
-
-                    &:nth-child(1) {
-                        background-color: var(--nude-8);
-
-                        .menu-tab::before {
-                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-21.svg);
-                        }
-                    }
-
-                    &:nth-child(2) {
-                        background-color: var(--nude-7);
-
-                        .menu-tab::before {
-                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-06.svg);
-                        }
-                    }
-
-                    &:nth-child(3) {
-                        background-color: var(--nude-6);
-
-                        .menu-tab::before {
-                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-02.svg);
-                        }
-                    }
-
-                    &:nth-child(4) {
-                        background-color: var(--nude-5);
-
-                        .menu-tab::before {
-                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-16.svg);
-                        }
-                    }
-
-                    &:nth-child(5) {
-                        background-color: var(--nude-4);
-
-                        .menu-tab::before {
-                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-07.svg);
-                        }
-                    }
-
-                    &:nth-child(6) {
-                        background-color: var(--nude-3);
-
-                        .menu-tab::before {
-                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-19.svg);
-                        }
-                    }
-
-                    &:nth-child(7) {
-                        background-color: var(--nude-2);
-
-                        .menu-tab::before {
-                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-04.svg);
-                        }
-                    }
+                    @apply transform translate-x-0 overflow-y-scroll;
                 }
 
                 .menu-tab {
+                    @apply hidden;
 
-                    @media (max-width: 767px) {
+                    .nav-title {
+                        @apply flex;
+                    }
+                }
 
-                        &::before {
-                            --size: 3.75rem;
-                            content: "";
-                            height: var(--size);
-                            width: var(--size);
-                            display: inline-block;
-                            position: relative;
-                            background-size: var(--size);
-                            background-repeat: no-repeat;
-                            margin-right: 1rem;
-                            vertical-align: middle;
-                            background-color: #ffffff80;
-                            border-radius: 50%;
-                            background-size: 85%;
-                            background-position: center;
+                .menu-wrapper {
+                    .nav-link {
+                        @apply block text-clamp-2xs 2xl:text-clamp-xs;
+
+                        span {
+                            @apply text-gold-3 cursor-pointer z-[1] before:content-[''] before:bg-gold-3 before:h-[1px] before:w-full before:max-w-0 before:absolute before:bottom-0 before:left-0 before:transition-[max-width];
                         }
+                    }
 
-                        &::after {
-                            content: attr(data-title);
-                            display: inline-block;
-                            font-size: calc(var(--font-size) * .9);
-                            color: var(--gold-2);
-                            font-weight: 400;
-                            vertical-align: middle;
-                        }
-
-
+                    .submenu {
+                        @apply mt-1 fixed left-0 right-0 top-12 m-auto z-0 h-screen/75 w-[85vw] pointer-events-none [&.open]:pointer-events-auto;
                     }
                 }
 
-                @media (max-width: 767px) {
-                    .menu-wrapper {
-                        height: 0;
-                        overflow: hidden;
-                        width: 100%;
-                        padding: 0 1rem;
-                    }
+                .submenu__left,
+                .submenu__right {
+                    @apply bg-blue-1/80 shadow opacity-0 pointer-events-auto will-change-transform;
                 }
 
-                &:hover span::before,
-                .router-link-exact-active span::before {
-                    max-width: 100%;
-                }
-            }
-
-            .submenu {
-
-                @media (max-width: 767px) {
-                    width: 100%;
-                    pointer-events: all;
-                    height: fit-content;
-                }
-
-                &__left,
-                &__right {
-                    background-color: #1c2c44c7;
-                    box-shadow: var(--shadow);
-                    opacity: 0;
-                    pointer-events: all;
-                    will-change: transform, opacity;
-
-                    @media (max-width: 767px) {
-                        opacity: 1 !important;
-                        visibility: visible !important;
-                    }
-                }
-
-                &__left {
-                    background-color: var(--nude-8);
+                .submenu__left {
+                    @apply bg-nude-8 h-screen/70 block bg-cover bg-center w-[calc(85vw*0.375)] top-0 -left-1 rounded-2xl absolute;
                     background-image: url(@/assets/images/hero.avif);
                     transform: translateY(-120%);
 
-                    @media (max-width: 767px) {
-                        transform: none;
-                        display: none;
+                    .submenu__left-slider {
+                        @apply flex flex-col overflow-hidden rounded-2xl h-screen/70;
+
+                        .before-after {
+                            @apply flex h-screen/70 absolute top-0 left-0;
+
+                            .slide-c {
+                                @apply absolute left-0 top-0 opacity-0 z-0 h-full will-change-transform w-[calc(85vw/2.666667)];
+                            }
+                        }
                     }
                 }
 
-                &__right {
+                .submenu__right {
+                    @apply h-screen/70 right-0 w-[calc(85vw*0.625)] top-0 rounded-2xl absolute backdrop-blur-xl;
                     transform: translateY(-120%);
 
-                    @media (max-width: 767px) {
-                        transform: none;
-                        background: transparent;
-                        box-shadow: none;
-                    }
+                    .submenu__right-list {
+                        @apply list-none p-0 h-full has-[.column]:flex flex-row content-center justify-center items-start flex-wrap absolute gap-0 w-full top-0 left-0;
 
-                    ul {
+
                         &>.submenu-child {
-                            .column {
-                                &::before {
-                                    content: none
-                                }
-                            }
-
-                            .nav-link {
-
-
-                                &::after {
-                                    background-color: currentColor;
-                                    // bottom: .375rem;
-                                    content: "";
-                                    height: 1px;
-                                    // left: var(--gap);
-                                    max-width: 0;
-                                    opacity: .5;
-                                    position: absolute;
-                                    transition: max-width var(--transition);
-                                    width: 100%;
-                                }
-
-                                &:hover::after,
-                                &.router-link-exact-active::after {
-                                    max-width: 100%;
-
-                                    @media (max-width: 767px) {
-                                        bottom: -0.5px;
-                                        left: 0;
-                                    }
-                                }
-                            }
-
+                            @apply w-fit flex flex-col justify-between items-start flex-nowrap;
 
                             ul {
-                                display: flex;
-                                flex-direction: column;
-                                justify-items: flex-start;
-                                align-items: flex-start;
+                                @apply flex flex-col justify-start items-start p-0 relative;
                                 clip-path: unset;
-                                padding: 0;
-                                position: relative;
-
-                                @media (max-width: 767px) {
-                                    margin: 0;
-                                    gap: .5rem;
-
-                                    &>li {
-                                        width: 100%;
-                                    }
-                                }
                             }
 
+                            span {
+                                @apply cursor-default p-0 block text-gold-3 font-normal text-clamp-base;
+                            }
                         }
 
+                        .subsubmenu-child {
+                            .nav-link {
+                                @apply text-balance tracking-normal flex flex-col justify-end items-start text-nude-8 pt-2 py-1 text-clamp-sm;
+                            }
+                        }
+                    }
+
+                }
+
+                &>li {
+                    @apply flex flex-col items-start gap-8 font-normal;
+                }
+
+                &>li:hover span::before,
+                .router-link-exact-active span::before {
+                    @apply max-w-full;
+                }
+
+                a img {
+                    @apply hidden;
+                }
+            }
+
+        }
+
+        .element-logros {
+            @apply flex;
+        }
+
+        .arrow-up {
+            @apply hidden;
+        }
+    }
+/* } */
+
+.is-mobile,
+.is-tablet,
+.is-ipad-pro,
+.is-ios,
+.is-android {
+
+    .egos-header {
+        .nav-categories {
+            @apply bg-white rounded-xl;
+        }
+
+        .header-wrapper {
+
+            .menu-list {
+                @apply flex items-start bg-blue-1/85 backdrop-blur-xl rounded-2xl flex-col gap-0 h-[calc(100lvh_-_.6rem)] justify-start fixed pt-24 px-4 pb-12 top-1 right-1 w-[calc(100vw-.6rem)] max-w-[480px] z-[-1] transition-transform;
+                transform: translateX(105%);
+
+                &>li {
+                    @apply w-full gap-4 pt-2 pb-6 px-3 -mb-4 rounded-xl;
+
+                    &:last-child {
+                        @apply pb-2
                     }
                 }
 
-            }
+                &>li:nth-child(1) {
+                    @apply bg-nude-8;
 
-            a {
-                img {
-                    display: none;
-                }
+                    .menu-tab {
+                        @apply flex flex-row justify-start items-center w-full;
 
-                @media (max-width: 1200px) {
-                    font-size: calc(var(--font-size) * 1.5);
-                    // display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 0.65rem 0rem 1.15rem;
-                    border-bottom: 1px solid rgba(var(--blue-1-rgb), 0.15);
+                        .nav-title {
+                            @apply hidden;
+                        }
+                        
+                        &::before {
+                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-21.svg);
+                        }
 
-                    img {
-                        display: inline-block;
-                        max-width: 30px;
-                        max-height: 30px;
+                        &::after {
+                            @apply text-gold-2 content-[attr(data-title)] uppercase inline-block font-normal align-middle text-clamp-base;
+                            /* font-size: calc(var(--font-size)*.9); */
+                        }
                     }
                 }
 
+                &>li:nth-child(2) {
+                    @apply bg-nude-7;
+
+                    .menu-tab::before {
+                        background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-06.svg);
+                    }
+                }
+
+                &>li:nth-child(3) {
+                    @apply bg-nude-6;
+
+                    .menu-tab::before {
+                        background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-02.svg);
+                    }
+                }
+
+                &>li:nth-child(4) {
+                    @apply bg-nude-5;
+
+                    .menu-tab::before {
+                        background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-16.svg);
+                    }
+                }
+
+                &>li:nth-child(5) {
+                    @apply bg-nude-4;
+
+                    .menu-tab::before {
+                        background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-07.svg);
+                    }
+                }
+
+                &>li:nth-child(6) {
+                    @apply bg-nude-3;
+
+                    .menu-tab::before {
+                        background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-19.svg);
+                    }
+                }
+
+                &>li:nth-child(7) {
+                    @apply bg-nude-2;
+
+                    .menu-tab::before {
+                        background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-04.svg);
+                    }
+                }
+
+                &>li .menu-tab::before {
+                    @apply content-[''] size-14 inline-block relative bg-[length:85%] bg-center bg-no-repeat mr-4 bg-white/50 align-middle rounded-full;
+                }
+
+                &>li .menu-tab::after {
+                    @apply content-[attr(data-title)] inline-block text-gold-2 font-normal align-middle text-clamp-base uppercase;
+                }
+
+                &>li .menu-wrapper {
+                    @apply h-0 overflow-hidden w-full py-0 px-4;
+
+                    .submenu {
+                        @apply mt-1 top-0 left-0 z-0 [&.open]:pointer-events-auto w-full pointer-events-auto h-fit;
+                    }
+                }
+
+                & .submenu__left,
+                & .submenu__right {
+                    @apply !opacity-100 !visible;
+                }
+
+                & .submenu__right {
+                    @apply transform-none bg-transparent shadow-none;
+                }
+
+                & .submenu__right ul>.submenu-child .column::before {
+                    content: none;
+                }
+
+                & .submenu__right ul>.submenu-child .nav-link::after {
+                    @apply bg-current content-[''] h-px max-w-0 opacity-50 absolute w-full transition-[max-width];
+                }
+
+                & .submenu__right ul>.submenu-child .nav-link:hover::after,
+                & .submenu__right ul>.submenu-child .nav-link.router-link-exact-active::after {
+                    @apply max-w-full;
+                }
+
+                & .submenu__right ul>.submenu-child .nav-link:hover::after,
+                & .submenu__right ul>.submenu-child .nav-link.router-link-exact-active::after {
+                    @apply -bottom-[0.5px] left-0;
+                }
+
+                & .submenu__right ul>.submenu-child ul {
+                    @apply m-0 gap-2;
+                }
+
+                & .submenu__right ul>.submenu-child ul>li {
+                    @apply w-full;
+                }
+
+                & a {
+                    @apply hidden;
+                }
+
+                & a img {
+                    @apply inline-block max-w-8 max-h-8;
+                }
+
+                &.active {
+                    @apply transform translate-x-0 overflow-y-scroll;
+                }
             }
+        }
+
+        .submenu__left {
+            @apply hidden;
+        }
+
+        .submenu__right {
+            @apply h-fit right-0 top-0 rounded-2xl w-full;
+            transform: translateY(-120%);
+
+            .submenu__right-list {
+                @apply list-none p-0 h-full has-[.column]:flex flex-row justify-center items-start flex-wrap gap-4 w-full top-0 left-0;
+
+
+                &>.submenu-child {
+                    @apply w-full flex-col justify-between items-start flex-nowrap;
+
+                    ul {
+                        @apply flex flex-col justify-start items-start p-0 relative;
+                        clip-path: unset;
+                    }
+
+                    span {
+                        @apply hidden;
+                    }
+                }
+
+                .subsubmenu-child {
+                    .nav-link {
+                        @apply text-balance tracking-normal flex flex-col justify-end items-start text-blue-1/75 pt-2 pb-4 border-b;
+                    }
+                }
+            }
+        }
+
+        .element-logros {
+            @apply hidden;
+        }
+
+        .arrow-up {
+            @apply size-8 p-2 rounded-full order-2 absolute right-0 bg-white opacity-50 text-blue-1
+        }
+
+        .arrow-down {
+            @apply max-w-4 order-2 absolute right-6 top-5 opacity-50 text-blue-1
         }
     }
 }
-
 </style>
-

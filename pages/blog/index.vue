@@ -104,7 +104,7 @@ const showLoadingIndicator = ref(true);
 const page = ref(1);
 
 // Carga inicial de posts
-const { data: posts, refresh: refreshPosts, pending: postsPending, error: postsError } = await useAsyncData('posts', () => getPosts({ page: page.value, perPage: postsPerPage }), {initialCache: false});
+const { data: posts, refresh: refreshPosts, error: postsError } = await useAsyncData('posts', () => getPosts({ page: page.value, perPage: postsPerPage }), {initialCache: false});
 
 // Carga de información de la página del blog
 const { data: blogPage, error: blogPageError } = await useAsyncData('blogPage', () => getPage(934), {initialCache: false});
@@ -125,7 +125,7 @@ const formatDate = (date) => {
 
 // Mounted lifecycle
 onMounted(() => {
-  if (process.client) {
+  if (import.meta.client) {
     gsap.registerPlugin(ScrollTrigger);
 
     ScrollTrigger.create({
