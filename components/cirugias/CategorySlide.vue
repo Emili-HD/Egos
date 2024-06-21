@@ -4,10 +4,11 @@
   <div v-else class="card rounded-3xl overflow-hidden" :class="props.classes">
       <nuxt-link :to="processedLink" class="w-full h-full block" aria-label="Ver detalles de cirugía" v-if="category">
           <picture class="h-[35.625rem] bg-nude-8 block min-h-full">
-              <NuxtImg loading="lazy"
+              <img loading="lazy"
                   class="size-full object-cover object-center"
                   v-if="category.featured_image_data"
-                  :src="category.featured_image_data.src"
+                  :src="category.featured_image_data.url"
+                  :srcset="category.featured_image_data.srcset"
                   :alt="category.featured_image_data.alt"
                   width="380"
                   height="570"

@@ -15,7 +15,16 @@
             </div>
             <div class="listado__list--item-content">
                <div class="listado__list--item-content-img">
-                  <NuxtImg v-if="listado.imagen && listado.imagen.url" loading="lazy" class="w-full object-center object-cover" :src="listado.imagen.url" :alt="listado.imagen.alt" />
+                  <img 
+                     v-if="listado.imagen && listado.imagen.url" 
+                     loading="lazy" 
+                     class="w-full object-center object-cover" 
+                     :src="listado.imagen.url" 
+                     :srcset="listado.imagen.srcset" 
+                     :alt="listado.imagen.alt" 
+                     :width="listado.imagen.width" 
+                     :height="listado.imagen.height" 
+                  />
                </div>
                <div class="listado__list--item-content-description">
                   <div class="listado__list-grid mb-12">

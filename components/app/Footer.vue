@@ -16,7 +16,7 @@
                </li>
             </ul>
          </div>
-         <div class="flex flex-col col-span-3 xl:col-span-1 justify-center items-center xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25
+         <div class="message-footer flex flex-col col-span-3 xl:col-span-1 justify-center items-center xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25
                      before:content-[''] before:absolute before:w-[1px] before:h-full before:bg-nude-8/20 before:-left-12
                      after:content-[''] after:absolute after:w-[1px] after:h-full after:bg-nude-8/20 after:-right-12">
             <div id="block-16" class="footer__block">
@@ -65,3 +65,25 @@ const resolveUrl = (slug) => {
 //    _hsp.push(['showBanner']);
 // };
 </script>
+
+<style>
+@media (min-width: 820px) and (max-width: 1180px) {
+   .is-tablet {
+      .footer {
+         @apply pb-24;
+      }
+      .menu-footer {
+         @apply text-left col-span-1 items-start;
+      }
+      .message-footer {
+         @apply col-span-1;
+      }
+      .menu-social {
+         @apply text-right col-span-1 items-end;
+      }
+      .menu-legal ul {
+         @apply flex-row
+      }
+   }
+}
+</style>

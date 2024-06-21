@@ -8,7 +8,7 @@
                 before:content-[''] before:size-full before:absolute
                 before:left-0 before:top-0 before:opacity-80 before:mix-blend-multiply
                 before:bg-gradient-to-b from-transparent from-[10%] to-blue-1" 
-          :style="`background-image: url(${data.featured_image_data.src});`">
+          :style="`background-image: url(${data.featured_image_data.url});`">
     <div class="header__content pb-8">
       <p class="desde !text-nude-8 leading-10 text-2xl [&>span]:span-gradient" 
          v-if="data.acf.precio_desde" v-html="data.acf.precio_desde"

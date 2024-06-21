@@ -16,7 +16,7 @@ export default defineSitemapEventHandler(async () => {
 
         // Prepara las imágenes para el sitemap
         const images = cirugia.featured_image_data ? [{
-          loc: cirugia.featured_image_data.src, // URL de la imagen
+          loc: cirugia.featured_image_data.url, // URL de la imagen
           caption: cirugia.featured_image_data.caption, // Pie de foto de la imagen
           title: cirugia.featured_image_data.alt, // Título (alt text) de la imagen
           // Puedes añadir otros campos como geoLocation y license si están disponibles

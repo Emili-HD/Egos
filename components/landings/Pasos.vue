@@ -5,7 +5,7 @@
       <div class="pasos__list py-8 mb-8 grid grid-cols-1 xl:grid-cols-4 auto-rows-fr gap-4">
          <div class="pasos__list-items p-8 xl:p-12 bg-nude-4 rounded-xl flex flex-row xl:flex-col justify-start items-center gap-6" v-for="items in data.pasos.listado_pasos">
             <div class="pasos__list-items-image w-20">
-               <NuxtImg loading="lazy" class="min-w-20" :src="items.icono.url" :alt="items.icono.alt" />
+               <img loading="lazy" class="min-w-20" :src="items.icono.url" :alt="items.icono.alt" />
             </div>
             <div class="pasos__list-items-content">
                <p class="!mb-0 text-left xl:text-center" v-html="items.texto_icono"></p>

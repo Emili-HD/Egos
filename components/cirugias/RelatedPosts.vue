@@ -16,15 +16,16 @@
           "
           class="size-full"
         >
-          <NuxtImg
+          <img
             loading="lazy"
-            v-if="post.featured_image_src && post.featured_image_src.src"
-            :src="post.featured_image_src.src"
             class="card__image rounded-2xl size-full aspect-square object-cover"
-            :alt="post.featured_image_src ? post.featured_image_src.alt : ''"
+            v-if="post.featured_image_data && post.featured_image_data.url"
+            :src="post.featured_image_data.url"
+            :srcset="post.featured_image_data.srcset"
+            :width="post.featured_image_data.width"
+            :height="post.featured_image_data.height"
+            :alt="post.featured_image_data ? post.featured_image_data.alt : ''"
             :aria-labelledby="'post-title-' + post.id"
-            width="400"
-            height="400"
           />
           <h2 v-if="post.title" :id="'post-title-' + post.id" class="h6">
             {{ post.title.rendered }}

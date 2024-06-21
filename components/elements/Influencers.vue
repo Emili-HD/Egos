@@ -9,7 +9,11 @@
                         width="32" height="32" class="rounded-full" />
                     <p class="mb-0">{{ influencer.texto_del_enlace }}</p>
                 </div>
-                <NuxtImg :src="influencer.imagen_influencer" :alt="`Imagen de ${influencer.texto_del_enlace}`" />
+                <img 
+                    loading="lazy"
+                    :src="influencer.imagen_influencer" 
+                    :alt="`Imagen de ${influencer.texto_del_enlace}`" 
+                />
             </a>
         </div>
     </div>

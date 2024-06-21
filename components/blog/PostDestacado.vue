@@ -12,12 +12,13 @@
           class="text-blue-1 font-canela h-full p-0 flex flex-col lg:flex-row"
           :to="'/blog/' + post.slug + '/'"
         >
-          <NuxtImg
+          <img
             loading="lazy"
-            v-if="post.featured_image_src"
-            :src="post.featured_image_src.src"
+            v-if="post.featured_image_data"
+            :src="post.featured_image_data.url"
+            :srcset="post.featured_image_data.srcset"
             class="card__image w-1/2 bg-nude-7 rounded-2xl flex flex-col lg:flex-row p-0 h-full relative"
-            :alt="post.featured_image_src.alt"
+            :alt="post.featured_image_data.alt"
           />
           <div
             class="card__content p-8 text-nude-8 items-start flex flex-col lg:flex-row"

@@ -323,7 +323,7 @@
     #orden-10 { @apply row-start-11; }
 
     .before-gradient {
-        @apply before:content-[''] before:size-full before:absolute before:left-0 before:top-0 before:opacity-80 before:mix-blend-multiply before:bg-gradient-to-b from-transparent from-[10%] to-blue-1;
+        @apply before:content-[''] before:size-full before:z-[1] before:absolute before:left-0 before:top-0 before:opacity-80 before:mix-blend-multiply before:bg-gradient-to-b from-transparent from-[10%] to-blue-1;
     }
 
     .span-gradient {

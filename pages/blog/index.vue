@@ -18,28 +18,28 @@
       </header>
 
       <div
-        class="post-list grid grid-cols-16 gap-4 mt-20"
+        class="post-list grid grid-cols-16 gap-4 mt-20 "
         v-if="posts"
         aria-label="Lista de publicaciones"
       >
-        <article
-          v-for="post in posts"
-          :key="post.id"
+        <article v-for="post in posts" :key="post.id"
           class="card aspect-none bg-nude-6 rounded-3xl overflow-hidden col-[2/-2]
+                sm:[&:nth-child(2n-1)]:col-[2/9] sm:[&:nth-child(2n)]:col-[9/16]
                 lg:[&:nth-child(2n-1)]:col-[2/9] lg:[&:nth-child(2n)]:col-[9/16]"
           :aria-labelledby="'post-title-' + post.id"
         >
           <nuxt-link
-            class="flex flex-col lg:flex-row h-full"
+            class="flex flex-col xl:flex-row h-full"
             :to="'/blog/' + post.slug + '/'"
             :aria-label="'Leer más sobre ' + post.title.rendered"
           >
-            <NuxtImg
-              class="card__image aspect-square w-full lg:w-[45%] min-w-[22rem] object-cover object-center rounded-2xl overflow-hidden"
+            <img
+              class="card__image aspect-square w-full xl:w-[45%] min-w-[22rem] object-cover object-center rounded-2xl overflow-hidden"
               loading="lazy"
-              v-if="post.featured_image_src"
-              :src="post.featured_image_src.src"
-              :alt="post.featured_image_src.alt"
+              v-if="post.featured_image_data"
+              :src="post.featured_image_data.url"
+              :srcset="post.featured_image_data.srcset"
+              :alt="post.featured_image_data.alt"
               :aria-labelledby="'post-title-' + post.id"
             />
             <div class="card__content p-4 flex flex-col w-full">

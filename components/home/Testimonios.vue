@@ -1,28 +1,38 @@
 <template>
    <div v-if="testimoniosError">Error al cargar los testimonios.</div>
    <section v-else class="testimonios grid grid-cols-16 gap-0 xl:gap-4 py-20">
-      <div class="testimonios__header col-[1/-1] p-8 xl:col-[4_/_span_10] xl:p-0 flex flex-col justify-center items-center h-fit text-left xl:text-center w-full z-10">
+      <div
+         class="testimonios__header col-[1/-1] p-8 xl:col-[4_/_span_10] xl:p-0 flex flex-col justify-center items-center h-fit text-left xl:text-center w-full z-10">
          <h2 class="text-clamp-3xl">Antes y después de nuestras cirugías estéticas y medicina en clínica Egos </h2>
-         <p>Cada año, se operan más de 3000 pacientes en Clínica Egos, para nosotros, vuestra satisfacción es nuestro mayor
+         <p>Cada año, se operan más de 3000 pacientes en Clínica Egos, para nosotros, vuestra satisfacción es nuestro
+            mayor
             logro. Hemos hablado con diferentes pacientes de la clínica para que nos cuenten cómo fue su paso, cómo se
             encuentran ahora y qué han mejorado tras la intervención.</p>
          <ElementsDivider />
       </div>
-      <div class="testimonios__list max-w-full grid-row-2 col-[1_/_span_16] p-8 xl:px-24 grid grid-cols-4 gap-8 xl:gap-4" v-if="testimoniosData">
-         <article v-for="testimonio in testimoniosDestacados" :key="testimonio.id" class="card rounded-2xl overflow-hidden p-2 bg-white !aspect-auto col-[1/-1] xl:col-auto flex flex-col justify-between items-center gap-8 shadow-2xl shadow-nude-7 h-fit">
+      <div
+         class="testimonios__list max-w-full grid-row-2 col-[1_/_span_16] p-8 xl:px-24 grid grid-cols-4 gap-8 xl:gap-4"
+         v-if="testimoniosData">
+         <article v-for="testimonio in testimoniosDestacados" :key="testimonio.id"
+            class="card rounded-2xl overflow-hidden p-2 bg-white !aspect-auto col-[1/-1] sm:col-span-2 xl:col-auto flex flex-col justify-between items-center gap-8 shadow-2xl shadow-nude-7 h-fit">
             <div v-if="testimonio.acf.vimeo_video" class="video__player rounded-xl w-full overflow-hidden">
                <div class="size-full aspect-[9/16]">
                   <VimeoPlayer :videoId="testimonio.acf.vimeo_video" />
                </div>
             </div>
-            <div class="testimonios__content p-2 pb-4 text-center font-canela h-max flex flex-col justify-between items-center">
+            <div
+               class="testimonios__content p-2 pb-4 text-center font-canela h-max flex flex-col justify-between items-center">
                <h3 class="h6 text-clamp-xl">{{ testimonio.title.rendered }}</h3>
-               <nuxt-link :to="`/opinion-egos/${testimonio.slug}`" class="pb-1 pt-2 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl font-geomanist">Saber más</nuxt-link>
+               <nuxt-link :to="`/opinion-egos/${testimonio.slug}`"
+                  class="pb-1 pt-2 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl font-geomanist">Saber
+                  más</nuxt-link>
             </div>
          </article>
       </div>
       <div class="col-[2/-2] flex justify-center">
-         <nuxt-link :to="`/casos-reales/`" class="w-fit pb-1 pt-2 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl font-geomanist">Ver todos nuestros casos reales</nuxt-link>
+         <nuxt-link :to="`/casos-reales/`"
+            class="w-fit pb-1 pt-2 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl font-geomanist">Ver
+            todos nuestros casos reales</nuxt-link>
       </div>
    </section>
 </template>
@@ -44,32 +54,32 @@ const { data: testimoniosData, error: testimoniosError, execute } = useLazyAsync
 
 // Filtro para testimonios destacados
 const testimoniosDestacados = computed(() => {
-  if (!testimoniosData.value) return [];
+   if (!testimoniosData.value) return [];
 
-  // Filtrar primero todos los testimonios destacados
-  const destacados = testimoniosData.value.filter(testimonio => testimonio.acf.destacado && testimonio.acf.destacado.includes("Destacar"));
-  
-  // Si hay más de 4 destacados, retornar solo los últimos 4
-  if (destacados.length > 4) {
-    return destacados.slice(-4); // Obtiene los últimos 4 elementos
-  }
+   // Filtrar primero todos los testimonios destacados
+   const destacados = testimoniosData.value.filter(testimonio => testimonio.acf.destacado && testimonio.acf.destacado.includes("Destacar"));
 
-  return destacados; // Si hay 4 o menos, los retorna todos
+   // Si hay más de 4 destacados, retornar solo los últimos 4
+   if (destacados.length > 4) {
+      return destacados.slice(-4); // Obtiene los últimos 4 elementos
+   }
+
+   return destacados; // Si hay 4 o menos, los retorna todos
 });
 
 // Función para manejar el evento de scroll y cargar los datos cuando sea apropiado
 const handleScroll = () => {
-  // Puedes ajustar esta lógica para determinar cuándo quieres cargar los datos,
-  // por ejemplo, verificar si el usuario ha hecho scroll más allá de cierto punto.
-  const scrollPosition = window.scrollY + window.innerHeight;
-  if (scrollPosition > document.body.offsetHeight - 500) {
-    execute();
-    window.removeEventListener('scroll', handleScroll); // Eliminar el listener después de cargar los datos
-  }
+   // Puedes ajustar esta lógica para determinar cuándo quieres cargar los datos,
+   // por ejemplo, verificar si el usuario ha hecho scroll más allá de cierto punto.
+   const scrollPosition = window.scrollY + window.innerHeight;
+   if (scrollPosition > document.body.offsetHeight - 500) {
+      execute();
+      window.removeEventListener('scroll', handleScroll); // Eliminar el listener después de cargar los datos
+   }
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
+   window.addEventListener('scroll', handleScroll);
 });
 </script>
 

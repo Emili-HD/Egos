@@ -4,7 +4,7 @@
       <h2 class="accordion__heading-title xl:text-center [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0" v-html="competencias.titulo_seccion"></h2>
       <div v-if="competencias.descripcion_seccion" v-html="competencias.descripcion_seccion"></div>
     </div>
-    <div class="list accordion__list col-[8_/_span_9] row-1">
+    <div class="list accordion__list col-span-full xl:col-[8_/_span_9] row-1">
       <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista" 
               v-for="listado in competencias.seccion_competencias" :key="listado.id"
             >

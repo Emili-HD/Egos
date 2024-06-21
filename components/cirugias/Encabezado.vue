@@ -1,12 +1,15 @@
 <template>
-  <header class="header-gradient min-h-[90vh] xl:min-h-screen 
-                px-8 xl:px-16 pt-[40vh] pb-6 xl:py-12 mb-0 
-                col-[1_/_span_16] xl:col-span-11 
-                flex items-end 
-                bg-cover bg-center
-                before-gradient" 
-                :style="`background-image: url(${data.featured_image_data.src});`">
-    <div class="header__content">
+  <header class="header-gradient min-h-[90vh] xl:min-h-screen px-8 xl:px-16 pt-[40vh] pb-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex items-end bg-cover bg-center before-gradient" >
+    <img loading="lazy"
+        class="size-full object-cover object-center absolute inset-0"
+        v-if="data.featured_image_data"
+        :src="data.featured_image_data.url"
+        :srcset="data.featured_image_data.srcset"
+        :alt="data.featured_image_data.alt"
+        :width="data.featured_image_data.width"
+        :height="data.featured_image_data.height"
+    />
+    <div class="header__content z-10">
       <div v-if="data.acf.rebaja">
         <h1 class="text-nude-8 mb-10 text-clamp-6xl"><u>{{ data.title.rendered }}</u></h1>
         <div class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-2xl [&>p]:text-lg" v-html="data.content.rendered"></div>

@@ -14,10 +14,10 @@ export default defineSitemapEventHandler(async () => {
         const path = url.pathname; // Obtiene solo el pathname
 
         // Prepara las imágenes para el sitemap
-        const images = miembro.featured_image_src ? [{
-          loc: miembro.featured_image_src.src, // URL de la imagen
-          caption: miembro.featured_image_src.caption, // Pie de foto de la imagen
-          title: miembro.featured_image_src.alt, // Título (alt text) de la imagen
+        const images = miembro.featured_image_data ? [{
+          loc: miembro.featured_image_data.url, // URL de la imagen
+          caption: miembro.featured_image_data.caption, // Pie de foto de la imagen
+          title: miembro.featured_image_data.alt, // Título (alt text) de la imagen
         }] : [];
 
         return {

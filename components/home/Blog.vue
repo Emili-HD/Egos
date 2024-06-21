@@ -24,13 +24,13 @@
           :to="`blog/${post.slug}/`"
           :aria-label="'Leer más sobre ' + post.title.rendered"
         >
-          <NuxtImg
-            sizes="90vw md:50vw xl:330px"
+          <img
             loading="lazy"
-            v-if="post.featured_image_src"
-            :src="post.featured_image_src.src"
+            v-if="post.featured_image_data"
+            :src="post.featured_image_data.url"
+            :srcset="post.featured_image_data.srcset"
             class="card__image aspect-square object-cover h-full rounded-2xl overflow-hidden"
-            :alt="post.featured_image_src.alt"
+            :alt="post.featured_image_data.alt"
             :aria-labelledby="'post-title-' + post.id"
           />
           <div class="card__content p-4">

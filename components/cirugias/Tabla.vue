@@ -33,10 +33,13 @@
         <div
           class="image_container mb-2 flex flex-col items-center overflow-hidden min-h-[300px] w-full gap-4"
         >
-          <NuxtImg
+          <img
             class="max-w-[250px]"
             loading="lazy"
             :src="header.cabecera_tabla.imagen_tabla.url"
+            :srcset="header.cabecera_tabla.imagen_tabla.srcset"
+            :width="header.cabecera_tabla.imagen_tabla.width"
+            :height="header.cabecera_tabla.imagen_tabla.height"
             :alt="header.cabecera_tabla.imagen_tabla.alt"
           />
           <div v-html="header.cabecera_tabla.descripcion_tabla" class="[&_h4]:text-clamp-base [&_p]:text-clamp-sm"></div>

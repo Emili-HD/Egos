@@ -1,7 +1,15 @@
 <template>
   <section v-if="faqsData.faqs" class="faqs grid grid-cols-16 gap-x-0 gap-y-8 xl:gap-4 py-20" id="faqs">
     <div class="faqs__image row-span-2 col-[2_/_span_14] xl:col-[2_/_span_6] overflow-hidden rounded-xl aspect-square">
-      <NuxtImg loading="lazy" class="size-full object-cover" :src="faqsData.imagen_faqs.url" :alt="faqsData.imagen_faqs.url" />
+      <img 
+        loading="lazy" 
+        class="size-full object-cover" 
+        :src="faqsData.imagen_faqs.url" 
+        :srcset="faqsData.imagen_faqs.srcset" 
+        :alt="faqsData.imagen_faqs.url" 
+        :width="faqsData.imagen_faqs.width" 
+        :height="faqsData.imagen_faqs.height" 
+      />
     </div>
     <div class="heading accordion__heading col-[2_/_span_14] xl:col-[9_/_span_7]">
       <h2 class="accordion__heading-title xl:text-center [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0" v-html="faqsData.titulo_faqs"></h2>

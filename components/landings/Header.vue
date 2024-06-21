@@ -1,5 +1,5 @@
 <template>
-   <div class="hero__intro blue-gradient-full bg-cover bg-center w-full md:w-1/2 min-h-screen/85 md:h-screen" :style="`background-image: url(${data.featured_image_data.src})`">
+   <div class="hero__intro blue-gradient-full bg-cover bg-center w-full md:w-1/2 min-h-screen/85 md:h-screen" :style="`background-image: url(${data.featured_image_data.url})`">
       <header class="header__landing px-12 py-6 bg-blue-1 flex justify-center md:justify-start w-full z-10" ref="cabecera">
          <nuxt-link to="/">
             <img class="header__landing-logo max-w-20 md:max-w-16" src="/assets/images/icons/logo-landings.svg" alt=""  width="133" height="100" />

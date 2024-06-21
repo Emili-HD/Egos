@@ -2,9 +2,12 @@
   <main class="site-main" v-if="post">
     <article>
       <div
-        class="post__header before-gradient mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center"
-        :style="`background-image: url(${post.featured_image_src.src})`">
-        <h1 v-if="isCritical" class="text-nude-8 font-semibold text-center w-full xl:max-w-[60vw]">{{ post.title.rendered }}</h1>
+        class="post__header before-gradient mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center overflow-hidden">
+        <img class="absolute object-cover object-center inset-0 z-0" loading="lazy" v-if="post.featured_image_data"
+          :src="post.featured_image_data.url" :srcset="post.featured_image_data.srcset"
+          :alt="post.featured_image_data.alt" :aria-labelledby="'post-title-' + post.id" />
+        <h1 v-if="isCritical" class="text-nude-8 font-semibold text-center w-full xl:max-w-[60vw] z-10">{{
+          post.title.rendered }}</h1>
       </div>
       <div class="breadcrumbs flex gap-4 px-4 divide-x divide-blue-1/50">
         <NuxtLink class="pl-4 mb-0 leading-3 font-normal" to="/">Inicio</NuxtLink>
@@ -28,7 +31,7 @@
                 v-html="post.acf.post_faqs.titulo_faqs"></span></li>
           </ul>
         </aside>
-        
+
         <div class="post__content-areas p-0 xl:py-6 xl:px-10">
           <div v-if="post.content.rendered" class="post__content-text pb-4" v-html="post.content.rendered"></div>
           <div class="post__content-text pb-4" v-for="(content, index) in post.acf.areas_de_contenido"
@@ -36,7 +39,9 @@
             <h2 class="area-title">{{ content.titulo_area }}</h2>
             <div v-html="content.contenido_area"></div>
             <div class="post__content-image" v-if="content.imagen_area.url">
-              <NuxtImg loading="lazy" :src="content.imagen_area.url" alt="" />
+              <img loading="lazy" :src="content.imagen_area.url" :srcset="content.imagen_area.srcset"
+                :width="content.imagen_area.width" :height="content.imagen_area.height"
+                :alt="content.imagen_area.alt" />
             </div>
           </div>
 
@@ -46,15 +51,18 @@
               <h2
                 class="accordion__heading-title area-title [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0"
                 v-html="post.acf.post_description.titulo_recomendaciones"></h2>
-              <div class="accordion__description pb-2"
-                v-html="post.acf.post_description.descripcion_recomendaciones"></div>
+              <div class="accordion__description pb-2" v-html="post.acf.post_description.descripcion_recomendaciones">
+              </div>
             </div>
             <div class="list accordion__list">
-              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista"
+              <div
+                class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista"
                 v-for="item in post.acf.post_description.secciones_del_post" :key="item.post_subtitle">
                 <div class="accordion__list--item-title flex flex-row justify-between items-center
                     [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist text-clamp-base mb-0 !font-light" v-html="item.post_subtitle"></div>
+                  <div
+                    class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist text-clamp-base mb-0 !font-light"
+                    v-html="item.post_subtitle"></div>
                   <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                     <path class="iconV" d="M 12,0 V 24" />
                     <path class="iconH" d="M 0,12 H 24" />
@@ -73,11 +81,14 @@
                 v-html="post.acf.post_faqs.titulo_faqs"></h2>
             </div>
             <div class="list accordion__list">
-              <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista"
+              <div
+                class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista"
                 v-for="contentido in post.acf.post_faqs.preguntas_frecuentes" :key="contentido.faq_subtitle">
                 <div class="accordion__list--item-title flex flex-row justify-between items-center
                     [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-                  <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist text-clamp-base mb-0 !font-light" v-html="contentido.faq_subtitle"></div>
+                  <div
+                    class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist text-clamp-base mb-0 !font-light"
+                    v-html="contentido.faq_subtitle"></div>
                   <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                     <path class="iconV" d="M 12,0 V 24" />
                     <path class="iconH" d="M 0,12 H 24" />
@@ -108,7 +119,7 @@ import { getPosts } from '@/composables/useFetch';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // import useCritical from '#booster/composables/critical';
-const { isCritical } = useBoosterCritical({critical: true});
+const { isCritical } = useBoosterCritical({ critical: true });
 
 const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
 
@@ -152,16 +163,16 @@ useHead(() => {
   const yoast = post.value.yoast_head_json;
 
   const link = [
-    { 
+    {
       rel: 'canonical',
       href: (() => {
         // Añadir "www." si no está presente y no es una subdominio diferente
         let canonical = yoast.canonical.startsWith('https://www.') ? yoast.canonical :
-                        yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
+          yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
         // Asegurar que la URL termina con "/"
         canonical = canonical.endsWith('/') ? canonical : `${canonical}/`;
         return canonical;
-      })() 
+      })()
     }
   ];
   const metaTags = [

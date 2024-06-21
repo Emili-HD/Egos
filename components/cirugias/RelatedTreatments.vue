@@ -5,7 +5,7 @@
         <h2 class="h3 text-center">{{ treatmentsData.titulo_relacionados }}</h2>
       </div>
       <div class="tratamientos__relacionados flex flex-row flex-wrap justify-center gap-4 w-full">
-        <div class="card__wrapper w-full max-w-[100vw] lg:max-w-[40vw] xl:max-w-[20vw]" v-for="categoryId in treatmentsData.cirugias_relacionadas" :key="categoryId">
+        <div class="card__wrapper w-full max-w-[100vw] sm:max-w-[calc(50%-.5rem)] lg:max-w-[40vw] xl:max-w-[20vw]" v-for="categoryId in treatmentsData.cirugias_relacionadas" :key="categoryId">
           <CirugiasCategorySlide :categoryId="categoryId" />
         </div>
       </div>

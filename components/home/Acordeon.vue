@@ -38,7 +38,14 @@
    
       <div class="panel__image col-[2_/_span_14] xl:col-[9_/_span_7] sm:row-1 xl:row-1 aspect-square w-full h-full overflow-hidden rounded-3xl self-center">
          <figure class="panel__image-img" v-for="(image, index) in data.items" :key="index" v-show="activeIndex === index">
-            <NuxtImg loading="lazy" :src="image.imagen.url" :alt="image.imagen.alt" width="750" height="750" />
+            <img 
+               loading="lazy" 
+               :src="image.imagen.url" 
+               :srcset="image.imagen.srcset" 
+               :width="image.imagen.width" 
+               :height="image.imagen.height" 
+               :alt="image.imagen.alt" 
+            />
          </figure>
       </div>
    </section>

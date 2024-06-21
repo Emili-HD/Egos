@@ -12,7 +12,7 @@ export default defineSitemapEventHandler(async () => {
       posts.map(post => {
         // Si el post tiene datos de la imagen destacada, prepara el campo images
         const images = post.featured_image_data ? [{
-          loc: post.featured_image_data.src, // URL de la imagen destacada
+          loc: post.featured_image_data.url, // URL de la imagen destacada
           caption: post.featured_image_data.caption, // Pie de foto
           title: post.featured_image_data.alt, // Texto alternativo como título
           // Aquí puedes añadir geoLocation y license si están disponibles

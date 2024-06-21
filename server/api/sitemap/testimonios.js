@@ -12,7 +12,7 @@ export default defineSitemapEventHandler(async () => {
       testimonios.map(testimonio => {
         // Prepara las imágenes, si están disponibles
         const images = testimonio.featured_image_data ? [{
-          loc: testimonio.featured_image_data.src,
+          loc: testimonio.featured_image_data.url,
           caption: testimonio.featured_image_data.caption,
           title: testimonio.featured_image_data.alt,
         }] : [];

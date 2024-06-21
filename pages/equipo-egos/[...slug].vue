@@ -4,10 +4,16 @@
     <div class="doctor__content col-[1/-1] lg:col-span-12 grid grid-cols-subgrid w-fit min-h-fit">
       <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-10 group" v-if="doctor && doctor.title">
         <h1 class="">{{ doctor.title.rendered }}</h1>
-        <div v-if="doctor.featured_image_src"
+        <div v-if="doctor.featured_image_data"
           class="doctor__media col-start-2 col-span-10 flex flex-row justify-center items-start">
           <div class="w-full bg-nude-5 h-[max(400px,_65vh)] rounded-2xl overflow-hidden">
-            <NuxtImg :src="doctor.featured_image_src.src" :alt="doctor.featured_image_src.alt" class="object-cover object-center size-full absolute" />
+            <img 
+            :src="doctor.featured_image_data.url" 
+            :srcset="doctor.featured_image_data.srcset" 
+            :alt="doctor.featured_image_data.alt" 
+            :width="doctor.featured_image_data.width" 
+            :height="doctor.featured_image_data.height" 
+            class="object-cover object-center size-full absolute" />
           </div>
         </div>
       </header>

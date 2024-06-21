@@ -43,7 +43,7 @@ onMounted(() => {
 .is-ipad-pro .navTrigger,
 .is-tablet .navTrigger,
 .is-mobile .navTrigger {
-  @apply absolute z-[1000] right-0 size-16  flex justify-center items-center focus:outline-none border-none outline-none cursor-pointer appearance-none rounded-xl xl:hidden;
+  @apply bg-white absolute z-[1000] right-0 size-16  flex justify-center items-center focus:outline-none border-none outline-none cursor-pointer appearance-none rounded-xl xl:flex;
 
   svg {
     path {

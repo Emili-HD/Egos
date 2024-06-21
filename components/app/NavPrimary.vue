@@ -1,21 +1,21 @@
 <template>
     <div class="header-nav flex flex-row justify-end items-stretch size-full" v-if="menuTratamientosData && menuTratamientosData.items">
         <nav aria-label="Global" class="nav-categories">
-            <ul class="menu-list" @mouseover="loadImages" ref="menuContainer">
+            <ul class="menu-list hidden" @mouseover="loadImages" ref="menuContainer">
                 <li v-for="tratamiento in menuTratamientosData.items" :key="tratamiento.ID"
                     :class="{ 'hasSubmenu': tratamiento.child_items }">
                     <div class="menu-tab" :data-title="tratamiento.title">
                         <nuxt-link :to="tratamiento.url" class="nav-title" active-class="router-link-active">
                             <span>{{ tratamiento.title }}</span>
                         </nuxt-link>
-                        <ArrowDownRightIcon class="arrow-down"
+                        <ArrowDownRightIcon class="arrow-down xl:hidden"
                             v-if="tratamiento.child_items" alt="Abrir menú" />
                     </div>
                     <div class="menu-wrapper">
                         <nuxt-link :to="tratamiento.url" class="nav-link" active-class="router-link-active">
                             <span class="">{{ tratamiento.title }}</span>
                             <ArrowUpRightIcon
-                                class="arrow-up size-8 p-2 rounded-full order-2 absolute lg:hidden right-4 opacity-50 text-blue-1"
+                                class="arrow-up size-8 p-2 rounded-full order-2 absolute lg:hidden right-4 opacity-50 text-blue-1 hidden"
                                 alt="Cerrar menú" />
                         </nuxt-link>
 
@@ -27,7 +27,7 @@
                                         <div class="slide-c" v-for="subSubTratamiento in subTratamiento.child_items"
                                             :key="subSubTratamiento.ID">
                                             <img loading="lazy"
-                                                class="menu-icon object-cover object-center min-h-full min-w-full"
+                                                class="menu-icon object-cover object-center min-h-full min-w-full hidden [.is-desktop_&]:block"
                                                 :data-src="subSubTratamiento.acf.icon" alt="" width="571"
                                                 height="706" />
                                         </div>
@@ -57,7 +57,7 @@
                                                     :class="subSubTratamiento.classes" active-class="nuxt-link-active">
                                                     {{ subSubTratamiento.title }}
                                                     <ArrowUpRightIcon
-                                                        class="arrow-up"
+                                                        class="arrow-up  hidden [.is-tablet_&,_.is-tablet_&]:block"
                                                         alt="Cerrar menú" />
                                                 </nuxt-link>
                                             </li>
@@ -337,7 +337,7 @@ const props = defineProps({
 
 <style>
 /* .is-desktop:not(.is-ipad-pro, .is-tablet) { */
-    .is-desktop:not(.is-ipad-pro, .is-tablet) .egos-header, .egos-header {
+    .is-desktop:not(.is-ipad-pro, .is-tablet) .egos-header {
         .nav-categories {
             @apply bg-white rounded-bl-xl rounded-tl-xl px-8 flex flex-col justify-center items-stretch w-fit;
         }
@@ -446,21 +446,32 @@ const props = defineProps({
             @apply flex;
         }
 
-        .arrow-up {
+        .arrow-up, .arrow-down {
             @apply hidden;
         }
+        
     }
 /* } */
 
 .is-mobile,
+.is-mobile.is-macos,
+.is-mobile.is-windows,
 .is-tablet,
+.is-tablet.is-macos,
+.is-tablet.is-window,
 .is-ipad-pro,
+.is-ipad-pro.is-macos,
+.is-ipad-pro.is-windows,
 .is-ios,
 .is-android {
 
     .egos-header {
         .nav-categories {
             @apply bg-white rounded-xl;
+        }
+
+        .nav-secondary {
+            @apply hidden;
         }
 
         .header-wrapper {
@@ -649,11 +660,11 @@ const props = defineProps({
         }
 
         .arrow-up {
-            @apply size-8 p-2 rounded-full order-2 absolute right-0 bg-white opacity-50 text-blue-1
+            @apply block size-8 p-2 rounded-full order-2 absolute right-0 bg-white opacity-50 text-blue-1
         }
 
         .arrow-down {
-            @apply max-w-4 order-2 absolute right-6 top-5 opacity-50 text-blue-1
+            @apply block max-w-4 order-2 absolute right-6 top-5 opacity-50 text-blue-1
         }
     }
 }

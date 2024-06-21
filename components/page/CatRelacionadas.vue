@@ -4,9 +4,9 @@
       <h2 class="cirugias__heading col-[1_/_span_16] my-12 text-center w-full">
         {{ data.cirugias.titulo_cirugias }}
       </h2>
-      <div class="cirugias__grid-inner grid grid-cols-[repeat(16,_minmax(0_,1fr))] col-[2_/_span_14] gap-2">
+      <div class="cirugias__grid-inner grid grid-cols-12 col-[2_/_span_14] gap-2">
         <div
-          class="card__wrapper col-[1_/_span_16] xl:col-span-4"
+          class="card__wrapper col-span-full sm:col-span-6 lg:col-span-4 xl:col-span-3"
           v-for="categoryId in data.cirugias.cirugias_relacionadas"
           :key="categoryId"
         >

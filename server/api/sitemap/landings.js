@@ -12,7 +12,7 @@ export default defineSitemapEventHandler(async () => {
       landings.map(landing => {
         // Prepara las imágenes para incluir en el sitemap, si están disponibles
         const images = landing.featured_image_data ? [{
-          loc: landing.featured_image_data.src, // URL de la imagen destacada
+          loc: landing.featured_image_data.url, // URL de la imagen destacada
           caption: landing.featured_image_data.caption, // Pie de foto de la imagen
           title: landing.featured_image_data.alt, // Título de la imagen (texto alternativo)
           // Puedes añadir otros campos como geoLocation y license si están disponibles

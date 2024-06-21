@@ -19,8 +19,7 @@
           <article
             v-for="clinica in clinicasData"
             :key="clinica.id"
-            class="card clinicas__egos-card 
-                  grid grid-cols-16 auto-rows-[60vh] gap-1 mt-20"
+            class="card clinicas__egos-card grid grid-cols-16 auto-rows-[60vh] lg:auto-rows-[70vh] gap-1 mt-20"
             :id="'clinica-' + clinica.id"
             :aria-labelledby="'clinica-title-' + clinica.id"
           >
@@ -35,21 +34,22 @@
                     flex flex-col justify-center 
                     left-0 right-0 bottom-0 h-1/2 p-8 
                     pointer-events-none z-10 
-                    col-[2/-2] lg:col-[7/11] row-start-1 self-end
-                    lg:[.card:nth-child(even)>&]:col-[7/11] [&>*]:mb-3"
+                    col-[2/-2] lg:col-[7/13] xl:col-[7/11] row-start-1 self-end
+                    lg:[.card:nth-child(even)>&]:col-[5/11] xl:[.card:nth-child(even)>&]:col-[7/11] [&>*]:mb-3"
               v-html="clinica.content.rendered"
             ></div>
             <div
-              class="col-[2/-2] lg:col-[7/-2] row-start-1 pointer-events-none rounded-3xl overflow-hidden lg:[.card:nth-child(even)>&]:col-[2/11]"
+              class="col-[2/-2] lg:col-[9/-2] xl:col-[7/-2] row-start-1 pointer-events-none rounded-3xl overflow-hidden lg:[.card:nth-child(even)>&]:col-[2/9] xl:[.card:nth-child(even)>&]:col-[2/11]"
               :to="`/nuestras-clinicas/${clinica.slug}`"
               :aria-label="'Leer más sobre ' + clinica.title.rendered"
               @click.passive
             >
-              <NuxtImg
+              <img
                 loading="lazy"
                 v-if="clinica.featured_image_data"
-                :src="clinica.featured_image_data.src"
                 class="clinicas__egos-card-image h-full min-w-full object-cover object-center"
+                :src="clinica.featured_image_data.url"
+                :srcset="clinica.featured_image_data.srcset"
                 :alt="clinica.featured_image_data.alt"
                 :aria-labelledby="'post-title-' + clinica.id"
               />
