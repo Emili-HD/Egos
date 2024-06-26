@@ -11,7 +11,8 @@
             <div class="insignia mb-8 flex flex-row justify-center text-center">
                <NuxtImg class="max-w-[19rem]" loading="lazy" :src="landing.acf.insignia.url" alt="" />
             </div>
-            <FormsLanding :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" />
+            <!-- <FormsLanding :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" /> -->
+            <FormsCustomForm :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" />
          </div>
       </section>
 

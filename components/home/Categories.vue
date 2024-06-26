@@ -19,7 +19,7 @@
    </section>
    <section v-if="data.acf.tratamientos_home.categorias_home" class="tratamientos" id="tratamientos">
 
-      <div class="home__services bg-white flex flex-row justify-center items-center flex-wrap min-h-[100vh] w-full xl:px-20 pt-16 overflow-hidden">
+      <div id="ofertas" class="home__services bg-white flex flex-row justify-center items-center flex-wrap min-h-[100vh] w-full xl:px-20 pt-16 overflow-hidden">
          <div class="home__services-description w-full pt-12 px-10 xl:px-24 pb-12 text-center">
             <p class="text-balance w-full" v-html="data.acf.tratamientos_home.descripcion_categorias"></p>
          </div>

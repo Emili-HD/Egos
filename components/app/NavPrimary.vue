@@ -427,7 +427,7 @@ const props = defineProps({
                 }
 
                 &>li {
-                    @apply flex flex-col items-start gap-8 font-normal;
+                    @apply flex flex-col items-start justify-center gap-8 font-normal h-full;
                 }
 
                 &>li:hover span::before,

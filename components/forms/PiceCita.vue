@@ -16,11 +16,12 @@
     >
       <div class="-mx-4 mb-12" v-html="content"></div>
       <div class="form__wrappe p-4 mb-12 lg:p-12 xl:p-0">
-        <FormsCirugia
+        <!-- <FormsCirugia
           :identificador="'map'"
           :portalId="portalId"
           :formId="formId"
-        />
+        /> -->
+        <FormsCustomForm :identificador="'map'" :portalId="String(portalId)" :formId="formId" />
       </div>
     </div>
   </section>

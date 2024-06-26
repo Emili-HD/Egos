@@ -22,7 +22,7 @@
             <VimeoPlayer :videoId="videoItem.video" />
          </div>
       </div>
-      <img class="rounded-xl [.columnas_&]:rounded-none size-full object-cover object-center" loading="lazy"
+      <img class="[.columnas_&]:rounded-none [.is-desktop_.columnas_&]:xl:rounded-xl size-full object-cover object-center" loading="lazy"
          v-else-if="contentData.fondo == 'imagen'" 
          :src="contentData.side_image.url"
          :srcset="contentData.side_image.srcset"

@@ -6,6 +6,35 @@ export default defineNuxtConfig({
     url: 'https://www.clinicaegos.com/',
     trailingSlash: true,
   },
+  app: {
+		// pageTransition: { name: 'page', mode: 'out-in' },
+		head: {
+			link: [
+				{
+					rel: 'preconnect',
+					href: 'https://test.clinicaegos.com',
+				},
+			],
+		},
+	},
+	pwa: {
+		workbox: {
+			runtimeCaching: [
+				{
+					urlPattern: /^https:\/\/test\.clinicaegos\.com\//,
+					handler: 'NetworkFirst',
+					options: {
+						cacheName: 'clinicaegos-cache',
+						expiration: {
+							maxEntries: 50,
+							maxAgeSeconds: 30 * 24 * 60 * 60, // 30 días
+						},
+					},
+				},
+			],
+			navigateFallback: '/index.html',
+		},
+	},
   plugins: [
     '~/plugins/gtm.js',
     '~/plugins/setHtmlLang.js',
@@ -45,6 +74,7 @@ export default defineNuxtConfig({
     'nuxt-simple-robots',
     'nuxt-booster',
     'nuxt-swiper',
+		'@vite-pwa/nuxt',
     // 'nuxt-viewport',
     // '@nuxtjs/html-validator',
     // '@nuxtjs/web-vitals',

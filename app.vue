@@ -1,13 +1,7 @@
 <template>
-  <div
-    v-if="!isGraciasPage"
-    class="fixed-button bg-blue-1 fixed lg top-[calc(100%-4.5rem)] w-full p-4 z-[998] flex flex-row justify-center items-center lg:hidden"
-  >
-    <ElementsButton
-      class="gold"
-      href="#formulario"
-      @click.passive="handleClick"
-    >
+  <div v-if="!isGraciasPage"
+    class="fixed-button bg-blue-1 fixed lg top-[calc(100%-4.5rem)] w-full p-4 z-[998] flex flex-row justify-center items-center lg:hidden">
+    <ElementsButton class="gold" href="#formulario" @click.passive="handleClick">
       Cita con el cirujano
     </ElementsButton>
   </div>
@@ -41,7 +35,7 @@ onMounted(() => {
     script.defer = true;
     script.src = '//js-eu1.hs-scripts.com/143602274.js';
     document.body.appendChild(script);
-  
+
     isGraciasPage.value = route.path === '/gracias/';
   }, 1500);
 });
@@ -49,7 +43,8 @@ onMounted(() => {
 </script>
 
 <style>
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -67,5 +62,16 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-smooth iframe {
   pointer-events: none;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.6s;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
 }
 </style>

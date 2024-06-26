@@ -1,6 +1,5 @@
 <template>
-  <div v-if="pending">Cargando...</div>
-  <div v-else-if="error">Error al cargar los datos: {{ error }}</div>
+  <div v-if="error">Error al cargar los datos: {{ error }}</div>
   <main v-else class="site-main" v-if="home">
       <HomeWellcome critical :data="home" />
       <DelayHydration>
@@ -28,7 +27,7 @@ import { onMounted, computed } from 'vue';
 import { useAsyncData } from 'nuxt/app'
 import { getPage } from '@/composables/useFetch';
 
-const { data: home, error, pending } = await useAsyncData(() => getPage(8), {initialCache: false})
+const { data: home, error } = await useAsyncData(() => getPage(8), {initialCache: false})
 const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);
 
 // Datos YOAST SEO

@@ -1,7 +1,7 @@
 <template>
   <header class="header-gradient min-h-[90vh] xl:min-h-screen px-8 xl:px-16 pt-[40vh] pb-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex items-end bg-cover bg-center before-gradient" >
     <img loading="lazy"
-        class="size-full object-cover object-center absolute inset-0"
+        class="size-full object-cover object-center absolute inset-0 block"
         v-if="data.featured_image_data"
         :src="data.featured_image_data.url"
         :srcset="data.featured_image_data.srcset"
@@ -35,7 +35,8 @@
     </div>
   </header>
   <div class="form__wrapper bg-blue-1 p-12 pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
-    <FormsCirugia :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)" :formId="data.acf.formulario.formid" />
+    <!-- <FormsCirugia :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)" :formId="data.acf.formulario.formid" /> -->
+    <FormsCustomForm :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)" :formId="data.acf.formulario.formid" />
   </div>
 </template>
 
