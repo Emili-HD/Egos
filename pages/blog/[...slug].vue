@@ -103,8 +103,7 @@
         </div>
         <aside class="widgets bg-blue-1 p-6 col-[2/-2] xl:col-[13/17] rounded-3xl">
           <div id="formulario" class="form__wrapper p-2 p-xs-6 ">
-            <!-- <FormsCirugia :identificador="'topPage'" :portalId="String(post.acf.formulario.portalid)"
-              :formId="post.acf.formulario.formid" /> -->
+            <!-- <FormsCirugia :identificador="'topPage'" :portalId="String(post.acf.formulario.portalid)" :formId="post.acf.formulario.formid" /> -->
             <FormsCustomForm v-if="post && post.acf" :identificador="'topPage'" :portalId="String(post.acf.formulario.portalid)" :formId="post.acf.formulario.formid" />
           </div>
         </aside>

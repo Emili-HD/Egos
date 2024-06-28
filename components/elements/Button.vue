@@ -1,14 +1,8 @@
 <template>
-   <a 
-      :class="class"
-      class="button [&.light]:text-nude-8
-            [&.gold]:text-blue-1 [&.gold]:font-normal [&.gold]:animate-gradient [&.gold]:bg-gold-gradient-text
-            [&.gold]:bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running]
-            [&.gold]:py-2 [&.gold]:px-4 [&.gold]:rounded-3xl"
-      :href="href"
-      >
+   <component :class="class" class="button" :is="to ? 'nuxt-link' : href ? 'a' : 'button'" :to="to" :href="href"
+      @click="$emit('click')">
       <slot></slot>
-   </a>
+   </component>
 </template>
 
 <script setup>
@@ -17,6 +11,10 @@ const props = defineProps({
    class: {
       type: String,
    },
+   to: {
+      type: String,
+      default: null
+   },
    href: {
       type: String,
    }
@@ -24,6 +22,16 @@ const props = defineProps({
 
 </script>
 
-<style lang="scss" scoped>
-// Estilo vacío
+<style scoped>
+.light {
+   @apply text-nude-8;
+}
+
+.gold {
+   @apply text-white font-normal animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4 rounded-full;
+}
+
+.blue {
+   @apply w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl font-geomanist hover:bg-blue-6 transition-colors;
+}
 </style>

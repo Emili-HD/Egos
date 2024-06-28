@@ -106,9 +106,9 @@ module.exports = {
       },
       keyframes: {
         gradient: {
-          '0%': { backgrounPosition: '0 50%' },
-          '50%': { backgrounPosition: '100% 50' },
-          '100%': { backgrounPosition: '0 50%)' },
+          '0%': { backgroundPosition: '0 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0 50%)' },
         },
       },
       animation: {

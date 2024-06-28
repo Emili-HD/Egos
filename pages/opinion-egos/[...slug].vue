@@ -16,8 +16,7 @@
       </section>
     </div>
     <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20" v-if="casoreal && casoreal.acf">
-      <!-- <FormsCirugia :identificador="'topPage'" :portalId="String(casoreal.acf.formulario.portalid)"
-        :formId="casoreal.acf.formulario.formid" /> -->
+      <!-- <FormsCirugia :identificador="'topPage'" :portalId="String(casoreal.acf.formulario.portalid)" :formId="casoreal.acf.formulario.formid" /> -->
       <FormsCustomForm :identificador="'topPage'" :portalId="String(casoreal.acf.formulario.portalid)" :formId="casoreal.acf.formulario.formid" />
     </aside>
   </main>

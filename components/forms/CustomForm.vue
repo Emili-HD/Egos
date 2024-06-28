@@ -1,15 +1,15 @@
 <template>
   <div
+    v-if="!isLoading && formStructure && formStructure.fieldGroups"
     :id="props.identificador"
     class="form-landing w-auto max-w-full"
-    v-if="!isLoading && formStructure"
   >
     <form @submit.prevent="handleSubmit" class="flex flex-col p-4  form-after">
       <div v-for="group in formStructure.fieldGroups" :key="group.richText" class="[&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance">
         <template v-if="group.fields && Array.isArray(group.fields)">
           <template v-for="field in group.fields" :key="field.name">
-            <template v-if="!field.hidden">
-              <div class="mb-4">
+            <template v-if="field && !field.hidden">
+              <div class="mb-0">
                 <template v-if="field.fieldType === 'single_line_text'">
                   <div class="form__group field">
                     <input
@@ -50,13 +50,14 @@
                       :placeholder="field.label"
                       :class="{ 'border-red-500': errors[field.name] }"
                       class="form-input form__field"
+                      @focus="addCountryPrefix(field.name)"
                     />
                     <label :for="field.name" class="form__label">{{ field.label }}</label>
                     <p v-if="errors[field.name]" class="text-red-500 text-sm">{{ errors[field.name] }}</p>
                   </div>
                 </template>
                 <template v-else-if="field.fieldType === 'dropdown'">
-                  <div class="form__group field select">
+                  <div class="form__group field select custom-select">
                     <select
                       :id="field.name"
                       v-model="formData[field.name]"
@@ -65,13 +66,31 @@
                       :placeholder="field.label"
                       class="form__select form__field focus:outline-none mt-4"
                     >
-                      <!-- <option value="" disabled selected class="!text-gray-300">Quiero mi cirugía en...</option> -->
-                      <option v-for="option in field.options" :key="option.value" :value="option.value">
+                      <option v-for="option in field.options" :key="option.value" :value="option.value" class="[.is-windows_&]:bg-black [.is-windows_&]:text-nude-8 [.is-windows_&]:font-light">
                         {{ option.label }}
                       </option>
                     </select>
                     <label :for="field.name" class="form__label">{{ field.label }}</label>
                     <p v-if="errors[field.name]" class="text-red-500 text-sm">{{ errors[field.name] }}</p>
+                  </div>
+                  
+                  <div v-for="subField in field.dependentFields" :key="subField.dependentField.name" :class="{ 'hidden': !shouldShowDependentField(subField) }">
+                    <div class="form__group field select custom-select">
+                      <select
+                        :id="subField.dependentField.name"
+                        v-model="formData[subField.dependentField.name]"
+                        :required="shouldShowDependentField(subField) && subField.dependentField.required"
+                        :class="{ 'border-red-500': errors[subField.dependentField.name] }"
+                        :placeholder="subField.dependentField.label"
+                        class="form__select form__field focus:outline-none mt-4"
+                      >
+                        <option v-for="option in subField.dependentField.options" :key="option.value" :value="option.value" class="[.is-windows_&]:bg-black [.is-windows_&]:text-nude-8 [.is-windows_&]:font-light">
+                          {{ option.label }}
+                        </option>
+                      </select>
+                      <label :for="subField.dependentField.name" class="form__label">{{ subField.dependentField.label }}</label>
+                      <p v-if="errors[subField.dependentField.name]" class="text-red-500 text-sm">{{ errors[subField.dependentField.name] }}</p>
+                    </div>
                   </div>
                 </template>
               </div>
@@ -103,13 +122,13 @@
               v-model="formData[checkbox.subscriptionTypeId]"
               :required="checkbox.required"
             />
-            <span v-html="checkbox.label" class="text-sm w-full"></span>
+            <span v-html="checkbox.label" class="text-sm w-full [&>p]:text-sm [&>p]:w-full [&>p]:mb-0"></span>
           </label>
           <p v-if="errors[checkbox.subscriptionTypeId]" class="text-red-500 text-sm">{{ errors[checkbox.subscriptionTypeId] }}</p>
         </div>
       </div>
 
-      <button type="submit">{{ submitButtonText }}</button>
+      <button type="submit" class="button">{{ submitButtonText }}</button>
     </form>
   </div>
   <div v-else>
@@ -143,6 +162,7 @@ const formStructure = ref(null)
 const isLoading = ref(true)
 const errors = ref({})
 const submitButtonText = ref('Enviar')
+const dependentFields = ref([])
 
 const loadFormStructure = async () => {
   await nextTick()
@@ -216,9 +236,9 @@ const handleSubmit = async () => {
       legalConsentOptions: legalConsentOptions ? { consent: legalConsentOptions } : undefined
     }
 
-    console.log('Datos de envío a HubSpot:', JSON.stringify(submissionData, null, 2))
+    // console.log('Datos de envío a HubSpot:', JSON.stringify(submissionData, null, 2))
 
-    const hubspotFormEndpoint = 'https://api.hsforms.com/submissions/v3/integration/submit/143602274/5c1f29ba-992b-4e66-8497-5afb2470bb64'
+    const hubspotFormEndpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${props.portalId}/${props.formId}`
 
     const response = await fetch(hubspotFormEndpoint, {
       method: 'POST',
@@ -230,12 +250,12 @@ const handleSubmit = async () => {
 
     const textResponse = await response.text()
 
-    console.log('Raw Response from HubSpot:', textResponse)
+    // console.log('Raw Response from HubSpot:', textResponse)
 
     try {
       const jsonResponse = JSON.parse(textResponse)
 
-      console.log('Parsed Response from HubSpot:', jsonResponse)
+      // console.log('Parsed Response from HubSpot:', jsonResponse)
 
       if (!response.ok) {
         console.error('Error Response Data:', jsonResponse)
@@ -250,6 +270,13 @@ const handleSubmit = async () => {
     }
   } catch (e) {
     console.error('Error submitting form:', e.message)
+  }
+}
+
+// Función para añadir el prefijo del país
+const addCountryPrefix = (fieldName) => {
+  if (!formData.value[fieldName].startsWith('+')) {
+    formData.value[fieldName] = '+34' + formData.value[fieldName]
   }
 }
 
@@ -296,14 +323,32 @@ const validateEmail = (email) => {
 }
 
 const validatePhone = (phone) => {
-  const regex = /^\d{7,20}$/
+  const regex = /^\+\d{1,3}\d{7,20}$/
   return regex.test(phone)
 }
+
+// Función para verificar si un campo dependiente debe ser visible
+const shouldShowDependentField = (subField) => {
+  const condition = subField.dependentCondition
+  if (!condition || !condition.values) {
+    return false
+  }
+  if (condition.operator === 'set_any') {
+    return condition.values.includes(formData.value['interes'])
+  }
+  return false
+}
+
+// Vigilar el campo principal para actualizar la visibilidad de los campos dependientes
+watch(() => formData.value['interes'], (newValue) => {
+  console.log('Interes changed to:', newValue)
+})
 
 onMounted(async () => {
   await nextTick()
   await loadFormStructure()
 })
+
 </script>
 
 <style scoped>
@@ -312,15 +357,10 @@ label {
   margin-top: 1em;
   color: #ffffff;
 }
-button {
-  margin-top: 1em;
-  background-color: #b4a984;
-  color: white;
-  padding: 0.5em;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.button {
+  @apply mt-8 bg-gold-2 text-nude-8 uppercase font-normal p-2 rounded-full cursor-pointer animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4;
 }
+
 .form-landing {
   input, select {
     @apply w-full flex py-2 px-4 text-white bg-transparent  border-b border-b-white/30 pointer-events-auto;    

@@ -1,26 +1,14 @@
 <template>
-  <section
-    class="pidecita w-screen grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-screen py-0 lg:gap-0"
-  >
+  <section class="pidecita w-screen grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-screen py-0 lg:gap-0">
     <div class="col-span-full lg:col-span-11 min-h-screen/60">
-      <LazyElementsGoogleMap
-        @update-content="handleContentUpdate"
-        @update-options="handleOptionsUpdate"
-      />
+      <LazyElementsGoogleMap @update-content="handleContentUpdate" @update-options="handleOptionsUpdate" />
     </div>
-    <div
-      id="formulario"
-      class="half-right bg-blue-1 p-8 xl:p-12 h-fit lg:h-full w-full mb-0 top-0
+    <div id="formulario" class="half-right bg-blue-1 p-8 xl:p-12 h-fit lg:h-full w-full mb-0 top-0
             lg:min-h-screen flex flex-col justify-center 
-            col-span-full lg:col-[12/17] row-start-2 lg:row-start-1"
-    >
+            col-span-full lg:col-[12/17] row-start-2 lg:row-start-1">
       <div class="-mx-4 mb-12" v-html="content"></div>
       <div class="form__wrappe p-4 mb-12 lg:p-12 xl:p-0">
-        <!-- <FormsCirugia
-          :identificador="'map'"
-          :portalId="portalId"
-          :formId="formId"
-        /> -->
+        <!-- <FormsCirugia :identificador="'map'" :portalId="portalId" :formId="formId" /> -->
         <FormsCustomForm :identificador="'map'" :portalId="String(portalId)" :formId="formId" />
       </div>
     </div>

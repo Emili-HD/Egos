@@ -28,8 +28,7 @@
       </DelayHydration>
     </div>
     <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20" v-if="doctor && doctor.acf">
-      <!-- <FormsCirugia :identificador="'formulario'" :portalId="String(doctor.acf.portalid)"
-        :formId="doctor.acf.formid" /> -->
+      <!-- <FormsCirugia :identificador="'formulario'" :portalId="String(doctor.acf.portalid)" :formId="doctor.acf.formid" /> -->
       <FormsCustomForm :identificador="'formulario'" :portalId="String(doctor.acf.portalid)" :formId="doctor.acf.formid" />
     </aside>
   </main>

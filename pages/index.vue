@@ -15,6 +15,7 @@
       <DelayHydration>
         <LazyHomeEspecialists />
       </DelayHydration>
+      <ElementsHablan :data="home.acf" />
       <DelayHydration>
         <!-- <HomeTiktok /> -->
         <ElementsInfluencers />

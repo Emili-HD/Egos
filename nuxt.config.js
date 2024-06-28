@@ -1,22 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   site: {
     url: 'https://www.clinicaegos.com/',
     trailingSlash: true,
-  },
-  app: {
-		// pageTransition: { name: 'page', mode: 'out-in' },
-		head: {
-			link: [
-				{
-					rel: 'preconnect',
-					href: 'https://test.clinicaegos.com',
-				},
-			],
-		},
-	},
+  },  
 	pwa: {
 		workbox: {
 			runtimeCaching: [
@@ -75,6 +64,7 @@ export default defineNuxtConfig({
     'nuxt-booster',
     'nuxt-swiper',
 		'@vite-pwa/nuxt',
+    '@morev/vue-transitions/nuxt',
     // 'nuxt-viewport',
     // '@nuxtjs/html-validator',
     // '@nuxtjs/web-vitals',
@@ -587,6 +577,7 @@ export default defineNuxtConfig({
         '/estetica-facial/queiloplastia/',
         '/estetica-facial/sonrisa-gingival/',
         '/estetica-facial/hidratacion-de-labios/',
+        '/estetica-facial/relleno-de-ojeras/',
         '/injerto-capilar/injerto-capilar/',
         '/obesidad/balon-gastrico/',
         '/obesidad/bypass-gastrico/',
@@ -608,14 +599,50 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      link: [
+				{
+					rel: 'preconnect',
+					href: 'https://test.clinicaegos.com',
+				},
+			],
       script: [
         {
           hid: 'cookieyes',
           src: 'https://cdn-cookieyes.com/client_data/3bd14708645aa2dea13c85b7/script.js',
           type: 'text/javascript',
           async: true
+        },
+        {
+          innerHTML: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1695692394291035');
+            fbq('track', 'PageView');
+          `,
+          type: 'text/javascript',
+          charset: 'utf-8'
+        }
+      ],
+      noscript: [
+        { 
+          children: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1695692394291035&ev=PageView&noscript=1" />`
         }
       ]
+    }
+  },
+  render: {
+    csp: {
+      hashAlgorithm: 'sha256',
+      policies: {
+        'script-src': ["'self'", "'unsafe-inline'"],
+        'img-src': ["'self'", "https://www.facebook.com"]
+      }
     }
   }
 })

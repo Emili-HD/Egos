@@ -1,5 +1,5 @@
 <template>
-  <header class="header-gradient min-h-[90vh] xl:min-h-screen px-8 xl:px-16 pt-[40vh] pb-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex items-end bg-cover bg-center before-gradient" >
+  <header class="header-gradient min-h-[90vh] xl:min-h-screen px-8 xl:px-16 pt-[50vh] pb-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex items-end bg-cover bg-center before-gradient" >
     <img loading="lazy"
         class="size-full object-cover object-center absolute inset-0 block"
         v-if="data.featured_image_data"
@@ -11,26 +11,30 @@
     />
     <div class="header__content z-10">
       <div v-if="data.acf.rebaja">
-        <h1 class="text-nude-8 mb-10 text-clamp-6xl"><u>{{ data.title.rendered }}</u></h1>
-        <div class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-2xl [&>p]:text-lg" v-html="data.content.rendered"></div>
-        <div class="flex gap-2 bg-blue-1/60 backdrop-blur-lg p-8 w-fit rounded-2xl m-0">
-          <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline [&>span]:text-red-600 [&>span]:opacity-50" 
-            v-if="data.acf.precio_desde" 
-            v-html="data.acf.precio_desde"
-          ></div>
-          <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline" 
-            v-if="data.acf.rebaja" 
-            v-html="data.acf.rebaja"
-          ></div>
+        <h1 class="text-nude-8 mb-6 text-clamp-6xl text-balance leading-none"><u>{{ data.title.rendered }}</u></h1>
+        <div class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-3xl [&>h2]:text-balance [&>p]:text-lg" v-html="data.content.rendered"></div>
+        <div class="flex flex-col xl:flex-row-reverse gap-8">
+          <div class="flex gap-2 bg-blue-1/60 backdrop-blur-lg p-8 w-fit rounded-2xl m-0">
+            <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline [&>span]:text-red-600 [&>span]:opacity-50" 
+              v-if="data.acf.precio_desde" 
+              v-html="data.acf.precio_desde"
+            ></div>
+            <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline" 
+              v-if="data.acf.rebaja" 
+              v-html="data.acf.rebaja"
+            ></div>
+          </div>
+          <ElementsCountDown class="x2 max-w-lg m-0" :data="data.acf" />
         </div>
-        <ElementsCountDown class="x2 max-w-lg m-0" :data="data.acf" />
       </div>
-      <div v-else>
-        <p class="desde !text-nude-8 leading-10 text-2xl [&>span]:span-gradient bg-blue-1/60 backdrop-blur-lg p-8 w-fit rounded-2xl" 
+      <div v-else class="flex gap-12 flex-col xl:flex-row-reverse">
+        <p class="desde !text-nude-8 leading-10 text-2xl [&>span]:span-gradient bg-blue-1/60 backdrop-blur-lg p-4 mb-0 w-fit rounded-2xl flex flex-col justify-center" 
            v-if="data.acf.precio_desde" v-html="data.acf.precio_desde"
         ></p>
-        <h1 class="text-nude-8 mb-10 text-clamp-6xl"><u>{{ data.title.rendered }}</u></h1>
-        <div class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-2xl [&>p]:text-lg" v-html="data.content.rendered"></div>
+        <div>
+          <h1 class="text-nude-8 mb-6 text-clamp-6xl text-balance leading-none">{{ data.title.rendered }}</h1>
+          <div class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-3xl [&>h2]:text-balance [&>p]:text-lg [&>p]:text-balance" v-html="data.content.rendered"></div>
+        </div>
       </div>
     </div>
   </header>

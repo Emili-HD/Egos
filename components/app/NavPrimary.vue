@@ -410,6 +410,10 @@ const props = defineProps({
                             ul {
                                 @apply flex flex-col justify-start items-start p-0 relative;
                                 clip-path: unset;
+
+                                &:has(li:nth-child(10)) {
+                                    @apply grid grid-cols-2 gap-x-10;
+                                }
                             }
 
                             span {
@@ -666,6 +670,12 @@ const props = defineProps({
         .arrow-down {
             @apply block max-w-4 order-2 absolute right-6 top-5 opacity-50 text-blue-1
         }
+    }
+}
+
+.is-desktop:not(.is-ipad-pro, .is-tablet) .egos-header:has(.offer-display) {
+    .submenu {
+        @apply !top-24;
     }
 }
 </style>

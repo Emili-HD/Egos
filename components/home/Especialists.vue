@@ -34,10 +34,10 @@
                               </div>
                               <div class="button__group flex flex-row justify-center items-center gap-2 w-full">
                                   <a v-if="category.form === false" href="#" @click.passive="showMemberPanel(miembro)" class="button border border-solid bg-nude-1 border-nude-1/20 rounded-full py-1 w-full text-center">+ Info</a>
-                                  <NuxtLink :to="processedPath(miembro.link)" class="button bg-nude-1 rounded-full py-1 text-blue-1 w-full text-center" v-if="category.form === true">Opiniones</NuxtLink>
+                                  <NuxtLink :to="processedPath(miembro.link)" class="button bg-nude-1 rounded-full py-1 text-blue-1 w-full text-center shadow-lg hover:bg-nude-6 hover:text-gold-3 transition-colors" v-if="category.form === true">Opiniones</NuxtLink>
                                   <NuxtLink
                                     :to="processedPath(miembro.link)"
-                                    class="button bg-gold-3 rounded-full py-1 text-nude-8 w-full text-center"
+                                    class="button bg-gold-3 rounded-full py-1 text-nude-8 w-full text-center shadow-lg hover:bg-gold-1 hover:text-blue-1 transition-colors"
                                     v-if="category.form === true"
                                     @click="handleAppointmentClick"
                                   >
@@ -50,7 +50,7 @@
               </ul>
           </article>
           <div class="flex flex-col items-center p-12">
-            <NuxtLink class="button px-6 pt-3 pb-2 bg-blue-1 rounded-full text-nude-1 text-center w-fit uppercase leading-none" to="/nuestro-equipo" >Ver todo nuestro equipo</NuxtLink>
+            <NuxtLink class="button px-6 pt-3 pb-2 bg-blue-1 rounded-full text-nude-8 text-center w-fit uppercase leading-none hover:bg-blue-6 transition-colors" to="/nuestro-equipo" >Ver todo nuestro equipo</NuxtLink>
           </div>
       </section>
   </template>

@@ -32,7 +32,7 @@
                   ></div>
                 </div>
                 <ElementsCountDown :data="category.acf" />
-                <div class="pt-1 px-6 mt-2 border border-solid border-blue-1/25 text-center uppercase rounded-3xl bg-blue-1 text-nude-1">Saber más</div>
+                <div class="w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl font-geomanist hover:bg-blue-6 transition-colors">Saber más</div>
             </div>
             <div v-else class="category__title bg-nude-8/50 backdrop-blur transform-[translateZ(0)] will-change-transform bg-opacity-80 flex flex-col justify-end items-center gap-2 bottom-2 p-6 absolute w-[calc(100%-1rem)] m-auto left-0 right-0 rounded-xl overflow-hidden">
                 <h3 class="h6 text-center uppercase text-clamp-sm font-semibold mb-0">{{ category.title.rendered }}</h3>
@@ -42,7 +42,7 @@
                   v-html="category.acf.precio_desde"
                 ></p>
                 <div v-html="category.excerpt.rendered" class="[&>p]:text-sm [&>p]:mb-0 [&>p]:text-center [&>p]:text-balance"></div>
-                <div class="py-1 px-6 mb-2 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</div>
+                <div class="w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl font-geomanist hover:bg-blue-6 transition-colors">Saber más</div>
             </div>
         </nuxt-link>
     </div>

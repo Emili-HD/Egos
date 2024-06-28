@@ -1,13 +1,22 @@
 <template>
-    <section class="intro min-h-[100vh]">
-        <div class="intro__image bg-[#16253c] h-[100vh] inset-0 absolute w-[100vw] flex flex-col justify-center items-start gap-8">
-            <img provider="ipx" class="girl h-screen object-cover absolute z-0 left-0 lg:left-[25vw]" src="/assets/images/2-intro/chica.avif" alt=""  width="1792" height="1008" />
-              <p class="intro__title font-geomanist font-semibold text-clamp-6xl 
-                        lg:text-[10vw] xl:text-[4vw] text-nude-7 leading-[0.9] mb-0 mt-[15vh] pl-8 lg:pl-16 text-left
-                        [&>span]:!text-gold-2 [&>span]:w-full [&>span]:block lg:[&>span]:inline-block">
+    <section class="intro min-h-[100vh] overflow-hidden">
+        <div class="intro__image bg-[#16253c] h-[100vh] inset-0 absolute w-[100vw] flex flex-col justify-center items-start gap-8
+                    after:content-[''] after:absolute after:inset-0 after:size-full after:bg-white/30 ">
+            <img 
+                class="girl min-h-screen min-w-screen object-cover object-[75%] xl:object-center absolute z-0 left-0" 
+                v-if="data && data.featured_image_data && data.featured_image_data.url"
+                :src="data.featured_image_data.url" 
+                :srcset="data.featured_image_data.srcset" 
+                :alt="data.featured_image_data.alt" 
+                :width="data.featured_image_data.width" 
+                :height="data.featured_image_data.height" 
+            />
+              <p class="intro__title font-canela font-normal text-clamp-6xl 
+                        lg:text-[10vw] xl:text-[4vw] text-blue-1 leading-[0.9] mb-0 mt-[15vh] pl-8 lg:pl-16 text-left
+                        [&>span]:!text-gold-3 [&>span]:w-full [&>span]:block lg:[&>span]:inline-block z-10">
                   Más de 3000<span id="a">pacientes</span> <span id="b">intervenidos</span> al año
               </p>
-            <div class="intro__content pl-8 lg:pl-16 text-nude-8 flex flex-col justify-center items-start gap-4">
+            <div class="intro__content pl-8 lg:pl-16 text-blue-1 flex flex-col justify-center items-start gap-4 z-10">
                 <div class="heading [&>h1]:font-geomanist [&>h1]:!text-clamp-2xl 2xl:![&>h1]:text-clamp-xl " v-html="data.content.rendered"></div>
                 <ElementsButton class="gold text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-auto" href="#ofertas" @click.passive="handleClick">Cumple tu sueño</ElementsButton>
             </div>

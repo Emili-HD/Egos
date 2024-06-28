@@ -14,7 +14,7 @@
          class="testimonios__list max-w-full grid-row-2 col-[1_/_span_16] p-8 xl:px-24 grid grid-cols-4 gap-8 xl:gap-4"
          v-if="testimoniosData">
          <article v-for="testimonio in testimoniosDestacados" :key="testimonio.id"
-            class="card rounded-2xl overflow-hidden p-2 bg-white !aspect-auto col-[1/-1] sm:col-span-2 xl:col-auto flex flex-col justify-between items-center gap-8 shadow-2xl shadow-nude-7 h-fit">
+            class="card rounded-2xl overflow-hidden p-2 bg-white !aspect-auto col-[1/-1] sm:col-span-2 xl:col-auto flex flex-col justify-between items-center gap-8 shadow-2xl shadow-nude-7 h-full">
             <div v-if="testimonio.acf.vimeo_video" class="video__player rounded-xl w-full overflow-hidden">
                <div class="size-full aspect-[9/16]">
                   <VimeoPlayer :videoId="testimonio.acf.vimeo_video" />
@@ -22,16 +22,17 @@
             </div>
             <div
                class="testimonios__content p-2 pb-4 text-center font-canela h-max flex flex-col justify-between items-center">
-               <h3 class="h6 text-clamp-xl">{{ testimonio.title.rendered }}</h3>
+               <h3 class="h6 text-clamp-xl min-h-32">{{ testimonio.title.rendered }}</h3>
+               <!-- <ElementsButton :to="`/opinion-egos/${testimonio.slug}`" class="blue">Saber más</ElementsButton> -->
                <nuxt-link :to="`/opinion-egos/${testimonio.slug}`"
-                  class="pb-1 pt-2 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl font-geomanist">Saber
+                  class="pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl font-geomanist hover:bg-blue-6 transition-colors">Saber
                   más</nuxt-link>
             </div>
          </article>
       </div>
       <div class="col-[2/-2] flex justify-center">
          <nuxt-link :to="`/casos-reales/`"
-            class="w-fit pb-1 pt-2 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl font-geomanist">Ver
+            class="w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl font-geomanist hover:bg-blue-6 transition-colors">Ver
             todos nuestros casos reales</nuxt-link>
       </div>
    </section>

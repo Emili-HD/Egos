@@ -26,10 +26,10 @@ export const getPage = async (identifier) => {
         }
         const data = await response.json();
         // Si el identificador es un slug, la respuesta será un arreglo, así que devuelve el primer elemento
-        return isSlug ? data[0] : data;
+        return isSlug ? (data[0] || null) : (data || null);
     } catch (error) {
         console.error("Fetch error: ", error);
-        throw error; // Propaga el error para manejarlo más adelante
+        return null; // Retorna null en caso de error para manejarlo en el uso de la función
     }
 };
 
