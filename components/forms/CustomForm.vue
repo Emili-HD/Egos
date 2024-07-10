@@ -122,7 +122,7 @@
               v-model="formData[checkbox.subscriptionTypeId]"
               :required="checkbox.required"
             />
-            <span v-html="checkbox.label" class="text-sm w-full [&>p]:text-sm [&>p]:w-full [&>p]:mb-0"></span>
+            <span v-html="checkbox.label" class="text-sm w-full [&>p]:text-sm [&>p]:w-full [&>p]:mb-0 [&>p>a]:font-normal"></span>
           </label>
           <p v-if="errors[checkbox.subscriptionTypeId]" class="text-red-500 text-sm">{{ errors[checkbox.subscriptionTypeId] }}</p>
         </div>
@@ -166,35 +166,36 @@ const dependentFields = ref([])
 
 const loadFormStructure = async () => {
   await nextTick()
+  isLoading.value = true // Iniciar el estado de carga
+
   try {
-    const { data, error } = await useFetch(`/api/getHubSpotForm`, {
-      query: { formId: props.formId }
+    const response = await $fetch(`/api/getHubSpotForm`, {
+      params: { formId: props.formId }
     })
 
-    if (error.value) {
-      throw new Error(error.value.message || 'Error fetching form structure')
-    }
-
-    if (data.value && data.value.data) {
-      formStructure.value = data.value.data
-      console.log('Form Structure:', formStructure.value)
-
-      formStructure.value.fieldGroups.forEach(group => {
-        if (group.fields) {
-          group.fields.forEach(field => {
-            formData.value[field.name] = field.defaultValues ? field.defaultValues[0] : ''
-          })
-        }
-      })
-
-      submitButtonText.value = formStructure.value.displayOptions?.submitButtonText || 'Enviar'
-    } else {
+    if (!response || !response.data) {
       throw new Error('Invalid form data')
     }
+
+    const formStructureData = response.data
+    formStructure.value = formStructureData
+
+    // console.log('Form Structure:', formStructure.value)
+
+    formStructure.value.fieldGroups.forEach(group => {
+      if (group.fields) {
+        group.fields.forEach(field => {
+          formData.value[field.name] = field.defaultValues ? field.defaultValues[0] : ''
+        })
+      }
+    })
+
+    submitButtonText.value = formStructure.value.displayOptions?.submitButtonText || 'Enviar'
+
   } catch (e) {
     console.error('Error loading form structure:', e.message)
   } finally {
-    isLoading.value = false
+    isLoading.value = false // Finalizar el estado de carga
   }
 }
 

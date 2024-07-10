@@ -1,5 +1,5 @@
 export default defineEventHandler((event) => {
-  let res = event.res
+  let res = event.node.res
   const year = 31536000
   const tenmin = 600
   const url = event.req.url

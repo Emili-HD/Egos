@@ -1,6 +1,5 @@
 <template>
-  <div v-if="legalPending">Cargando contenido legal...</div>
-  <div v-else-if="legalError">Error al cargar el contenido legal.</div>
+  <div v-if="legalError">Error al cargar el contenido legal.</div>
   <main v-else class="page site-main grid grid-cols-16 w-full">
     <section class="legal col-[2/-2] xl:col-[5/-5] py-40">
       <h1>{{ legal.title.rendered }}</h1>
@@ -13,7 +12,7 @@
 import { useAsyncData } from 'nuxt/app';
 import { getPage } from '@/composables/useFetch'; // Asegúrate de que useFetch contiene la lógica actualizada para fetch
 
-const { data: legal, error, pending } = await useAsyncData(() => getPage(16092))
+const { data: legal, legalError } = await useAsyncData(() => getPage(16092))
 
 useHead(() => {
   const link = [

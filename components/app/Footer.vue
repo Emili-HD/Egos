@@ -59,11 +59,6 @@ const { data: legalMenuData, error: legalMenuError } = await useAsyncData(() => 
 const resolveUrl = (slug) => {
    return slug.startsWith('/') ? slug : `/${slug}`;
 }
-
-// const showCookieBanner = () => {
-//    var _hsp = window._hsp = window._hsp || [];
-//    _hsp.push(['showBanner']);
-// };
 </script>
 
 <style>

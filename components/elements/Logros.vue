@@ -1,20 +1,32 @@
 <template>
-    <li class="logros text-nude-8 text-clamp-xs hidden lg:flex justify-center items-center absolute bottom-0 w-full h-24 gap-4">
-        <div class="mejorValorada flex items-center gap-1">
-            <img class="google-icon" src="../../assets/images/icons/google-icon.svg"
+    <li class="logros">
+        <div class="mejorValorada logros__icon">
+            <img class="google-icon" src="/images/icons/google.svg"
                 alt="Clínica mejor valorada en google" width="32" height="32" />
-            <span class="!text-nude-8 after:content-none before:!content-none">Clínica mejor valorada</span>
+            <span>Somos la clínica mejor<br>valorada en Google</span>
         </div>
-        <div class="operaciones flex items-center">
-            <img class="laurel-iz" src="../../assets/images/icons/laurel-iz.svg" alt="" width="12" height="24" />
-            <span class="!text-nude-8 after:content-none before:!content-none">+2000</span>
-            <img class="laurel-der mr-2" src="../../assets/images/icons/laurel-der.svg" alt="" width="12"
-                height="24" />
-            <span class="!text-nude-8 after:content-none before:!content-none">pacientes intervenidos al año</span>
+        <div class="h-full w-px bg-gold-2"></div>
+        <div class="operaciones logros__icon">
+            <img class="laurel-iz" src="/images/icons/tremil.svg" alt="" width="60" height="24" />
+            <span>pacientes intervenidos<br>al año</span>
         </div>
     </li>
 </template>
 
 <script setup>
-
+import {ref, onMounted} from 'vue'
 </script>
+
+<style scoped>
+.logros {
+    @apply text-nude-8 bg-blue-1 rounded-xl text-clamp-xs hidden lg:flex justify-center items-center absolute bottom-6 w-fit h-20 px-6 py-3 gap-4;
+}
+
+.logros__icon {
+    @apply flex justify-center items-center gap-2 w-1/2
+}
+
+.logros__icon span {
+    @apply !text-nude-8 after:content-none before:!content-none mt-3 text-balance;
+}
+</style>

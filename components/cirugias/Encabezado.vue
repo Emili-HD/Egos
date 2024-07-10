@@ -1,5 +1,5 @@
 <template>
-  <header class="header-gradient min-h-[90vh] xl:min-h-screen px-8 xl:px-16 pt-[50vh] pb-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex items-end bg-cover bg-center before-gradient" >
+  <header class="header-gradient min-h-[90vh] xl:min-h-screen px-8 xl:px-16 pt-[40vh] pb-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex items-end bg-cover bg-center before-gradient" >
     <img loading="lazy"
         class="size-full object-cover object-center absolute inset-0 block"
         v-if="data.featured_image_data"
@@ -24,27 +24,45 @@
               v-html="data.acf.rebaja"
             ></div>
           </div>
+          <ElementsButton  v-if="showPresupuestoLink" class="gold text-clamp-xs uppercase text-center" href="#presupuesto" @click.passive="pressu">
+            Calcula tu presupuesto
+          </ElementsButton>
           <ElementsCountDown class="x2 max-w-lg m-0" :data="data.acf" />
         </div>
       </div>
-      <div v-else class="flex gap-12 flex-col xl:flex-row-reverse">
-        <p class="desde !text-nude-8 leading-10 text-2xl [&>span]:span-gradient bg-blue-1/60 backdrop-blur-lg p-4 mb-0 w-fit rounded-2xl flex flex-col justify-center" 
+      <div v-else class="flex gap-6 flex-col items-center xl:items-start">
+        <p class="desde !text-nude-8 leading-none text-2xl [&>span]:span-gradient bg-blue-1/60 backdrop-blur-lg p-4 mb-0 w-fit rounded-2xl flex flex-row justify-center gap-2 items-center" 
            v-if="data.acf.precio_desde" v-html="data.acf.precio_desde"
         ></p>
-        <div>
-          <h1 class="text-nude-8 mb-6 text-clamp-6xl text-balance leading-none">{{ data.title.rendered }}</h1>
-          <div class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-3xl [&>h2]:text-balance [&>p]:text-lg [&>p]:text-balance" v-html="data.content.rendered"></div>
+        <ElementsButton  v-if="showPresupuestoLink" class="gold text-clamp-sm uppercase text-center w-fit xl:hidden" href="#presupuesto" @click.passive="pressu">
+          Calcula tu presupuesto
+        </ElementsButton>
+        <div class="max-xl:mt-20">
+          <h1 class="text-nude-8 mb-6 text-clamp-4xl text-balance leading-none">{{ data.title.rendered }}</h1>
+          <div class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-2xl [&>h2]:text-balance [&>p]:text-lg [&>p]:text-balance" v-html="data.content.rendered"></div>
         </div>
       </div>
+      
     </div>
   </header>
-  <div class="form__wrapper bg-blue-1 p-12 pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
-    <!-- <FormsCirugia :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)" :formId="data.acf.formulario.formid" /> -->
+  <div id="formulario" class="form__wrapper bg-blue-1 p-12 pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
     <FormsCustomForm :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)" :formId="data.acf.formulario.formid" />
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+
+const showPresupuestoLink = ref(false);
+
+const { $lenis: lenis } = useNuxtApp();
+const pressu = () => {
+  lenis.scrollTo('#presupuesto', { offset: -60 });
+}
+
+const checkPresupuestoLink = () => {
+    showPresupuestoLink.value = !!document.getElementById('presupuesto');
+}
 
 // Props
 const props = defineProps({
@@ -53,6 +71,26 @@ const props = defineProps({
   }
 })
 
+let observer; // Define observer in the outer scope
+
+onMounted(() => {
+  checkPresupuestoLink(); // Initial check in case #presupuesto is already in the DOM
+
+  observer = new MutationObserver(() => {
+      checkPresupuestoLink();
+  });
+
+  observer.observe(document.body, {
+      childList: true,
+      subtree: true
+  });
+});
+
+onBeforeUnmount(() => {
+    if (observer) {
+        observer.disconnect();
+    }
+});
 </script>
 
 <style lang="scss" scoped>

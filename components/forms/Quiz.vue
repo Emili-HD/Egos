@@ -14,13 +14,33 @@
 
               <div class="mb-4">
                 <template v-if="field.fieldType === 'radio'">
-                  <div class="form__group field flex flex-wrap justify-start gap-x-6 !pt-0">
+                  <div class="form__group field flex flex-wrap justify-center gap-x-6 !pt-0">
                     <label class="form__label w-full !relative text-clamp-xl leading-none text-center">{{ field.label }}</label>
                     <p class="w-full text-white mb-0 italic text-center">Selecciona una imagen para continuar</p>
-                    <div v-for="option in field.options" :key="option.value" class="form-check flex justify-start items-center flex-nowrap size-[calc((100%/3)-1rem)]">
-                      
+                    <div v-for="option in field.options" :key="option.value" class="form-check flex justify-start items-center flex-nowrap size-[calc((100%/2)-1rem)] lg:size-[calc((100%/3)-1rem)]">    
                       <input
                         type="radio"
+                        :id="option.value"
+                        :name="field.name"
+                        :value="option.value"
+                        v-model="formData[field.name]"
+                        :required="field.required"
+                        :class="{ 'border-red-500': errors[field.name] }"
+                        class="form-check-input !size-3 !hidden"
+                        @change="handleRadioChange"
+                      />
+                      <label :for="option.value" class="form-check-label size-full aspect-square p-1 !text-blue-1 font-normal uppercase flex flex-col justify-end items-center cursor-pointer" :class="option.value">{{ option.label }}</label>
+                    </div>
+                    <p v-if="errors[field.name]" class="text-red-500 text-sm">{{ errors[field.name] }}</p>
+                  </div>
+                </template>
+                <template v-else-if="field.fieldType === 'multiple_checkboxes'">
+                  <div class="form__group field flex flex-wrap justify-center gap-x-6 !pt-0">
+                    <label class="form__label w-full !relative text-clamp-xl leading-none text-center">{{ field.label }}</label>
+                    <p class="w-full text-white mb-0 italic text-center">Selecciona una imagen para continuar</p>
+                    <div v-for="option in field.options" :key="option.value" class="form-check flex justify-start items-center flex-nowrap size-[calc((100%/2)-1rem)] lg:size-[calc((100%/3)-1rem)]">    
+                      <input
+                        type="checkbox"
                         :id="option.value"
                         :name="field.name"
                         :value="option.value"
@@ -141,7 +161,7 @@
         </div>
         
         <!-- Renderizar Checkboxes de Consentimiento -->
-        <div v-if="formStructure.legalConsentOptions" class="mt-4">
+        <div v-if="formStructure.legalConsentOptions" class="mt-8">
           <div v-if="formStructure.legalConsentOptions.consentToProcessCheckboxLabel">
             <label :class="{ 'text-red-500': errors.consent }" class="flex gap-3">
               <input
@@ -162,7 +182,7 @@
                 v-model="formData[checkbox.subscriptionTypeId]"
                 :required="checkbox.required"
               />
-              <span v-html="checkbox.label" class="text-sm w-full [&>p]:text-sm [&>p]:w-full [&>p]:mb-0"></span>
+              <span v-html="checkbox.label" class="text-sm w-full [&>p]:text-sm [&>p]:w-full [&>p]:mb-0 [&>p>a]:font-normal"></span>
             </label>
             <p v-if="errors[checkbox.subscriptionTypeId]" class="text-red-500 text-sm">{{ errors[checkbox.subscriptionTypeId] }}</p>
           </div>
@@ -476,6 +496,10 @@ label {
   @apply border-t-0 border-x-0 border-b border-b-white/30 w-full outline-0 text-white py-2 bg-transparent transition-[border-color];
 }
 
+.form__group:has(.form-check:nth-of-type(4)) .form-check {
+  @apply lg:w-[calc((100%/4)-1.15rem)]
+}
+
 .form__field::placeholder {
   @apply text-transparent opacity-0;
 }
@@ -526,7 +550,7 @@ select:-webkit-autofill:focus {
 }
 
 .form-check-label {
-  @apply bg-cover bg-center outline outline-4 outline-offset-8 outline-transparent rounded-xl transition-all hover:outline-gold-2;
+  @apply bg-cover bg-center outline outline-4 outline-offset-8 outline-transparent rounded-xl transition-all hover:outline-gold-2 text-center leading-none;
 }
 
 .form-check-input:checked + .form-check-label {
@@ -540,7 +564,7 @@ select:-webkit-autofill:focus {
   background-image: url(/images/quiz/pera.webp);
 }
 .gota_de_agua {
-  background-image: url(/images/quiz/naturales.webp);
+  background-image: url(/images/quiz/gota_de_agua.webp);
 }
 .una_talla {
   background-image: url(/images/quiz/pequenos.webp);
@@ -558,4 +582,101 @@ select:-webkit-autofill:focus {
   background-image: url(/images/quiz/implantes.webp);
 }
 
+.blefaro-completa {
+  background-image: url(/images/quiz/blefaro_completa.webp);
+}
+.blefaro-inferior {
+  background-image: url(/images/quiz/blefaro_inferior.webp);
+}
+.blefaro-superior {
+  background-image: url(/images/quiz/blefaro_superior.webp);
+}
+.blefaro-18_25 {
+  background-image: url(/images/quiz/blefaro-18_25.webp);
+}
+.blefaro-26_45 {
+  background-image: url(/images/quiz/blefaro-16_45.webp);
+}
+.blefaro-46 {
+  background-image: url(/images/quiz/blefaro-46.webp);
+}
+
+.labios-suave {
+  background-image: url(/images/quiz/labios-aumento-suave.webp);
+}
+.labios-notable {
+  background-image: url(/images/quiz/labios-aumento-notable.webp);
+}
+
+.Una {
+  background-image: url(/images/quiz/oto-una.webp);
+}
+.Dos {
+  background-image: url(/images/quiz/oto-dos.webp);
+}
+.Abiertas {
+  background-image: url(/images/quiz/oto-soplillo.webp);
+}
+.Irregulares {
+  background-image: url(/images/quiz/oto-asimetricas.webp);
+}
+
+.Superior {
+  background-image: url(/images/quiz/rejuvenecer-superior.webp);
+}
+.Medio {
+  background-image: url(/images/quiz/rejuvenecer-medio.webp);
+}
+.Inferior {
+  background-image: url(/images/quiz/rejuvenecer-inferior.webp);
+}
+.Todas {
+  background-image: url(/images/quiz/rejuvenecer-todas.webp);
+}
+
+.curva {
+  background-image: url(/images/quiz/rino-curva.webp);
+}
+.mas-estrecha {
+  background-image: url(/images/quiz/rino-estrecha.webp);
+}
+.asimetria {
+  background-image: url(/images/quiz/rino-asimetria.webp);
+}
+.recta {
+  background-image: url(/images/quiz/rino-recta.webp);
+}
+.punta-caida {
+  background-image: url(/images/quiz/rino-punta.webp);
+}
+.rino-anchura {
+  background-image: url(/images/quiz/rino-anchura.webp);
+}
+.jiba {
+  background-image: url(/images/quiz/rino-tabique.webp);
+}
+
+.edad-20-30, .entre-20-30 {
+  background-image: url(/images/quiz/edad-20-30.webp);
+}
+.edad-31-40, .entre-31-40 {
+  background-image: url(/images/quiz/edad-31-40.webp);
+}
+.mas-41 {
+  background-image: url(/images/quiz/edad-41.webp);
+}
+
+.edad-20-30, .edad-31-40, .mas-41,
+.entre-20-30, .entre-31-40 {
+  @apply !text-transparent;
+}
+
+.funcional, .estetico {
+  @apply bg-[#E8E4DD] justify-center;
+}
+
 </style>
+
+<!-- Rinomodelación
+    portalId: "143602274",
+    formId: "0714b413-2930-4392-8db3-1bb51b7c1c4f" sls7 Krb448hdez!-->

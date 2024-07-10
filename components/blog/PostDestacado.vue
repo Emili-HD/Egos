@@ -2,7 +2,9 @@
   <div
     class="destacado rounded-3xl m-auto w-full p-0 col-[2/-2] flex max-w-full min-h-[40vh]"
   >
-    <div class="post-list w-full mt-0 flex" v-if="highlightedPostsData">
+    <div v-if="pending" class="loading">Loading...</div>
+    <div v-else-if="error" class="error">Error loading posts</div>
+    <div class="post-list w-full mt-0 flex" v-else>
       <article
         v-for="post in highlightedPostsData"
         :key="post.id"
@@ -17,7 +19,7 @@
             v-if="post.featured_image_data"
             :src="post.featured_image_data.url"
             :srcset="post.featured_image_data.srcset"
-            class="card__image w-1/2 bg-nude-7 rounded-2xl flex flex-col lg:flex-row p-0 h-full relative"
+            class="card__image aspect-square lg:aspect-[4/1] w-full xl:w-[45%] min-w-[22rem] object-cover object-center rounded-2xl overflow-hidden"
             :alt="post.featured_image_data.alt"
           />
           <div
@@ -32,7 +34,8 @@
                 </time>
               </p>
               <h2 class="h6">{{ post.title.rendered }}</h2>
-              <p class="text-nude-8" v-html="post.excerpt.rendered"></p>
+              <!-- Aquí eliminamos el v-html -->
+              <!-- <p class="text-nude-8">{{ post.excerpt.rendered }}</p> -->
             </div>
             <svg
               class="size-20 self-end max-h-20"
@@ -79,6 +82,7 @@ const { data: highlightedPostsData, error, pending } = await useAsyncData('highl
     post => post.acf && post.acf.destacar_post && post.acf.destacar_post.includes('Destacado')
   ).sort((a, b) => new Date(b.date) - new Date(a.date));
   // Solo toma el post destacado más reciente
+  console.log('Highlighted Posts:', highlightedPosts); // Agregar log
   return highlightedPosts.slice(0, 1);
 });
 
@@ -91,6 +95,7 @@ const formatDate = (date) => {
   return `${day}/${month}/${year}`;
 };
 </script>
+
 
 
 <style lang="scss" scoped>

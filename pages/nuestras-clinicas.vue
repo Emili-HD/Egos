@@ -71,6 +71,8 @@ const { data: pages, error: pageError } = await useAsyncData(() => getPage(13618
 // Uso de useAsyncData para cargar clínicas sin parámetros adicionales
 const { data: clinicasData, error: clinicasError } = await useAsyncData(() => getClinicas(), {initialCache: false})
 
+// console.log('Clínicas:', clinicasData);
+
 // Datos YOAST SEO
 useHead(() => {
   if (!pages.value || !pages.value.yoast_head_json) {

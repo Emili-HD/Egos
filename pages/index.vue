@@ -5,6 +5,7 @@
       <DelayHydration>
         <LazyHomeCategories :data="home" />
       </DelayHydration>
+      <ElementsHablan :data="home.acf" />
       <HomeTestimonios />
       <DelayHydration>
         <LazyFormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid"/>
@@ -15,9 +16,7 @@
       <DelayHydration>
         <LazyHomeEspecialists />
       </DelayHydration>
-      <ElementsHablan :data="home.acf" />
       <DelayHydration>
-        <!-- <HomeTiktok /> -->
         <ElementsInfluencers />
       </DelayHydration>
   </main>

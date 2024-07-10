@@ -71,6 +71,7 @@
                         </div>
                     </div>
                 </li>
+                <ElementsLogros class="logros-mobile" />
             </ul>
             <ElementsHamburger />
         </nav>
@@ -201,7 +202,7 @@ const initializeMenus = async () => {
                                 // autoAlpha: 1,
                             }
                         });
-                        tlMenuOpen.to([subRight, subLeft], { yPercent: 125 }, 0);
+                        tlMenuOpen.to([subRight, subLeft], { yPercent: 145 }, 0);
                         tlMenuOpen.to([subRight, subLeft], { autoAlpha: 1 }, 0.05);
                         subMenu.classList.add('open');
 
@@ -336,126 +337,127 @@ const props = defineProps({
 </script>
 
 <style>
-/* .is-desktop:not(.is-ipad-pro, .is-tablet) { */
-    .is-desktop:not(.is-ipad-pro, .is-tablet) .egos-header {
-        .nav-categories {
-            @apply bg-white rounded-bl-xl rounded-tl-xl px-8 flex flex-col justify-center items-stretch w-fit;
-        }
+.is-desktop:not(.is-ipad-pro, .is-tablet) .egos-header {
+    .nav-categories {
+        @apply bg-white rounded-bl-xl rounded-tl-xl px-8 flex flex-col justify-center items-stretch w-fit;
+    }
 
-        .header-wrapper {
+    .header-wrapper {
 
-            .menu-list {
-                @apply flex justify-end items-center gap-8 font-light h-full mb-0 uppercase tracking-wider;
+        .menu-list {
+            @apply flex justify-end items-center gap-8 font-light h-full mb-0 uppercase tracking-wider;
 
-                &.active {
-                    @apply transform translate-x-0 overflow-y-scroll;
-                }
+            &.active {
+                @apply transform translate-x-0 overflow-y-scroll;
+            }
 
-                .menu-tab {
-                    @apply hidden;
+            .menu-tab {
+                @apply hidden;
 
-                    .nav-title {
-                        @apply flex;
-                    }
-                }
-
-                .menu-wrapper {
-                    .nav-link {
-                        @apply block text-clamp-2xs 2xl:text-clamp-xs;
-
-                        span {
-                            @apply text-gold-3 cursor-pointer z-[1] before:content-[''] before:bg-gold-3 before:h-[1px] before:w-full before:max-w-0 before:absolute before:bottom-0 before:left-0 before:transition-[max-width];
-                        }
-                    }
-
-                    .submenu {
-                        @apply mt-1 fixed left-0 right-0 top-12 m-auto z-0 h-screen/75 w-[85vw] pointer-events-none [&.open]:pointer-events-auto;
-                    }
-                }
-
-                .submenu__left,
-                .submenu__right {
-                    @apply bg-blue-1/80 shadow opacity-0 pointer-events-auto will-change-transform;
-                }
-
-                .submenu__left {
-                    @apply bg-nude-8 h-screen/70 block bg-cover bg-center w-[calc(85vw*0.375)] top-0 -left-1 rounded-2xl absolute;
-                    background-image: url(@/assets/images/hero.avif);
-                    transform: translateY(-120%);
-
-                    .submenu__left-slider {
-                        @apply flex flex-col overflow-hidden rounded-2xl h-screen/70;
-
-                        .before-after {
-                            @apply flex h-screen/70 absolute top-0 left-0;
-
-                            .slide-c {
-                                @apply absolute left-0 top-0 opacity-0 z-0 h-full will-change-transform w-[calc(85vw/2.666667)];
-                            }
-                        }
-                    }
-                }
-
-                .submenu__right {
-                    @apply h-screen/70 right-0 w-[calc(85vw*0.625)] top-0 rounded-2xl absolute backdrop-blur-xl;
-                    transform: translateY(-120%);
-
-                    .submenu__right-list {
-                        @apply list-none p-0 h-full has-[.column]:flex flex-row content-center justify-center items-start flex-wrap absolute gap-0 w-full top-0 left-0;
-
-
-                        &>.submenu-child {
-                            @apply w-fit flex flex-col justify-between items-start flex-nowrap;
-
-                            ul {
-                                @apply flex flex-col justify-start items-start p-0 relative;
-                                clip-path: unset;
-
-                                &:has(li:nth-child(10)) {
-                                    @apply grid grid-cols-2 gap-x-10;
-                                }
-                            }
-
-                            span {
-                                @apply cursor-default p-0 block text-gold-3 font-normal text-clamp-base;
-                            }
-                        }
-
-                        .subsubmenu-child {
-                            .nav-link {
-                                @apply text-balance tracking-normal flex flex-col justify-end items-start text-nude-8 pt-2 py-1 text-clamp-sm;
-                            }
-                        }
-                    }
-
-                }
-
-                &>li {
-                    @apply flex flex-col items-start justify-center gap-8 font-normal h-full;
-                }
-
-                &>li:hover span::before,
-                .router-link-exact-active span::before {
-                    @apply max-w-full;
-                }
-
-                a img {
-                    @apply hidden;
+                .nav-title {
+                    @apply flex;
                 }
             }
 
+            .menu-wrapper {
+                .nav-link {
+                    @apply block text-clamp-2xs 2xl:text-clamp-xs;
+
+                    span {
+                        @apply text-gold-3 cursor-pointer z-[1] before:content-[''] before:bg-gold-3 before:h-[1px] before:w-full before:max-w-0 before:absolute before:bottom-0 before:left-0 before:transition-[max-width];
+                    }
+                }
+
+                .submenu {
+                    @apply mt-1 fixed left-0 right-0 top-12 m-auto z-0 h-screen/75 w-[85vw] pointer-events-none [&.open]:pointer-events-auto;
+                }
+            }
+
+            .submenu__left,
+            .submenu__right {
+                @apply bg-blue-1/80 shadow opacity-0 pointer-events-auto will-change-transform;
+            }
+
+            .submenu__left {
+                @apply bg-nude-8 h-screen/70 block bg-cover bg-center w-[calc(85vw*0.375)] top-0 -left-1 rounded-2xl absolute translate-y-[-140%];
+                background-image: url(/assets/images/hero.webp);
+
+                .submenu__left-slider {
+                    @apply flex flex-col overflow-hidden rounded-2xl h-screen/70;
+
+                    .before-after {
+                        @apply flex h-screen/70 absolute top-0 left-0;
+
+                        .slide-c {
+                            @apply absolute left-0 top-0 opacity-0 z-0 h-full will-change-transform w-[calc(85vw/2.666667)];
+                        }
+                    }
+                }
+            }
+
+            .submenu__right {
+                @apply h-screen/70 right-0 w-[calc(85vw*0.625)] top-0 rounded-2xl absolute backdrop-blur-xl;
+                transform: translateY(-140%);
+
+                .submenu__right-list {
+                    @apply list-none p-0 h-full has-[.column]:flex flex-row content-center justify-center items-start flex-wrap absolute gap-0 w-full top-0 left-0;
+
+
+                    &>.submenu-child {
+                        @apply w-fit flex flex-col justify-between items-start flex-nowrap;
+
+                        ul {
+                            @apply flex flex-col justify-start items-start p-0 relative;
+                            clip-path: unset;
+
+                            &:has(li:nth-child(10)) {
+                                @apply grid grid-cols-2 gap-x-10;
+                            }
+                        }
+
+                        span {
+                            @apply cursor-default p-0 block text-gold-1 font-normal text-clamp-base;
+                        }
+                    }
+
+                    .subsubmenu-child {
+                        .nav-link {
+                            @apply text-balance tracking-normal flex flex-col justify-end items-start text-nude-8 pt-2 py-1 text-clamp-sm;
+                        }
+                    }
+                }
+
+            }
+
+            &>li {
+                @apply flex flex-col items-start justify-center gap-8 font-normal h-full;
+            }
+
+            &>li:hover span::before,
+            .router-link-exact-active span::before {
+                @apply max-w-full;
+            }
+
+            a img {
+                @apply hidden;
+            }
         }
 
-        .element-logros {
-            @apply flex;
-        }
-
-        .arrow-up, .arrow-down {
-            @apply hidden;
-        }
-        
     }
-/* } */
+
+    .element-logros {
+        @apply flex;
+    }
+
+    .arrow-up, .arrow-down {
+        @apply hidden;
+    }
+
+    .logros-mobile {
+        @apply !hidden
+    }
+    
+}
 
 .is-mobile,
 .is-mobile.is-macos,
@@ -663,12 +665,30 @@ const props = defineProps({
             @apply hidden;
         }
 
+        .logros-mobile {
+            @apply flex flex-col h-fit max-w-full !relative !-bottom-6 !mb-8;
+
+            .logros__icon {
+                @apply w-full;
+
+                span {
+                    @apply text-base leading-none;
+                }
+            }
+        }
+
         .arrow-up {
             @apply block size-8 p-2 rounded-full order-2 absolute right-0 bg-white opacity-50 text-blue-1
         }
 
         .arrow-down {
             @apply block max-w-4 order-2 absolute right-6 top-5 opacity-50 text-blue-1
+        }
+    }
+
+    .egos-header:has(.offer-display) {
+        .header-wrapper .menu-list {
+            @apply !pt-32;
         }
     }
 }
@@ -678,4 +698,6 @@ const props = defineProps({
         @apply !top-24;
     }
 }
+
+
 </style>
