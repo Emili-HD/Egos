@@ -4,8 +4,8 @@ export default defineEventHandler(async (event) => {
 
   try {
     const response = await $fetch(apiUrl, {
-      method: 'POST', // O GET, según corresponda.
-      body: body, // Asegúrate de que el body está optimizado.
+      method: 'GET',
+      body: body,
     });
 
     return response;

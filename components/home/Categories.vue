@@ -1,5 +1,5 @@
 <template>
-   <section v-if="data.acf.tratamientos_home.categorias_home" class="tratamientos" id="tratamientos">
+   <section v-if="data.acf.tratamientos_home.categorias_home" class="tratamientos" id="tratamientos" ref="target" :class="{visible: inView}">
       <div id="ofertas" class="home__services bg-white flex flex-row justify-center items-center flex-wrap min-h-[100vh] w-full xl:px-20 py-16 overflow-hidden">
          <div class="home__services-description w-full pt-12 px-10 xl:px-24 pb-12 text-center">
             <p class="text-balance w-full" v-if="data.acf.tratamientos_home.descripcion_categorias" v-html="data.acf.tratamientos_home.descripcion_categorias"></p>
@@ -28,6 +28,11 @@
 </template>
 
 <script setup>
+const { el: target, inView } = useBoosterComponentObserver({
+  trackVisibility: true,
+  delay: 350
+});
+
 const props = defineProps({
    data: {
       type: Object,

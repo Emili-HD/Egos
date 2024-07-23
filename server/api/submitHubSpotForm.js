@@ -7,8 +7,8 @@ export default defineEventHandler(async (event) => {
 
     // Verificar si el cuerpo de la solicitud se lee correctamente
     console.log('Body received from client:', JSON.stringify(body, null, 2))
-    // const hubspotFormEndpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${body.portalId}/${body.formId}`
-    const hubspotFormEndpoint = 'https://api.hsforms.com/submissions/v3/integration/submit/143602274/5c1f29ba-992b-4e66-8497-5afb2470bb64'
+    const hubspotFormEndpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${body.portalId}/${body.formId}`
+    // const hubspotFormEndpoint = 'https://api.hsforms.com/submissions/v3/integration/submit/143602274/5c1f29ba-992b-4e66-8497-5afb2470bb64'
 
     const formDataFiltered = body.fields ? body.fields.map(field => ({
       name: field.name,

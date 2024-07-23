@@ -35,22 +35,4 @@ export default defineNuxtPlugin((nuxtApp) => {
     };
 
     loadAnalytics(); // Llamar a la función al iniciar la app
-
-    // Escuchar el evento de consentimiento para ajustar configuraciones según el consentimiento del usuario
-    window.addEventListener('cookieyes-consent', function (event) {
-        const consent = event.detail;
-
-        // Actualizar el consentimiento de Google Analytics según las categorías aceptadas
-        gtag("consent", "update", {
-            ad_storage: consent.categories.includes('advertising') ? "granted" : "denied",
-            analytics_storage: consent.categories.includes('analytics') ? "granted" : "denied",
-            functionality_storage: consent.categories.includes('functionality') ? "granted" : "denied",
-            personalization_storage: consent.categories.includes('personalization') ? "granted" : "denied",
-        });
-
-        // Si el usuario da consentimiento a analytics, enviar la vista de página
-        if (consent.categories.includes('analytics')) {
-            gtag('event', 'page_view');
-        }
-    });
 });

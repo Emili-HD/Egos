@@ -5,7 +5,7 @@
                 <li v-for="tratamiento in menuTratamientosData.items" :key="tratamiento.ID"
                     :class="{ 'hasSubmenu': tratamiento.child_items }">
                     <div class="menu-tab" :data-title="tratamiento.title">
-                        <nuxt-link :to="tratamiento.url" class="nav-title" active-class="router-link-active">
+                        <nuxt-link :to="tratamiento.url" class="nav-title" active-class="router-link-active" :class="tratamiento.classes" >
                             <span>{{ tratamiento.title }}</span>
                         </nuxt-link>
                         <ArrowDownRightIcon class="arrow-down xl:hidden"
@@ -27,7 +27,7 @@
                                         <div class="slide-c" v-for="subSubTratamiento in subTratamiento.child_items"
                                             :key="subSubTratamiento.ID">
                                             <img loading="lazy"
-                                                class="menu-icon object-cover object-center min-h-full min-w-full hidden [.is-desktop_&]:block"
+                                                class="menu-icon object-cover object-bottom absolute bottom-0 min-h-full min-w-full hidden [.is-desktop_&]:block"
                                                 :data-src="subSubTratamiento.acf.icon" alt="" width="571"
                                                 height="706" />
                                         </div>
@@ -83,8 +83,6 @@ import { ArrowUpRightIcon, ArrowDownRightIcon } from '@heroicons/vue/24/outline'
 const { $gsap: gsap } = useNuxtApp();
 const route = useRoute();
 const menuStore = useMenuStore();
-
-// const menuTratamientosData = ref(null)
 
 // Métodos
 const processMenuItems = (items) => {
@@ -298,7 +296,7 @@ const closeAllMenus = () => {
     });
 }
 
-const cerrarMenuMobile = () => {
+const cerrarMenuMobile = async () => {
     const burger = document.getElementById('navTrigger');
     const nav = document.querySelector('.menu-list');
     const links = document.querySelectorAll('.nav-link');
@@ -326,9 +324,10 @@ const loadImages = (event) => {
 };
 
 onMounted(async () => {
-    cerrarMenuMobile()
-    initializeMenus();
+    await initializeMenus();
+    await cerrarMenuMobile()
 })
+
 const props = defineProps({
     data: {
         type: Object,
@@ -512,7 +511,11 @@ const props = defineProps({
                             @apply text-gold-2 content-[attr(data-title)] uppercase inline-block font-normal align-middle text-clamp-base;
                             /* font-size: calc(var(--font-size)*.9); */
                         }
+
                     }
+                    /* .menu-tab:has(.activo) {
+                        @apply justify-end
+                    } */
                 }
 
                 &>li:nth-child(2) {
@@ -616,6 +619,14 @@ const props = defineProps({
 
                 & a {
                     @apply hidden;
+
+                    &.activo {
+                        @apply inline-block text-gold-2 uppercase font-normal
+                    }
+                }
+
+                &>li:has(.activo) .menu-tab::after {
+                    @apply content-['']
                 }
 
                 & a img {

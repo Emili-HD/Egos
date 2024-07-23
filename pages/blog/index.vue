@@ -8,7 +8,7 @@
                 <ElementsDivider class="mt-8 !mb-4 col-[2/-2] lg:col-[4/-4]" />
                 <div class="blog__header-content text-center col-[2/-2] lg:col-[4/-4]"
                     v-html="blogPage.content.rendered"></div>
-                <BlogPostDestacado />
+                <BlogPostDestacado critical />
             </header>
 
             <div class="post-list grid grid-cols-16 gap-4 mt-20 " v-if="posts" aria-label="Lista de publicaciones">

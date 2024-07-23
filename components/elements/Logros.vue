@@ -7,7 +7,7 @@
         </div>
         <div class="h-full w-px bg-gold-2"></div>
         <div class="operaciones logros__icon">
-            <img class="laurel-iz" src="/images/icons/tremil.svg" alt="" width="60" height="24" />
+            <img loading="lazy" class="laurel-iz" src="/images/icons/tremil.svg" alt="" width="60" height="24" />
             <span>pacientes intervenidos<br>al año</span>
         </div>
     </li>

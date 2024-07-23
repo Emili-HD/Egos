@@ -18,6 +18,7 @@ logs
 .fleet
 .idea
 .unlighthouse
+TODO.md
 
 # Local env files
 .env

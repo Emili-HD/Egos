@@ -10,17 +10,17 @@
         :height="data.featured_image_data.height"
     />
     <div class="header__content z-10">
-      <div v-if="data.acf.rebaja">
-        <h1 class="text-nude-8 mb-6 text-clamp-6xl text-balance leading-none"><u>{{ data.title.rendered }}</u></h1>
-        <div class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-3xl [&>h2]:text-balance [&>p]:text-lg" v-html="data.content.rendered"></div>
+      <div v-if="data.acf && data.acf.rebaja">
+        <h1 v-if="data.title && data.title.rendered" class="text-nude-8 mb-6 text-clamp-6xl text-balance leading-none"><u>{{ data.title.rendered }}</u></h1>
+        <div v-if="data.content && data.content.rendered" class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-3xl [&>h2]:text-balance [&>p]:text-lg" v-html="data.content.rendered"></div>
         <div class="flex flex-col xl:flex-row-reverse gap-8">
           <div class="flex gap-2 bg-blue-1/60 backdrop-blur-lg p-8 w-fit rounded-2xl m-0">
             <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline [&>span]:text-red-600 [&>span]:opacity-50" 
-              v-if="data.acf.precio_desde" 
+              v-if="data.acf && data.acf.precio_desde" 
               v-html="data.acf.precio_desde"
             ></div>
             <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline" 
-              v-if="data.acf.rebaja" 
+              v-if="data.acf && data.acf.rebaja" 
               v-html="data.acf.rebaja"
             ></div>
           </div>
@@ -32,20 +32,20 @@
       </div>
       <div v-else class="flex gap-6 flex-col items-center xl:items-start">
         <p class="desde !text-nude-8 leading-none text-2xl [&>span]:span-gradient bg-blue-1/60 backdrop-blur-lg p-4 mb-0 w-fit rounded-2xl flex flex-row justify-center gap-2 items-center" 
-           v-if="data.acf.precio_desde" v-html="data.acf.precio_desde"
+           v-if="data.acf && data.acf.precio_desde" v-html="data.acf.precio_desde"
         ></p>
-        <ElementsButton  v-if="showPresupuestoLink" class="gold text-clamp-sm uppercase text-center w-fit xl:hidden" href="#presupuesto" @click.passive="pressu">
+        <ElementsButton  v-if="showPresupuestoLink" class="gold text-clamp-sm uppercase text-center w-fit" href="#presupuesto" @click.passive="pressu">
           Calcula tu presupuesto
         </ElementsButton>
         <div class="max-xl:mt-20">
-          <h1 class="text-nude-8 mb-6 text-clamp-4xl text-balance leading-none">{{ data.title.rendered }}</h1>
-          <div class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-2xl [&>h2]:text-balance [&>p]:text-lg [&>p]:text-balance" v-html="data.content.rendered"></div>
+          <h1  v-if="data.title && data.title.rendered" class="text-nude-8 mb-6 text-clamp-4xl text-balance leading-none">{{ data.title.rendered }}</h1>
+          <div v-if="data.content && data.content.rendered" class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-2xl [&>h2]:text-balance [&>p]:text-lg [&>p]:text-balance" v-html="data.content.rendered"></div>
         </div>
       </div>
       
     </div>
   </header>
-  <div id="formulario" class="form__wrapper bg-blue-1 p-12 pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
+  <div v-if="data.acf && data.acf.formulario" id="formulario" class="form__wrapper bg-blue-1 p-8 pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
     <FormsCustomForm :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)" :formId="data.acf.formulario.formid" />
   </div>
 </template>

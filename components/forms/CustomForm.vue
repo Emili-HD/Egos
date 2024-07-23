@@ -2,9 +2,9 @@
   <div
     v-if="!isLoading && formStructure && formStructure.fieldGroups"
     :id="props.identificador"
-    class="form-landing w-auto max-w-full"
+    class="form-landing max-w-full w-[clamp(400px,_60vw,_600px)] m-auto"
   >
-    <form @submit.prevent="handleSubmit" class="flex flex-col p-4  form-after">
+    <form @submit.prevent="handleSubmit" class="flex flex-col p-8 bg-nude-8/[0.025] border border-nude-8/[0.1] rounded-2xl">
       <div v-for="group in formStructure.fieldGroups" :key="group.richText" class="[&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance">
         <template v-if="group.fields && Array.isArray(group.fields)">
           <template v-for="field in group.fields" :key="field.name">
@@ -40,8 +40,10 @@
                     <p v-if="errors[field.name]" class="text-red-500 text-sm">{{ errors[field.name] }}</p>
                   </div>
                 </template>
+
+                <!-- telèfon -->
                 <template v-else-if="field.fieldType === 'phone'">
-                  <div class="form__group field">
+                  <div class="form__group field flex items-end gap-2">
                     <input
                       type="tel"
                       :id="field.name"
@@ -49,13 +51,15 @@
                       :required="field.required"
                       :placeholder="field.label"
                       :class="{ 'border-red-500': errors[field.name] }"
-                      class="form-input form__field"
+                      class="form-input form__field w-full"
                       @focus="addCountryPrefix(field.name)"
                     />
                     <label :for="field.name" class="form__label">{{ field.label }}</label>
                     <p v-if="errors[field.name]" class="text-red-500 text-sm">{{ errors[field.name] }}</p>
                   </div>
                 </template>
+
+                <!-- DROPDOWN -->
                 <template v-else-if="field.fieldType === 'dropdown'">
                   <div class="form__group field select custom-select">
                     <select
@@ -140,6 +144,7 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 
+// Inicializar selectedCountry con el valor del prefijo telefónico de España
 const router = useRouter()
 
 const props = defineProps({
@@ -342,7 +347,7 @@ const shouldShowDependentField = (subField) => {
 
 // Vigilar el campo principal para actualizar la visibilidad de los campos dependientes
 watch(() => formData.value['interes'], (newValue) => {
-  console.log('Interes changed to:', newValue)
+  // console.log('Interes changed to:', newValue)
 })
 
 onMounted(async () => {

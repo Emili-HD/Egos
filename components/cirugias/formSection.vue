@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data && data.quiz && data.quiz.formid"  id="presupuesto" class="form__wrapper p-8 xl:p-36 col-[1/-1] xl:col-[1/9] bg-blue-1 flex flex-col justify-center items-stretch min-h-screen/80">
+  <div v-if="data && data.quiz && data.quiz.formid"  id="presupuesto" class="form__wrapper p-8 xl:p-20 col-[1/-1] xl:col-[1/9] bg-blue-1 flex flex-col justify-center items-stretch min-h-screen/80">
     <FormsQuiz :identificador="'formPage'" :portalId="String(data.quiz.portalid)" :formId="data.quiz.formid" :titulo="data.quiz.titulo_form" />
   </div>
   <div v-else id="formulario" class="form__wrapper p-8 xl:p-36 col-[1/-1] xl:col-[1/9] bg-blue-1 flex flex-col justify-center items-stretch min-h-screen/80">

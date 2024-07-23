@@ -327,7 +327,7 @@
     }
 
     .span-gradient {
-        @apply text-clamp-4xl bg-[length:80%] xl:bg-[length:30%] font-semibold block bg-clip-text text-transparent bg-gold-gradient-text leading-tight;
+        @apply text-clamp-4xl bg-[length:80%] xl:bg-[length:30%] font-semibold bg-clip-text text-transparent bg-gold-gradient-text leading-tight;
     }
 
     .blue-gradient-full {

@@ -1,14 +1,15 @@
 <template>
   <main class="page site-main grid grid-cols-[repeat(16,_minmax(0,_1fr))]" v-if="pages">
-      <PageHeading :data="pages" />
-      <DelayHydration>
+      <PageHeading critical :data="pages" />
+      <NuxtLazyHydrate when-idle>
         <LazyPageCatRelacionadas :data="pages.acf" />
-      </DelayHydration>
-      <FormsPiceCita :titulo="`¿No encuentras tu cirugía?`" :portalId="String(pages.acf.formulario.portalid)" :formId="pages.acf.formulario.formid" />
-      <section class="quote font-base text-balance normal-case font-semibold py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid" >
-          <ElementsReveal :titulo="pages.acf.hero.texto_imagen" tag="div" />
-      </section>
-      <PageRecomendaciones :data="pages.acf" />
+        <FormsPiceCita v-if="pages.acf && pages.acf.formulario" :titulo="`¿No encuentras tu cirugía?`" :portalId="String(pages.acf.formulario.portalid)" :formId="pages.acf.formulario.formid" />
+        <div class="clear-both"></div>
+        <section v-if="pages.acf && pages.acf.hero && pages.acf.hero.texto_imagen" class="quote font-base text-balance normal-case font-semibold py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid" >
+            <ElementsReveal :titulo="pages.acf.hero.texto_imagen" tag="div" />
+        </section>
+        <PageRecomendaciones v-if="pages.acf" :data="pages.acf" />
+      </NuxtLazyHydrate>
   </main>
 </template>
 
@@ -21,9 +22,22 @@ const router = useRouter();
 const route = useRoute();
 
 // Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
-const { data: pages, refresh } = await useAsyncData(`pages-${route.params.slug}`, () => {
-  return getPage(route.params.slug);
-}, { watch: [() => route.params.slug], initialCache: false });
+const { data: pages, refresh } = await useAsyncData(
+  `pages-${route.params.slug}`,
+  async () => {
+    try {
+      const response = await getPage(route.params.slug);
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error(`Error fetching page ${route.params.slug}:`, error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  },
+  {
+    watch: [() => route.params.slug],
+    initialCache: false
+  }
+);
 
 watch(() => route.params.slug, async (newSlug, oldSlug) => {
   if (newSlug !== oldSlug) {

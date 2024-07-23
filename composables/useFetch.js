@@ -8,23 +8,18 @@ const JSON_URL = `${DOMAIN_URL}/wp-json`;
 
 export const getPage = async (identifier) => {
     // Determina si el identificador es un slug (string) o un ID (number)
-    const isSlug = isNaN(identifier);
+    const isSlug = isNaN(Number(identifier));
     const endpoint = isSlug ? `pages?slug=${identifier}` : `pages/${identifier}`;
 
     const url = `${JSON_URL}/wp/v2/${endpoint}`;
     
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            // Lanza un error con el estado de la respuesta para un manejo de errores más específico
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
         // Si el identificador es un slug, la respuesta será un arreglo, así que devuelve el primer elemento
         return isSlug ? (data[0] || null) : (data || null);
     } catch (error) {
@@ -52,16 +47,12 @@ export const getPosts = async ({ page = 1, perPage = 100, slug = null, categoryI
     const url = `${JSON_URL}/${endpoint}${queryParameters}`;
 
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
         // Devuelve el primer elemento si se busca por slug, ya que es único
         return slug ? data[0] : data;
     } catch (error) {
@@ -69,6 +60,7 @@ export const getPosts = async ({ page = 1, perPage = 100, slug = null, categoryI
         throw error;
     }
 };
+
 
 // ***************************************************************************************************
 // Función unificada para obtener menús
@@ -78,16 +70,13 @@ export const getMenu = async (menuName) => {
     const url = `${JSON_URL}/menus/v1/menus/${menuName}`;
 
     try {
-        const response = await fetch(url, {
+        const response = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return await response.json();
+        return response;
     } catch (error) {
         console.error("Fetch error: ", error);
         throw error;
@@ -110,17 +99,12 @@ export const getClinicas = async ({ page = 1, perPage = 100, slug = null } = {})
     const url = `${JSON_URL}/${endpoint}${queryParameters}`;
 
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            // Lanza un error si la respuesta no es exitosa
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
         // Devuelve el primer elemento si se busca por slug, ya que es único
         return slug ? data[0] : data;
     } catch (error) {
@@ -136,6 +120,7 @@ export const getClinicas = async ({ page = 1, perPage = 100, slug = null } = {})
 export const getTestimonios = async ({ page = 1, perPage = 100, slug = null, categories = false } = {}) => {
     let endpoint = 'wp/v2';
     const timestamp = new Date().getTime();
+
     // Si se solicitan las categorías de testimonios
     if (categories) {
         endpoint += '/categoria-opinion';
@@ -147,16 +132,12 @@ export const getTestimonios = async ({ page = 1, perPage = 100, slug = null, cat
     const url = `${JSON_URL}/${endpoint}`;
 
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
         // Devuelve el primer elemento si se busca por slug, ya que debería ser único
         return slug ? data[0] : data;
     } catch (error) {
@@ -181,16 +162,12 @@ export const getTratamiento = async ({ id = null, slug = null } = {}) => {
     const url = `${JSON_URL}/${endpoint}${queryParameters}`;
 
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
         // Devuelve el primer elemento si se busca por slug, ya que se espera que sea único
         return slug ? data[0] : data;
     } catch (error) {
@@ -207,16 +184,13 @@ export const getEspecialidades = async () => {
     const url = `${JSON_URL}/wp/v2/especialidad`;
 
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return await response.json();
+        return data;
     } catch (error) {
         console.error("Fetch error: ", error);
         throw error;
@@ -238,22 +212,18 @@ export const getReviews = async ({ slug }) => {
     }
 
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return await response.json();
+        return data;
     } catch (error) {
         console.error("Fetch error: ", error);
         throw error;
     }
 };
-
 
 // ***************************************************************************************************
 // Función para obtener miembros del equipo, con soporte para paginación
@@ -271,16 +241,12 @@ export const getEquipo = async ({ page = 1, perPage = 100, slug = null } = {}) =
     const url = `${JSON_URL}/${endpoint}${queryParameters}`;
 
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
         // Devuelve el primer elemento si se busca por slug, ya que se espera que sea único
         return slug ? data[0] : data;
     } catch (error) {
@@ -297,22 +263,19 @@ export const getLanding = async (slug) => {
     const url = `${JSON_URL}/wp/v2/landing?slug=${slug}`;
 
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
         return data[0]; // Asume que el slug es único y devuelve el primer elemento
     } catch (error) {
         console.error("Fetch error: ", error);
         throw error;
     }
 };
+
 
 // ***************************************************************************************************
 // Función para obtener ajustes de Egos por nombre
@@ -322,21 +285,19 @@ export const egosSettings = async (name) => {
     const url = `${JSON_URL}/wp/v1/options/settings?name=${name}`;
 
     try {
-        const response = await fetch(url, {
+        const data = await $fetch(url, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return await response.json();
+        return data;
     } catch (error) {
         console.error("Fetch error: ", error);
         throw error;
     }
 };
+
 
 // ***************************************************************************************************
 // Función para obtener datos de TikTok

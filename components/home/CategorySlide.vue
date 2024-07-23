@@ -23,7 +23,7 @@
 
                 <div class="flex gap-2">
                   <div class="desde !text-gold-3 text-clamp-base drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline [&>span]:text-red-600 [&>span]:opacity-50" 
-                    v-if="category.acf.precio_desde" 
+                    v-if="category.acf && category.acf.precio_desde" 
                     v-html="category.acf.precio_desde"
                   ></div>
                   <div class="desde !text-gold-3 text-clamp-base drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline" 
@@ -38,7 +38,7 @@
                 <h3 class="h6 text-center uppercase text-clamp-sm font-semibold mb-0">{{ category.title.rendered }}</h3>
 
                 <p class="desde !text-gold-3 text-clamp-base drop-shadow lowercase font-normal mb-0" 
-                  v-if="category.acf.precio_desde" 
+                  v-if="category.acf && category.acf.precio_desde" 
                   v-html="category.acf.precio_desde"
                 ></p>
                 <div v-html="category.excerpt.rendered" class="[&>p]:text-sm [&>p]:mb-0 [&>p]:text-center [&>p]:text-balance"></div>

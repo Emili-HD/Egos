@@ -10,6 +10,7 @@
         :aria-labelledby="'post-title-' + post.id"
       >
         <nuxt-link
+          v-if="post.title && post.title.rendered"
           :to="`/blog/${post.slug}`"
           :aria-label="
             post.title ? 'Leer más sobre ' + post.title.rendered : 'Leer más'
@@ -27,7 +28,7 @@
             :alt="post.featured_image_data ? post.featured_image_data.alt : ''"
             :aria-labelledby="'post-title-' + post.id"
           />
-          <h2 v-if="post.title" :id="'post-title-' + post.id" class="h6">
+          <h2 v-if="post.title && post.title.rendered" :id="'post-title-' + post.id" class="h6">
             {{ post.title.rendered }}
           </h2>
         </nuxt-link>

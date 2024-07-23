@@ -5,7 +5,7 @@
             class="influencer bg-white rounded-xl overflow-hidden w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33%-1rem)] xl:w-[calc(20%-1rem)] shadow-2xl">
             <a :href="influencer.url_del_enlace" target="_blank" rel="noopener noreferrer">
                 <div class="flex gap-2 items-center justify-start p-4">
-                    <NuxtImg :src="influencer.icono_influencer" :alt="`Icono de ${influencer.texto_del_enlace}`"
+                    <img :src="influencer.icono_influencer" :alt="`Icono de ${influencer.texto_del_enlace}`"
                         width="32" height="32" class="rounded-full" />
                     <p class="mb-0">{{ influencer.texto_del_enlace }}</p>
                 </div>

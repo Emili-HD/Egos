@@ -30,11 +30,10 @@
 import { ref, watch, nextTick } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getTestimonios } from '@/composables/useFetch';
-import ScrollTrigger from 'gsap/ScrollTrigger';
 
 const router = useRouter();
 const route = useRoute();
-const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
+const { $gsap: gsap, $lenis: lenis, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 // Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
 const { data: casoreal, refresh } = await useAsyncData(`casoreal-${route.params.slug}`, () => {

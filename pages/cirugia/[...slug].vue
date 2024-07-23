@@ -1,7 +1,7 @@
 <template>
   <main class="site-main" v-if="tratamiento" ref="componentRef">
     <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
-      <CirugiasEncabezado :data="tratamiento" />
+      <CirugiasEncabezado critical :data="tratamiento" />
       <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
 
       <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
@@ -23,20 +23,20 @@
         <CirugiasFormSection :data="tratamiento.acf" />
       </div>
     </section>
-    <DelayHydration>
+    <NuxtLazyHydrate when-idle>
       <ClientOnly>
         <LazyCirugiasRelatedTreatments :treatmentsData="tratamiento.acf"
           :relatedId="tratamiento.acf.cirugias_relacionadas" :category="category" />
       </ClientOnly>
-    </DelayHydration>
+    </NuxtLazyHydrate>
     <section class="oferta__form py-12 xl:py-24 mb-0" v-for="setting in form.form_settings" :key="setting.formid">
       <div class="oferta" v-if="setting.ubicacion === 'oferta'">
         <FormsOferta :data="setting" :portalId="setting.portalid" :formId="setting.formid" />
       </div>
     </section>
-    <DelayHydration>
+    <NuxtLazyHydrate when-idle>
       <LazyCirugiasRelatedPosts :treatmentsData="tratamiento.acf" />
-    </DelayHydration>
+    </NuxtLazyHydrate>
   </main>
 </template>
 
@@ -86,13 +86,34 @@ const observeDOM = () => {
   }
 };
 
-const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(`tratamiento-${route.params.slug}`, () => {
-  return getTratamiento({ slug: route.params.slug });
-}, { watch: [() => route.params.slug], initialCache: false });
+const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(
+  `tratamiento-${route.params.slug}`,
+  async () => {
+    try {
+      const response = await getTratamiento({ slug: route.params.slug });
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error(`Error fetching tratamiento ${route.params.slug}:`, error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  },
+  { 
+    watch: [() => route.params.slug]
+  }
+);
+const { data: formData, refresh: refreshFormData } = await useAsyncData(
+  'formSettings',
+  async () => {
+    try {
+      const response = await egosSettings('form_settings');
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error('Error fetching form settings:', error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  }
+);
 
-const { data: formData, refresh: refreshFormData } = await useAsyncData('formSettings', () => {
-  return egosSettings('form_settings');
-}, { initialCache: false });
 
 const isLoading = ref(false);
 const errorMessage = ref("");

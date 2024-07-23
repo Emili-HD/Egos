@@ -15,8 +15,8 @@
               />
           </picture>
           <div class="category__title bg-nude-8/90 transform-[translateZ(0)] will-change-transform flex flex-col justify-end items-center gap-4 bottom-2 p-6 absolute w-[calc(100%-1rem)] m-auto left-0 right-0 rounded-xl overflow-hidden">
-              <h3 class="h6 text-center uppercase text-clamp-sm font-semibold mb-0">{{ category.title.rendered }}</h3>
-              <div v-html="category.excerpt.rendered" class="[&>p]:text-sm [&>p]:mb-0 [&>p]:text-center [&>p]:text-balance"></div>
+              <h3 v-if="category.title && category.title.rendered" class="h6 text-center uppercase text-clamp-sm font-semibold mb-0">{{ category.title.rendered }}</h3>
+              <div v-if="category.excerpt && category.excerpt.rendered" v-html="category.excerpt.rendered" class="[&>p]:text-sm [&>p]:mb-0 [&>p]:text-center [&>p]:text-balance"></div>
               <div class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</div>
           </div>
       </nuxt-link>

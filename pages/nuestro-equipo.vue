@@ -19,8 +19,7 @@
     <div class="team__form fixed size-full z-[999999] bg-blue-1/50 flex flex-col justify-center items-center" v-if="showPopup">
         <div class="close absolute top-4 right-4 md:top-24 md:right-12 cursor-pointer z-10" @click="closePopup">
             <svg class="close-icon size-16 fill-nude-8" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M777.856 280.192l-33.92-33.952-231.872 231.872-231.84-231.872-33.984 33.888 231.872 231.904-231.84 231.84 33.888 33.984 231.904-231.904 231.84 231.872 33.952-33.888-231.872-231.904z" />
+                <path d="M777.856 280.192l-33.92-33.952-231.872 231.872-231.84-231.872-33.984 33.888 231.872 231.904-231.84 231.84 33.888 33.984 231.904-231.904 231.84 231.872 33.952-33.888-231.872-231.904z" />
             </svg>
         </div>
         <!-- <FormsCirugia v-if="pages && pages.acf" :identificador="'topPage'" :portalId="String(pages.acf.portalid)" :formId="pages.acf.formid" /> -->
@@ -83,9 +82,9 @@
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import { useAsyncData } from 'nuxt/app';
 import { getEspecialidades, getPage, getEquipo } from '@/composables/useFetch';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+// import ScrollTrigger from 'gsap/ScrollTrigger';
 
-const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
+const { $gsap: gsap, $lenis: lenis, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 // Estados reactivos
 const panelVisible = ref(false);
@@ -114,9 +113,46 @@ const categories = computed(() => {
 });
 
 // Obtener datos
-const { data: especialidades, error: especialidadesError } = await useAsyncData('especialidades', getEspecialidades, {initialCache: false});
-const { data: pages, error: paginaError } = await useAsyncData('paginaEspecial', () => getPage(562), {initialCache: false});
-const { data: doctor, error: equipoError } = await useAsyncData('equipo', () => getEquipo({ perPage: 100 }), {initialCache: false});
+const { data: especialidades, error: especialidadesError } = await useAsyncData(
+  'especialidades',
+  async () => {
+    try {
+      const response = await getEspecialidades();
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error('Error fetching especialidades:', error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  },
+  { initialCache: false }
+);
+const { data: pages, error: paginaError } = await useAsyncData(
+  'paginaEspecial',
+  async () => {
+    try {
+      const response = await getPage(562);
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error('Error fetching pagina especial:', error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  },
+  { initialCache: false }
+);
+const { data: doctor, error: equipoError } = await useAsyncData(
+  'equipo',
+  async () => {
+    try {
+      const response = await getEquipo({ perPage: 100 });
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error('Error fetching equipo:', error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  },
+  { initialCache: false }
+);
+
 
 const doctorByCategory = (categoryId) => {
     return doctor.value.filter((d) => d.especialidad.includes(categoryId));

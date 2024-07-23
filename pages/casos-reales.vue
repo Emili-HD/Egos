@@ -53,7 +53,6 @@
       </div>
 
       <section class="bg-blue-1 p-12 xl:p-24 mb-0" v-if="pages.acf">
-        <!-- <FormsCirugia :identificador="'formulario'" :portalId="String(pages.acf.portalid)" :formId="pages.acf.formid" /> -->
         <FormsCustomForm :identificador="'formulario'" :portalId="String(pages.acf.portalid)" :formId="pages.acf.formid" />
       </section>
 
@@ -71,14 +70,49 @@ const { $gsap: gsap } = useNuxtApp();
 const categoriasSeleccionadas = ref({});
 
 // Cargar testimonios
-const { data: testimonios, error: testimoniosError } = await useAsyncData('testimonios', () => getTestimonios({ page: 1, perPage: 100 }));
+const { data: testimonios, error: testimoniosError } = await useAsyncData(
+  'testimonios',
+  async () => {
+    try {
+      const response = await getTestimonios({ page: 1, perPage: 100 });
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error('Error fetching testimonios:', error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  }
+);
 
 // Cargar página específica (p.ej., la información de la página de testimonios)
-const pageId = 16851; // Asume que este es el ID de tu página de testimonios
-const { data: pages, error: pagesError } = await useAsyncData(`page-${pageId}`, () => getPage(pageId), { initialCache: false });
+const pageId = 16851; // ID página de testimonios
+const { data: pages, error: pagesError } = await useAsyncData(
+  `page-${pageId}`,
+  async () => {
+    try {
+      const response = await getPage(pageId);
+      return response || {}; 
+    } catch (error) {
+      console.error(`Error fetching page ${pageId}:`, error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  },
+  { initialCache: false }
+);
+
 
 // Cargar categorías de testimonios
-const { data: categorias, error: categoriasError } = await useAsyncData('categoriasTestimonios', () => getTestimonios({ categories: true }));
+const { data: categorias, error: categoriasError } = await useAsyncData(
+  'categoriasTestimonios',
+  async () => {
+    try {
+      const response = await getTestimonios({ categories: true });
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error('Error fetching categorias:', error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  }
+);
 
 const removeAccents = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");

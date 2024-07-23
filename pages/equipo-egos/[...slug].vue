@@ -23,9 +23,9 @@
       <section class="col-[2/-2] lg:col-start-2 lg:col-span-10 bg-transparent min-h-max">
         <DoctorResenas :data="reviews" :name="doctor.title.rendered" />
       </section>
-      <DelayHydration>
+      <NuxtLazyHydrate when-idle>
         <LazyElementsReviews :ruta="route.params.slug[1]" />
-      </DelayHydration>
+      </NuxtLazyHydrate>
     </div>
     <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20" v-if="doctor && doctor.acf">
       <!-- <FormsCirugia :identificador="'formulario'" :portalId="String(doctor.acf.portalid)" :formId="doctor.acf.formid" /> -->
@@ -38,12 +38,12 @@
 import { watch, onMounted, nextTick } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getEquipo, getReviews } from '@/composables/useFetch';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+// import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useScrollStore } from '@/stores/scrollStore';
 
 const router = useRouter();
 const route = useRoute();
-const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
+const { $gsap: gsap, $lenis: lenis, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 // Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
 const { data: doctor, refresh: refreshDoctor } = await useAsyncData(`doctor-${route.params.slug}`, () => {

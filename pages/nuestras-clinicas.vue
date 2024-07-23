@@ -6,6 +6,7 @@
       aria-labelledby="page-title"
     >
       <ElementsEncabezado
+        critical
         class="flex flex-col justify-end items-start min-h-[60vh] xl:min-h-[100vh] overflow-hidden bg-nude-6 bg-center bg-cover"
         :data="pages"
       />

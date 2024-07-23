@@ -7,7 +7,7 @@
       </div>
 
       <div class="antesdespues__content flex flex-col xl:flex-row justify-between items-start gap-24 w-full p-0">
-         <div class="antesdespues__content-images text-center w-full flex flex-row xl:flex-col gap-0 flex-wrap"
+         <div class="antesdespues__content-images text-center w-full flex flex-row xl:flex-col gap-0 flex-wrap max-w-[28vw]"
             v-for="elem in data.antes_despues.cirugias_relacionadas">
             <h5 class="antesdespues__content-images-title w-full xl:w-auto my-4">{{ elem.cirugia }}</h5>
             <figure

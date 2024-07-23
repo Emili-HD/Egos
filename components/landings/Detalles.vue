@@ -6,13 +6,13 @@
       </div>
       <div class="consejos p-12 xl:py-40 xl:px-20 flex flex-col xl:flex-row justify-center items-center xl:items-start w-full xl:w-1/2 gap-8" ref="detalles">
          <figure class="icon text-center w-[min(16rem,50vw)]" v-for="icons in data.detalles.consejo" :key="icons.id">
-            <NuxtImg loading="lazy" class="bg-nude-5 p-7 mb-4 rounded-2xl w-full" :src="icons.icono.url" alt="" width="220" height="220"/>
+            <img loading="lazy" class="bg-nude-5 p-7 mb-4 rounded-2xl w-full" :src="icons.icono.url" alt="" width="220" height="220"/>
             <figcaption v-html="icons.texto_icono"></figcaption>
          </figure>
       </div>
       <div class="bg__detalles py-5 px-3 w-1/2 hidden md:flex flex-col items-center">
          <figure class="bg__detalles-img w-3/4 overflow-hidden h-screen/70 rounded-2xl">
-            <NuxtImg loading="lazy" class="absolute object-cover object-center h-full w-full" 
+            <img loading="lazy" class="absolute object-cover object-center h-full w-full" 
                :src="data.detalles.imagen_avalados.url" 
                :srcset="data.detalles.imagen_avalados.srcset" 
                :alt="data.detalles.imagen_avalados.alt" 

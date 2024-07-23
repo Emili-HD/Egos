@@ -2,23 +2,25 @@
   <div v-if="error">Error al cargar los datos: {{ error }}</div>
   <main v-else class="site-main" v-if="home">
       <HomeWellcome critical :data="home" />
-      <DelayHydration>
+      <NuxtLazyHydrate when-idle>
         <LazyHomeCategories :data="home" />
-      </DelayHydration>
-      <ElementsHablan :data="home.acf" />
+      </NuxtLazyHydrate>
+      <NuxtLazyHydrate when-idle>
+        <ElementsHablan :data="home.acf" />
+      </NuxtLazyHydrate>
       <HomeTestimonios />
-      <DelayHydration>
+      <NuxtLazyHydrate when-idle>
         <LazyFormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid"/>
-      </DelayHydration>
-      <DelayHydration>
+      </NuxtLazyHydrate>
+      <NuxtLazyHydrate when-idle>
         <LazyHomeAcordeon :data="home.acf.acordeon_cirugias" />
-      </DelayHydration>
-      <DelayHydration>
+      </NuxtLazyHydrate>
+      <NuxtLazyHydrate when-idle>
         <LazyHomeEspecialists />
-      </DelayHydration>
-      <DelayHydration>
+      </NuxtLazyHydrate>
+      <NuxtLazyHydrate when-idle>
         <ElementsInfluencers />
-      </DelayHydration>
+      </NuxtLazyHydrate>
   </main>
 </template>
 

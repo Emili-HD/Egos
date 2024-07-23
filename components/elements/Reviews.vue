@@ -61,17 +61,8 @@ watchEffect(() => {
     newReview.value.publicar_en = props.ruta;
 });
 
-const { executeRecaptcha } = useGoogleRecaptcha()
 
 const submitReview = async () => {
-    // Ejecuta reCAPTCHA para obtener el token
-    const token = await executeRecaptcha('submitReview')
-
-    // Asegúrate de que el token de reCAPTCHA se obtuvo correctamente
-    if (!token) {
-        alert('Error al obtener la validación de reCAPTCHA.')
-        return // Detiene la ejecución si no hay token
-    }
 
     // Define la URL de tu endpoint de WordPress para el CPT 'reviews'
     const apiUrl = 'https://test.clinicaegos.com/wp-json/wp/v2/review'
@@ -87,7 +78,6 @@ const submitReview = async () => {
             publicar_en: newReview.value.publicar_en,
         },
         status: 'pending',
-        'g-recaptcha-response': token // Incluye el token de reCAPTCHA en tu solicitud
     })
 
     try {

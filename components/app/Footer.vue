@@ -51,9 +51,43 @@ import { useAsyncData } from 'nuxt/app'
 import { getMenu } from '@/composables/useFetch'
 
 // Uso de useAsyncData para cargar los menús de manera asincrónica
-const { data: footerMenuData, error: footerMenuError } = await useAsyncData(() => getMenu('menu-footer'));
-const { data: socialMenuData, error: socialMenuError } = await useAsyncData(() => getMenu('social'));
-const { data: legalMenuData, error: legalMenuError } = await useAsyncData(() => getMenu('textos-legales'));
+const { data: footerMenuData, error: footerMenuError } = await useAsyncData(
+  'menu-footer',
+  async () => {
+    try {
+      const response = await getMenu('menu-footer');
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error('Error fetching footer menu:', error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  }
+);
+const { data: socialMenuData, error: socialMenuError } = await useAsyncData(
+  'social-menu',
+  async () => {
+    try {
+      const response = await getMenu('social');
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error('Error fetching social menu:', error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  }
+);
+const { data: legalMenuData, error: legalMenuError } = await useAsyncData(
+  'textos-legales',
+  async () => {
+    try {
+      const response = await getMenu('textos-legales');
+      return response || {}; // Asegurarse de que siempre se retorne un objeto
+    } catch (error) {
+      console.error('Error fetching legal menu:', error);
+      return {}; // En caso de error, retornar un objeto vacío
+    }
+  }
+);
+
 
 // Función auxiliar para resolver URLs
 const resolveUrl = (slug) => {

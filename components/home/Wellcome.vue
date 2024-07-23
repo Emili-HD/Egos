@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 import {TextPlugin} from 'gsap/TextPlugin'
 
@@ -96,9 +96,22 @@ const cleanupAnimations = () => {
   timeouts.value = [];
 };
 
-onMounted( async () => {
-    // await animationMask();
-    await switchText()
+onMounted(async () => {
+    await nextTick()
+    const startAnimation = async () => {
+        // Remove event listeners to avoid multiple triggers
+        window.removeEventListener('mouseenter', startAnimation)
+        window.removeEventListener('click', startAnimation)
+        window.removeEventListener('touchstart', startAnimation)
+
+        // Start the animation
+        await switchText()
+    }
+
+    // Add event listeners for user interaction
+    window.addEventListener('mouseenter', startAnimation)
+    window.addEventListener('click', startAnimation)
+    window.addEventListener('touchstart', startAnimation)
 })
 
 onUnmounted(() => {

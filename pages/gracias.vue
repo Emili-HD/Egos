@@ -9,7 +9,7 @@
             <ul class="list-none !mb-0 flex flex-wrap flex-row justify-center items-center gap-4 lg:gap-8 w-screen px-8 lg:px-12">
                <li v-for="item in principalMenuData.items" :key="item.ID" class="aspect-[2/3] w-[47%] lg:w-[calc(100%/7-2rem)]" b>
                   <nuxt-link :to="resolveUrl(item.slug)" class="size-full flex justify-center items-end overflow-hidden rounded-xl  bg-blue-1/30">
-                        <NuxtImg :src="item.acf.icon" class="absolute object-cover object-center size-full aspect-[2/3] mix-blend-hard-light" />
+                        <img :src="item.acf.icon" class="absolute object-cover object-center size-full aspect-[2/3] mix-blend-hard-light" />
                         <span class="text-nude-8 font-normal">{{ item.title }}</span>
                   </nuxt-link>
                </li>
