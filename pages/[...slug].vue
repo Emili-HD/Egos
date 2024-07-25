@@ -3,11 +3,17 @@
       <PageHeading critical :data="pages" />
       <NuxtLazyHydrate when-idle>
         <LazyPageCatRelacionadas :data="pages.acf" />
+      </NuxtLazyHydrate>
+      <NuxtLazyHydrate when-idle>
         <FormsPiceCita v-if="pages.acf && pages.acf.formulario" :titulo="`¿No encuentras tu cirugía?`" :portalId="String(pages.acf.formulario.portalid)" :formId="pages.acf.formulario.formid" />
         <div class="clear-both"></div>
+      </NuxtLazyHydrate>
+      <NuxtLazyHydrate when-idle>
         <section v-if="pages.acf && pages.acf.hero && pages.acf.hero.texto_imagen" class="quote font-base text-balance normal-case font-semibold py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid" >
             <ElementsReveal :titulo="pages.acf.hero.texto_imagen" tag="div" />
         </section>
+      </NuxtLazyHydrate>
+      <NuxtLazyHydrate when-idle>
         <PageRecomendaciones v-if="pages.acf" :data="pages.acf" />
       </NuxtLazyHydrate>
   </main>

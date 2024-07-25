@@ -1,6 +1,7 @@
 <template>
     <div v-if="landingError">Error al cargar la Promoción.</div>
     <main v-else class="site-main landing-main" v-if="landing && landing.acf">
+        
         <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
             <a class="gold" href="#hubspotLanding" @click.passive="handleClick">Cita con el cirujano
             </a>
@@ -11,13 +12,14 @@
                 <div class="insignia mb-8 flex flex-row justify-center text-center">
                     <img class="max-w-[19rem]" loading="lazy" :src="landing.acf.insignia.url" alt="" />
                 </div>
-                <FormsCustomForm :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid"
-                    identificador="topPage" />
+                <FormsLanding :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" />
+                <!-- <FormsCustomForm v-else-if="landing.acf.form_type === 'Hubspot'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid"
+                    identificador="topPage" /> -->
             </div>
         </section>
 
         <LandingsDetalles :data="landing.acf" />
-        <LandingsAntesDespues :data="landing.acf" />
+        <LandingsAntesDespues :data="landing.acf" v-if="landing.acf && landing.acf.antes_despues.titulo_antesdespues" />
         <LandingsDestacado :data="landing.acf" />
         <LandingsPromociones :data="landing.acf" />
         <div v-if="landing.acf && landing.acf.quiz_multiple && landing.acf.quiz_multiple.multiple_forms" id="presupuesto"
@@ -48,7 +50,6 @@ const loadData = () => {
 
 // Función para cargar los datos
 const { data: landing, error: landingError, refresh } = await useAsyncData(`landing-${route.params.slug}`, loadData, { initialCache: false });
-
 
 // watch(
 //    () => route.params.slug,
@@ -127,12 +128,29 @@ useHead(() => {
             metaTags.push({ property: 'og:image:width', content: image.width.toString() });
             metaTags.push({ property: 'og:image:height', content: image.height.toString() });
         });
-    }
+    };
+
+    // const script = [
+    //   {
+    //     type: 'text/javascript',
+    //     innerHTML: `
+    //       window.dataLayer = window.dataLayer || [];
+    //       function gtag(){dataLayer.push(arguments);}
+    //       gtag('js', new Date());
+    //       gtag('config', '${landing.value.acf?.gtag_script}');
+    //     `
+    //   },
+    //   {
+    //     src: `https://www.googletagmanager.com/gtag/js?id=${landing.value.acf?.gtag_script}`,
+    //     async: true
+    //   }
+    // ]
 
     return {
         title: yoast.title || 'Título del Post',
         link: link,
         meta: metaTags,
+        // script: script,
     };
 });
 
@@ -173,6 +191,100 @@ onMounted(async () => {
 })
 </script>
 
-<style lang="scss" scoped>
-// empty style
+<style>
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0px 1000px #1C2C44 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.hs-form-field {
+    @apply text-white mt-6;
+}
+
+.hs-button {
+  @apply mt-8 bg-gold-2 text-nude-8 uppercase font-normal p-2 rounded-full cursor-pointer animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4;
+}
+
+.form-landing {
+  input, select {
+    @apply w-full flex py-2 px-4 text-white bg-transparent  border-b border-b-white/30 pointer-events-auto;    
+  }
+  select {
+    @apply  py-3 px-4;    
+  }
+}
+
+.hs-form-field input::placeholder {
+  @apply text-transparent opacity-0;
+}
+
+.hs-form-field:has(input[type=tel]::placeholder) {
+  @apply text-red-500;
+}
+
+
+.hs-form-field:has(input[type=text]:valid) > label,
+.hs-form-field:has(input[type=email]:valid) > label {
+  @apply -top-5;
+}
+.hs-phone:has(input[type=tel] + input[type=hidden]:not([value=""])) > label {
+  @apply text-transparent;
+}
+
+.hs-form-field > label {
+  @apply absolute top-2 block transition-all text-nude-8 pointer-events-none;
+}
+
+.hs-form-field input:focus,
+.hs-form-field select:focus {
+  @apply pb-2 border-b-2 outline-0;
+  border-image: linear-gradient(to right, #e2d9bf, #908057);
+  border-image-slice: 1;
+}
+
+.hs-form-field:has(input:focus) > label {
+  @apply text-nude-1 transition-all block absolute -top-5;
+}
+
+.is-windows .hs-form-field select option {
+    @apply text-blue-1;
+}
+
+.hs-form-field select.is-placeholder {
+    @apply text-transparent pl-48;
+}
+
+.hs_selecciona_la_clinica select,
+.hs_cirugias select {
+    @apply pl-48;
+}
+
+.hs-fieldtype-intl-phone.hs-input .hs-input {
+    @apply pl-0;
+}
+
+.legal-consent-container label {
+    @apply flex items-center;
+}
+.legal-consent-container label input {
+    @apply w-4;
+}
+.legal-consent-container label span,
+.legal-consent-container label span p {
+    @apply text-sm;
+}
+
+.hs-error-msgs {
+    @apply absolute top-2 right-0 text-red-600;
+}
 </style>

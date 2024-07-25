@@ -2,26 +2,32 @@
   <main class="site-main" v-if="tratamiento" ref="componentRef">
     <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
       <CirugiasEncabezado critical :data="tratamiento" />
-      <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
+      <NuxtLazyHydrate when-idle>
+        <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
+      </NuxtLazyHydrate>
 
-      <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
-        <div class="panels w-full">
-          <section :id="processAncla(content.ancla)"
-            class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8"
-            :class="content.fondo, content.opciones_listado" v-for="content in tratamiento.acf.tabs">
-            <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
-            <CirugiasTabla :contentData="content" />
-            <CirugiasColumnas :contentData="content" />
-            <LandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
-          </section>
-
-          <CirugiasFaqs :faqsData="tratamiento.acf" />
+      <NuxtLazyHydrate when-idle>
+        <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
+          <div class="panels w-full">
+            <section :id="processAncla(content.ancla)"
+              class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8"
+              :class="content.fondo, content.opciones_listado" v-for="content in tratamiento.acf.tabs">
+              <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
+              <CirugiasTabla :contentData="content" />
+              <CirugiasColumnas :contentData="content" />
+              <LandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
+            </section>
+  
+            <CirugiasFaqs :faqsData="tratamiento.acf" />
+          </div>
         </div>
-      </div>
+      </NuxtLazyHydrate>
 
-      <div class="form__page grid grid-cols-subgrid col-[1/-1] mb-12">
-        <CirugiasFormSection :data="tratamiento.acf" />
-      </div>
+      <NuxtLazyHydrate when-idle>
+        <div class="form__page grid grid-cols-subgrid col-[1/-1] mb-12">
+          <CirugiasFormSection :data="tratamiento.acf" />
+        </div>
+      </NuxtLazyHydrate>
     </section>
     <NuxtLazyHydrate when-idle>
       <ClientOnly>
@@ -29,11 +35,13 @@
           :relatedId="tratamiento.acf.cirugias_relacionadas" :category="category" />
       </ClientOnly>
     </NuxtLazyHydrate>
-    <section class="oferta__form py-12 xl:py-24 mb-0" v-for="setting in form.form_settings" :key="setting.formid">
-      <div class="oferta" v-if="setting.ubicacion === 'oferta'">
-        <FormsOferta :data="setting" :portalId="setting.portalid" :formId="setting.formid" />
-      </div>
-    </section>
+    <NuxtLazyHydrate when-idle>
+      <section class="oferta__form py-12 xl:py-24 mb-0" v-for="setting in form.form_settings" :key="setting.formid">
+        <div class="oferta" v-if="setting.ubicacion === 'oferta'">
+          <FormsOferta :data="setting" :portalId="setting.portalid" :formId="setting.formid" />
+        </div>
+      </section>
+    </NuxtLazyHydrate>
     <NuxtLazyHydrate when-idle>
       <LazyCirugiasRelatedPosts :treatmentsData="tratamiento.acf" />
     </NuxtLazyHydrate>

@@ -1,6 +1,6 @@
 <template>
     <div id="hubspotLanding" 
-          class="form-landing box-content form-after rounded-2xl w-auto max-w-full xl:w-full" v-once>
+          class="form-landing box-content form-after rounded-2xl m-auto w-auto max-w-full lg:w-[max(400px,40vw)] xl:w-[max(400px,35vw)] [&_h2]:text-balance [&_h2]:text-center [&_h2]:text-clamp-2xl" v-once>
     </div>
 </template>
 
