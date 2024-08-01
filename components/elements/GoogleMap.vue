@@ -34,7 +34,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { getClinicas } from '@/composables/useFetch'
+import { getClinicas } from '@/composables/useApi'
 const apiKey = useRuntimeConfig().public.googleMapsApiKey
 
 import { GoogleMap, Marker, CustomControl } from 'vue3-google-map'

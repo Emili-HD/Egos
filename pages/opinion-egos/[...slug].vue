@@ -1,8 +1,7 @@
 <template>
-
     <main class="site-main caso-real bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
-        <div class="caso-real__content col-[1/-1] lg:col-span-12 grid grid-cols-subgrid">
-            <header class="caso-real__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-10 group"
+        <div class="caso-real__content col-[1/-1] lg:col-span-11 grid grid-cols-subgrid">
+            <header class="caso-real__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
                 v-if="casoreal && casoreal.title">
                 <h1 class="">{{ casoreal.title.rendered }}</h1>
                 <div v-if="casoreal.acf.vimeo_video"
@@ -12,13 +11,12 @@
                     </div>
                 </div>
             </header>
-            <section
-                class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-10 row-start-2 py-8 lg:py-20"
+            <section class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="casoreal && casoreal.content">
                 <div v-html="casoreal.content.rendered"></div>
             </section>
         </div>
-        <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20 h-full"
+        <aside class="form__wrapper bg-blue-2 col-[1_/_span_16] lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20 h-full"
             v-if="casoreal && casoreal.acf">
             <FormsCustomForm :identificador="'formulario'" :portalId="String(casoreal.acf.formulario.portalid)"
                 :formId="casoreal.acf.formulario.formid" />
@@ -29,7 +27,8 @@
 <script setup>
 import { ref, watch, nextTick } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
-import { getTestimonios } from '@/composables/useFetch';
+import { getTestimonios } from '@/composables/useApi';
+
 
 const router = useRouter();
 const route = useRoute();

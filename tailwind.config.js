@@ -69,7 +69,7 @@ module.exports = {
       fontSize: {
         'clamp-2xs': "clamp(0.65rem, 0.6vw, 0.8rem)",
         'clamp-xs': "clamp(0.75rem, 0.7vw, 0.9rem)",
-        'clamp-sm': "clamp(0.875rem, 1vw, 1.125rem)",
+        'clamp-sm': "clamp(0.825rem, 0.95vw, 1rem)",
         'clamp-base': "clamp(1rem, 1.3vw, 1.5rem)",
         'clamp-lg': "clamp(1.3rem, 1.6vw, 1.8rem)",
         'clamp-xl': "clamp(1.6rem, 1.9vw, 2.1rem)",
@@ -80,8 +80,8 @@ module.exports = {
         'clamp-6xl': "clamp(3.1rem, 3.4vw, 3.7rem)",
       },
       fontFamily: {
-        canela: ['Canela', 'serif'],
-        geomanist: ['Geomanist', 'sans-serif'],
+        nunito: ['Nunito Sans', 'sans-serif'],
+        lora: ['Lora', 'serif'],
       },
       spacing: {
         'screen/95': '95vh',

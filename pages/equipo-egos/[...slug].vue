@@ -1,9 +1,9 @@
 <template>
 
   <main class="site-main doctor bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
-    <div class="doctor__content col-[1/-1] lg:col-span-12 grid grid-cols-subgrid w-fit min-h-fit">
-      <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-10 group" v-if="doctor && doctor.title">
-        <h1 class="">{{ doctor.title.rendered }}</h1>
+    <div class="doctor__content col-[1/-1] lg:col-span-11 grid grid-cols-subgrid w-fit min-h-fit">
+      <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group" v-if="doctor && doctor.title">
+        <h1 class="font-lora">{{ doctor.title.rendered }}</h1>
         <div v-if="doctor.featured_image_data"
           class="doctor__media col-start-2 col-span-10 flex flex-row justify-center items-start">
           <div class="w-full bg-nude-5 h-[max(400px,_65vh)] rounded-2xl overflow-hidden">
@@ -17,17 +17,17 @@
           </div>
         </div>
       </header>
-      <section class="doctor__description lg:col-start-2 col-[2_/_span_14] lg:col-span-10 row-start-2 py-8 lg:py-20"  v-if="doctor && doctor.content">
-        <div v-html="doctor.content.rendered"></div>
+      <section class="doctor__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"  v-if="doctor && doctor.content">
+        <div class="[&p]:font-nunito" v-html="doctor.content.rendered"></div>
       </section>
-      <section class="col-[2/-2] lg:col-start-2 lg:col-span-10 bg-transparent min-h-max">
-        <DoctorResenas :data="reviews" :name="doctor.title.rendered" />
+      <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max">
+        <LazyDoctorResenas :data="reviews" :name="doctor.title.rendered" />
       </section>
       <NuxtLazyHydrate when-idle>
         <LazyElementsReviews :ruta="route.params.slug[1]" />
       </NuxtLazyHydrate>
     </div>
-    <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20" v-if="doctor && doctor.acf">
+    <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20" v-if="doctor && doctor.acf">
       <!-- <FormsCirugia :identificador="'formulario'" :portalId="String(doctor.acf.portalid)" :formId="doctor.acf.formid" /> -->
       <FormsCustomForm :identificador="'formulario'" :portalId="String(doctor.acf.portalid)" :formId="doctor.acf.formid" />
     </aside>
@@ -37,9 +37,9 @@
 <script setup>
 import { watch, onMounted, nextTick } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
-import { getEquipo, getReviews } from '@/composables/useFetch';
-// import ScrollTrigger from 'gsap/ScrollTrigger';
+import { getEquipo, getReviews } from '@/composables/useApi';
 import { useScrollStore } from '@/stores/scrollStore';
+
 
 const router = useRouter();
 const route = useRoute();

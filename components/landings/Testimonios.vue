@@ -34,31 +34,15 @@ const props = defineProps({
 <style lang="scss" scoped>
 :deep(.divider) {
    .sLogo {
-      fill: var(--nude-8);
-   }
-
-   &::after {
-      background-color: var(--nude-8);
+      @apply fill-nude-8 after:bg-nude-8;
    }
 }
 
 .testimonios {
-   min-height: var(--full-height);
-   background-color: var(--blue-1);
-   color: var(--nude-8);
-   display: flex;
-   flex-direction: column;
-   align-items: center;
+   @apply min-h-screen bg-blue-1 text-nude-8 flex flex-col items-center;
 
    &__header {
-      width: 100%;
-      text-align: center;
-
-      @media (max-width: 767px) {
-         h2 {
-            font-size: calc(var(--font-size) * 2.5);
-         }
-      }
+      @apply w-full text-center;
    }
 
    &__videos {

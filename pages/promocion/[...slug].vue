@@ -38,7 +38,7 @@
 <script setup>
 import { watch, onMounted } from 'vue';
 import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
-import { getLanding } from '@/composables/useFetch';
+import { getLanding } from '@/composables/useApi';
 
 const router = useRouter();
 const route = useRoute();

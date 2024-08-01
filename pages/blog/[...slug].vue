@@ -8,7 +8,7 @@
                     :srcset="post.featured_image_data.srcset" :alt="post.featured_image_data.alt"
                     :aria-labelledby="'post-title-' + post.id" />
                 <h1 v-if="isCritical"
-                    class="text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10">{{
+                    class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10">{{
                         post.title.rendered }}</h1>
 
             </div>
@@ -21,7 +21,7 @@
                     :srcset="post.featured_image_data.srcset" :alt="post.featured_image_data.alt"
                     :aria-labelledby="'post-title-' + post.id" />
                 <h1 v-if="isCritical"
-                    class="text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 mt-20">
+                    class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 mt-20">
                     {{
                         post.title.rendered }}</h1>
 
@@ -37,14 +37,14 @@
                 </div>
             </aside>
 
-            <div class="breadcrumbs flex gap-4 px-4 divide-x divide-blue-1/50">
+            <div class="breadcrumbs flex gap-4 px-4 divide-x divide-blue-1/50 font-[nunito,_serif]">
                 <NuxtLink class="pl-4 mb-0 leading-3 font-normal" to="/">Inicio</NuxtLink>
                 <NuxtLink class="pl-4 mb-0 leading-3 font-normal" to="/blog/">Blog</NuxtLink>
                 <div class="pl-4 mb-0 leading-3 italic">{{ post.title.rendered }}</div>
             </div>
             <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
                 <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-3xl">
-                    <h4 class="nav-content-title h6 bg-nude-4 p-4">Tabla de contenidos</h4>
+                    <h4 class="font-[lora_sans-serif] nav-content-title h6 bg-nude-4 p-4">Tabla de contenidos</h4>
                     <ul class="pl-6 list-decimal">
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
                             v-for="(content, index) in post.acf.areas_de_contenido"
@@ -63,12 +63,12 @@
                 </aside>
 
                 <div class="post__content-areas p-0 xl:py-6 xl:px-10 col-[2/-2] xl:col-[4/13]">
-                    <div v-if="post.content.rendered" class="post__content-text pb-4" v-html="post.content.rendered">
+                    <div v-if="post.content.rendered" class="[&_h2]:font-lora [&_p]:font-nunito post__content-text pb-4" v-html="post.content.rendered">
                     </div>
                     <div class="post__content-text pb-4" v-for="(content, index) in post.acf.areas_de_contenido"
                         :id="`area-${index}`">
-                        <h2 class="area-title">{{ content.titulo_area }}</h2>
-                        <div v-html="content.contenido_area"></div>
+                        <h2 class="area-title font-lora">{{ content.titulo_area }}</h2>
+                        <div class="[&_p]:font-nunito" v-html="content.contenido_area"></div>
                         <div class="post__content-image" v-if="content.imagen_area.url">
                             <img loading="lazy" :src="content.imagen_area.url" :srcset="content.imagen_area.srcset"
                                 :width="content.imagen_area.width" :height="content.imagen_area.height"
@@ -79,17 +79,17 @@
                     <div id="recomendaciones" v-if="post.acf.post_description.titulo_recomendaciones"
                         class="post__content-text recomendaciones pb-6">
                         <div class="heading accordion__heading">
-                            <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0"
+                            <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0"
                                 v-html="post.acf.post_description.titulo_recomendaciones"></h2>
                             <div class="accordion__description pb-2"
                                 v-html="post.acf.post_description.descripcion_recomendaciones">
                             </div>
                         </div>
                         <div class="list accordion__list">
-                            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista"
+                            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-5 cursor-pointer separador-lista"
                                 v-for="item in post.acf.post_description.secciones_del_post" :key="item.post_subtitle">
-                                <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-                                    <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist text-clamp-base mb-0 !font-light"
+                                <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
+                                    <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 text-clamp-base mb-0 !font-light"
                                         v-html="item.post_subtitle"></div>
                                     <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                                         <path class="iconV" d="M 12,0 V 24" />
@@ -104,15 +104,15 @@
 
                     <div v-if="post.acf.post_faqs && post.acf.post_faqs.preguntas_frecuentes !== null" class="post__content-text faqs py-12" id="faqs">
                         <div class="heading accordion__heading">
-                            <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0"
+                            <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0"
                                 v-html="post.acf.post_faqs.titulo_faqs"></h2>
                         </div>
                         <div class="list accordion__list">
-                            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista"
+                            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-5 cursor-pointer separador-lista"
                                 v-for="contentido in post.acf.post_faqs.preguntas_frecuentes"
                                 :key="contentido.faq_subtitle">
-                                <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-                                    <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist text-clamp-base mb-0 !font-light"
+                                <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
+                                    <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 text-clamp-base mb-0 !font-light"
                                         v-html="contentido.faq_subtitle"></div>
                                     <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                                         <path class="iconV" d="M 12,0 V 24" />
@@ -135,7 +135,7 @@
                     </div>
 
                 </div>
-                <aside class="widgets bg-blue-1 p-6 col-[2/-2] xl:col-[13/17] rounded-3xl"
+                <aside class="widgets bg-blue-2 p-6 col-[2/-2] xl:col-[13/17] rounded-3xl"
                     v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
                     <div id="formulario" class="form__wrapper p-2 p-xs-6 ">
                         <FormsCustomForm v-if="post && post.acf" :identificador="'topPage'"
@@ -150,8 +150,9 @@
 <script setup>
 import { onMounted, watch } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
-import { getPosts } from '@/composables/useFetch';
+import { getPosts } from '@/composables/useApi';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 
 // Acceder a los parámetros de la ruta
 const router = useRouter();
@@ -320,35 +321,39 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .post__content-image {
         @apply rounded-xl overflow-hidden;
     }
     
-    .post__content-text a {
-        @apply font-medium text-blue-6;
-    }
+    .post__content-text {
+        a {
+            @apply font-medium text-blue-6;
+        }
 
-    .post__content-text h3 {
-        @apply font-geomanist text-clamp-lg font-normal;
-    }
-
-    .post__content-text iframe {
-        @apply w-full aspect-video h-fit my-6;
-    }
-
-    .post__content-text -areas {
-        @apply col-[4/13];
-
-        @media (max-width: 1024px) and (orientation: portrait) {
-            @apply col-[2/-2];
+        h3 {
+            @apply text-clamp-lg font-normal;
+        }
+        
+        iframe {
+            @apply w-full aspect-video h-fit my-6;
+        }
+    
+        &-areas {
+            @apply col-[4/13];
+    
+            @media (max-width: 1024px) and (orientation: portrait) {
+                @apply col-[2/-2];
+            }
         }
     }
+
     
     .post__content-text .faqs .accordion__heading,
     .post__content-text .faqs .accordion__list {
         @apply col-span-full;
     }
+
 
     .fullwidth .nav-content {
         @apply lg:col-span-6 xl:!col-start-2 xl:!col-span-4;

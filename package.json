@@ -13,11 +13,11 @@
   "dependencies": {
     "@ambitiondev/nuxt-cookiebot": "^3.2.1",
     "@hubspot/api-client": "^11.1.0",
+    "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/robots": "^4.0.2",
     "@pinia/nuxt": "^0.5.1",
     "nuxt-lazy-hydrate": "^1.0.0",
-    "pinia": "^2.1.7",
-    "vanilla-cookieconsent": "^3.0.1"
+    "pinia": "^2.1.7"
   },
   "devDependencies": {
     "@heroicons/vue": "^2.1.5",
@@ -28,16 +28,15 @@
     "@tailwindcss/typography": "^0.5.13",
     "gsap": "npm:@gsap/shockingly@^3.12.5",
     "iframe-resizer": "^4.4.5",
-    "lenis": "^1.1.6",
+    "lenis": "^1.1.9",
     "nuxt": "^3.12.4",
     "nuxt-booster": "^3.0.16",
     "nuxt-simple-robots": "^3.1.10",
     "nuxt-swiper": "^1.2.2",
     "sass": "^1.77.8",
-    "sass-loader": "^15.0.0",
-    "sitemap": "^8.0.0",
+    "sass-loader": "^16.0.0",
     "undici": "^6.19.4",
-    "vue": "^3.4.33",
+    "vue": "^3.4.35",
     "vue-router": "^4.4.0",
     "vue3-google-map": "^0.20.0"
   }

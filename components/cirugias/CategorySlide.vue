@@ -1,11 +1,11 @@
 <template>
   <div v-if="pending">Cargando...</div>
   <div v-else-if="error">Error al cargar los datos: {{ error }}</div>
-  <div v-else class="card rounded-3xl overflow-hidden" :class="props.classes">
-      <nuxt-link :to="processedLink" class="w-full h-full block" aria-label="Ver detalles de cirugía" v-if="category">
-          <picture class="h-[35.625rem] bg-nude-8 block min-h-full">
+  <div v-else class="card" :class="props.classes">
+      <nuxt-link :to="processedLink" class="w-full min-h-full block bg-nude-7 rounded-3xl p-2" aria-label="Ver detalles de cirugía" v-if="category">
+          <picture class="group aspect-square block rounded-2xl overflow-hidden mb-2">
               <img loading="lazy"
-                  class="size-full object-cover object-center"
+                  class="size-full object-cover object-center group-hover:scale-125 transition-transform duration-1000 ease-out"
                   v-if="category.featured_image_data"
                   :src="category.featured_image_data.url"
                   :srcset="category.featured_image_data.srcset"
@@ -14,10 +14,10 @@
                   height="570"
               />
           </picture>
-          <div class="category__title bg-nude-8/90 transform-[translateZ(0)] will-change-transform flex flex-col justify-end items-center gap-4 bottom-2 p-6 absolute w-[calc(100%-1rem)] m-auto left-0 right-0 rounded-xl overflow-hidden">
-              <h3 v-if="category.title && category.title.rendered" class="h6 text-center uppercase text-clamp-sm font-semibold mb-0">{{ category.title.rendered }}</h3>
-              <div v-if="category.excerpt && category.excerpt.rendered" v-html="category.excerpt.rendered" class="[&>p]:text-sm [&>p]:mb-0 [&>p]:text-center [&>p]:text-balance"></div>
-              <div class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</div>
+          <div class="category__title flex flex-col justify-end items-center gap-2 p-4 relative w-full m-auto">
+              <h3 v-if="category.title && category.title.rendered" class="h6 text-center text-clamp-base text-balance font-semibold mb-0 font-lora">{{ category.title.rendered }}</h3>
+              <div v-if="category.excerpt && category.excerpt.rendered" v-html="category.excerpt.rendered" class="[&>p]:text-clamp-sm [&>p]:mb-0 [&>p]:text-center [&>p]:font-nunito"></div>
+              <div class="button py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</div>
           </div>
       </nuxt-link>
   </div>
@@ -26,7 +26,8 @@
 <script setup>
 import { computed } from 'vue';
 import { useAsyncData } from 'nuxt/app';
-import { getTratamiento } from '@/composables/useFetch';
+import { getTratamiento } from '@/composables/useApi';
+
 
 // Definir props
 const props = defineProps({

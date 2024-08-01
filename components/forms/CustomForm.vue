@@ -5,7 +5,7 @@
     class="form-landing max-w-full w-[clamp(400px,_60vw,_600px)] m-auto"
   >
     <form @submit.prevent="handleSubmit" class="flex flex-col p-8 bg-nude-8/[0.025] border border-nude-8/[0.1] rounded-2xl">
-      <div v-for="group in formStructure.fieldGroups" :key="group.richText" class="[&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance">
+      <div v-for="group in formStructure.fieldGroups" :key="group.richText" class="[&_h2]:font-lora [&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance">
         <template v-if="group.fields && Array.isArray(group.fields)">
           <template v-for="field in group.fields" :key="field.name">
             <template v-if="field && !field.hidden">
@@ -364,12 +364,12 @@ label {
   color: #ffffff;
 }
 .button {
-  @apply mt-8 bg-gold-2 text-nude-8 uppercase font-normal p-2 rounded-full cursor-pointer animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4;
+  @apply mt-8 bg-gold-2 text-nude-8 uppercase font-normal p-2 rounded-full cursor-pointer animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4 font-nunito;
 }
 
 .form-landing {
   input, select {
-    @apply w-full flex py-2 px-4 text-white bg-transparent  border-b border-b-white/30 pointer-events-auto;    
+    @apply w-full flex py-2 px-4 text-white bg-transparent  border-b border-b-white/30 pointer-events-auto font-nunito;    
   }
 }
 
@@ -404,7 +404,7 @@ select:-webkit-autofill:focus {
 }
 
 .form__label {
-  @apply absolute -top-3 block transition-all text-nude-8 pointer-events-none;
+  @apply absolute -top-3 block transition-all text-nude-8 pointer-events-none font-nunito;
 }
 
 .form__field:focus {

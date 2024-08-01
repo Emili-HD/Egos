@@ -31,9 +31,7 @@
          :alt="contentData.side_image.alt" />
    </figure>
 
-   <div
-      class="panel__content col-[2/-2] lg:col-[10_/_span_6] has-[.accordion]:col-[2_/_span_6] row-start-2 lg:row-start-1 [#precio_&]:col-start-2 
-               [#precio_&]:lg:col-end-8 [#precio_&]:flex [#precio_&]:flex-col [#precio_&]:justify-center [#caso-real_&]:col-[2/-2] [#caso-real_&]:lg:col-[2/_span_6] [#caso-real_&]:self-center"
+   <div class="panel__content"
       v-if="contentData && contentData.opciones_listado != 'columnas' && contentData.opciones_listado != 'antesdespues'">
       <h2 class="text-clamp-2xl mb-8">{{ contentData.heading }}</h2>
       <div class="answer p-0">
@@ -52,6 +50,7 @@
 
 <script setup>
 
+
 // Props
 const props = defineProps({
    contentData: {
@@ -62,4 +61,24 @@ const props = defineProps({
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.panel__content {
+   @apply col-[2/-2] lg:col-[10_/_span_6] row-start-2 lg:row-start-1;
+
+   &:has(.accordion) {
+      @apply col-[2_/_span_6];
+   }
+
+   #precio & {
+      @apply col-start-2 lg:col-end-8 flex flex-col justify-center;
+   }
+
+   #caso-real & {
+      @apply col-[2/-2] lg:col-[2/_span_6] self-center;
+   }
+
+   #opciones & {
+      @apply col-[2/-2] lg:col-[5/_span_8] self-center;
+   }
+}
+</style>

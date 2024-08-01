@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-// Props
+
 const props = defineProps({
    detallesData: {
       type: Array,

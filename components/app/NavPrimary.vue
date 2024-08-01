@@ -336,6 +336,10 @@ const props = defineProps({
 </script>
 
 <style>
+.header-nav * {
+    @apply font-nunito font-normal;
+}
+
 .is-desktop:not(.is-ipad-pro, .is-tablet) .egos-header {
     .nav-categories {
         @apply bg-white rounded-bl-xl rounded-tl-xl px-8 flex flex-col justify-center items-stretch w-fit;
@@ -420,8 +424,9 @@ const props = defineProps({
                     }
 
                     .subsubmenu-child {
+                        @apply m-0;
                         .nav-link {
-                            @apply text-balance tracking-normal flex flex-col justify-end items-start text-nude-8 pt-2 py-1 text-clamp-sm;
+                            @apply text-balance tracking-normal flex flex-col justify-end items-start text-nude-8 py-1 text-clamp-sm;
                         }
                     }
                 }
@@ -429,7 +434,7 @@ const props = defineProps({
             }
 
             &>li {
-                @apply flex flex-col items-start justify-center gap-8 font-normal h-full;
+                @apply flex flex-col items-start justify-center gap-8 font-normal h-full mb-0;
             }
 
             &>li:hover span::before,
@@ -509,13 +514,9 @@ const props = defineProps({
 
                         &::after {
                             @apply text-gold-2 content-[attr(data-title)] uppercase inline-block font-normal align-middle text-clamp-base;
-                            /* font-size: calc(var(--font-size)*.9); */
                         }
 
                     }
-                    /* .menu-tab:has(.activo) {
-                        @apply justify-end
-                    } */
                 }
 
                 &>li:nth-child(2) {

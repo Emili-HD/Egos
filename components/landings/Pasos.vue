@@ -3,7 +3,8 @@
       <h2 class="pasos__title text-center mb-0 text-4xl">{{ data.pasos.titulo }}</h2>
       <ElementsDivider />
       <div class="pasos__list py-8 mb-8 grid grid-cols-1 xl:grid-cols-4 auto-rows-fr gap-4">
-         <div class="pasos__list-items p-8 xl:p-12 bg-nude-4 rounded-xl flex flex-row xl:flex-col justify-start items-center gap-6" v-for="items in data.pasos.listado_pasos">
+         <div class="pasos__list-items p-8 xl:p-12 bg-nude-4 rounded-xl flex flex-row xl:flex-col justify-start items-center gap-6" v-for="(items, index) in data.pasos.listado_pasos" :key="index">
+            <div class="absolute text-[240px] -left-4 -top-10 opacity-15 font-bold leading-none">{{ index + 1 }}</div>
             <div class="pasos__list-items-image w-20">
                <img loading="lazy" class="min-w-20" :src="items.icono.url" :alt="items.icono.alt" />
             </div>

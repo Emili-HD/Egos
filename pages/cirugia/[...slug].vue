@@ -1,9 +1,10 @@
 <template>
   <main class="site-main" v-if="tratamiento" ref="componentRef">
     <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
-      <CirugiasEncabezado critical :data="tratamiento" />
+      <CirugiasEncabezado :data="tratamiento" />
       <NuxtLazyHydrate when-idle>
         <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
+        <CirugiasEntryText :data="tratamiento" />
       </NuxtLazyHydrate>
 
       <NuxtLazyHydrate when-idle>
@@ -51,7 +52,7 @@
 <script setup>
 import { ref, onMounted, nextTick, watch } from 'vue'
 import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
-import { getTratamiento, egosSettings } from '@/composables/useFetch';
+import { getTratamiento, egosSettings } from '@/composables/useApi';
 
 const router = useRouter();
 const route = useRoute();

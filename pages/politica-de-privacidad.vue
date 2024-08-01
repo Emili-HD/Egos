@@ -10,7 +10,7 @@
 
 <script setup>
 import { useAsyncData } from 'nuxt/app';
-import { getPage } from '@/composables/useFetch'; // Asegúrate de que useFetch contiene la lógica actualizada para fetch
+import { getPage } from '@/composables/useApi'; // Asegúrate de que useFetch contiene la lógica actualizada para fetch
 
 const { data: legal, legalError } = await useAsyncData(() => getPage(16092))
 

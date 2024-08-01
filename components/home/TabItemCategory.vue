@@ -13,7 +13,7 @@
 
 <script setup>
 import { useAsyncData } from 'nuxt/app';
-import { getTratamiento } from '@/composables/useFetch';
+import { getTratamiento } from '@/composables/useApi';
 
 const props = defineProps({
   categoryId: Number,

@@ -3,7 +3,14 @@
   <main v-else class="site-main" v-if="home">
       <HomeWellcome critical :data="home" />
       <NuxtLazyHydrate when-idle>
-        <LazyHomeCategories :data="home" />
+        <LazyHomeCategories 
+          v-if="home.acf.tratamientos_home.categorias_home"
+          :data="home.acf.tratamientos_home" 
+          sectionId="tratamientos" />
+        <LazyHomeCategories 
+          v-if="home.acf.ofertas_cirugias_home.categorias_home"
+          :data="home.acf.ofertas_cirugias_home" 
+          sectionId="ofertas-cirugias" />
       </NuxtLazyHydrate>
       <NuxtLazyHydrate when-idle>
         <ElementsHablan :data="home.acf" />
@@ -27,7 +34,7 @@
 <script setup>
 import { onMounted, computed } from 'vue';
 import { useAsyncData } from 'nuxt/app'
-import { getPage } from '@/composables/useFetch';
+import { getPage } from '@/composables/useApi';
 
 const { data: home, error } = await useAsyncData(() => getPage(8), {initialCache: false})
 const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);

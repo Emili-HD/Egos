@@ -18,7 +18,7 @@
                                     <template v-if="field.fieldType === 'radio'">
                                         <div class="form__group field flex flex-wrap justify-center gap-x-6 !pt-0">
                                             <label
-                                                class="form__label w-full !relative text-clamp-xl leading-none text-center">{{
+                                                class="form__label w-full !relative text-clamp-xl leading-none text-center font-nunito">{{
                                                 field.label }}</label>
                                             <p class="w-full text-white mb-0 italic text-center">Selecciona una imagen
                                                 para continuar</p>
@@ -41,7 +41,7 @@
                                     <template v-else-if="field.fieldType === 'multiple_checkboxes'">
                                         <div class="form__group field flex flex-wrap justify-center gap-x-6 !pt-0">
                                             <label
-                                                class="form__label w-full !relative text-clamp-xl leading-none text-center">{{
+                                                class="form__label w-full !relative text-clamp-xl leading-none text-center font-nunito">{{
                                                 field.label }}</label>
                                             <p class="w-full text-white mb-0 italic text-center">Selecciona una imagen
                                                 para continuar</p>
@@ -51,10 +51,10 @@
                                                     :value="option.value" v-model="formData[field.name]"
                                                     :required="field.required"
                                                     :class="{ 'border-red-500': errors[field.name] }"
-                                                    class="form-check-input !size-3 !hidden"
+                                                    class="form-check-input !size-3 !hidden font-nunito"
                                                     @change="handleRadioChange" />
                                                 <label :for="option.value"
-                                                    class="form-check-label size-full aspect-square p-1 !text-blue-1 font-normal uppercase flex flex-col justify-end items-center cursor-pointer"
+                                                    class="form-check-label size-full aspect-square p-1 !text-blue-1 font-normal uppercase flex flex-col justify-end items-center cursor-pointer font-nunito"
                                                     :class="option.value">{{ option.label }}</label>
                                             </div>
                                             <p v-if="errors[field.name]" class="text-red-500 text-sm">{{
@@ -81,7 +81,7 @@
                                                     :required="field.required" :placeholder="field.label"
                                                     :class="{ 'border-red-500': errors[field.name] }"
                                                     class="form-input form__field" />
-                                                <label :for="field.name" class="form__label">{{ field.label }}</label>
+                                                <label :for="field.name" class="form__label font-nunito">{{ field.label }}</label>
                                                 <p v-if="errors[field.name]" class="text-red-500 text-sm">{{
                                                     errors[field.name] }}</p>
                                             </div>
@@ -93,7 +93,7 @@
                                                     :required="field.required" :placeholder="field.label"
                                                     :class="{ 'border-red-500': errors[field.name] }"
                                                     class="form-input form__field" />
-                                                <label :for="field.name" class="form__label">{{ field.label }}</label>
+                                                <label :for="field.name" class="form__label font-nunito">{{ field.label }}</label>
                                                 <p v-if="errors[field.name]" class="text-red-500 text-sm">{{
                                                     errors[field.name] }}</p>
                                             </div>
@@ -105,7 +105,7 @@
                                                     :class="{ 'border-red-500': errors[field.name] }"
                                                     class="form-input form__field"
                                                     @focus="addCountryPrefix(field.name)" />
-                                                <label :for="field.name" class="form__label">{{ field.label }}</label>
+                                                <label :for="field.name" class="form__label font-nunito">{{ field.label }}</label>
                                                 <p v-if="errors[field.name]" class="text-red-500 text-sm">{{
                                                     errors[field.name] }}</p>
                                             </div>
@@ -123,7 +123,7 @@
                                                         {{ option.label }}
                                                     </option>
                                                 </select>
-                                                <label :for="field.name" class="form__label">{{ field.label }}</label>
+                                                <label :for="field.name" class="form__label font-nunito">{{ field.label }}</label>
                                                 <p v-if="errors[field.name]" class="text-red-500 text-sm">{{
                                                     errors[field.name] }}</p>
                                             </div>
@@ -144,7 +144,7 @@
                                                             {{ option.label }}
                                                         </option>
                                                     </select>
-                                                    <label :for="subField.dependentField.name" class="form__label">{{
+                                                    <label :for="subField.dependentField.name" class="form__label font-nunito">{{
                                                         subField.dependentField.label }}</label>
                                                     <p v-if="errors[subField.dependentField.name]"
                                                         class="text-red-500 text-sm">{{
@@ -805,7 +805,12 @@ select:-webkit-autofill:focus {
 .estetico,
 .hidratacion,
 .aumento-de-labios,
-.sonrisa-gingival {
+.sonrisa-gingival,
+.farmacologico,
+.intervencion,
+.kilos10-15,
+.kilos16-25,
+.mas-de-30 {
     @apply bg-[#E8E4DD] justify-center;
 }
 </style>

@@ -53,11 +53,7 @@ const props = defineProps({
    }
 
    .footer__inner .container #menu-menu-footer {
-      font-size: var(--font-size);
-      line-height: var(--line-height);
-      text-transform: uppercase;
-      list-style: none;
-      text-align: center;
+      @apply uppercase list-none text-center;
    }
 
    .footer__inner .footer__block {

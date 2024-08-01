@@ -6,7 +6,6 @@
       aria-labelledby="page-title"
     >
       <ElementsEncabezado
-        critical
         class="flex flex-col justify-end items-start min-h-[60vh] xl:min-h-[100vh] overflow-hidden bg-nude-6 bg-center bg-cover"
         :data="pages"
       />
@@ -64,7 +63,8 @@
 
 <script setup>
 import { useAsyncData } from 'nuxt/app'
-import { getPage, getClinicas } from '@/composables/useFetch'
+import { getPage, getClinicas } from '@/composables/useApi'
+
 
 // Uso de useAsyncData para cargar la página por su ID
 const { data: pages, error: pageError } = await useAsyncData(() => getPage(13618), {initialCache: false})

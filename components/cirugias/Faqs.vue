@@ -1,5 +1,5 @@
 <template>
-  <section v-if="faqsData.faqs" class="faqs grid grid-cols-16 gap-x-0 gap-y-8 xl:gap-4 py-20" id="faqs">
+  <section v-if="faqsData.faqs" class="faqs grid grid-cols-16 gap-x-0 gap-y-8 xl:gap-4 py-20" id="faqs" >
     <div class="faqs__image row-span-2 col-[2_/_span_14] xl:col-[2_/_span_6] overflow-hidden rounded-xl aspect-square">
       <img 
         loading="lazy" 
@@ -12,16 +12,15 @@
       />
     </div>
     <div class="heading accordion__heading col-[2_/_span_14] xl:col-[9_/_span_7]">
-      <h2 class="accordion__heading-title xl:text-center [&>span]:block [&>span]:font-geomanist [&>span]:text-clamp-xl [&>span]:mb-0" v-html="faqsData.titulo_faqs"></h2>
+      <h2 class="accordion__heading-title xl:text-center [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0" v-html="faqsData.titulo_faqs"></h2>
     </div>
     <div class="list accordion__list col-[2_/_span_14] xl:col-[9_/_span_7]">
       <div 
-        class="accordion__list--item flex flex-col flex-wrap justify-between py-6 cursor-pointer separador-lista" 
+        class="accordion__list--item flex flex-col flex-wrap justify-between py-5 cursor-pointer separador-lista" 
         v-for="content in faqsData.faqs" :key="content.heading_faq"
       >
-        <div class="accordion__list--item-title flex flex-row justify-between items-center
-                    [&>*]:font-geomanist [&>*]:font-normal [&>*]:m-0">
-          <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 [&>.h4]:font-geomanist text-clamp-base mb-0 !font-light" v-html="content.heading_faq"></div>
+        <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
+          <div class="max-w-[85%]  text-clamp-base mb-0 !font-light" v-html="content.heading_faq"></div>
           <svg class="h-6 w-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
             <path class="iconV" d="M 12,0 V 24" />
             <path class="iconH" d="M 0,12 H 24" />
@@ -35,7 +34,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-// import gsap from 'gsap';
+
 const { $gsap: gsap } = useNuxtApp();
 
 // Props

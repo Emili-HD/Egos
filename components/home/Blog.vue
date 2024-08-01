@@ -42,7 +42,7 @@
               </p>
               <h2
                 :id="'post-title-' + post.id"
-                class="h6 font-canela font-light"
+                class="h6 font-light"
               >
                 {{ post.title.rendered }}
               </h2>
@@ -79,7 +79,7 @@
 
 <script setup>
 import { useAsyncData } from 'nuxt/app';
-import { getPage, getPosts } from '@/composables/useFetch';
+import { getPage, getPosts } from '@/composables/useApi';
 
 // Definir IDs y parámetros como constantes o reactivos según sea necesario
 const blogId = 934;
@@ -101,95 +101,74 @@ const stickyPosts = computed(() => postsData.value ? postsData.value.filter((pos
 <style lang="scss" scoped>
 .home__blog {
   &--header {
-    display: grid;
-    grid-template-columns: repeat(16, minmax(0, 1fr));
-    gap: 1rem;
-    // min-height: clamp(300px, 35vh, 400px);
-    position: relative;
-    text-align: center;
-    width: 100%;
-    z-index: 1;
+    @apply grid grid-cols-16 gap-4 relative text-center w-full z-[1];
 
     @media (max-width: 767px) {
-      gap: 0;
-      text-align: left;
+      @apply gap-0 text-left;
     }
 
     &-title {
-      grid-column: 3/-3;
+      @apply col-[3/-3];
 
       @media (max-width: 767px) {
-        grid-column: 2/-2;
-        font-size: calc(var(--font-size) * 2.5);
+        @apply col-[2/-2];
       }
     }
 
     &-content {
-      grid-column: 4/-4;
+      @apply col-[4/-4];
 
       @media (max-width: 767px) {
-        grid-column: 2/-2;
+        @apply col-[2/-2];
       }
     }
   }
 
   .post-list {
     .card {
-      aspect-ratio: unset;
-      background-color: var(--nude-7);
-      box-shadow: var(--shadow);
+      @apply aspect-[unset] bg-nude-7 shadow-md;
 
       a {
-        display: flex;
+        @apply flex;
 
         @media (max-width: 767px) {
-          flex-direction: column;
+          @apply flex-col;
         }
       }
 
       &:nth-child(2n-1) {
-        grid-column: 2/9;
+        @apply col-[2/9];
 
         @media (max-width: 767px) {
-          grid-column: 2/-2;
+          @apply col-[2/-2];
         }
       }
 
       &:nth-child(2n) {
-        grid-column: 9/16;
+        @apply col-[9/16];
 
         @media (max-width: 767px) {
-          grid-column: 2/-2;
+          @apply col-[2/-2];
         }
       }
 
       &__image {
-        aspect-ratio: 1;
-        object-fit: cover;
-        width: calc(100% / 7 * 3);
+        @apply aspect-square object-cover w-[calc(100%/7*3)];
 
         @media (max-width: 767px) {
-          width: 100%;
+          @apply w-full;
         }
       }
 
       &__content {
-        width: calc(100% / 7 * 4);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        @apply w-[calc(100%/7*4)] flex flex-col justify-between;
 
         &-cat {
-          color: var(--gold-3);
-          font-weight: 400;
-
-          span {
-            font-size: calc(var(--font-size) * 1.3);
-          }
+          @apply font-normal text-gold-3;
         }
 
         @media (max-width: 767px) {
-          width: 100%;
+          @apply w-full;
         }
       }
     }

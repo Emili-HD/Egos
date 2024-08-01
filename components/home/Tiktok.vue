@@ -53,7 +53,7 @@
 
 <script setup>
 import { useAsyncData } from 'nuxt/app';
-import { getTikTok } from '@/composables/useFetch'; // Asegúrate de que esta ruta sea correcta
+import { getTikTok } from '@/composables/useApi'; // Asegúrate de que esta ruta sea correcta
 // import BoosterImage from '#booster/components/BoosterImage';
 // import PlayIcon from '~/assets/images/icons/play-tiktok.svg';
 

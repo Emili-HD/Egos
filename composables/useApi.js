@@ -1,4 +1,4 @@
-// useFetch.js
+// useApi.js
 const DOMAIN_URL = 'https://test.clinicaegos.com';
 const JSON_URL = `${DOMAIN_URL}/wp-json`;
 
@@ -128,6 +128,33 @@ export const getTestimonios = async ({ page = 1, perPage = 100, slug = null, cat
         // Para testimonios o un testimonio específico por slug
         endpoint += `/testimonio${slug ? `?slug=${slug}` : `?per_page=${perPage}&page=${page}&timestamp=${timestamp}`}`;
     }
+
+    const url = `${JSON_URL}/${endpoint}`;
+
+    try {
+        const data = await $fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        // Devuelve el primer elemento si se busca por slug, ya que debería ser único
+        return slug ? data[0] : data;
+    } catch (error) {
+        console.error("Fetch error: ", error);
+        throw error;
+    }
+};
+
+// ***************************************************************************************************
+// Función unificada para obtener noticias o una noticia específica
+// ***************************************************************************************************
+
+export const getNoticias = async ({ page = 1, perPage = 100, slug = null } = {}) => {
+    let endpoint = 'wp/v2';
+    const timestamp = new Date().getTime();
+
+    endpoint += `/noticias${slug ? `?slug=${slug}` : `?per_page=${perPage}&page=${page}&timestamp=${timestamp}`}`;
 
     const url = `${JSON_URL}/${endpoint}`;
 

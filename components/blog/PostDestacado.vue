@@ -11,7 +11,7 @@
         class="card bg-blue-1 aspect-auto w-full rounded-3xl overflow-hidden"
       >
         <nuxt-link
-          class="text-blue-1 font-canela h-full p-0 flex flex-col lg:flex-row"
+          class="text-blue-1 h-full p-0 flex flex-col lg:flex-row"
           :to="'/blog/' + post.slug + '/'"
         >
           <img
@@ -69,7 +69,7 @@
 
 <script setup>
 import { useAsyncData } from 'nuxt/app';
-import { getPosts } from '@/composables/useFetch';
+import { getPosts } from '@/composables/useApi';
 import { ref } from 'vue';
 
 // Define los parámetros de la petición

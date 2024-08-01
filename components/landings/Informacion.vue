@@ -5,7 +5,7 @@
       <div class="listado__list mt-4">
          <div class="listado__list--item p-8" v-for="listado in data.informacion.informacion_cirugia" :key="listado.id">
             <div class="listado__list--item-title flex flex-row justify-between items-center cursor-pointer">
-               <h3 class="font-geomanist text-clamp-lg" v-html="listado.titulo"></h3>
+               <h3 class="text-clamp-lg" v-html="listado.titulo"></h3>
                <div class="indicator">
                   <svg viewBox="0 0 19 19" fill="none">
                      <line class="iconV" y1="9.5" x2="19" y2="9.5"/>
@@ -110,42 +110,35 @@ onMounted(initAccordion)
 
 <style lang="scss" scoped>
 .informacion {
-   background-color: var(--nude-8);
-   overflow: hidden;
+   @apply bg-nude-8 overflow-hidden;
 
    &__title {
       text-align: center;
       margin-bottom: 0;
-
-      @media (max-width: 767px) {
-         font-size: calc(var(--font-size) * 2.4);
-      }
    }
 
    .listado__list {
       &--item {
-         border-radius: var(--radius-m);
-         margin-top: -1.5rem;
-         padding-bottom: 3rem;
+         @apply rounded-xl -mt-6 pb-12;
 
          &:last-child {
             padding-bottom: 2rem;
          }
 
          &:nth-child(1) {
-            background-color: var(--nude-7);
+            @apply bg-nude-7;
          }
          &:nth-child(2) {
-            background-color: var(--nude-6);
+            @apply bg-nude-6;
          }
          &:nth-child(3) {
-            background-color: var(--nude-5);
+            @apply bg-nude-5;
          }
          &:nth-child(4) {
-            background-color: var(--nude-4);
+            @apply bg-nude-4;
          }
          &:nth-child(5) {
-            background-color: var(--nude-3);
+            @apply bg-nude-3;
          }
          &-title {
             display: flex;
@@ -166,10 +159,6 @@ onMounted(initAccordion)
                   bottom: -0.5rem;
                   transform: width .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                }
-
-               @media (max-width: 767px) {
-                  font-size: calc(var(--font-size) * 1.3);
-               }
             }
 
             &:hover {
@@ -185,7 +174,7 @@ onMounted(initAccordion)
             }
          }
          .indicator {
-            background: var(--nude-1);
+            @apply bg-nude-1;
             background-size: 350%;
             display: flex;
             justify-content: center;
@@ -197,8 +186,8 @@ onMounted(initAccordion)
             transition: scale .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             
             svg {
+               @apply stroke-nude-8;
                height: 1.5rem;
-               stroke: var(--nude-8);
                stroke-width: 1;
                width: 1.5rem;
 
@@ -221,9 +210,7 @@ onMounted(initAccordion)
             }
 
             &-img {
-               border-radius: var(--radius-m);
-               overflow: hidden;
-               width: 33.3333%;
+               @apply rounded-lg overflow-hidden w-1/3;
                
                @media (max-width: 767px) {
                   width: 100%;
@@ -272,8 +259,8 @@ onMounted(initAccordion)
          gap: 1rem;
 
          :deep(.list-detalle){
-            background-color: var(--nude-8);
-            border-radius: var(--radius-s);
+            @apply bg-nude-8 rounded-2xl;
+
             &>p {
                display: flex;
                flex-direction: row;

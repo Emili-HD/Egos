@@ -26,6 +26,6 @@ const close = () => {
 
 <style lang="scss" scoped>
 .social-video-container {
-   background: rgba(var(--blue-1-rgb), 0.8);
+   @apply bg-blue-1/80;
 }
 </style>

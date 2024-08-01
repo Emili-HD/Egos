@@ -58,9 +58,11 @@
 
 <script setup>
 import { useAsyncData } from 'nuxt/app';
-import { getPosts, getPage } from '@/composables/useFetch';
+import { getPosts, getPage } from '@/composables/useApi';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+
+
 
 const postsPerPage = 100;
 const { $gsap: gsap, $lenis: lenis } = useNuxtApp();

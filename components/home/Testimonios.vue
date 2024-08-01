@@ -21,18 +21,18 @@
                </div>
             </div>
             <div
-               class="testimonios__content p-2 pb-4 text-center font-canela h-max flex flex-col justify-between items-center">
-               <h3 class="h6 text-clamp-xl min-h-32">{{ testimonio.title.rendered }}</h3>
+               class="testimonios__content p-2 pb-4 text-center h-max flex flex-col justify-between items-center">
+               <h3 class="h6 text-clamp-lg min-h-32">{{ testimonio.title.rendered }}</h3>
                <!-- <ElementsButton :to="`/opinion-egos/${testimonio.slug}`" class="blue">Saber más</ElementsButton> -->
                <nuxt-link :to="`/opinion-egos/${testimonio.slug}`"
-                  class="pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl font-geomanist hover:bg-blue-6 transition-colors">Saber
+                  class="pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl hover:bg-blue-6 transition-colors">Saber
                   más</nuxt-link>
             </div>
          </article>
       </div>
       <div class="col-[2/-2] flex justify-center">
          <nuxt-link :to="`/casos-reales/`"
-            class="w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl font-geomanist hover:bg-blue-6 transition-colors">Ver
+            class="w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl hover:bg-blue-6 transition-colors">Ver
             todos nuestros casos reales</nuxt-link>
       </div>
    </section>
@@ -41,7 +41,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useLazyAsyncData } from 'nuxt/app';
-import { getTestimonios } from '@/composables/useFetch';
+import { getTestimonios } from '@/composables/useApi';
+
+
 
 // Definir explícitamente los valores de page y perPage
 const page = 1;

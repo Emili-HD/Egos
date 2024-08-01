@@ -24,7 +24,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     // Carga del script de Google Analytics
     const loadAnalytics = () => {
         const gtagScript = document.createElement('script');
-        gtagScript.async = true;
+        gtagScript.defer = true;
         gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-K4KDQ4HZCX';
         document.head.appendChild(gtagScript);
 

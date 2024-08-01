@@ -74,7 +74,7 @@ function calculateWidth(valoracion) {
 
 // .bg-stars{clip-path:url(#SVGID_2_);fill:#CCB780;}
 .resenas {
-   background-color: var(--nude-5);
+   @apply bg-nude-5;
    min-height: 80lvh;
    display: flex;
    flex-direction: column;
@@ -83,14 +83,6 @@ function calculateWidth(valoracion) {
    &__header {
       width: 80%;
       text-align: center;
-
-      @media (max-width: 767px) {
-         width: 100%;
-
-         h2 {
-            font-size: calc(var(--font-size) * 2.3);
-         }
-      }
    }
 }
 
@@ -99,9 +91,8 @@ function calculateWidth(valoracion) {
 //   height: max(400px, 40lvh);
   
   &-slide {
+   @apply bg-nude-8 rounded-md;
     text-align: left;
-    background: var(--nude-8);
-    border-radius: var(--radius-s);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -114,10 +105,6 @@ function calculateWidth(valoracion) {
 
     .stars svg {
       width: 6rem;
-    }
-    
-    & > p {
-      font-size: calc(var(--font-size) * .8);
     }
   }
 }

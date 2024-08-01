@@ -16,13 +16,14 @@
          </div>
       </div>
       <div class="promociones__featured pt-12 text-center">
-         <p class="h5 !text-3xl text-balance font-geomanist text-nude-8">{{ data.promocion.destacado }}</p>
+         <p class="h5 !text-3xl text-balance text-nude-8">{{ data.promocion.destacado }}</p>
       </div>
    </section>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+
 
 // Estado reactivo
 const destpromocionesacado = ref(null)
@@ -38,12 +39,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 :deep(.divider) {
    .sLogo {
-      fill: var(--nude-8);
+      @apply fill-nude-8 after:bg-nude-8;
    }
-
-   &::after {
-      background-color: var(--nude-8);
-   }
-
 }
 </style>

@@ -3,10 +3,10 @@
     <div v-if="data && data.oferta_desde && data.oferta_hasta && countdown" class="flex justify-center flex-wrap w-full bg-blue-1 py-4 rounded-xl">
       <p class="w-full mb-1 text-center font-normal text-nude-8">La oferta termina en:</p>
       <div class="counter flex justify-center w-full gap-2 text-blue-1">
-        <div class="flex flex-col items-center text-xl [.x2_&]:text-clamp-lg bg-nude-8 p-2 rounded-lg w-[20%] font-normal leading-tight">{{ countdown.days }} <span class="uppercase text-[8px] [.x2_&]:text-xs">días</span></div>
-        <div class="flex flex-col items-center text-xl [.x2_&]:text-clamp-lg bg-nude-8 p-2 rounded-lg w-[20%] font-normal leading-tight">{{ countdown.hours }} <span class="uppercase text-[8px] [.x2_&]:text-xs">horas</span></div>
-        <div class="flex flex-col items-center text-xl [.x2_&]:text-clamp-lg bg-nude-8 p-2 rounded-lg w-[20%] font-normal leading-tight">{{ countdown.minutes }} <span class="uppercase text-[8px] [.x2_&]:text-xs">minutos</span></div>
-        <div class="flex flex-col items-center text-xl [.x2_&]:text-clamp-lg bg-nude-8 p-2 rounded-lg w-[20%] font-normal leading-tight">{{ countdown.seconds }} <span class="uppercase text-[8px] [.x2_&]:text-xs">segundos</span></div>
+        <div class="flex flex-col items-center justify-center text-xl [.x2_&]:text-clamp-lg bg-nude-8 p-2 rounded-lg w-[20%] font-normal leading-tight">{{ countdown.days }} <span class="uppercase text-[8px] [.x2_&]:text-xs">días</span></div>
+        <div class="flex flex-col items-center justify-center text-xl [.x2_&]:text-clamp-lg bg-nude-8 p-2 rounded-lg w-[20%] font-normal leading-tight">{{ countdown.hours }} <span class="uppercase text-[8px] [.x2_&]:text-xs">horas</span></div>
+        <div class="flex flex-col items-center justify-center text-xl [.x2_&]:text-clamp-lg bg-nude-8 p-2 rounded-lg w-[20%] font-normal leading-tight">{{ countdown.minutes }} <span class="uppercase text-[8px] [.x2_&]:text-xs">minutos</span></div>
+        <div class="flex flex-col items-center justify-center text-xl [.x2_&]:text-clamp-lg bg-nude-8 p-2 rounded-lg w-[20%] font-normal leading-tight">{{ countdown.seconds }} <span class="uppercase text-[8px] [.x2_&]:text-xs">segundos</span></div>
       </div>
     </div>
   </ClientOnly>

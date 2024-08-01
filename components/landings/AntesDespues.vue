@@ -6,12 +6,12 @@
          <p v-html="data.antes_despues.subtitulo_antesdespues"></p>
       </div>
 
-      <div class="antesdespues__content flex flex-col xl:flex-row justify-between items-start gap-12 w-full p-0 xl:has-[.vertical]:flex-wrap">
-         <div class="antesdespues__content-images text-center w-full flex flex-row xl:flex-col xl:has-[.vertical]:flex-row gap-0 flex-wrap xl:w-[40vw]"
+      <div class="antesdespues__content flex flex-col xl:flex-row justify-center items-start gap-12 w-full p-0 xl:has-[.vertical]:flex-wrap">
+         <div class="antesdespues__content-images text-center w-full flex flex-row xl:flex-col xl:has-[.vertical]:flex-row gap-0 flex-wrap xl:w-[30vw]"
             v-for="elem in data.antes_despues.cirugias_relacionadas">
-            <h5 class="antesdespues__content-images-title w-full xl:w-auto my-4">{{ elem.cirugia }}</h5>
+            <h5 class="antesdespues__content-images-title w-full my-4">{{ elem.cirugia }}</h5>
             <figure
-               class="antes h-[max(250px,30vh)]" :class="elem.orientacion">
+               class="antes aspect-[3/2] [&.vertical]:aspect-[2/3]" :class="elem.orientacion">
                <img loading="lazy"
                   v-if="elem.imagen_antes && elem.imagen_antes.url"
                   class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-nude-1"
@@ -26,7 +26,7 @@
                   Antes</figcaption>
             </figure>
             <figure
-               class="despues h-[max(250px,30vh)]" :class="elem.orientacion">
+               class="despues aspect-[3/2] [&.vertical]:aspect-[2/3]" :class="elem.orientacion">
                <img loading="lazy"
                   v-if="elem.imagen_despues && elem.imagen_despues.url"
                   class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-nude-1"
@@ -49,7 +49,7 @@
 <script setup>
 import { ref } from 'vue';
 
-// Estado reactivo
+
 const comparacion = ref(null)
 
 // props
@@ -74,9 +74,14 @@ const props = defineProps({
    }
 }
 
+.antesdespues__content-images {
+   @apply xl:has-[.horizontal]:max-w-[22vw];
+}
+
 figure {
+
    &.horizontal {
-      @apply bg-nude-6 overflow-hidden min-h-[28lvh] w-full;
+      @apply bg-nude-6 overflow-hidden w-full;
       &.antes {
          @apply rounded-tl-xl rounded-tr-xl;
       }
@@ -85,7 +90,7 @@ figure {
       }
    }
    &.vertical {
-      @apply bg-nude-6 overflow-hidden min-h-[50lvh] lg:min-h-[45lvh] w-full lg:w-1/2;
+      @apply bg-nude-6 overflow-hidden w-full lg:w-1/2;
       &.antes {
          @apply max-lg:rounded-tl-xl max-lg:rounded-tr-xl lg:rounded-tl-xl lg:rounded-bl-xl lg:border-r-4 border-nude-1;
       }

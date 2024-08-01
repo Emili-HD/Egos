@@ -1,15 +1,9 @@
 <template>
     <div
-        class="team__panel p-8 pt-16 md:pt-24 sm:px-16 sm:pb-16 bg-white rounded-3xl fixed right-0 top-0 md:top-20 
-              w-[100vw] xl:w-[70vw] h-screen md:h-[calc(100vh-var(--header-height)-1rem)] z-[1001] 
-              translate-x-[100%] transition-[translate] duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]">
-        <div class="team__panel-content overscroll-contain" v-if="panelVisible">
-            <div class="close absolute -top-16 sm:top-0 -right-4 sm:right-0 z-10" @click="panelVisible = false">
-                <svg class="close-icon size-16 fill-blue-1" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M777.856 280.192l-33.92-33.952-231.872 231.872-231.84-231.872-33.984 33.888 231.872 231.904-231.84 231.84 33.888 33.984 231.904-231.904 231.84 231.872 33.952-33.888-231.872-231.904z" />
-                </svg>
+        class="team__panel">
+        <div class="team__panel-content" v-if="panelVisible">
+            <div class="close" @click="panelVisible = false">
+                <svg class="close-icon size-16 fill-blue-1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="m777.856 280.192-33.92-33.952-231.872 231.872-231.84-231.872-33.984 33.888 231.872 231.904-231.84 231.84 33.888 33.984 231.904-231.904 231.84 231.872 33.952-33.888-231.872-231.904z"/></svg>
             </div>
             <h3 v-if="selectedMemberInfo.title.rendered">{{ selectedMemberInfo.title.rendered }}</h3>
             <ElementsSlide :data="selectedMemberInfo" />
@@ -18,9 +12,7 @@
 
     <div class="team__form fixed size-full z-[999999] bg-blue-1/50 flex flex-col justify-center items-center" v-if="showPopup">
         <div class="close absolute top-4 right-4 md:top-24 md:right-12 cursor-pointer z-10" @click="closePopup">
-            <svg class="close-icon size-16 fill-nude-8" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <path d="M777.856 280.192l-33.92-33.952-231.872 231.872-231.84-231.872-33.984 33.888 231.872 231.904-231.84 231.84 33.888 33.984 231.904-231.904 231.84 231.872 33.952-33.888-231.872-231.904z" />
-            </svg>
+            <svg class="close-icon size-16 fill-nude-8" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="m777.856 280.192-33.92-33.952-231.872 231.872-231.84-231.872-33.984 33.888 231.872 231.904-231.84 231.84 33.888 33.984 231.904-231.904 231.84 231.872 33.952-33.888-231.872-231.904z"/></svg>
         </div>
         <!-- <FormsCirugia v-if="pages && pages.acf" :identificador="'topPage'" :portalId="String(pages.acf.portalid)" :formId="pages.acf.formid" /> -->
         <FormsCustomForm v-if="pages && pages.acf" :identificador="'topPage'" :portalId="String(pages.acf.portalid)" :formId="pages.acf.formid" />
@@ -81,8 +73,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import { useAsyncData } from 'nuxt/app';
-import { getEspecialidades, getPage, getEquipo } from '@/composables/useFetch';
-// import ScrollTrigger from 'gsap/ScrollTrigger';
+import { getEspecialidades, getPage, getEquipo } from '@/composables/useApi';
+
 
 const { $gsap: gsap, $lenis: lenis, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
@@ -293,5 +285,18 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
-// estilo vacío
+:root {
+    --header-height: 4.8125rem;
+}
+.team__panel {
+    @apply p-8 pt-16 md:pt-24 sm:px-16 sm:pb-16 bg-white rounded-3xl fixed right-0 top-0 md:top-20 w-[100vw] xl:w-[70vw] h-screen md:h-[calc(100vh-var(--header-height)-1rem)] z-[1001] translate-x-[100%] transition-[translate] duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)];
+
+    &-content {
+        @apply overscroll-contain;
+
+        .close {
+            @apply absolute -top-16 sm:top-0 -right-4 sm:right-0 z-10;
+        }
+    }
+}
 </style>

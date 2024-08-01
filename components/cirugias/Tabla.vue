@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-// Props
+
 const props = defineProps({
   contentData: {
     type: Object,

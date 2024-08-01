@@ -19,7 +19,7 @@
 
 <script setup>
 import { onMounted, ref, computed } from 'vue';
-import { egosSettings } from '@/composables/useFetch.js';
+import { egosSettings } from '@/composables/useApi.js';
 
 const { $lenis: lenis } = useNuxtApp();
 const ofertas = ref([]);

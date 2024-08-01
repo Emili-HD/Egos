@@ -2,6 +2,7 @@
   <main class="page site-main grid grid-cols-[repeat(16,_minmax(0,_1fr))]" v-if="pages">
       <PageHeading critical :data="pages" />
       <NuxtLazyHydrate when-idle>
+        <LazyCirugiasEntryText :data="pages" class="mt-12" />
         <LazyPageCatRelacionadas :data="pages.acf" />
       </NuxtLazyHydrate>
       <NuxtLazyHydrate when-idle>
@@ -22,7 +23,7 @@
 <script setup>
 import { watch, onMounted } from 'vue';
 import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
-import { getPage } from '@/composables/useFetch';
+import { getPage } from '@/composables/useApi';
 
 const router = useRouter();
 const route = useRoute();

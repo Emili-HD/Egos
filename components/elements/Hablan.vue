@@ -1,5 +1,5 @@
 <template>
-    <section class="bg-nude-5 flex items-center justify-center gap-4 flex-wrap py-12" v-if="data && data.hablan_de_egos">
+    <section class="bg-nude-5 flex items-center justify-center gap-4 flex-wrap py-12">
         <div class="section__header px-8 xl:px-20 xl:py-0 flex flex-col justify-center items-center h-fit text-center w-full z-10">
             <h2 class="h4 w-full my-0">Hablan de EGOS</h2>
         </div>
@@ -10,6 +10,7 @@
 </template>
 
 <script setup>
+
 const props = defineProps({
     data: {
         type: Object,

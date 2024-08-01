@@ -38,12 +38,10 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
-// import gsap from 'gsap';
-// import { SwiperFreeMode, SwiperScrollbar, SwiperMousewheel } from 'swiper/modules';
+
 
 const { $gsap: gsap } = useNuxtApp()
-// Importa los estilos de Swiper
-// import 'swiper/css'
+
 import 'swiper/css/free-mode'
 import 'swiper/css/scrollbar'
 
@@ -60,18 +58,20 @@ const props = defineProps({
 
 const preventLenis = () => {
   const columna = document.querySelectorAll('.swiperColumn')
-  let mm = gsap.matchMedia()
-  mm.add('(min-width: 1024px)', () => {
-    columna.forEach((col) => {
-      const columnaHeight = col.offsetHeight
-      const innerHeight = col.querySelector('.swiper-slide').offsetHeight
-      // console.log(columnaHeight, innerHeight);
-
-      if (innerHeight > columnaHeight) {
-        col.setAttribute('data-lenis-prevent', '')
-      }
+  if (columna) {
+    let mm = gsap.matchMedia()
+    mm.add('(min-width: 1024px)', () => {
+      columna.forEach((col) => {
+        const columnaHeight = col.offsetHeight
+        const innerHeight = col.querySelector('.swiper-slide').offsetHeight
+        // console.log(columnaHeight, innerHeight);
+  
+        if (innerHeight > columnaHeight) {
+          col.setAttribute('data-lenis-prevent', '')
+        }
+      })
     })
-  })
+  }
 }
 
 onMounted(() => {
