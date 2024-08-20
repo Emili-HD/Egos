@@ -24,15 +24,7 @@
           :to="`blog/${post.slug}/`"
           :aria-label="'Leer más sobre ' + post.title.rendered"
         >
-          <img
-            loading="lazy"
-            v-if="post.featured_image_data"
-            :src="post.featured_image_data.url"
-            :srcset="post.featured_image_data.srcset"
-            class="card__image aspect-square object-cover h-full rounded-2xl overflow-hidden"
-            :alt="post.featured_image_data.alt"
-            :aria-labelledby="'post-title-' + post.id"
-          />
+          <UiImage :data="post" class="aspect-square object-cover h-full rounded-2xl overflow-hidden" loading="lazy" :aria-labelledby="'post-title-' + post.id"/>
           <div class="card__content p-4">
             <div class="card__content-wrapper text-left [&_h2,&_h3]:text-clamp-xl [&_h2,&_h3]:font-light">
               <p

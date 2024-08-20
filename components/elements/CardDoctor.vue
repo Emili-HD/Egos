@@ -5,15 +5,9 @@
             <!-- <article class=""> -->
                 <ul class="grid grid-cols-4 xl:grid-cols-12 gap-4 lg:gap-8 px-12 lg:px-32">
                     <li v-for="miembro in doctorByCategory(category.id)" :key="miembro.id"
-                        class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden col-span-4 md:col-span-2 xl:col-span-3">
+                        class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden col-span-4 md:col-span-2 xl:col-span-3 list-none">
                         <div class="card__member block relative size-full overflow-hidden">
-                            <img loading="lazy" v-if="miembro.featured_image_data"
-                              class="card__image absolute w-full object-center object-cover min-h-full overflow-hidden rounded-3xl"
-                                :src="miembro.featured_image_data.url"
-                                :srcset="miembro.featured_image_data.srcset"
-                                :width="miembro.featured_image_data.width"
-                                :height="miembro.featured_image_data.height"
-                                :alt="miembro.featured_image_data.alt" />
+                          <UiImage :data="miembro" class="absolute w-full object-center object-cover min-h-full overflow-hidden rounded-3xl" loading="lazy"/>
                             <div
                                 class="card__description text-nude-6 bg-gold-3/10 p-4 absolute bottom-0 rounded-3xl size-full z-10 flex flex-col justify-between items-start gap-2">
                                 <div>

@@ -1,8 +1,10 @@
 export default defineNuxtPlugin((nuxtApp) => {
   if (import.meta.client) {
-    const { consentBanner } = useCookiebot({
-        blockingMode: 'auto'
-    });
-    consentBanner();
+    nuxtApp.hook('app:mounted', () => {
+      const { consentBanner } = useCookiebot({
+          blockingMode: 'auto'
+      });
+      consentBanner();
+    })
   }
 });

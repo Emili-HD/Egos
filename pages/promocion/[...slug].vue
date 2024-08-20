@@ -3,7 +3,7 @@
     <main v-else class="site-main landing-main" v-if="landing && landing.acf">
         
         <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
-            <a class="gold" href="#hubspotLanding" @click.passive="handleClick">Cita con el cirujano
+            <a class="gold" href="#hubspotLanding">Cita con el cirujano
             </a>
         </div>
         <section class="hero m-0 p-0 min-h-screen flex flex-col lg:flex-row justify-between items-stretch">
@@ -62,10 +62,10 @@ const { data: landing, error: landingError, refresh } = await useAsyncData(`land
 // );
 // console.log(landing.value);
 
-function handleClick() {
-    const { $lenis: lenis } = useNuxtApp();
-    lenis.scrollTo('#hubspotLanding', { offset: -20 });
-}
+// function handleClick() {
+//     const { $lenis: lenis } = useNuxtApp();
+//     lenis.scrollTo('#hubspotLanding', { offset: -20 });
+// }
 
 // Datos YOAST SEO
 useHead(() => {

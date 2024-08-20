@@ -1,18 +1,9 @@
 <template>
   <header class="heading__cirugias">
-    <img loading="lazy"
-        class="size-full object-cover object-center absolute inset-0 block"
-        v-if="data.featured_image_data"
-        :src="data.featured_image_data.url"
-        :srcset="data.featured_image_data.srcset"
-        :alt="data.featured_image_data.alt"
-        :width="data.featured_image_data.width"
-        :height="data.featured_image_data.height"
-    />
+    <UiImage :data="data" class="hero" :preload="true" />
     <div class="header__content z-10">
       <div v-if="data.acf && data.acf.rebaja">
         <h1 v-if="data.title && data.title.rendered" class="text-nude-8 mb-6 text-clamp-6xl text-balance leading-none"><u>{{ data.title.rendered }}</u></h1>
-        <!-- <div v-if="data.content && data.content.rendered" class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-3xl [&>h2]:text-balance [&>p]:text-lg" v-html="data.content.rendered"></div> -->
         <div class="flex flex-col xl:flex-row-reverse gap-8">
           <div class="flex gap-2 bg-blue-1/60 backdrop-blur-lg p-8 w-fit rounded-2xl m-0">
             <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline [&>span]:text-red-600 [&>span]:opacity-50" 
@@ -45,7 +36,7 @@
       
     </div>
   </header>
-  <div v-if="data.acf && data.acf.formulario" id="formulario" class="form__wrapper bg-blue-1 p-8 pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
+  <div v-if="data.acf && data.acf.formulario" id="formulario" class="form__wrapper bg-blue-1 p-6 pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
     <FormsCustomForm :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)" :formId="data.acf.formulario.formid" />
   </div>
 </template>
@@ -54,12 +45,6 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const showPresupuestoLink = ref(false);
-
-const { $lenis: lenis } = useNuxtApp();
-const pressu = () => {
-  lenis.scrollTo('#presupuesto', { offset: -60 });
-}
-
 const checkPresupuestoLink = () => {
     showPresupuestoLink.value = !!document.getElementById('presupuesto');
 }

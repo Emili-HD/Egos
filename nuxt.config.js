@@ -176,9 +176,11 @@ export default defineNuxtConfig({
             component: '0%',
             asset: '0%',
         },
-        // disableNuxtFontaine: true,
-        // disableNuxtImage: true,
-        optimizePreloads: true,
+        optimizeSSR: {
+            cleanPreloads: true,
+            cleanPrefetches: true,
+            inlineStyles: true
+        }
     },
 
     image: {
@@ -447,6 +449,7 @@ export default defineNuxtConfig({
         '/otoplastia-en-clinica-egos/': { redirect: { to: '/estetica-facial/otoplastia/', statusCode: 308 } },
         '/servicio/relleno-de-labios/': { redirect: { to: '/estetica-facial/aumento-de-labios/', statusCode: 308 } },
         '/servicio/elimincacion-de-arrugas-de-la-expresion/': { redirect: { to: '/estetica-facial/tratamiento-antiarrugas/', statusCode: 308 } },
+        '/estetica-facial/eliminar-arrugas-de-expresio/': { redirect: { to: '/estetica-facial/eliminar-arrugas-de-expresion/', statusCode: 308 } },
         '/medicina-estetica-facial/': { redirect: { to: '/estetica-facial/', statusCode: 308 } },
         '/cirugia-estetica-facial/mentoplastia-en-barcelona/': { redirect: { to: '/estetica-facial/mentoplastia/', statusCode: 308 } },
         '/medicina-estetica-facial/bioestimulacion-facial/': { redirect: { to: '/estetica-facial/', statusCode: 308 } },
@@ -459,6 +462,14 @@ export default defineNuxtConfig({
         '/rinoplastia-de-nariz-ancha/': { redirect: { to: '/estetica-facial/rinoplastia-ultrasonica/', statusCode: 308 } },
         '/rinoplastia-sin-cirugia/': { redirect: { to: '/estetica-facial/rinoplastia-ultrasonica/', statusCode: 308 } },
         '/cirugia-estetica-facial/rinoplastia-ultrasonica/': { redirect: { to: '/estetica-facial/rinoplastia-ultrasonica/', statusCode: 308 } },
+
+        '/obesidad/': {redirect: {to: '/perdida-de-peso/', statusCode: 308}},
+        '/obesidad/balon-gastrico/': {redirect: {to: '/perdida-de-peso/balon-gastrico/', statusCode: 308}},
+        '/obesidad/metodo-endomanga-mega/': {redirect: {to: '/perdida-de-peso/metodo-endomanga-mega/', statusCode: 308}},
+        '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/': {redirect: {to: '/perdida-de-peso/endomanga-reduccion-de-estomago-sin-cirugia/', statusCode: 308}},
+        '/obesidad/sleeve-gastrico/': {redirect: {to: '/perdida-de-peso/sleeve-gastrico/', statusCode: 308}},
+        '/obesidad/bypass-gastrico/': {redirect: {to: '/perdida-de-peso/bypass-gastrico/', statusCode: 308}},
+        '/obesidad/tratamiento-farmacologico-obesidad/': {redirect: {to: '/perdida-de-peso/tratamiento-farmacologico-obesidad/', statusCode: 308}},
     },
 
     // Configuración de nuxt-simple-robots
@@ -614,14 +625,15 @@ export default defineNuxtConfig({
                 '/estetica-facial/hidratacion-de-labios/',
                 '/estetica-facial/relleno-de-ojeras/',
                 '/estetica-facial/hilos-tensores/',
+                '/estetica-facial/marcacion-mandibular-medicina-estetica/',
                 '/injerto-capilar/injerto-capilar/',
-                '/obesidad/balon-gastrico/',
-                '/obesidad/bypass-gastrico/',
-                '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/',
-                '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/',
-                '/obesidad/sleeve-gastrico/',
-                '/obesidad/tratamiento-farmacologico-obesidad/',
-                '/obesidad/metodo-endomanga-mega/',
+                '/perdida-de-peso/',
+                '/perdida-de-peso/balon-gastrico/',
+                '/perdida-de-peso/bypass-gastrico/',
+                '/perdida-de-peso/endomanga-reduccion-de-estomago-sin-cirugia/',
+                '/perdida-de-peso/sleeve-gastrico/',
+                '/perdida-de-peso/tratamiento-farmacologico-obesidad/',
+                '/perdida-de-peso/metodo-endomanga-mega/',
             ]
         },
         render: {

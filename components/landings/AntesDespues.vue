@@ -1,7 +1,7 @@
 <template>
-   <div class="antesdespues col-[2_/_span_14] xl:col-[2_/_span_14] flex flex-col items-center py-20" ref="comparacion">
+   <div class="antesdespues col-[2_/_span_14] xl:col-[2_/_span_14] flex flex-col items-center py-4 xl:py-20" ref="comparacion">
       <div class="antesdespues__header w-full text-center p-0">
-         <h2>{{ data.antes_despues.titulo_antesdespues }}</h2>
+         <h2 class="text-clamp-4xl text-balance">{{ data.antes_despues.titulo_antesdespues }}</h2>
          <ElementsDivider />
          <p v-html="data.antes_despues.subtitulo_antesdespues"></p>
       </div>

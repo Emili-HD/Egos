@@ -4,15 +4,7 @@
   <div v-else class="card" :class="props.classes">
       <nuxt-link :to="processedLink" class="w-full min-h-full block bg-nude-7 rounded-3xl p-2" aria-label="Ver detalles de cirugía" v-if="category">
           <picture class="group aspect-square block rounded-2xl overflow-hidden mb-2">
-              <img loading="lazy"
-                  class="size-full object-cover object-center group-hover:scale-125 transition-transform duration-1000 ease-out"
-                  v-if="category.featured_image_data"
-                  :src="category.featured_image_data.url"
-                  :srcset="category.featured_image_data.srcset"
-                  :alt="category.featured_image_data.alt"
-                  width="380"
-                  height="570"
-              />
+              <UiImage :data="category" class="scale-effect" />
           </picture>
           <div class="category__title flex flex-col justify-end items-center gap-2 p-4 relative w-full m-auto">
               <h3 v-if="category.title && category.title.rendered" class="h6 text-center text-clamp-base text-balance font-semibold mb-0 font-lora">{{ category.title.rendered }}</h3>

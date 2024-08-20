@@ -3,14 +3,13 @@
         <div 
             v-for="(oferta, index) in ofertas" 
             :key="index" 
-            class="offer-display min-h-12 flex justify-center items-center text-center text-nude-8 font-normal tracking-wide leading-none p-2 absolute top-0 left-0 w-full transition-transform duration-1000"
+            class="offer-display min-h-12 flex justify-center items-center text-center text-nude-8 font-semibold tracking-wide leading-none p-2 absolute top-0 left-0 w-full transition-transform duration-1000"
             :class="{
                 'active': index === currentIndex,
                 'next': index === nextIndex,
                 'previous': index === previousIndex
             }"
             :style="`background-color: ${oferta.color}; color: ${oferta.text_color}; transform-origin: ${index === nextIndex ? 'bottom' : 'top'}`"
-            @click="oferta.link ? lenis.scrollTo(`${oferta.link}`, { offset: -20 }) : null"
         >
             {{ oferta.oferta }}
         </div>
@@ -88,4 +87,3 @@ onMounted(() => {
     transform: rotateX(90deg);
 }
 </style>
-

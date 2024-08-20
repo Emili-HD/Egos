@@ -9,12 +9,7 @@
                 :aria-labelledby="'post-title-' + post.id">
                 <nuxt-link v-if="post.title && post.title.rendered" :to="`/blog/${post.slug}`" :aria-label="post.title ? 'Leer más sobre ' + post.title.rendered : 'Leer más'
                     " class="size-full">
-                    <img loading="lazy" class="card__image rounded-2xl size-full aspect-square object-cover"
-                        v-if="post.featured_image_data && post.featured_image_data.url"
-                        :src="post.featured_image_data.url" :srcset="post.featured_image_data.srcset"
-                        :width="post.featured_image_data.width" :height="post.featured_image_data.height"
-                        :alt="post.featured_image_data ? post.featured_image_data.alt : ''"
-                        :aria-labelledby="'post-title-' + post.id" />
+                    <UiImage loading="lazy" :data="post" class="rounded-2xl size-full aspect-square object-cover"/>
                     <h2 v-if="post.title && post.title.rendered" :id="'post-title-' + post.id" class="h6">
                         {{ post.title.rendered }}
                     </h2>

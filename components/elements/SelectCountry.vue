@@ -15,7 +15,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { countries } from '~/data/countries';
+import { countries } from '~/app/data/countries';
 
 // Inicializar selectedCountry con el valor del prefijo telefónico de España
 const selectedCountry = ref('+34');

@@ -1,5 +1,6 @@
 <template>
-    <header class="header full-width" :style="`background-image: url(${data.featured_image_data.url});`">
+    <header class="header full-width">
+        <UiImage :data="data" class="hero" :preload="true" />
     </header>
     <div class="header__content blue-1">
         <h1 class="text-balance">{{ data.title.rendered }}</h1>

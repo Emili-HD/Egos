@@ -5,6 +5,7 @@
             <p v-if="data.descripcion_categorias" v-html="data.descripcion_categorias"></p>
             <h2 v-if="data.title_categories" v-html="data.title_categories"></h2>
          </div>
+         <div id="ofertas"></div>
          <div class="category__cards [&>h3]:!text-clamp-sm" v-for="(categoryId, index) in data.categorias_home" :key="`category-${categoryId}-${index}`">
             <div class="card__wrapper">
                <HomeCategorySlide :categoryId="categoryId" class="[&>.card-wrapper>.card]:h-full [&>.card-wrapper>.card]:objet-cover [&>.card-wrapper>.card]:object-center [&>.card-wrapper>.card]:w-[90vw] [&>.card-wrapper>.card]:shadow-2xl" />

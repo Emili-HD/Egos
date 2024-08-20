@@ -17,16 +17,14 @@
                     class="card item rounded-3xl overflow-hidden flex flex-col justify-between items-center gap-2 lg:gap-8 bg-nude-6 p-0"
                     >
                     <nuxt-link :to="`/noticias/${noticia.slug}`" class="size-full">
-                        <div class="noticias__image overflow-hidden w-full h-3/5"
-                            v-if="noticia.featured_image_data && noticia.featured_image_data.url">
-                            <img class="object-cover object-top w-full min-h-full" :src="noticia.featured_image_data.url"
-                                :srcset="noticia.featured_image_data.srcset"
-                                :width="noticia.featured_image_data.width"
-                                :height="noticia.featured_image_data.height"
-                                :alt="noticia.featured_image_data.alt" />
+                        <div class="noticias__image overflow-hidden w-full h-3/5">
+                            <UiImage :data="noticia" class="cover" loading="lazy" />
                         </div>
                         <div
                             class="noticias__content p-6 text-center h-2/5 flex flex-col justify-between items-center">
+                            <time :datetime="noticia.date_gmt" class="text-gray-400 italic">
+                                {{ formatDate(noticia.date_gmt) }}
+                            </time>
                             <h3 class="h6 text-clamp-base font-medium">
                                 <span class="">{{ noticia.acf.subtitulo }}</span>:<br>
                                 {{ noticia.title.rendered }}
@@ -73,7 +71,13 @@ const { data: noticias, error: noticiasError } = await useAsyncData(
     }
 );
 
-console.log('Noticia:', noticias.value[1].slug);
+const formatDate = (date) => {
+    const newDate = new Date(date)
+    const day = newDate.getDate().toString().padStart(2, '0')
+    const month = (newDate.getMonth() + 1).toString().padStart(2, '0') // Meses comienzan en 0
+    const year = newDate.getFullYear()
+    return `${day}/${month}/${year}`
+}
 
 // Cargar página específica (p.ej., la información de la página de noticias)
 const pageId = 18848; // ID página de noticias

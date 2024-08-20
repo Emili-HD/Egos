@@ -2,46 +2,20 @@
     <div v-if="footerMenuError || socialMenuError || legalMenuError">
       Error al cargar los menús.
     </div>
-   <footer v-else class="footer bg-blue-1 px-12 xl:px-24 pt-24 pb-6 flex flex-col justify-center items-center z-[999]" >
-      <div class="footer__inner grid grid-cols-3 auto-rows-auto xl:auto-rows-fr items-center gap-4 w-full gap-y-4 xl:gap-y-8 gap-x-4 xl:gap-x-8">
-         <div class="footer-logo col-span-3 h-[20vh] flex flex-row justify-center ">
+   <footer v-else class="footer" >
+      <div class="footer__inner">
+         <div class="footer-logo">
             <img loading="lazy" src="~/assets/images/1-navigation/logo-egos.svg" alt="" width="263" height="202" />
          </div>
-         <div class="menu-footer col-span-3 xl:col-span-1 flex flex-col justify-center items-center xl:items-start text-center xl:text-left">
-            <ul class="list-none !mb-0 flex flex-col gap-2">
-               <li class="mb-0" v-for="item in footerMenuData.items" :key="item.ID">
-                  <nuxt-link :to="resolveUrl(item.slug)">
-                     <span class="text-nude-8 uppercase">{{ item.title }}</span>
-                  </nuxt-link>
-               </li>
-            </ul>
-         </div>
-         <div class="message-footer flex flex-col col-span-3 xl:col-span-1 justify-center items-center xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25
-                     before:content-[''] before:absolute before:w-[1px] before:h-full before:bg-nude-8/20 before:-left-12
-                     after:content-[''] after:absolute after:w-[1px] after:h-full after:bg-nude-8/20 after:-right-12">
+         <UiMenu :data="footerMenuData.items" class="menu-footer"/>
+         <div class="message-footer xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25">
             <div id="block-16" class="footer__block">
                <p class="text-clamp-5xl text-center text-nude-8 font-lora mb-0">Hazlo por ti</p>
                <p class="text-center text-nude-8"><a href="mailto:info@clinicaegos.com">info@clinicaegos.com</a></p>
             </div>
          </div>
-         <div class="menu-social col-span-3 xl:col-span-1 flex flex-col justify-center items-center xl:items-end text-center xl:text-right">
-            <ul class="list-none !mb-0 flex flex-col gap-2">
-               <li class="mb-0" v-for="item in socialMenuData.items" :key="item.ID">
-                  <a :href="item.url" target="_blank">
-                     <span class="text-nude-8 uppercase">{{ item.post_title }}</span>
-                  </a>
-               </li>
-            </ul>
-         </div>
-         <div class="menu-legal col-span-3 py-4 self-start">
-            <ul class="list-none !mb-0 flex flex-col xl:flex-row justify-center items-center gap-8 w-full">
-               <li class="mb-0" v-for="item in legalMenuData.items" :key="item.ID">
-                  <nuxt-link :to="resolveUrl(item.slug)">
-                     <span class="text-nude-8">{{ item.title }}</span>
-                  </nuxt-link>
-               </li>
-            </ul>
-         </div>
+         <UiMenu :data="socialMenuData.items" class="menu-social" :isExternal="true"/>
+         <UiMenu :data="legalMenuData.items" class="menu-legal"/>
       </div>
    </footer>
 </template>
@@ -88,30 +62,41 @@ const { data: legalMenuData, error: legalMenuError } = await useAsyncData(
   }
 );
 
-
-// Función auxiliar para resolver URLs
-const resolveUrl = (slug) => {
-   return slug.startsWith('/') ? slug : `/${slug}`;
-}
 </script>
 
-<style>
+<style lang="scss" scoped>
+.footer {
+   @apply bg-blue-1 px-12 xl:px-24 pt-24 pb-6 flex flex-col justify-center items-center z-[999];
+
+   &__inner {
+      @apply grid grid-cols-3 auto-rows-auto xl:auto-rows-fr items-center gap-4 w-full gap-y-4 xl:gap-y-8 gap-x-4 xl:gap-x-8;
+   }
+
+   &-logo {
+      @apply col-span-3 h-[20vh] flex flex-row justify-center;
+   }
+}
+
+.message-footer {
+   @apply flex flex-col col-span-3 xl:col-span-1 justify-center items-center;
+
+   &::before {
+      @apply content-[''] absolute w-[1px] h-full bg-nude-8/20 -left-12;
+   }
+
+   &::after {
+      @apply content-[''] absolute w-[1px] h-full bg-nude-8/20 -right-12;
+   }                          
+}
+
 @media (min-width: 820px) and (max-width: 1180px) {
    .is-tablet {
       .footer {
          @apply pb-24;
       }
-      .menu-footer {
-         @apply text-left col-span-1 items-start;
-      }
+      
       .message-footer {
          @apply col-span-1;
-      }
-      .menu-social {
-         @apply text-right col-span-1 items-end;
-      }
-      .menu-legal ul {
-         @apply flex-row
       }
    }
 }

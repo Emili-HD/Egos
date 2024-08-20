@@ -36,7 +36,7 @@ import { onMounted, computed } from 'vue';
 import { useAsyncData } from 'nuxt/app'
 import { getPage } from '@/composables/useApi';
 
-const { data: home, error } = await useAsyncData(() => getPage(8), {initialCache: false})
+const { data: home, error } = await useAsyncData(() => getPage(8))
 const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);
 
 // Datos YOAST SEO

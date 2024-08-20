@@ -5,11 +5,10 @@
                 <li v-for="tratamiento in menuTratamientosData.items" :key="tratamiento.ID"
                     :class="{ 'hasSubmenu': tratamiento.child_items }">
                     <div class="menu-tab" :data-title="tratamiento.title">
-                        <nuxt-link :to="tratamiento.url" class="nav-title" active-class="router-link-active" :class="tratamiento.classes" >
+                        <nuxt-link :to="tratamiento.url" class="nav-title" active-class="router-link-active" :class="tratamiento.classes" prefetch >
                             <span>{{ tratamiento.title }}</span>
                         </nuxt-link>
-                        <ArrowDownRightIcon class="arrow-down xl:hidden"
-                            v-if="tratamiento.child_items" alt="Abrir menú" />
+                        <ArrowDownRightIcon class="arrow-down xl:hidden" v-if="tratamiento.child_items" alt="Abrir menú" />
                     </div>
                     <div class="menu-wrapper">
                         <nuxt-link :to="tratamiento.url" class="nav-link" active-class="router-link-active">
@@ -80,9 +79,9 @@
 
 <script setup>
 import { ArrowUpRightIcon, ArrowDownRightIcon } from '@heroicons/vue/24/outline'
+// import menuData from '~/data/menu.json'
 const { $gsap: gsap } = useNuxtApp();
 const route = useRoute();
-const menuStore = useMenuStore();
 
 // Métodos
 const processMenuItems = (items) => {
@@ -104,12 +103,35 @@ const processMenuItems = (items) => {
     });
 };
 
-const { data: menuTratamientosData, error: menuTratamientosError } = await useAsyncData('menuTratamientos', async () => {
+// const { data: menuTratamientosData } = await useAsyncData('menuTratamientos', async () => {
+//     const menuData = await getMenu('tratamientos');
+//     if (menuData && menuData.items) {
+//         processMenuItems(menuData.items);
+//     }
+//     return menuData;
+// });
+
+// Cargar solo los elementos de primer nivel inicialmente
+const { data: menuTratamientosData } = await useAsyncData('menuTratamientos', async () => {
+    const menuData = await getMenu('tratamientos', { level: 1 });
+    return menuData;
+});
+
+// Cargar submenús después
+const { data: submenuData } = await useLazyAsyncData('submenuTratamientos', async () => {
     const menuData = await getMenu('tratamientos');
     if (menuData && menuData.items) {
         processMenuItems(menuData.items);
     }
     return menuData;
+});
+
+// Mantener el estado de si los submenús han sido cargados
+const submenusLoaded = ref(false);
+watchEffect(() => {
+    if (submenuData.value) {
+        submenusLoaded.value = true;
+    }
 });
 
 const initializeMenus = async () => {
@@ -348,7 +370,7 @@ const props = defineProps({
     .header-wrapper {
 
         .menu-list {
-            @apply flex justify-end items-center gap-8 font-light h-full mb-0 uppercase tracking-wider;
+            @apply flex justify-end items-center gap-6 font-light h-full mb-0 uppercase tracking-wide;
 
             &.active {
                 @apply transform translate-x-0 overflow-y-scroll;

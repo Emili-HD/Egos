@@ -9,7 +9,7 @@
       :styles="mapStyles"
     >
       <CustomControl position="LEFT_CENTER" class="clinics ">
-        <ul class="clinics p-8 hidden lg:flex flex-col">
+        <ul class="clinics p-8 hidden lg:flex flex-col list-none">
           <li v-for="location in locations" :key="location.id" class="mb-1">
             <button
               class="custom-btn m-0 py-1 px-3 font-light text-sm appearance-none cursor-pointer select-none text-nude-8 bg-blue-1 rounded-md"

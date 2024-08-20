@@ -11,9 +11,12 @@
                     </div>
                 </div>
             </header>
-            <section class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
+            <section
+                class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="casoreal && casoreal.content">
-                <div v-html="casoreal.content.rendered"></div>
+                <div v-html="processedContent"
+                    class="[&>p:has(img.aligncenter)]:inline-flex [&>p:has(img.aligncenter)]:justify-center [&>p:has(img.aligncenter)]:w-[33%] [&>p:has(img.aligncenter)]:max-md:w-[100%] [&>p>img]:w-full">
+                </div>
             </section>
         </div>
         <aside class="form__wrapper bg-blue-2 col-[1_/_span_16] lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20 h-full"
@@ -25,14 +28,14 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick } from 'vue';
+import { ref, watch, nextTick, computed } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getTestimonios } from '@/composables/useApi';
 
 
 const router = useRouter();
 const route = useRoute();
-const { $gsap: gsap, $lenis: lenis, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
+const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 // Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
 const { data: casoreal, refresh } = await useAsyncData(`casoreal-${route.params.slug}`, () => {
@@ -40,6 +43,19 @@ const { data: casoreal, refresh } = await useAsyncData(`casoreal-${route.params.
     return getTestimonios({ slug: route.params.slug });
 }, { watch: [() => route.params.slug], initialCache: false });
 
+const rawContent = computed(() => casoreal.value.content.rendered)
+
+const processedContent = computed(() => {
+    if (!rawContent.value) return ''
+
+    return rawContent.value
+        // Reemplaza solo URLs relativas que empiezan con `//`
+        .replace(/(src|srcset)="\/\/([^"]*)"/g, '$1="https://test.clinicaegos.com/$2"')
+        // Asegúrate de que las URLs absolutas incorrectamente formadas no se dupliquen
+        .replace(/https:\/\/test\.clinicaegos\.com\/https:\/\/test\.clinicaegos\.com\//g, 'https://test.clinicaegos.com/')
+        // Corrige cualquier caso de `srcset` que todavía use el dominio principal
+        .replace(/https:\/\/clinicaegos\.com/g, 'https://test.clinicaegos.com')
+})
 
 watch(
     () => route.params.slug,

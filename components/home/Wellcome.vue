@@ -1,45 +1,49 @@
 <template>
-    <section class="intro min-h-[100vh] overflow-hidden">
-        <div class="intro__image bg-[#16253c] h-[100vh] inset-0 absolute w-[100vw] flex flex-col justify-center items-start gap-8
-                    after:content-[''] after:absolute after:inset-0 after:size-full after:bg-white/30 ">
-            <img 
-                class="girl min-h-screen min-w-screen object-cover object-[75%] xl:object-center absolute z-0 left-0" 
-                v-if="data && data.featured_image_data && data.featured_image_data.url"
-                :src="data.featured_image_data.url" 
-                :srcset="data.featured_image_data.srcset" 
-                :alt="data.featured_image_data.alt" 
-                :width="data.featured_image_data.width" 
-                :height="data.featured_image_data.height" 
-            />
-              <p class="intro__title font-lora font-normal text-clamp-6xl 
-                        lg:text-[10vw] xl:text-[4vw] text-blue-1 leading-[0.9] mb-0 mt-[15vh] pl-8 lg:pl-16 text-left
-                        [&>span]:!text-gold-3 [&>span]:w-full [&>span]:block lg:[&>span]:inline-block z-10">
-                  Más de 3000<span id="a">pacientes</span> <span id="b">intervenidos</span> al año
-              </p>
-            <div class="intro__content pl-8 lg:pl-16 text-blue-1 flex flex-col justify-center items-start gap-4 z-10">
-                <div class="heading">
-                    <h1 class="text-clamp-2xl 2xl:text-clamp-xl font-nunito">EGOS | Clínica de cirugía plástica y reparadora</h1>
+    <section class="intro">
+        <div class="intro__image">
+            <UiImage :data="data" class="girl" :preload="true" />
+            <div>
+                <p class="intro__title">
+                    Más de 3000<span id="a">pacientes</span> <span id="b">intervenidos</span> al año
+                </p>
+                <div
+                    class="intro__content pl-8 lg:pl-16 text-blue-1 flex flex-col justify-center items-start gap-4 z-10 w-full">
+                    <div class="heading mb-12">
+                        <h1 class="">EGOS | Clínica de cirugía plástica y reparadora</h1>
+                    </div>
                 </div>
-                <ElementsButton class="gold text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase h-full z-2 w-auto" href="#ofertas" @click.passive="handleClick">Cumple tu sueño</ElementsButton>
+            </div>
+            <div class="flex flex-col lg:flex-row justify-center items-center w-full z-20 gap-6 px-12 xl:px-16">
+                <div v-for="tratamiento in featuredTratamientos" :key="tratamiento.id" class="w-full max-w-[320px] sm:max-w-[70%] lg:max-w-[32%] xl:max-w-[33%] ">
+                    <nuxt-link :to="tratamiento.link"
+                        class="flex items-center bg-nude-8/40 backdrop-blur overflow-hidden rounded-xl min-w-[320px] xl:min-w-[30vw] shadow-lg">
+                        <div class="p-0 h-full w-[30%] xl:w-1/3 aspect-square overflow-hidden">
+                            <UiImage :data="tratamiento" class="absolute inset-0 size-full object-cover object-center"/>
+                        </div>
+                        <div class="px-4 w-[70%] xl:w-2/3 flex justify-start items-center h-full">
+                            <div>
+                                <h2 class="text-lg xl:text-xl font-medium mb-4">{{ tratamiento.acf.titulo }}</h2>
+                                <div class="gold text-xs xl:text-clamp-sm !px-4">¡Calcula tu presupuesto!</div>
+                            </div>
+                        </div>
+                        <svg class="size-8 xl:size-12 absolute right-1 bottom-1" width="92" height="92" viewBox="0 0 92 92" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="45.5811" cy="45.6007" rx="32" ry="32.5"
+                                transform="rotate(43.416 45.5811 45.6007)" fill="#273E60" />
+                            <path
+                                d="M32.7615 46.0546L58.4009 45.1466M58.4009 45.1466L48.5948 35.8682M58.4009 45.1466L49.3266 54.7371"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </nuxt-link>
+                </div>
             </div>
         </div>
     </section>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, nextTick } from 'vue'
-import {ScrollTrigger} from 'gsap/ScrollTrigger'
-import {TextPlugin} from 'gsap/TextPlugin'
-
-const { $gsap: gsap } = useNuxtApp();
-
-// Refs para elementos del DOM
-const introTitleA = ref(null);
-const introTitleB = ref(null);
-
-// Arrays para rastrear timeouts y animaciones
-const timeouts = ref([]);
-const animations = ref([]);
+import { useAsyncData } from 'nuxt/app'
+import { getTratamiento } from '@/composables/useApi';
 
 const props = defineProps({
     data: {
@@ -48,80 +52,49 @@ const props = defineProps({
     }
 })
 
-// Métodos
-function handleClick() {
-  const { $lenis: lenis } = useNuxtApp();
-//   console.log('lenis on click', lenis);
-  lenis.scrollTo('#ofertas', {offset: -20});
-}
-
-// Función para cambiar el texto con animación
-/* const switchText = async () => {
-    gsap.registerPlugin(TextPlugin)
-
-    gsap.defaults({ease: "none"});
-
-    const tl = gsap.timeline({repeat:3, repeatDelay:1, yoyo:true});
-
-    function switch_text(el, txt, delay, callback) {
-        setTimeout(function () {
-            gsap.to(el, {
-                duration: 1, 
-                text: { value: txt }, onComplete: function () {
-                    if (callback && typeof (callback) === 'function') {
-                        callback();
-                    }
-                }
-            });
-        }, delay);
-    }
-
-    function init() {
-        switch_text('.intro__title #a', 'pacientes', 0);
-        switch_text('.intro__title #a', 'sueños', 4000);
-        switch_text('.intro__title #b', 'intervenidos', 0);
-        switch_text('.intro__title #b', 'cumplidos', 4000);
-        // run again after 6s
-        setTimeout(init, 8000);
-    }
-
-    // Init the magic
-    init();
-} */
-
-// Limpieza de animaciones y timeouts
-const cleanupAnimations = () => {
-  animations.value.forEach(animation => animation.kill());
-  animations.value = [];
-
-  timeouts.value.forEach(timeoutId => clearTimeout(timeoutId));
-  timeouts.value = [];
-};
-
-onMounted(async () => {
-    await nextTick()
-    /* const startAnimation = async () => {
-        // Remove event listeners to avoid multiple triggers
-        window.removeEventListener('mouseenter', startAnimation)
-        window.removeEventListener('click', startAnimation)
-        window.removeEventListener('touchstart', startAnimation)
-
-        // Start the animation
-        await switchText()
-    }
-
-    // Add event listeners for user interaction
-    window.addEventListener('mouseenter', startAnimation)
-    window.addEventListener('click', startAnimation)
-    window.addEventListener('touchstart', startAnimation) */
-})
-
-onUnmounted(() => {
-  cleanupAnimations();
+// Usamos `useFetch` para hacer la solicitud de datos.
+const { data: featuredTratamientos, error } = await useAsyncData('featured-tratamientos', async () => {
+    const tratamientos = await getTratamiento({ getAll: true });
+    return tratamientos.filter(tratamiento =>
+        tratamiento.acf?.destacar_post?.includes('featured')
+    );
 });
+
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.gold {
+   @apply py-2 px-6 w-fit rounded-full text-white font-normal animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running];
+}
+
+.intro {
+    @apply min-h-[100vh];
+
+    &__image {
+        @apply h-screen inset-0 absolute w-screen flex flex-col justify-evenly items-start gap-8;
+
+        &::after {
+            @apply content-[''] absolute inset-0 size-full bg-white/30;
+        }
+    }
+}
+
+.girl {
+    @apply h-screen w-screen object-cover object-[75%] xl:object-center absolute z-0 left-0;
+}
+
+.intro__title {
+    @apply font-lora font-normal text-clamp-4xl lg:text-[8vw] xl:text-[3vw] text-blue-1 leading-[0.9] mb-8 mt-screen/20 pl-8 lg:pl-16 text-left z-10;
+
+    &>span {
+        @apply text-gold-3 w-full block lg:inline-block
+    }
+}
+
+.heading h1 {
+    @apply text-clamp-2xl 2xl:text-clamp-lg font-nunito;
+}
+
 @media (min-width: 768px) and (max-width: 1366px) and (orientation: portrait) {
     .girl {
         @apply left-0;
@@ -134,3 +107,4 @@ onUnmounted(() => {
     }
 }
 </style>
+<!-- 81.60.175.100 -->

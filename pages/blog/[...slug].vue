@@ -3,10 +3,7 @@
         <article :class="{ 'fullwidth': post.acf.quiz && post.acf.quiz.posicion === 'top' }">
             <div class="post__header before-gradient mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center overflow-hidden"
                 v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
-                <img class="absolute object-cover object-center inset-0 z-0 min-h-full" loading="lazy"
-                    v-if="post.featured_image_data" :src="post.featured_image_data.url"
-                    :srcset="post.featured_image_data.srcset" :alt="post.featured_image_data.alt"
-                    :aria-labelledby="'post-title-' + post.id" />
+                <UiImage :data="post" class="cover absolute" :preload="true" :aria-labelledby="'post-title-' + post.id" />
                 <h1 v-if="isCritical"
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10">{{
                         post.title.rendered }}</h1>
@@ -16,10 +13,7 @@
             <!-- CABECERA MODIFICADA PARA FORM QUIZ -->
             <div class="post__header before-gradient bg-cover bg-center bg-no-repeat h-[70vh] xl:h-[50vh] flex flex-col justify-center items-center overflow-hidden p-8"
                 v-if="post.acf && post.acf.quiz && post.acf.quiz.posicion === 'top'">
-                <img class="absolute object-cover object-center inset-0 z-0 min-h-full" loading="lazy"
-                    v-if="post.featured_image_data" :src="post.featured_image_data.url"
-                    :srcset="post.featured_image_data.srcset" :alt="post.featured_image_data.alt"
-                    :aria-labelledby="'post-title-' + post.id" />
+                <UiImage :data="post" class="cover absolute" :preload="true" :aria-labelledby="'post-title-' + post.id" />
                 <h1 v-if="isCritical"
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 mt-20">
                     {{
@@ -47,17 +41,14 @@
                     <h4 class="font-[lora_sans-serif] nav-content-title h6 bg-nude-4 p-4">Tabla de contenidos</h4>
                     <ul class="pl-6 list-decimal">
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                            v-for="(content, index) in post.acf.areas_de_contenido"
-                            @click.passive="lenis.scrollTo(`#area-${index}`, { offset: -100 })"><span>{{
+                            v-for="(content, index) in post.acf.areas_de_contenido"><span>{{
                                 content.titulo_area }}</span>
                         </li>
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                            v-if="post.acf.post_description.titulo_recomendaciones"
-                            @click.passive="lenis.scrollTo('#recomendaciones', { offset: -100 })"><span
+                            v-if="post.acf.post_description.titulo_recomendaciones"><span
                                 v-html="post.acf.post_description.titulo_recomendaciones"></span></li>
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                            v-if="post.acf.post_faqs.titulo_faqs"
-                            @click.passive="lenis.scrollTo('#faqs', { offset: -100 })"><span
+                            v-if="post.acf.post_faqs.titulo_faqs"><span
                                 v-html="post.acf.post_faqs.titulo_faqs"></span></li>
                     </ul>
                 </aside>
@@ -163,7 +154,7 @@ const route = useRoute();
 const { isCritical } = useBoosterCritical({ critical: true });
 
 // Acceder a gsap y lenis desde el contexto de Nuxt
-const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
+const { $gsap: gsap } = useNuxtApp();
 
 // Define la función para cargar los datos
 const loadData = async () => {

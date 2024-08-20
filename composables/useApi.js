@@ -177,14 +177,22 @@ export const getNoticias = async ({ page = 1, perPage = 100, slug = null } = {})
 // Función unificada para obtener tratamientos por ID o slug
 // ***************************************************************************************************
 
-export const getTratamiento = async ({ id = null, slug = null } = {}) => {
-    if (!id && !slug) {
-        throw new Error("Debe proporcionar un ID o un slug para buscar un tratamiento.");
+export const getTratamiento = async ({ id = null, slug = null, getAll = false, perPage = 60 } = {}) => {
+    if (!id && !slug && !getAll) {
+        throw new Error("Debe proporcionar un ID, un slug o activar la opción 'getAll' para buscar un tratamiento.");
     }
 
     let endpoint = 'wp/v2/tratamiento';
     const timestamp = new Date().getTime();
-    let queryParameters = id ? `/${id}` : `?slug=${slug}&timestamp=${timestamp}`;
+    let queryParameters = '';
+
+    if (id) {
+        queryParameters = `/${id}`;
+    } else if (slug) {
+        queryParameters = `?slug=${slug}&timestamp=${timestamp}`;
+    } else if (getAll) {
+        queryParameters = `?per_page=${perPage}&timestamp=${timestamp}`;
+    }
 
     const url = `${JSON_URL}/${endpoint}${queryParameters}`;
 
@@ -195,13 +203,14 @@ export const getTratamiento = async ({ id = null, slug = null } = {}) => {
                 'Content-Type': 'application/json',
             },
         });
-        // Devuelve el primer elemento si se busca por slug, ya que se espera que sea único
+
         return slug ? data[0] : data;
     } catch (error) {
         console.error("Fetch error: ", error);
         throw error;
     }
 };
+
 
 // ***************************************************************************************************
 // Función para obtener especialidades

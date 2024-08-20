@@ -25,18 +25,18 @@
 
         <template v-if="doctor.length > 0">
             <section v-for="category in categories" :key="category.id" :class="`equipo ${category.slug}`"
-                class="pt-20 pb-40 xl:pt-32 w-[100vw] grid grid-cols-subgrid col-[1_/_-1]" :id="`orden-${category.order}`">
+                class="pt-20 pb-60 xl:pt-32 w-[100vw] grid grid-cols-subgrid col-[1_/_-1]" :id="`orden-${category.order}`">
                 <aside class="equipo__left-column col-[2/-2] xl:col-[2/7] pb-20">
-                    <div class="equipo__left-description">
+                    <div class="equipo__left-description lg:mb-40">
                         <h3>{{ category.name }}</h3>
-                        <p class="!mb-0" v-if="category.description">{{ category.description }}</p>
-                        <button class="button" v-if="category.form === true" @click="openPopup">Pedir Cita</button>
+                        <p class="mb-6" v-if="category.description">{{ category.description }}</p>
+                        <UiButton class="gold uppercase" v-if="category.form === true" @click="openPopup">Pedir Cita</UiButton>
                     </div>
                 </aside>
                 <article class="equipo__right-column col-[2/-2] xl:col-[8/-2]">
                     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-8">
                         <li v-for="miembro in doctorByCategory(category.id)" :key="miembro.id"
-                            class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden xl:[&:nth-child(2n)]:translate-y-1/3">
+                            class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden xl:[&:nth-child(2n)]:translate-y-1/3 list-none">
                             <div class="card__member block relative size-full overflow-hidden">
                                 <img loading="lazy" 
                                     class="card__image absolute w-full object-center object-cover min-h-full overflow-hidden rounded-3xl"
@@ -56,9 +56,9 @@
                                     </div>
                                     <div class="button__group flex flex-row justify-center items-center gap-2 w-full">
                                         <a v-if="category.form === false" href="#" @click.passive="showMemberPanel(miembro)" class="button border border-solid bg-nude-1 border-nude-1/20 rounded-full py-1 w-full text-center">+ Info</a>
-                                        <NuxtLink :to="processedPath(miembro.link)" class="button bg-nude-1 rounded-full py-1 text-nude-8 w-full text-center" v-if="category.form === true">+ Info</NuxtLink>
-                                        <button class="button bg-gold-3 rounded-full py-1 text-nude-8 w-full text-center" v-if="category.form === true"
-                                            @click="openPopup">Pedir Cita</button>
+                                        <UiButton :to="processedPath(miembro.link)" class="bg-nude-1 !w-1/2 text-center" v-if="category.form === true">+ Info</UiButton>
+                                        <UiButton class="bg-gold-3 !w-1/2 text-center" v-if="category.form === true"
+                                            @click="openPopup">Pedir Cita</UiButton>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@ import { useAsyncData } from 'nuxt/app';
 import { getEspecialidades, getPage, getEquipo } from '@/composables/useApi';
 
 
-const { $gsap: gsap, $lenis: lenis, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
+const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 // Estados reactivos
 const panelVisible = ref(false);
@@ -159,7 +159,7 @@ const processedPath = (fullUrl) => {
 function showMemberPanel(miembro) {
     selectedMemberInfo.value = miembro;
     panelVisible.value = true;
-    lenis
+    // lenis
 }
 
 const pinTitles = async () => {

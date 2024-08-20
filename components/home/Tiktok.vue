@@ -57,7 +57,7 @@ import { getTikTok } from '@/composables/useApi'; // Asegúrate de que esta ruta
 // import BoosterImage from '#booster/components/BoosterImage';
 // import PlayIcon from '~/assets/images/icons/play-tiktok.svg';
 
-const { $lenis: lenis } = useNuxtApp();
+// const { $lenis: lenis } = useNuxtApp();
 const selectedVideoId = ref('');
 const showPopup = ref(false);
 
@@ -68,16 +68,16 @@ const { data: tiktokData, error: tiktokError } = await useAsyncData(getTikTok);
 const openPopup = (videoId) => {
   selectedVideoId.value = videoId;
   showPopup.value = true;
-  lenis.scrollTo('.social', { offset: 0, duration: 0.2 });
-  setTimeout(() => {
-    lenis.stop();
-  }, 200);
+//   lenis.scrollTo('.social', { offset: 0, duration: 0.2 });
+//   setTimeout(() => {
+//     lenis.stop();
+//   }, 200);
 };
 
 // Ejemplo de cómo podrías cerrar el popup, necesitarás implementar esta lógica
 const closePopup = () => {
   showPopup.value = false;
-  lenis.start();
+//   lenis.start();
 };
 </script>
 

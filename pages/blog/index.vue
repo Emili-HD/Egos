@@ -18,10 +18,11 @@
                     :aria-labelledby="'post-title-' + post.id">
                     <nuxt-link class="flex flex-col xl:flex-row h-full" :to="'/blog/' + post.slug + '/'"
                         :aria-label="'Leer más sobre ' + post.title.rendered">
-                        <img class="card__image aspect-square w-full xl:w-[45%] min-w-[22rem] object-cover object-center rounded-2xl overflow-hidden"
+                        <UiImage :data="post" class="card__image !aspect-square" loading="lazy" />
+                        <!-- <img class="card__image aspect-square w-full xl:w-[45%] min-w-[22rem] object-cover object-center rounded-2xl overflow-hidden"
                             loading="lazy" v-if="post.featured_image_data" :src="post.featured_image_data.url"
                             :srcset="post.featured_image_data.srcset" :alt="post.featured_image_data.alt"
-                            :aria-labelledby="'post-title-' + post.id" />
+                            :aria-labelledby="'post-title-' + post.id" /> -->
                         <div class="card__content p-4 flex flex-col w-full">
                             <div
                                 class="card__content-wrapper text-left [&_h2,&_h3]:text-clamp-xl [&_h2,&_h3]:font-light">
@@ -65,7 +66,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 
 const postsPerPage = 100;
-const { $gsap: gsap, $lenis: lenis } = useNuxtApp();
+const { $gsap: gsap } = useNuxtApp();
 const showLoadingIndicator = ref(true);
 const page = ref(1);
 

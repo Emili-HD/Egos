@@ -9,11 +9,7 @@
                 </h1>
                 <div class="noticias__image overflow-hidden w-full"
                     v-if="noticia.featured_image_data && noticia.featured_image_data.url">
-                    <img class="object-contain object-top w-full min-h-full" :src="noticia.featured_image_data.url"
-                        :srcset="noticia.featured_image_data.srcset"
-                        :width="noticia.featured_image_data.width"
-                        :height="noticia.featured_image_data.height"
-                        :alt="noticia.featured_image_data.alt" />
+                    <UiImage :data="noticia" class="contain" loading="lazy" />
                 </div>
             </header>
             <nav class="breadcrumbs flex gap-4 mb-0 divide-x divide-blue-1/50 font-nunito text-gray-400">
@@ -45,7 +41,7 @@ import { getNoticias } from '@/composables/useApi';
 
 const router = useRouter();
 const route = useRoute();
-const { $gsap: gsap, $lenis: lenis, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
+const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 // Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
 const { data: noticia, refresh } = await useAsyncData(`noticia-${route.params.slug}`, () => {

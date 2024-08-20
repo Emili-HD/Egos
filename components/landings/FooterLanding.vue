@@ -11,7 +11,7 @@
 
             <div class="col-md-6">
                <div class="copyright-right">
-                  <p>&copy; 2023 <b>Clínica Egos</b></p>
+                  <p>&copy; 2023 <b>Clínica EGOS</b></p>
                </div>
             </div>
 

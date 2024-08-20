@@ -28,11 +28,7 @@
                     <nuxt-link :to="`/opinion-egos/${testimonio.slug}`" class="size-full">
                         <div class="testimonios__image overflow-hidden w-full h-[60%]"
                             v-if="testimonio.featured_image_data && testimonio.featured_image_data.url">
-                            <img class="object-cover w-full min-h-full" :src="testimonio.featured_image_data.url"
-                                :srcset="testimonio.featured_image_data.srcset"
-                                :width="testimonio.featured_image_data.width"
-                                :height="testimonio.featured_image_data.height"
-                                :alt="testimonio.featured_image_data.alt" />
+                            <UiImage :data="testimonio" class="cover" loading="lazy" />
                         </div>
                         <div
                             class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-between items-center">
@@ -51,7 +47,7 @@
                 <div v-html="pages.content.rendered"></div>
             </div>
 
-            <section class="bg-blue-1 p-12 xl:p-24 mb-0" v-if="pages.acf">
+            <section class="bg-blue-2 p-12 xl:p-24 mb-0" v-if="pages.acf">
                 <FormsCustomForm :identificador="'formulario'" :portalId="String(pages.acf.portalid)"
                     :formId="pages.acf.formid" />
             </section>
