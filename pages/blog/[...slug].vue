@@ -80,7 +80,7 @@
                             <div class="accordion__list--item flex flex-col flex-wrap justify-between py-5 cursor-pointer separador-lista"
                                 v-for="item in post.acf.post_description.secciones_del_post" :key="item.post_subtitle">
                                 <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
-                                    <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 text-clamp-base mb-0 !font-light"
+                                    <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 text-clamp-base mb-0 !font-semibold"
                                         v-html="item.post_subtitle"></div>
                                     <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                                         <path class="iconV" d="M 12,0 V 24" />
@@ -103,7 +103,7 @@
                                 v-for="contentido in post.acf.post_faqs.preguntas_frecuentes"
                                 :key="contentido.faq_subtitle">
                                 <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
-                                    <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 text-clamp-base mb-0 !font-light"
+                                    <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 text-clamp-base mb-0 !font-semibold"
                                         v-html="contentido.faq_subtitle"></div>
                                     <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
                                         <path class="iconV" d="M 12,0 V 24" />

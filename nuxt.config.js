@@ -251,6 +251,7 @@ export default defineNuxtConfig({
             '~/middleware/apiProxy.js',
             '~/middleware/force-slash.global.js',
             '~/middleware/force-cirugias.global.js',
+            '~/middleware/cleanQueryParams.js',
         ]
     },
 

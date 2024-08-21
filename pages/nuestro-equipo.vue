@@ -25,7 +25,7 @@
 
         <template v-if="doctor.length > 0">
             <section v-for="category in categories" :key="category.id" :class="`equipo ${category.slug}`"
-                class="pt-20 pb-60 xl:pt-32 w-[100vw] grid grid-cols-subgrid col-[1_/_-1]" :id="`orden-${category.order}`">
+                class="pt-20 xl:pb-60 xl:pt-32 w-[100vw] grid grid-cols-subgrid col-[1_/_-1]" :id="`orden-${category.order}`">
                 <aside class="equipo__left-column col-[2/-2] xl:col-[2/7] pb-20">
                     <div class="equipo__left-description lg:mb-40">
                         <h3>{{ category.name }}</h3>

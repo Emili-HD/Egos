@@ -37,7 +37,7 @@ onMounted(() => {
 }
 
 .navTrigger {
-  @apply xl:hidden;
+  @apply size-16 rounded-xl flex justify-center place-items-center bg-nude-8 xl:hidden;
 }
 
 .is-ipad-pro .navTrigger,

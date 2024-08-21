@@ -1,9 +1,9 @@
 <template>
     <section class="col-[1/-1]" v-if="categories.length > 0">
         <article v-for="category in categories" :key="category.id" :class="`equipo ${category.slug}`"
-            class="pt-20 pb-20 xl:pt-32 w-screen" :id="`orden-${category.order}`">
+            class="pt-16 xl:pb-16 px-4 w-full" :id="`orden-${category.order}`">
             <!-- <article class=""> -->
-                <ul class="grid grid-cols-4 xl:grid-cols-12 gap-4 lg:gap-8 px-12 lg:px-32">
+                <ul class="grid grid-cols-4 xl:grid-cols-12 gap-4 lg:gap-8 lg:px-12 lg:px-32">
                     <li v-for="miembro in doctorByCategory(category.id)" :key="miembro.id"
                         class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden col-span-4 md:col-span-2 xl:col-span-3 list-none">
                         <div class="card__member block relative size-full overflow-hidden">

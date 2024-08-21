@@ -3,7 +3,7 @@
         <UiImage :data="data" class="hero" :preload="true" />
     </header>
     <div class="header__content blue-1">
-        <h1 class="text-balance">{{ data.title.rendered }}</h1>
+        <h1 class="text-balance max-sm:text-clamp-4xl">{{ data.title.rendered }}</h1>
         <ElementsDivider />
         <div class="answer" v-html="data.content.rendered"></div>
     </div>
@@ -22,7 +22,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .header {
-    @apply h-screen sm:h-screen/50 lg:min-h-screen/80 xl:h-screen p-12 mb-0 col-[1/-1] lg:col-[1/10] xl:col-[1/12] !bg-transparent bg-cover bg-center;
+    @apply h-screen/50 lg:min-h-screen/80 xl:h-screen p-12 mb-0 col-[1/-1] lg:col-[1/10] xl:col-[1/12] !bg-transparent bg-cover bg-center;
 
     &__content {
         @apply p-12 bg-nude-6 flex flex-col justify-center items-center col-[1/-1] lg:col-[10/17] xl:col-[12/17];

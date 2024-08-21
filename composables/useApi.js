@@ -83,6 +83,23 @@ export const getMenu = async (menuName) => {
     }
 };
 
+export const getMenuTratamientos = async () => {
+    const url = `${JSON_URL}/menus/v1/menu/?nombre=tratamientos`;
+
+    try {
+        const response = await $fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        return response;
+    } catch (error) {
+        console.error("Fetch error: ", error);
+        throw error;
+    }
+};
+
 // ***************************************************************************************************
 // Función unificada para obtener clínicas por página o por slug
 // ***************************************************************************************************

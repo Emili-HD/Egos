@@ -15,8 +15,7 @@
             </div>
             <div class="flex flex-col lg:flex-row justify-center items-center w-full z-20 gap-6 px-12 xl:px-16">
                 <div v-for="tratamiento in featuredTratamientos" :key="tratamiento.id" class="w-full max-w-[320px] sm:max-w-[70%] lg:max-w-[32%] xl:max-w-[33%] ">
-                    <nuxt-link :to="tratamiento.link"
-                        class="flex items-center bg-nude-8/40 backdrop-blur overflow-hidden rounded-xl min-w-[320px] xl:min-w-[30vw] shadow-lg">
+                    <nuxt-link :to="formatLink(tratamiento.link)" class="flex items-center bg-nude-8/40 backdrop-blur overflow-hidden rounded-xl min-w-[320px] xl:min-w-[30vw] shadow-lg">
                         <div class="p-0 h-full w-[30%] xl:w-1/3 aspect-square overflow-hidden">
                             <UiImage :data="tratamiento" class="absolute inset-0 size-full object-cover object-center"/>
                         </div>
@@ -60,6 +59,17 @@ const { data: featuredTratamientos, error } = await useAsyncData('featured-trata
     );
 });
 
+// Función para formatear el link
+const formatLink = (url) => {
+    // Si la URL es completa, extraemos el path
+    try {
+        const { pathname } = new URL(url);
+        return pathname;
+    } catch (error) {
+        // Si no es una URL válida, asumimos que ya es un path relativo
+        return url;
+    }
+};
 </script>
 
 <style lang="scss" scoped>

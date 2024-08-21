@@ -3,11 +3,9 @@
     <div class="col-span-full lg:col-span-11 min-h-screen/60">
       <LazyElementsGoogleMap @update-content="handleContentUpdate" @update-options="handleOptionsUpdate" />
     </div>
-    <div id="formulario" class="half-right bg-blue-1 p-8 xl:p-12 h-fit lg:h-full w-full mb-0 top-0
-            lg:min-h-screen flex flex-col justify-center 
-            col-span-full lg:col-[12/17] row-start-2 lg:row-start-1">
+    <div id="formulario" class="half-right">
       <div class="-mx-4 mb-12" v-html="content"></div>
-      <div class="form__wrappe p-4 mb-12 lg:p-12 xl:p-0">
+      <div class="form__wrapper">
         <!-- <FormsCirugia :identificador="'map'" :portalId="portalId" :formId="formId" /> -->
         <FormsCustomForm :identificador="'map'" :portalId="String(portalId)" :formId="formId" />
       </div>
@@ -46,5 +44,11 @@ const handleOptionsUpdate = (newOptions) => {
 </script>
 
 <style lang="scss" scoped>
-// empty style
+.half-right {
+  @apply bg-blue-1 p-6 xl:p-12 h-fit lg:h-full w-full mb-0 top-0 flex flex-col justify-center col-span-full lg:col-[12/17] row-start-2 lg:row-start-1 lg:min-h-screen;
+
+  .form__wrapper {
+    @apply p-0 mb-12 lg:p-12 xl:p-0;
+  }
+}
 </style>

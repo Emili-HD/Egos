@@ -1,5 +1,5 @@
 <template>
-    <div class="card p-2 pb-4 bg-nude-7 rounded-3xl min-h-full" :class="props.classes" v-if="category">
+    <div class="card" :class="props.classes" v-if="category">
         <nuxt-link :to="processedLink" class="card__link" aria-label="Ver detalles de cirugía">
             <div v-if="category.acf && category.acf.badge">
                 <p class="card__link-badge">{{ category.acf.badge }}</p>
@@ -63,6 +63,8 @@ const { data: category, error } = await useAsyncData(`tratamiento-${props.catego
 
 <style lang="scss" scoped>
 .card {
+    @apply pb-4 bg-nude-7 rounded-3xl min-h-full shadow-xl;
+
     &__link {
         @apply w-full h-full block;
     
@@ -81,11 +83,11 @@ const { data: category, error } = await useAsyncData(`tratamiento-${props.catego
 
     .category {
         &__title {
-            @apply flex flex-col justify-end items-center gap-2 p-2 relative w-full m-auto;
+            @apply flex flex-col justify-end items-center gap-4 p-4 relative w-full m-auto;
             
 
             h3 {
-                @apply text-center text-clamp-base text-pretty font-light mb-0;
+                @apply text-center text-clamp-lg lg:text-clamp-base text-pretty font-semibold mb-0;
             }
 
         }

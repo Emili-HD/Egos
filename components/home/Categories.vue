@@ -29,13 +29,17 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .home__services {
-   @apply bg-white flex flex-row justify-center items-stretch flex-wrap min-h-screen w-full xl:px-20 py-16 overflow-hidden; 
+   @apply bg-white flex flex-row justify-center items-stretch flex-wrap min-h-screen w-full pt-12 xl:px-20 xl:py-16; 
 
    &-description {
-      @apply w-full pt-12 px-10 xl:px-24 pb-12 text-center;
+      @apply w-full pt-0 px-10 xl:px-24 pb-12 text-center;
 
       & > p {
-         @apply text-balance w-full;
+         @apply text-pretty w-full max-sm:text-left;
+      }
+
+      & > h2 {
+         @apply max-sm:text-clamp-3xl max-sm:text-left mb-0;
       }
    }
 

@@ -1,24 +1,32 @@
 <template>
-    <div class="header-nav flex flex-row justify-end items-stretch size-full" v-if="menuTratamientosData && menuTratamientosData.items">
+    <div class="header-nav flex flex-row justify-end items-stretch size-full" v-if="menuTratamientosData">
         <nav aria-label="Global" class="nav-categories">
             <ul class="menu-list hidden" @mouseover="loadImages" ref="menuContainer">
-                <li v-for="tratamiento in menuTratamientosData.items" :key="tratamiento.ID"
+                <li v-for="tratamiento in menuTratamientosData" :key="tratamiento.ID"
                     :class="{ 'hasSubmenu': tratamiento.child_items }">
                     <div class="menu-tab" :data-title="tratamiento.title">
-                        <nuxt-link :to="tratamiento.url" class="nav-title" active-class="router-link-active" :class="tratamiento.classes" prefetch >
+                        <nuxt-link 
+                            :to="tratamiento.path" 
+                            class="nav-title" 
+                            active-class="router-link-active" 
+                            :class="[
+                                ...tratamiento.classes, 
+                                { 'nav-link': tratamiento.child_items.length === 0 }
+                            ]"
+                        >
                             <span>{{ tratamiento.title }}</span>
                         </nuxt-link>
-                        <ArrowDownRightIcon class="arrow-down xl:hidden" v-if="tratamiento.child_items" alt="Abrir menú" />
+                        <ArrowDownRightIcon class="arrow-down xl:hidden" v-if="tratamiento.child_items.length > 0" alt="Abrir menú" />
                     </div>
                     <div class="menu-wrapper">
-                        <nuxt-link :to="tratamiento.url" class="nav-link" active-class="router-link-active">
+                        <nuxt-link :to="tratamiento.path" class="nav-link" active-class="router-link-active">
                             <span class="">{{ tratamiento.title }}</span>
                             <ArrowUpRightIcon
                                 class="arrow-up size-8 p-2 rounded-full order-2 absolute lg:hidden right-4 opacity-50 text-blue-1 hidden"
                                 alt="Cerrar menú" />
                         </nuxt-link>
 
-                        <div class="submenu" v-if="tratamiento.child_items">
+                        <div class="submenu" v-if="tratamiento.child_items.length > 0">
                             <div class="anchorLink submenu__left">
                                 <ul class="submenu__left-slider">
                                     <li class="before-after" v-for="(subTratamiento, index) in tratamiento.child_items"
@@ -38,7 +46,7 @@
                                 <ul class="submenu__right-list">
                                     <li class="submenu-child" v-for="(subTratamiento, index) in tratamiento.child_items"
                                         :key="subTratamiento.ID" :data-index="index">
-                                        <nuxt-link v-if="!subTratamiento.child_items" :to="subTratamiento.url"
+                                        <nuxt-link v-if="!subTratamiento.child_items" :to="subTratamiento.path"
                                             class="nav-link" :class="subTratamiento.classes"
                                             active-class="nuxt-link-active">
                                             {{ subTratamiento.title }}
@@ -52,7 +60,7 @@
                                                 v-for="(subSubTratamiento, subIndex) in subTratamiento.child_items"
                                                 :key="subSubTratamiento.ID" :data-index="subIndex">
 
-                                                <nuxt-link :to="subSubTratamiento.url" class="nav-link"
+                                                <nuxt-link :to="subSubTratamiento.path" class="nav-link"
                                                     :class="subSubTratamiento.classes" active-class="nuxt-link-active">
                                                     {{ subSubTratamiento.title }}
                                                     <ArrowUpRightIcon
@@ -79,64 +87,18 @@
 
 <script setup>
 import { ArrowUpRightIcon, ArrowDownRightIcon } from '@heroicons/vue/24/outline'
-// import menuData from '~/data/menu.json'
+import { getMenuTratamientos } from '~/composables/useApi';
 const { $gsap: gsap } = useNuxtApp();
 const route = useRoute();
 
-// Métodos
-const processMenuItems = (items) => {
-    items.forEach((item) => {
-        if (item.url && item.url.startsWith('http')) {
-            item.url = new URL(item.url).pathname;
-        }
-        if (item.child_items && item.child_items.length > 0) {
-            item.child_items.forEach((subItem) => {
-                if (subItem.child_items) {
-                    subItem.child_items.forEach((subSubItem) => {
-                        if (subSubItem.url && subSubItem.url.startsWith('http')) {
-                            subSubItem.url = new URL(subSubItem.url).pathname;
-                        }
-                    });
-                }
-            });
-        }
-    });
-};
-
-// const { data: menuTratamientosData } = await useAsyncData('menuTratamientos', async () => {
-//     const menuData = await getMenu('tratamientos');
-//     if (menuData && menuData.items) {
-//         processMenuItems(menuData.items);
-//     }
-//     return menuData;
-// });
-
-// Cargar solo los elementos de primer nivel inicialmente
 const { data: menuTratamientosData } = await useAsyncData('menuTratamientos', async () => {
-    const menuData = await getMenu('tratamientos', { level: 1 });
+    const menuData = await getMenuTratamientos();
     return menuData;
 });
 
-// Cargar submenús después
-const { data: submenuData } = await useLazyAsyncData('submenuTratamientos', async () => {
-    const menuData = await getMenu('tratamientos');
-    if (menuData && menuData.items) {
-        processMenuItems(menuData.items);
-    }
-    return menuData;
-});
-
-// Mantener el estado de si los submenús han sido cargados
-const submenusLoaded = ref(false);
-watchEffect(() => {
-    if (submenuData.value) {
-        submenusLoaded.value = true;
-    }
-});
-
-const initializeMenus = async () => {
+const initializeMenus = () => {
    
-        await nextTick()
+        // await nextTick()
 
         let mm = gsap.matchMedia();
         mm.add("(max-width: 1200px)", () => {
@@ -172,7 +134,7 @@ const initializeMenus = async () => {
                         });
                         tl.play();
                         setTimeout(() => {
-                            gsap.to(scroller, { duration: 1, scrollTo: { y: title, offsetY: 90 } })
+                            gsap.to(scroller, { duration: 1, scrollTo: { y: title, offsetY: 150 } })
                         }, 150);
                     } else {
                         tl.reverse();
@@ -186,113 +148,120 @@ const initializeMenus = async () => {
 
             menus.forEach((menu) => {
                 let subMenu = menu.querySelector('.submenu');
-                let subRight = menu.querySelector('.submenu__right');
-                let subLeft = menu.querySelector('.submenu__left');
 
-                gsap.set(subRight, { autoAlpha: 1 });
-                gsap.set(subLeft, { autoAlpha: 1 });
+                if (subMenu) {
+                    let subRight = menu.querySelector('.submenu__right');
+                    let subLeft = menu.querySelector('.submenu__left');
+    
+                    if (subRight) {
+                        gsap.set(subRight, { autoAlpha: 1 });
+                    }
 
-                // Evento de mouseenter
-
-                menu.addEventListener('mouseenter', () => {
-                    openMenuTimeout = setTimeout(() => {
-                        // Cerrar cualquier subMenu abierto
-                        document.querySelectorAll('.submenu.open').forEach(openMenu => {
-                            if (openMenu !== subMenu) {
-                                const tlClose = gsap.timeline({
-                                    defaults: {
-                                        duration: 0.05,
-                                        ease: 'power1.in',
-                                        autoAlpha: 0,
-                                    }
-                                });
-                                let openRight = openMenu.querySelector('.submenu__right');
-                                let openLeft = openMenu.querySelector('.submenu__left');
-                                // tlClose.to([openRight, openLeft], { autoAlpha: 0 }, 0);
-                                tlClose.to([openRight, openLeft], { yPercent: 0 }, 0.05);
-                                openMenu.classList.remove('open');
-                            }
-                        });
-
-                        // Abrir el subMenu actual
-                        const tlMenuOpen = gsap.timeline({
-                            defaults: {
-                                duration: 0.05,
-                                ease: 'power1.out',
-                                // autoAlpha: 1,
-                            }
-                        });
-                        tlMenuOpen.to([subRight, subLeft], { yPercent: 145 }, 0);
-                        tlMenuOpen.to([subRight, subLeft], { autoAlpha: 1 }, 0.05);
-                        subMenu.classList.add('open');
-
-                        let submenuChildren = document.querySelectorAll('.submenu-child');
-                        let subsubmenuChildren = document.querySelectorAll('.subsubmenu-child');
-                        let allSlides = document.querySelectorAll('ul.submenu__left-slider > .before-after');
-
-                        function hideAllSlidesAndStopAnimations() {
-                            allSlides.forEach(slide => {
-                                let slideCs = slide.querySelectorAll('.slide-c');
-                                slideCs.forEach(slideC => {
-                                    gsap.set(slideC, { opacity: 0 });
-                                });
-                            });
-                        }
-
-                        // Función para manejar el hover en los enlaces
-                        function handleHoverOnLink(parentIndex, linkIndex) {
-                            hideAllSlidesAndStopAnimations();
-                            let correspondingSlide = allSlides[parentIndex];
-                            let slideCs = correspondingSlide.querySelectorAll('.slide-c');
-                            if (slideCs[linkIndex]) {
-                                gsap.to(slideCs[linkIndex], { duration: 0.05, opacity: 1 });
-                            }
-                        }
-
-                        // Agregar eventos a submenu-child
-                        submenuChildren.forEach((child, index) => {
-                            let links = child.querySelectorAll('a');
-                            links.forEach((link, linkIndex) => {
-                                link.addEventListener('mouseenter', () => handleHoverOnLink(index, linkIndex));
-                            });
-                            child.addEventListener('mouseleave', hideAllSlidesAndStopAnimations);
-                        });
-
-                        // Agregar eventos a subsubmenu-child
-                        subsubmenuChildren.forEach(child => {
-                            let parentIndex = Array.from(submenuChildren).indexOf(child.closest('.submenu-child'));
-                            let links = child.querySelectorAll('a');
-                            links.forEach((link, linkIndex) => {
-                                link.addEventListener('mouseenter', () => handleHoverOnLink(parentIndex, linkIndex));
-                            });
-                            child.addEventListener('mouseleave', hideAllSlidesAndStopAnimations);
-                        });
-
-                        // Inicialmente ocultar todos los slides
-                        hideAllSlidesAndStopAnimations();
-
-                    }, 200); // Retraso de 300 ms
-
-                    // Evento de mouseleave
-                    menu.addEventListener('mouseleave', () => {
-                        clearTimeout(openMenuTimeout); // Cancela el temporizador si el ratón sale antes de 300 ms
-                        if (subMenu.classList.contains('open')) {
-                            const tlMenuClose = gsap.timeline({
-                                defaults: {
-                                    duration: 0.25,
-                                    ease: 'circ.out',
+                    if (subLeft) {
+                        gsap.set(subLeft, { autoAlpha: 1 });
+                    }
+    
+                    // Evento de mouseenter
+    
+                    menu.addEventListener('mouseenter', () => {
+                        openMenuTimeout = setTimeout(() => {
+                            // Cerrar cualquier subMenu abierto
+                            document.querySelectorAll('.submenu.open').forEach(openMenu => {
+                                if (openMenu !== subMenu) {
+                                    const tlClose = gsap.timeline({
+                                        defaults: {
+                                            duration: 0.05,
+                                            ease: 'power1.in',
+                                            autoAlpha: 0,
+                                        }
+                                    });
+                                    let openRight = openMenu.querySelector('.submenu__right');
+                                    let openLeft = openMenu.querySelector('.submenu__left');
+                                    tlClose.to([openRight, openLeft], { yPercent: 0 }, 0.05);
+                                    openMenu.classList.remove('open');
                                 }
                             });
-                            tlMenuClose.to([subRight, subLeft], { autoAlpha: 0 }, 0);
-                            tlMenuClose.to([subRight, subLeft], { yPercent: 0 }, 0.25);
-                            subMenu.classList.remove('open');
-                        }
+    
+                            // Abrir el subMenu actual
+                            const tlMenuOpen = gsap.timeline({
+                                defaults: {
+                                    duration: 0.05,
+                                    ease: 'power1.out',
+                                    // autoAlpha: 1,
+                                }
+                            });
+                            tlMenuOpen.to([subRight, subLeft], { yPercent: 145 }, 0);
+                            tlMenuOpen.to([subRight, subLeft], { autoAlpha: 1 }, 0.05);
+                            subMenu.classList.add('open');
+    
+                            let submenuChildren = document.querySelectorAll('.submenu-child');
+                            let subsubmenuChildren = document.querySelectorAll('.subsubmenu-child');
+                            let allSlides = document.querySelectorAll('ul.submenu__left-slider > .before-after');
+    
+                            function hideAllSlidesAndStopAnimations() {
+                                allSlides.forEach(slide => {
+                                    let slideCs = slide.querySelectorAll('.slide-c');
+                                    slideCs.forEach(slideC => {
+                                        gsap.set(slideC, { opacity: 0 });
+                                    });
+                                });
+                            }
+    
+                            // Función para manejar el hover en los enlaces
+                            function handleHoverOnLink(parentIndex, linkIndex) {
+                                hideAllSlidesAndStopAnimations();
+                                let correspondingSlide = allSlides[parentIndex];
+                                let slideCs = correspondingSlide.querySelectorAll('.slide-c');
+                                if (slideCs[linkIndex]) {
+                                    gsap.to(slideCs[linkIndex], { duration: 0.05, opacity: 1 });
+                                }
+                            }
+    
+                            // Agregar eventos a submenu-child
+                            submenuChildren.forEach((child, index) => {
+                                let links = child.querySelectorAll('a');
+                                links.forEach((link, linkIndex) => {
+                                    link.addEventListener('mouseenter', () => handleHoverOnLink(index, linkIndex));
+                                });
+                                child.addEventListener('mouseleave', hideAllSlidesAndStopAnimations);
+                            });
+    
+                            // Agregar eventos a subsubmenu-child
+                            subsubmenuChildren.forEach(child => {
+                                let parentIndex = Array.from(submenuChildren).indexOf(child.closest('.submenu-child'));
+                                let links = child.querySelectorAll('a');
+                                links.forEach((link, linkIndex) => {
+                                    link.addEventListener('mouseenter', () => handleHoverOnLink(parentIndex, linkIndex));
+                                });
+                                child.addEventListener('mouseleave', hideAllSlidesAndStopAnimations);
+                            });
+    
+                            // Inicialmente ocultar todos los slides
+                            hideAllSlidesAndStopAnimations();
+    
+                        }, 200); // Retraso de 300 ms
+    
+                        // Evento de mouseleave
+                        menu.addEventListener('mouseleave', () => {
+                            clearTimeout(openMenuTimeout); // Cancela el temporizador si el ratón sale antes de 300 ms
+                            if (subMenu.classList.contains('open')) {
+                                const tlMenuClose = gsap.timeline({
+                                    defaults: {
+                                        duration: 0.25,
+                                        ease: 'circ.out',
+                                    }
+                                });
+                                tlMenuClose.to([subRight, subLeft], { autoAlpha: 0 }, 0);
+                                tlMenuClose.to([subRight, subLeft], { yPercent: 0 }, 0.25);
+                                subMenu.classList.remove('open');
+                            }
+                        });
                     });
-                });
-
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', closeAllMenus);
-                });
+    
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.addEventListener('click', closeAllMenus);
+                    });
+                }
             });
 
         })
@@ -318,19 +287,27 @@ const closeAllMenus = () => {
     });
 }
 
-const cerrarMenuMobile = async () => {
-    const burger = document.getElementById('navTrigger');
+const cerrarMenuMobile = () => {
+    const burger = document.querySelector('.navTrigger');
     const nav = document.querySelector('.menu-list');
-    const links = document.querySelectorAll('.nav-link');
+    const submenu = gsap.utils.toArray('.menu-wrapper');
+    const allLinks = gsap.utils.toArray('.nav-link');
+
     // Cierra el menú al hacer clic en un enlace
-    links.forEach(link => {
+    allLinks.forEach(link => {
         link.addEventListener('click', () => {
-            // console.log('link clicado');
             burger.classList.remove('active');
             nav.classList.remove('active');
+            gsap.set(submenu, { autoAlpha: 0, height: 0 });
         });
     });
 
+    // Alterna la visibilidad del menú al hacer clic en el disparador (navTrigger)
+    burger.addEventListener('click', () => {
+        if (burger.classList.contains('active')) {
+            gsap.set(submenu, { autoAlpha: 0, height: 0 });
+        }
+    });
 }
 
 // Función para cargar las imágenes
@@ -346,8 +323,8 @@ const loadImages = (event) => {
 };
 
 onMounted(async () => {
-    await initializeMenus();
-    await cerrarMenuMobile()
+    initializeMenus();
+    cerrarMenuMobile()
 })
 
 const props = defineProps({
