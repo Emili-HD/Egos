@@ -23,7 +23,7 @@ import {ref, onMounted} from 'vue'
 }
 
 .logros__icon {
-    @apply flex justify-center items-center gap-2 w-1/2
+    @apply flex justify-evenly xl:justify-center items-center gap-2 w-1/2
 }
 
 .logros__icon span {

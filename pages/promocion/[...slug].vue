@@ -1,7 +1,7 @@
 <template>
     <div v-if="landingError">Error al cargar la Promoción.</div>
     <main v-else class="site-main landing-main" v-if="landing && landing.acf">
-        
+        <UiBotonCita :data="landing.acf.boton_cita" />
         <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
             <a class="gold" href="#hubspotLanding">Cita con el cirujano
             </a>

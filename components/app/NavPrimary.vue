@@ -292,13 +292,16 @@ const cerrarMenuMobile = () => {
     const nav = document.querySelector('.menu-list');
     const submenu = gsap.utils.toArray('.menu-wrapper');
     const allLinks = gsap.utils.toArray('.nav-link');
+    let mql = window.matchMedia("(max-width: 1200px)");
 
     // Cierra el menú al hacer clic en un enlace
     allLinks.forEach(link => {
         link.addEventListener('click', () => {
             burger.classList.remove('active');
             nav.classList.remove('active');
-            gsap.set(submenu, { autoAlpha: 0, height: 0 });
+            if (window.matchMedia("(max-width: 1200px)").matches) {
+                gsap.set(submenu, { autoAlpha: 0, height: 0 });
+            }
         });
     });
 
@@ -677,10 +680,14 @@ const props = defineProps({
         }
 
         .logros-mobile {
-            @apply flex flex-col h-fit max-w-full !relative !-bottom-6 !mb-8;
+            @apply flex flex-col h-fit max-w-full !relative !-bottom-6 !mb-12 !p-6 !gap-2 divide-y divide-white/30;
 
             .logros__icon {
                 @apply w-full;
+
+                &.operaciones {
+                    @apply pt-4 mb-3
+                }
 
                 span {
                     @apply text-base leading-none;

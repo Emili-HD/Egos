@@ -1,5 +1,6 @@
 <template>
     <main class="site-main caso-real bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
+        <UiBotonCita :data="casoreal.acf.boton_cita" />
         <div class="caso-real__content col-[1/-1] lg:col-span-11 grid grid-cols-subgrid">
             <header class="caso-real__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
                 v-if="casoreal && casoreal.title">
@@ -120,81 +121,23 @@ onMounted(async () => {
     await injectStructuredData(); // Asegúrate de que esta función también se ejecute después de la renderización
 });
 
-// Datos YOAST SEO
-useHead(() => {
-    // Verifica si el post está cargado y tiene la estructura esperada
-    if (!casoreal.value || !casoreal.value.yoast_head_json) {
-        return {
-            title: 'Cargando...', // Título temporal mientras se cargan los datos
-        };
-    }
+let tratamiento = casoreal;
+const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
+const breadcrumbJson = generateBreadcrumbData();
 
-    // Accede al primer elemento del arreglo para obtener los datos de YOAST SEO
-    const yoast = casoreal.value.yoast_head_json;
+const { generateYoastHead } = useYoastHead(casoreal);
+const yoastHead = generateYoastHead();
 
-    const link = [
-        {
-            rel: 'canonical',
-            href: (() => {
-                // Añadir "www." si no está presente y no es una subdominio diferente
-                let canonical = yoast.canonical.startsWith('https://www.') ? yoast.canonical :
-                    yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
-                // Asegurar que la URL termina con "/"
-                canonical = canonical.endsWith('/') ? canonical : `${canonical}/`;
-                return canonical;
-            })()
-        }
-    ];
-    const metaTags = [
-        { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
-        { property: 'og:title', content: yoast.og_title },
-        { property: 'og:description', content: yoast.og_description },
-        { property: 'og:url', content: yoast.og_url },
-        { property: 'og:type', content: yoast.og_type },
-        { property: 'og:locale', content: yoast.og_locale },
-        { property: 'og:site_name', content: yoast.og_site_name },
-        { property: 'article:publisher', content: yoast.article_publisher },
-        // Twitter Card
-        { name: 'twitter:card', content: yoast.twitter_card },
-        // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
-        { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
-        // Robots
-        {
-            name: 'robots',
-            content: `index=${yoast.robots.index}, follow=${yoast.robots.follow}, max-snippet=${yoast.robots['max-snippet']}, max-image-preview=${yoast.robots['max-image-preview']}, max-video-preview=${yoast.robots['max-video-preview']}`
-        },
-        // Añadir más tags según sean necesarios
-    ];
-
-    // Añadir las imágenes de Open Graph si están disponibles
-    if (yoast.og_image && yoast.og_image.length > 0) {
-        yoast.og_image.forEach((image) => {
-            metaTags.push({ property: 'og:image', content: image.url });
-            metaTags.push({ property: 'og:image:width', content: image.width.toString() });
-            metaTags.push({ property: 'og:image:height', content: image.height.toString() });
-        });
-    }
-
-    return {
-        title: yoast.title || 'Título del Post',
-        link: link,
-        meta: metaTags,
-    };
-});
+let structuredData = null;
 
 const injectStructuredData = async () => {
-    const structuredData = {
+    structuredData = {
         "@context": "http://schema.org",
         "@type": casoreal.value.acf.datos.type,
         "name": casoreal.value.acf.datos.name,
         "address": [
             {
                 "@type": casoreal.value.acf.datos.adress.type,
-                // "streetAddress": casoreal.value.acf.datos.adress.streetaddress,
-                // "postalCode": casoreal.value.acf.datos.adress.postalcode,
-                // "addressLocality": casoreal.value.acf.datos.adress.addresslocality,
-                // "addressRegion": casoreal.value.acf.datos.adress.addressregion,
-                // "name": casoreal.value.acf.datos.adress.addresscountry,
                 "name": casoreal.value.acf.datos.adress.addresscountry,
             }
         ],
@@ -206,11 +149,25 @@ const injectStructuredData = async () => {
             }
         ],
     };
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(structuredData);
-    document.head.appendChild(script);
-}
+    
+    // Inyecta el structuredData en el head
+    useHead({
+        script: [
+            breadcrumbJson && {
+                type: 'application/ld+json',
+                children: JSON.stringify(breadcrumbJson),
+            },
+            structuredData && {
+                type: 'application/ld+json',
+                children: JSON.stringify(structuredData),
+            },
+        ].filter(Boolean), // Filtra los valores nulos o undefined
+        ...yoastHead,
+    });
+};
+
+// Ejecuta la función asíncrona y espera su finalización
+injectStructuredData().catch(console.error);
 </script>
 
 <style lang="scss">

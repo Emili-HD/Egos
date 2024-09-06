@@ -1,7 +1,7 @@
 <template>
     <div v-if="!isLoading && formStructure && formStructure.fieldGroups" :id="props.identificador"
         class="form-landing w-full flex even:flex-row-reverse">
-        <div class="w-1/2 h-full overflow-hidden [.is-mobile_&]:hidden" v-if="props.image && props.image.url">
+        <div class="left-image w-1/2 h-full overflow-hidden [.is-mobile_&]:hidden" v-if="props.image && props.image.url">
             <img class="absolute size-full object-cover object-center" :src="props.image.url" :srcset="props.image.srcset" :alt="props.image.alt" :width="props.image.width" :height="props.image.height">
         </div>
         <div class="w-full p-6 lg:pt-28 lg:py-36 border border-nude-8/[0.1] bg-nude-8/[0.025] rounded-2xl" :class="{'lg:w-1/2': props.image && props.image.url, 'lg:w-full': !(props.image && props.image.url)}">
@@ -285,6 +285,47 @@ const loadFormStructure = async () => {
     }
 }
 
+/* const loadFormStructure = async () => {
+    await nextTick(); // Asegura que los cambios de DOM estén aplicados antes de continuar.
+    try {
+        // Usar $fetch en lugar de useFetch
+        const response = await $fetch('/api/getHubSpotForm', {
+            query: { formId: props.formId }
+        });
+
+        // Validar la respuesta
+        if (!response || !response.data) {
+            throw new Error('Invalid form data');
+        }
+
+        // Asignar la estructura del formulario
+        formStructure.value = response.data;
+
+        // Filtrar solo los grupos de campos que contienen campos de tipo radio
+        radioFieldGroups.value = formStructure.value.fieldGroups.filter(group =>
+            group.fields && group.fields.some(field => field.fieldType === 'radio')
+        );
+
+        // Inicializar el formData
+        formStructure.value.fieldGroups.forEach(group => {
+            if (group.fields) {
+                group.fields.forEach(field => {
+                    formData.value[field.name] = field.defaultValues ? field.defaultValues[0] : '';
+                });
+            }
+        });
+
+        // Establecer el texto del botón de envío
+        submitButtonText.value = formStructure.value.displayOptions?.submitButtonText || 'Enviar';
+    } catch (e) {
+        // Manejo de errores
+        console.error('Error loading form structure:', e.message);
+    } finally {
+        // Asegurarse de que el estado de carga se desactiva
+        isLoading.value = false;
+    }
+}; */
+
 const handleSubmit = async () => {
     await nextTick()
     errors.value = {}
@@ -468,6 +509,11 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+@media (pointer: coarse) and (hover: none) {
+    .left-image {
+        display: none;
+    }
+}
 .slide.fade-move {
     @apply !relative;
 }

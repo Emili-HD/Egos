@@ -78,7 +78,7 @@ const props = defineProps({
    }
 
    #opciones & {
-      @apply col-[2/-2] lg:col-[5/_span_8] self-center;
+      @apply col-[2/-2] lg:col-[5/_span_8] self-center row-start-1;
    }
 }
 </style>

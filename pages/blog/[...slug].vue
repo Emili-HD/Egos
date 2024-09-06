@@ -1,13 +1,21 @@
 <template>
     <main class="site-main" v-if="post">
+        <UiBotonCita :data="post.acf.boton_cita" />
         <article :class="{ 'fullwidth': post.acf.quiz && post.acf.quiz.posicion === 'top' }">
             <div class="post__header before-gradient mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center overflow-hidden"
                 v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
                 <UiImage :data="post" class="cover absolute" :preload="true" :aria-labelledby="'post-title-' + post.id" />
                 <h1 v-if="isCritical"
-                    class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10">{{
-                        post.title.rendered }}</h1>
-
+                    class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 text-balance">
+                    {{ post.title.rendered }}
+                </h1>
+                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50">
+                    <svg class="arrows scale-50 w-[60px] h-[75px]">
+                        <path class="a1" d="M0 0 L30 32 L60 0"></path>
+                        <path class="a2" d="M0 20 L30 52 L60 20"></path>
+                        <path class="a3" d="M0 40 L30 72 L60 40"></path>
+                    </svg>
+                </div>
             </div>
 
             <!-- CABECERA MODIFICADA PARA FORM QUIZ -->
@@ -15,10 +23,15 @@
                 v-if="post.acf && post.acf.quiz && post.acf.quiz.posicion === 'top'">
                 <UiImage :data="post" class="cover absolute" :preload="true" :aria-labelledby="'post-title-' + post.id" />
                 <h1 v-if="isCritical"
-                    class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 mt-20">
-                    {{
-                        post.title.rendered }}</h1>
-
+                    class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 mt-20 text-balance">
+                    {{ post.title.rendered }}</h1>
+                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50">
+                    <svg class="arrows scale-50 w-[60px] h-[75px]">
+                        <path class="a1" d="M0 0 L30 32 L60 0"></path>
+                        <path class="a2" d="M0 20 L30 52 L60 20"></path>
+                        <path class="a3" d="M0 40 L30 72 L60 40"></path>
+                    </svg>
+                </div>
             </div>
 
             <!-- FORM QUIZ SÓLO SI ESTÁ PRESENTE -->
@@ -31,15 +44,17 @@
                 </div>
             </aside>
 
-            <div class="breadcrumbs flex gap-4 px-4 divide-x divide-blue-1/50 font-[nunito,_serif]">
-                <NuxtLink class="pl-4 mb-0 leading-3 font-normal" to="/">Inicio</NuxtLink>
-                <NuxtLink class="pl-4 mb-0 leading-3 font-normal" to="/blog/">Blog</NuxtLink>
-                <div class="pl-4 mb-0 leading-3 italic">{{ post.title.rendered }}</div>
+            <div class="breadcrumbs flex gap-4 p-4 divide-x divide-blue-1/50 font-nunito rounded-xl shadow-lg w-[calc(100%-4rem)] mx-auto mb-8">
+                <NuxtLink class="pl-4 mb-0 leading-none font-normal" to="/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 2048 2048"><path fill="currentColor" d="m1024 165l941 942l-90 90l-83-82v805h-640v-640H896v640H256v-805l-83 82l-90-90zm640 1627V987l-640-640l-640 640v805h384v-640h512v640z"/></svg>
+                </NuxtLink>
+                <NuxtLink class="pl-4 mb-0 leading-none font-normal" to="/blog/">Blog</NuxtLink>
+                <div class="pl-4 mb-0 leading-none italic opacity-50">{{ post.title.rendered }}</div>
             </div>
             <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
                 <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-3xl">
-                    <h4 class="font-[lora_sans-serif] nav-content-title h6 bg-nude-4 p-4">Tabla de contenidos</h4>
-                    <ul class="pl-6 list-decimal">
+                    <h4 class="font-lora nav-content-title h6 bg-nude-4 p-4 rounded-xl">Tabla de contenidos</h4>
+                    <ul class="pl-6 list-decimal mb-10">
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
                             v-for="(content, index) in post.acf.areas_de_contenido"><span>{{
                                 content.titulo_area }}</span>
@@ -51,6 +66,27 @@
                             v-if="post.acf.post_faqs.titulo_faqs"><span
                                 v-html="post.acf.post_faqs.titulo_faqs"></span></li>
                     </ul>
+
+                    <div v-if="post.acf.doctores_relacionados">
+                        <div v-if="doctor">
+                            <div class="overflow-hidden size-full flex flex-col items-center">
+                                <div class="flex flex-col justify-center items-center flex-wrap gap-x-4 mb-4 text-center">
+                                    <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p>
+                                    <div class="size-16 aspect-square rounded-full overflow-hidden">
+                                        <UiImage :data="doctor" class="cover absolute object-center inset-0"  :aria-labelledby="'doctor-title-' + doctor.id" />
+                                    </div>
+                                    <div class="w-full">
+                                        <h3 class="text-clamp-base mb-0"><strong>{{ doctor.title.rendered }}</strong></h3>
+                                        <p class="text-clamp-xs mb-0">{{ doctor.acf.trayectoria.especialidad }}</p>
+                                    </div>
+                                </div>
+                                <UiButton :to="relativeDoctorLink" class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1">más información</UiButton>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p>Cargando información del doctor...</p>
+                        </div>
+                    </div>
                 </aside>
 
                 <div class="post__content-areas p-0 xl:py-6 xl:px-10 col-[2/-2] xl:col-[4/13]">
@@ -77,7 +113,7 @@
                             </div>
                         </div>
                         <div class="list accordion__list">
-                            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-5 cursor-pointer separador-lista"
+                            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-2 cursor-pointer separador-lista"
                                 v-for="item in post.acf.post_description.secciones_del_post" :key="item.post_subtitle">
                                 <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
                                     <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 text-clamp-base mb-0 !font-semibold"
@@ -99,7 +135,7 @@
                                 v-html="post.acf.post_faqs.titulo_faqs"></h2>
                         </div>
                         <div class="list accordion__list">
-                            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-5 cursor-pointer separador-lista"
+                            <div class="accordion__list--item flex flex-col flex-wrap justify-between py-2 cursor-pointer separador-lista"
                                 v-for="contentido in post.acf.post_faqs.preguntas_frecuentes"
                                 :key="contentido.faq_subtitle">
                                 <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
@@ -139,18 +175,16 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue';
-import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
-import { getPosts } from '@/composables/useApi';
+// import { onMounted, watch, ref, watchEffect } from 'vue';
+// import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
+// import { getPosts, getEquipo } from '@/composables/useApi';
+import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
 
 // Acceder a los parámetros de la ruta
 const router = useRouter();
 const route = useRoute();
 
-// Importar useBoosterCritical si es necesario
-// import useCritical from '#booster/composables/critical';
 const { isCritical } = useBoosterCritical({ critical: true });
 
 // Acceder a gsap y lenis desde el contexto de Nuxt
@@ -158,12 +192,40 @@ const { $gsap: gsap } = useNuxtApp();
 
 // Define la función para cargar los datos
 const loadData = async () => {
-    const slug = route.params.slug;
-    return getPosts({ slug });
+  const slug = route.params.slug;
+  const post = await getPosts({ slug });
+  return post;
 };
 
 // Utiliza `useAsyncData` con un key dinámico y dependencias de reactividad
 const { data: post, refresh } = await useAsyncData(`post-${route.params.slug}`, loadData, { watch: [() => route.params.slug], initialCache: false });
+
+// Step 2: Definir una referencia para el doctor relacionado
+const doctor = ref(null);
+
+// Step 3: Usar watchEffect para cargar el doctor solo cuando el post esté disponible
+watchEffect(async () => {
+  if (post.value && post.value.acf?.doctores_relacionados) {
+    try {
+      const doctorId = post.value.acf.doctores_relacionados[0];
+      doctor.value = await getEquipo({ id: doctorId });
+    //   console.log(doctorId);
+    //   console.log(doctor.value);
+      
+    } catch (error) {
+      console.error("Error fetching doctor:", error);
+    }
+  }
+});
+
+const relativeDoctorLink = computed(() => {
+  if (doctor.value?.link) {
+    // Remover el dominio y dejar solo la parte relativa de la URL
+    const url = new URL(doctor.value.link);
+    return url.pathname;
+  }
+  return '';
+});
 
 // Observador para manejar la recarga de datos cuando cambia el parámetro de ruta
 watch(() => route.params.slug, async (newSlug, oldSlug) => {
@@ -178,68 +240,6 @@ watch(post, (newPost) => {
         router.push('/error');
     }
 }, { immediate: true });
-
-// Datos YOAST SEO
-useHead(() => {
-    // Verifica si el post está cargado y tiene la estructura esperada
-    if (!post.value || post.value.length === 0 || !post.value.yoast_head_json) {
-        return {
-            title: 'Cargando...', // Título temporal mientras se cargan los datos
-        };
-    }
-
-    // Accede al primer elemento del arreglo para obtener los datos de YOAST SEO
-    const yoast = post.value.yoast_head_json;
-
-    const link = [
-        {
-            rel: 'canonical',
-            href: (() => {
-                // Añadir "www." si no está presente y no es una subdominio diferente
-                let canonical = yoast.canonical.startsWith('https://www.') ? yoast.canonical :
-                    yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
-                // Asegurar que la URL termina con "/"
-                canonical = canonical.endsWith('/') ? canonical : `${canonical}/`;
-                return canonical;
-            })()
-        }
-    ];
-    const metaTags = [
-        { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
-        { property: 'og:title', content: yoast.og_title },
-        { property: 'og:description', content: yoast.og_description },
-        { property: 'og:url', content: yoast.og_url },
-        { property: 'og:type', content: yoast.og_type },
-        { property: 'og:locale', content: yoast.og_locale },
-        { property: 'og:site_name', content: yoast.og_site_name },
-        { property: 'article:publisher', content: yoast.article_publisher },
-        // Twitter Card
-        { name: 'twitter:card', content: yoast.twitter_card },
-        // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
-        { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
-        // Robots
-        {
-            name: 'robots',
-            content: `index=${yoast.robots.index}, follow=${yoast.robots.follow}, max-snippet=${yoast.robots['max-snippet']}, max-image-preview=${yoast.robots['max-image-preview']}, max-video-preview=${yoast.robots['max-video-preview']}`
-        },
-        // Añadir más tags según sean necesarios
-    ];
-
-    // Añadir las imágenes de Open Graph si están disponibles
-    if (yoast.og_image && yoast.og_image.length > 0) {
-        yoast.og_image.forEach((image) => {
-            metaTags.push({ property: 'og:image', content: image.url });
-            metaTags.push({ property: 'og:image:width', content: image.width.toString() });
-            metaTags.push({ property: 'og:image:height', content: image.height.toString() });
-        });
-    }
-
-    return {
-        title: yoast.title || 'Título del Post',
-        link: link,
-        meta: metaTags,
-    };
-});
 
 const initAccordion = async () => {
     const groups = gsap.utils.toArray(".accordion__list--item");
@@ -282,13 +282,20 @@ const initAccordion = async () => {
 const stickyForm = async () => {
     gsap.registerPlugin(ScrollTrigger)
 
+    if (ScrollTrigger) {
+        let Alltrigger = ScrollTrigger.getAll()
+        for (let i = 0; i < Alltrigger.length; i++) {
+            Alltrigger[i].kill(true)
+        }
+    }
+
     let ctx = gsap.context(() => {
 
         let mm = gsap.matchMedia()
         mm.add("(min-width: 1025px)", () => {
             const form = document.querySelector('#formulario')
 
-            const tl = gsap.timeline({
+             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".widgets",
                     pin: form,
@@ -310,9 +317,61 @@ onMounted(async () => {
     await initAccordion()
     await stickyForm()
 });
+
+
+let tratamiento = post
+const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
+const breadcrumbJson = generateBreadcrumbData();
+
+const { generateYoastHead } = useYoastHead(post);
+const yoastHead = generateYoastHead();
+
+useHead({
+    script: [
+        breadcrumbJson && {
+            type: 'application/ld+json',
+            children: JSON.stringify(breadcrumbJson),
+        },
+    ].filter(Boolean), // Filtra los valores nulos o undefined
+    ...yoastHead,
+});
 </script>
 
 <style lang="scss" scoped>
+    .arrows {
+        z-index: 99;
+    }
+    .arrows path {
+        width: 2.5rem;
+        stroke: #ffffff;
+        fill: transparent;
+        stroke-width: 1px;	
+        animation: arrow 2s infinite;
+        -webkit-animation: arrow 2s infinite; 
+    }
+
+    .arrows path.a1 {
+        animation-delay:-1s;
+        -webkit-animation-delay:-1s; /* Safari 和 Chrome */
+    }
+
+    .arrows path.a2 {
+        animation-delay:-0.5s;
+        -webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
+    }
+
+    .arrows path.a3 {	
+        animation-delay:0s;
+        -webkit-animation-delay:0s; /* Safari 和 Chrome */
+    }
+
+    @keyframes arrow {
+        0% {opacity:0}
+        40% {opacity:1}
+        80% {opacity:0}
+        100% {opacity:0}
+    }
+
     .post__content-image {
         @apply rounded-xl overflow-hidden;
     }

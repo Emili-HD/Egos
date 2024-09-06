@@ -35,7 +35,9 @@
                     left-0 right-0 bottom-0 h-1/2 p-8 
                     pointer-events-none z-10 
                     col-[2/-2] lg:col-[7/13] xl:col-[7/11] row-start-1 self-end
-                    lg:[.card:nth-child(even)>&]:col-[5/11] xl:[.card:nth-child(even)>&]:col-[7/11] [&>*]:mb-3"
+                    lg:[.card:nth-child(even)>&]:col-[5/11] xl:[.card:nth-child(even)>&]:col-[7/11] [&>*]:mb-3
+                    [&>p]:leading-snug
+                    [&>ul>li]:mb-0 [&>ul>li]:leading-tight"
               v-html="clinica.content.rendered"
             ></div>
             <div

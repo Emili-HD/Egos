@@ -1,5 +1,5 @@
 <template>
-  <div class="tabla_wrapper col-[2/-2]" v-if="contentData.opciones_listado == 'tabla'">
+  <div class="tabla_wrapper col-[2/-2] mt-8" v-if="contentData.opciones_listado == 'tabla'">
     <div
       class="answer__tabla grid grid-cols-1 lg:grid-cols-[170px_1fr_1fr_1fr] gap-8"
       v-for="table in contentData.list_tabs"
@@ -34,7 +34,7 @@
           class="image_container mb-2 flex flex-col items-center overflow-hidden min-h-[300px] w-full gap-4"
         >
           <img
-            class="max-w-[250px]"
+            class="max-w-[250px] rounded-2xl"
             loading="lazy"
             :src="header.cabecera_tabla.imagen_tabla.url"
             :srcset="header.cabecera_tabla.imagen_tabla.srcset"
@@ -42,7 +42,7 @@
             :height="header.cabecera_tabla.imagen_tabla.height"
             :alt="header.cabecera_tabla.imagen_tabla.alt"
           />
-          <div v-html="header.cabecera_tabla.descripcion_tabla" class="[&_h4]:text-clamp-base [&_p]:text-clamp-sm"></div>
+          <div v-html="header.cabecera_tabla.descripcion_tabla" class="[&_.h5]:text-clamp-base [&_p]:text-clamp-sm"></div>
         </div>
         <div class="contenido_tabla grid grid-rows-[repeat(auto-fit,_minmax(150px,_1fr))]">
           <div

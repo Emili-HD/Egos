@@ -1,8 +1,9 @@
 <template>
    <div class="accordion" v-if="contentData.list_tabs && contentData.opciones_listado == 'pestanyes'" ref="accordion">
+      <!-- <UiAccordion :data="contentData.list_tabs" v-if="contentData && contentData.list_tabs" /> -->
       <div class="list accordion__list">
 
-         <div class="accordion__list--item flex flex-col flex-wrap justify-between py-5 cursor-pointer separador-lista" 
+         <div class="accordion__list--item flex flex-col flex-wrap justify-between py-2 cursor-pointer separador-lista" 
               v-for="(list, index) in contentData.list_tabs" :key="list.list_title"
             >
             <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">

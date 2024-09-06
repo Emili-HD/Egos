@@ -1,10 +1,10 @@
 <template>
-    <div v-if="!isGraciasPage"
+    <!-- <div v-if="!isGraciasPage"
         class="fixed-button bg-blue-1 fixed top-[calc(100%-4.3rem)] w-full p-4 z-[998] flex flex-row justify-center items-center gap-2 lg:hidden">
         <ElementsButton class="gold text-clamp-xs uppercase" href="#formulario" >
             Cita con el cirujano
         </ElementsButton>
-    </div>
+    </div> -->
     <AppHeader v-if="!isPromotionPage" />
     <NuxtPage />
     <AppFooter />
@@ -15,9 +15,6 @@ import { computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute } from 'vue-router';
 import { useNuxtApp } from '#app';
 
-// const { consentBanner } = useCookiebot({
-//     blockingMode: 'auto'
-// });
 const nuxtApp = useNuxtApp();
 const route = useRoute();
 const isGraciasPage = ref(false);
@@ -27,18 +24,40 @@ const isPromotionPage = computed(() => {
     return route.path.startsWith('/promocion/');
 });
 
-// const { $lenis: lenis } = useNuxtApp();
-// const handleClick = () => {
-//     lenis.scrollTo('#formulario', { offset: -20 });
-// }
-// const pressu = () => {
-//     lenis.scrollTo('#presupuesto', { offset: -60 });
-// }
-
 const checkPresupuestoLink = () => {
     showPresupuestoLink.value = !!document.getElementById('presupuesto');
 }
 
+const { data: clinicasData, error: clinicasError } = await useAsyncData(
+    'clinicas',
+    async () => {
+        try {
+            const response = await getClinicas();
+            return response || []; // Asegurarse de que siempre se retorne un array
+        } catch (error) {
+            console.error('Error fetching clinicas:', error);
+            return []; // En caso de error, retornar un array vacío
+        }
+    }
+);
+
+let businessJsonLd = null;
+
+if (clinicasData && clinicasData.value.length > 0) {
+    const { generateBusinessData } = useBusinessData();
+    businessJsonLd = generateBusinessData(clinicasData.value);
+} else if (clinicasError.value) {
+    console.error('Error al cargar las clínicas:', clinicasError.value);
+}
+
+useHead({
+    script: [
+        businessJsonLd && {
+            type: 'application/ld+json',
+            children: JSON.stringify(businessJsonLd),
+        },
+    ].filter(Boolean), // Filtra los valores nulos o undefined
+});
 
 onMounted( async () => {
     await nextTick()

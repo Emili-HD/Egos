@@ -1,15 +1,17 @@
 <template>
-   <div class="hero__intro blue-gradient-full bg-cover bg-center w-full md:w-1/2 min-h-screen/85 md:h-screen overflow-hidden">
-      <UiImage :data="data" class="cover" :preload="true" />
-      <header class="header__landing px-12 py-6 bg-blue-1 flex justify-center md:justify-start w-full z-10" ref="cabecera">
+   <div class="hero__intro bg-cover bg-center w-full md:w-1/2 h-screen/85 md:h-screen overflow-hidden">
+      <div class="blue-gradient-full size-full absolute z-0">
+         <UiImage :data="data" class="h-screen/85 object-cover object-center absolute" :preload="true" />
+      </div>
+      <header class="header__landing relative px-12 py-6 bg-blue-1 flex justify-center md:justify-start w-full z-[999]" ref="cabecera">
          <nuxt-link to="/">
             <img class="header__landing-logo max-w-20 md:max-w-16" src="/assets/images/icons/logo-landings.svg" alt=""  width="133" height="100" />
          </nuxt-link>
       </header>
-      <div class="header__landing-content text-nude-8 text-center p-5 md:px-24 w-full flex flex-col justify-around items-center h-screen/70 md:h-full">
+      <div class="header__landing-content text-nude-8 text-center p-5 md:px-24 w-full flex flex-col justify-end items-center h-screen/85 md:h-full">
          <h1 class="header__landing-content-title [&>span]:span-gradient [&>span]:border-b-[1px] [&>span]:border-b-white/20 [&>span]:block" v-html="data.acf.titulo_landing"></h1>
          <div class="flex flex-col items-center gap-4 w-full">
-            <ElementsButton  v-if="data.acf && data.acf.quiz_multiple && data.acf.quiz_multiple.multiple_forms " class="gold text-clamp-sm uppercase text-center w-fit" href="#presupuesto" @click.passive="pressu">
+            <ElementsButton  v-if="data.acf && data.acf.quiz_multiple && data.acf.quiz_multiple.multiple_forms " class="gold text-clamp-sm uppercase text-center w-fit" href="#presupuesto">
                Calcula tu presupuesto
             </ElementsButton>
             <div v-if="data.acf && data.acf.precio" class="precio flex flex-col items-center w-full">
@@ -38,16 +40,6 @@ const props = defineProps({
    }
 })
 
-// const { $lenis: lenis } = useNuxtApp();
-
-// function handleClick() {
-// //   console.log('lenis on click', lenis);
-//   lenis.scrollTo('#hubspotLanding', {offset: -20});
-// }
-
-const pressu = () => {
-  lenis.scrollTo('#presupuesto', { offset: -60 });
-}
 </script>
 
 <style lang="scss" scoped>

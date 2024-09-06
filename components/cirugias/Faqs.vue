@@ -11,24 +11,10 @@
         :height="faqsData.imagen_faqs.height" 
       />
     </div>
-    <div class="heading accordion__heading col-[2_/_span_14] xl:col-[9_/_span_7]">
-      <h2 class="accordion__heading-title text-clamp-3xl xl:text-center [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0" v-html="faqsData.titulo_faqs"></h2>
+    <div class="heading accordion__heading col-[2_/_span_14] xl:col-[9_/_span_7] self-end">
+      <h2 class="accordion__heading-title text-clamp-3xl [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0" v-html="faqsData.titulo_faqs"></h2>
     </div>
-    <div class="list accordion__list col-[2_/_span_14] xl:col-[9_/_span_7]">
-      <div 
-        class="accordion__list--item flex flex-col flex-wrap justify-between py-5 cursor-pointer separador-lista" 
-        v-for="content in faqsData.faqs" :key="content.heading_faq"
-      >
-        <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
-          <div class="max-w-[85%]  text-clamp-base mb-0 !font-light" v-html="content.heading_faq"></div>
-          <svg class="h-6 w-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
-            <path class="iconV" d="M 12,0 V 24" />
-            <path class="iconH" d="M 0,12 H 24" />
-          </svg>
-        </div>
-        <div class="accordion__list--item-descripcion self-end h-0 w-full xl:w-[60%] opacity-0 relative" v-html="content.content_faq"></div>
-      </div>
-    </div>
+    <UiAccordion :data="faqsData.faqs" v-if="faqsData && faqsData.faqs" />
   </section>
 </template>
 

@@ -1,10 +1,13 @@
 <template>
     <main class="site-main casos-reales" v-if="testimonios">
+        <UiBotonCita :data="pages.acf.boton_cita" />
         <section class="testimonios section__hero gap-x-1 lg:gap-x-4 lg:gap-y-8">
             <div
                 class="testimonios__header min-h-[30vh] flex flex-col justify-center align-center p-8 lg:px-40 lg:pt-40 text-center">
                 <h1 class="mb-0">{{ pages.title.rendered }}</h1>
             </div>
+
+            <!-- Filtros por categoría -->
             <div class="categories__list checkboxes p-4 flex flex-row-reverse flex-wrap justify-between md:justify-center items-center gap-1"
                 v-if="categorias">
                 <div class="categories__list-title w-full text-center font-medium uppercase">Filtros</div>
@@ -20,7 +23,12 @@
                     </svg>
                 </label>
             </div>
-            <div class="testimonios__list max-w-full min-h-screen p-8 lg:px-20 lg:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4"
+
+            <!-- Listado de 3 testimonios destacados -->
+            <TestimoniosDestacados />
+
+            <!-- Listado de todos los testimonios filtrados -->
+            <div class="testimonios__list max-w-full min-h-screen p-8 lg:px-20 lg:pt-0 lg:pb-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4"
                 v-if="testimonios">
                 <article v-for="testimonio in testimonios" :key="testimonio.id"
                     class="card item rounded-3xl overflow-hidden flex flex-col justify-between items-center gap-2 lg:gap-8 bg-nude-6 p-0"

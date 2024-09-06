@@ -3,7 +3,7 @@
         <ElementsNotices />
         <div class="header-wrapper flex flex-row justify-between px-4 mt-2 w-full h-16">
             <AppHeaderBrand />
-            <AppNavPrimary critical />
+            <AppNavPrimary />
             <AppNavSecondary />
         </div>
     </header>

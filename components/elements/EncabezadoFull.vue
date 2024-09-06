@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-const { $getFont } = useBoosterFonts({ critical: true });
 // Props
 const props = defineProps({
     data: {

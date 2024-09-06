@@ -1,6 +1,6 @@
 <template>
-
     <main class="site-main doctor bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
+        <UiBotonCita :data="doctor.acf.boton_cita" />
         <div class="doctor__content col-[1/-1] lg:col-span-11 grid grid-cols-subgrid w-fit min-h-fit">
             <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
                 v-if="doctor && doctor.title">
@@ -90,7 +90,6 @@ const stickyForm = async () => {
 // Ciclo de vida Mounted
 onMounted(async () => {
     await stickyForm()
-    await injectStructuredData()
     // Utilizar nextTick para asegurarse de que todas las mutaciones DOM y el estado Vue estén actualizados
     nextTick(async () => {
         // const { $lenis } = useNuxtApp();
@@ -103,96 +102,98 @@ onMounted(async () => {
     });
 });
 
-// Datos YOAST SEO
-useHead(() => {
-    // Verifica si el post está cargado y tiene la estructura esperada
-    if (!doctor.value || !doctor.value.yoast_head_json) {
-        return {
-            title: 'Cargando...', // Título temporal mientras se cargan los datos
-        };
-    }
+// Genera los metadatos de Yoast
+const { generateYoastHead } = useYoastHead(doctor);
+const yoastHead = generateYoastHead();
 
-    // Accede al primer elemento del arreglo para obtener los datos de YOAST SEO
-    const yoast = doctor.value.yoast_head_json;
-
-    const link = [
-        {
-            rel: 'canonical',
-            href: (() => {
-                // Añadir "www." si no está presente y no es una subdominio diferente
-                let canonical = yoast.canonical.startsWith('https://www.') ? yoast.canonical :
-                    yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
-                // Asegurar que la URL termina con "/"
-                canonical = canonical.endsWith('/') ? canonical : `${canonical}/`;
-                return canonical;
-            })()
-        }
-    ];
-    const metaTags = [
-        { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
-        { property: 'og:title', content: yoast.og_title },
-        { property: 'og:description', content: yoast.og_description },
-        { property: 'og:url', content: yoast.og_url },
-        { property: 'og:type', content: yoast.og_type },
-        { property: 'og:locale', content: yoast.og_locale },
-        { property: 'og:site_name', content: yoast.og_site_name },
-        { property: 'article:publisher', content: yoast.article_publisher },
-        // Twitter Card
-        { name: 'twitter:card', content: yoast.twitter_card },
-        // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
-        { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
-        // Robots
-        {
-            name: 'robots',
-            content: `index=${yoast.robots.index}, follow=${yoast.robots.follow}, max-snippet=${yoast.robots['max-snippet']}, max-image-preview=${yoast.robots['max-image-preview']}, max-video-preview=${yoast.robots['max-video-preview']}`
-        },
-        // Añadir más tags según sean necesarios
-    ];
-
-    // Añadir las imágenes de Open Graph si están disponibles
-    if (yoast.og_image && yoast.og_image.length > 0) {
-        yoast.og_image.forEach((image) => {
-            metaTags.push({ property: 'og:image', content: image.url });
-            metaTags.push({ property: 'og:image:width', content: image.width.toString() });
-            metaTags.push({ property: 'og:image:height', content: image.height.toString() });
-        });
-    }
-
-    return {
-        title: yoast.title || 'Título del Post',
-        link: link,
-        meta: metaTags,
-    };
-});
-
-const injectStructuredData = async () => {
+const injectStructuredData = () => {
+    // Crear el objeto JSON-LD para el Physician
     const structuredData = {
         "@context": "http://schema.org",
-        "@type": doctor.value.acf.datos.type,
-        "name": doctor.value.acf.datos.name,
-        "address": [
-            {
-                "@type": doctor.value.acf.datos.adress.type,
-                // "streetAddress": doctor.value.acf.datos.adress.streetaddress,
-                // "postalCode": doctor.value.acf.datos.adress.postalcode,
-                // "addressLocality": doctor.value.acf.datos.adress.addresslocality,
-                // "addressRegion": doctor.value.acf.datos.adress.addressregion,
-                // "name": doctor.value.acf.datos.adress.addresscountry,
-                "name": doctor.value.acf.datos.adress.addresscountry,
+        "@type": "Physician",
+        "name": doctor.value.title.rendered,
+        "image": doctor.value.featured_image_data.url,
+        "medicalSpecialty": doctor.value.acf.microdatos.medicalspecialty,
+        "description": doctor.value.acf.microdatos.description,
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": doctor.value.acf.microdatos.streetaddress,
+            "addressLocality": doctor.value.acf.microdatos.addresslocality,
+            "addressRegion": "España",
+            "postalCode": doctor.value.acf.microdatos.postalcode,
+            "addressCountry": "ES"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+34 633 696 383",
+            "contactType": "Consultation",
+            "availableLanguage": [
+                "Spanish"
+            ]
+        },
+        "memberOf": doctor.value.acf.microdatos.memberof.map(member => ({
+            "@type": "MedicalOrganization",
+            "name": member.name
+        })),
+        "award": doctor.value.acf.microdatos.awards ? doctor.value.acf.microdatos.awards.map(award => award.award) : [],
+        "sameAs": doctor.value.acf.microdatos.rrss.map(social => social.social_url) || [],
+        "potentialAction": {
+            "@type": "ReserveAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": `https://www.clinicaegos.com${route.fullPath}#formulario`,
+                "inLanguage": "es",
             }
-        ],
-        "aggregateRating": [
-            {
-                "@type": doctor.value.acf.datos.aggregaterating.type,
-                "ratingValue": doctor.value.acf.datos.aggregaterating.ratingvalue,
-                "reviewCount": doctor.value.acf.datos.aggregaterating.reviewcount,
-            }
-        ],
+        }
     };
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(structuredData);
-    document.head.appendChild(script);
+
+    // Crear un array con todas las publicaciones
+    const publications = doctor.value.acf.microdatos.publications || [];
+    const publicationElements = publications.map(publication => ({
+        "@context": "http://schema.org",
+        "@type": "MedicalScholarlyArticle",
+        "headline": publication.title,
+        "author": {
+            "@type": "Physician",
+            "name": doctor.value.title.rendered
+        },
+        "datePublished": publication.datePublished,
+        "journalName": publication.journalName,
+        "url": publication.url
+    }));
+
+    // Retornar ambos JSON-LD para inyectarlos con useHead
+    return {
+        structuredData,
+        publicationElements
+    };
+};
+
+// const { structuredData, publicationElements } = injectStructuredData();
+
+// Verificar si activar_schema es true
+if (doctor.value.acf.activar_schema && doctor.value.acf.activar_schema.includes("true")) {
+    const { structuredData, publicationElements } = injectStructuredData();
+
+    // Usar useHead para inyectar el JSON-LD en el head solo si activar_schema es true
+    useHead({
+        script: [
+            {
+                type: 'application/ld+json',
+                innerHTML: JSON.stringify(structuredData) // Usar innerHTML para insertar JSON-LD como cadena
+            },
+            ...publicationElements.map(publication => ({
+                type: 'application/ld+json',
+                innerHTML: JSON.stringify(publication) // Convertir cada objeto a una cadena JSON
+            }))
+        ],
+        ...yoastHead,
+    });
+} else {
+    // Si activar_schema no es true, solo inyectar los metadatos de Yoast
+    useHead({
+        ...yoastHead,
+    });
 }
 </script>
 

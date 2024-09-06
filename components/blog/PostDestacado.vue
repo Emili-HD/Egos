@@ -47,7 +47,7 @@ const { data: highlightedPostsData, error, pending } = await useAsyncData('highl
         post => post.acf && post.acf.destacar_post && post.acf.destacar_post.includes('Destacado')
     ).sort((a, b) => new Date(b.date) - new Date(a.date));
     // Solo toma el post destacado más reciente
-    console.log('Highlighted Posts:', highlightedPosts); // Agregar log
+    // console.log('Highlighted Posts:', highlightedPosts); // Agregar log
     return highlightedPosts.slice(0, 1);
 });
 

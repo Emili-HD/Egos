@@ -163,6 +163,25 @@ export const getTestimonios = async ({ page = 1, perPage = 100, slug = null, cat
     }
 };
 
+export const getTestimoniosDestacados = async () => {
+    let endpoint = 'custom/v1/testimonios-destacados';
+    const url = `${JSON_URL}/${endpoint}`;
+
+    try {
+        const data = await $fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        return data; // Devuelve todos los testimonios destacados
+    } catch (error) {
+        console.error("Fetch error: ", error);
+        throw error;
+    }
+};
+
+
 // ***************************************************************************************************
 // Función unificada para obtener noticias o una noticia específica
 // ***************************************************************************************************
@@ -194,7 +213,7 @@ export const getNoticias = async ({ page = 1, perPage = 100, slug = null } = {})
 // Función unificada para obtener tratamientos por ID o slug
 // ***************************************************************************************************
 
-export const getTratamiento = async ({ id = null, slug = null, getAll = false, perPage = 60 } = {}) => {
+export const getTratamiento = async ({ id = null, slug = null, getAll = false, perPage = 100 } = {}) => {
     if (!id && !slug && !getAll) {
         throw new Error("Debe proporcionar un ID, un slug o activar la opción 'getAll' para buscar un tratamiento.");
     }
@@ -282,7 +301,7 @@ export const getReviews = async ({ slug }) => {
 // Función para obtener miembros del equipo, con soporte para paginación
 // ***************************************************************************************************
 
-export const getEquipo = async ({ page = 1, perPage = 100, slug = null } = {}) => {
+export const getEquipo = async ({ page = 1, perPage = 100, slug = null, id = null } = {}) => {
     let endpoint = 'wp/v2/doctor';
     const timestamp = new Date().getTime();
     let queryParameters = `?per_page=${perPage}&page=${page}&timestamp=${timestamp}`;
@@ -291,7 +310,8 @@ export const getEquipo = async ({ page = 1, perPage = 100, slug = null } = {}) =
         queryParameters += `&slug=${slug}`;
     }
 
-    const url = `${JSON_URL}/${endpoint}${queryParameters}`;
+    // Construir la URL correcta
+    const url = id ? `${JSON_URL}/${endpoint}/${id}?timestamp=${timestamp}` : `${JSON_URL}/${endpoint}${queryParameters}`;
 
     try {
         const data = await $fetch(url, {
@@ -300,13 +320,22 @@ export const getEquipo = async ({ page = 1, perPage = 100, slug = null } = {}) =
                 'Content-Type': 'application/json',
             },
         });
-        // Devuelve el primer elemento si se busca por slug, ya que se espera que sea único
-        return slug ? data[0] : data;
+
+        // Manejar la respuesta dependiendo del tipo de data
+        if (id || slug) {
+            // Si buscamos por id o slug, la API debería devolver un único objeto, no un array
+            return Array.isArray(data) ? data[0] : data;
+        } else {
+            // Si no hay id ni slug, se espera que la API devuelva un array
+            return data;
+        }
     } catch (error) {
         console.error("Fetch error: ", error);
         throw error;
     }
 };
+
+
 
 // ***************************************************************************************************
 // Función para obtener una landing por slug

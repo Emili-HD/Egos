@@ -16,10 +16,6 @@ export default defineNuxtConfig({
         '~/plugins/device-classes.js',
     ],
 
-    device: {
-        refreshOnResize: true
-    },
-
     css: [
         '~/assets/css/tailwind.css',
     ],
@@ -219,6 +215,7 @@ export default defineNuxtConfig({
         public: {
             googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAP_API_KEY,
             recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY,
+            youtubeApiKey: process.env.NUXT_YOUTUBE_API_KEY,
         },
         private: {
             wordpressUrl: process.env.NUXT_API_WP_URL,
@@ -234,12 +231,18 @@ export default defineNuxtConfig({
 
     hooks: {
         'pages:extend'(pages) {
-            // add a route
+            // Asegúrate de que las rutas dinámicas se manejan correctamente
             pages.push({
                 name: 'tratamiento',
                 path: '/:category/:slug',
-                file: '~/pages/cirugia/[...slug].vue',
-            })
+                file: '@/pages/cirugia/[...slug].vue',
+            });
+
+            pages.push({
+                name: 'tratamiento-hijo',
+                path: '/:parentCategory/:category/:slug',
+                file: '@/pages/cirugia/[...slug].vue',
+            });
         },
     },
 
@@ -256,7 +259,8 @@ export default defineNuxtConfig({
     },
 
     routeRules: {
-        '/estetica-facial/rinoplastia/': { redirect: { to: '/estetica-facial/rinoplastia-ultrasonica/', statusCode: 308 } },
+        // '/estetica-facial/rinoplastia/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 308 } },
+        '/estetica-facial/rinoplastia-ultrasonica/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 308 } },
         '/blog/page/**': { redirect: { to: '/blog/', statusCode: 308 } },
         '/category/uncategorized/**': { redirect: { to: '/blog/', statusCode: 308 } },
         '/centros/**': { redirect: { to: '/nuestras-clinicas/', statusCode: 308 } },
@@ -464,13 +468,13 @@ export default defineNuxtConfig({
         '/rinoplastia-sin-cirugia/': { redirect: { to: '/estetica-facial/rinoplastia-ultrasonica/', statusCode: 308 } },
         '/cirugia-estetica-facial/rinoplastia-ultrasonica/': { redirect: { to: '/estetica-facial/rinoplastia-ultrasonica/', statusCode: 308 } },
 
-        '/obesidad/': {redirect: {to: '/perdida-de-peso/', statusCode: 308}},
-        '/obesidad/balon-gastrico/': {redirect: {to: '/perdida-de-peso/balon-gastrico/', statusCode: 308}},
-        '/obesidad/metodo-endomanga-mega/': {redirect: {to: '/perdida-de-peso/metodo-endomanga-mega/', statusCode: 308}},
-        '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/': {redirect: {to: '/perdida-de-peso/endomanga-reduccion-de-estomago-sin-cirugia/', statusCode: 308}},
-        '/obesidad/sleeve-gastrico/': {redirect: {to: '/perdida-de-peso/sleeve-gastrico/', statusCode: 308}},
-        '/obesidad/bypass-gastrico/': {redirect: {to: '/perdida-de-peso/bypass-gastrico/', statusCode: 308}},
-        '/obesidad/tratamiento-farmacologico-obesidad/': {redirect: {to: '/perdida-de-peso/tratamiento-farmacologico-obesidad/', statusCode: 308}},
+        '/obesidad/': { redirect: { to: '/perdida-de-peso/', statusCode: 308 } },
+        '/obesidad/balon-gastrico/': { redirect: { to: '/perdida-de-peso/balon-gastrico/', statusCode: 308 } },
+        '/obesidad/metodo-endomanga-mega/': { redirect: { to: '/perdida-de-peso/metodo-endomanga-mega/', statusCode: 308 } },
+        '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/': { redirect: { to: '/perdida-de-peso/endomanga-reduccion-de-estomago-sin-cirugia/', statusCode: 308 } },
+        '/obesidad/sleeve-gastrico/': { redirect: { to: '/perdida-de-peso/sleeve-gastrico/', statusCode: 308 } },
+        '/obesidad/bypass-gastrico/': { redirect: { to: '/perdida-de-peso/bypass-gastrico/', statusCode: 308 } },
+        '/obesidad/tratamiento-farmacologico-obesidad/': { redirect: { to: '/perdida-de-peso/tratamiento-farmacologico-obesidad/', statusCode: 308 } },
     },
 
     // Configuración de nuxt-simple-robots
@@ -619,7 +623,9 @@ export default defineNuxtConfig({
                 '/estetica-facial/mentoplastia/',
                 '/estetica-facial/otoplastia/',
                 '/estetica-facial/rinomodelacion/',
-                '/estetica-facial/rinoplastia-ultrasonica/',
+                '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/',
+                '/estetica-facial/rinoplastia/rinoplastia-secundaria/',
+                '/estetica-facial/rinoplastia/',
                 '/estetica-facial/tratamiento-antiarrugas/',
                 '/estetica-facial/queiloplastia/',
                 '/estetica-facial/sonrisa-gingival/',
@@ -627,6 +633,13 @@ export default defineNuxtConfig({
                 '/estetica-facial/relleno-de-ojeras/',
                 '/estetica-facial/hilos-tensores/',
                 '/estetica-facial/marcacion-mandibular-medicina-estetica/',
+                '/estetica-facial/micropigmentacion-de-cejas-sombreadas/',
+                '/estetica-facial/micropigmentacion-para-estrias-y-cicatrices/',
+                '/estetica-facial/micropigmentacion-eyeliner/',
+                '/estetica-facial/micropigmentacion-de-ojeras/',
+                '/estetica-facial/micropigmentaciion-de-labios/',
+                '/estetica-facial/microblading-tecnica-pelo-a-pelo/',
+                '/estetica-facial/nanoblading/',
                 '/injerto-capilar/injerto-capilar/',
                 '/perdida-de-peso/',
                 '/perdida-de-peso/balon-gastrico/',
@@ -664,7 +677,7 @@ export default defineNuxtConfig({
                 //     rel: 'preconnect',
                 //     href: 'https://www.googletagmanager.com',
                 // },
-                
+
                 // {
                 //     rel: 'preconnect',
                 //     href: 'https://connect.facebook.net',
