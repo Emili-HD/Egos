@@ -1,6 +1,6 @@
 <template>
     <main class="site-main" v-if="tratamiento" ref="componentRef">
-        <UiBotonCita :data="tratamiento.acf.boton_cita" />
+        <UiBotonCita v-if="tratamiento && tratamiento.acf && tratamiento.acf.boton_cita" :data="tratamiento.acf.boton_cita" />
         <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
             <CirugiasEncabezado :data="tratamiento" />
             <NuxtLazyHydrate when-idle>
@@ -25,36 +25,6 @@
                 </div>
             </NuxtLazyHydrate>
 
-
-            <div v-if="tratamiento.acf.doctores_relacionados" class="col-[2/-2] mb-20">
-                <div v-if="doctors.length > 0" class="grid grid-cols-12 gap-4">
-                    <div class="overflow-hidden size-full flex flex-col items-center col-span-6 border-y border-y-blue-1/25 pt-4" v-for="doc in doctors" :key="doc.ID">
-                        <div class="flex justify-center items-center gap-x-6 mb-4 text-center">
-                            <div class="w-64 aspect-square rounded-lg overflow-hidden">
-                                <!-- Imagen del doctor -->
-                                <img loading="lazy" :src="doc.featured_image" :alt="doc.post_title" class="cover absolute object-center h-full max-w-none left-1/2 -translate-x-1/2"
-                                    :aria-labelledby="'doctor-title-' + doc.ID" />
-                            </div>
-                            <div class="w-full" v-if="doc.post_title">
-                                <!-- Título del doctor -->
-                                <h3 class="text-clamp-base text-left mb-2"><strong>{{ doc.post_title }}</strong></h3>
-                                <!-- Contenido del doctor -->
-                                <p class="text-clamp-sm leading-tight mb-4 text-left" v-html="doc.post_excerpt"></p>
-                                <!-- Botón con enlace al doctor -->
-                                <UiButton :to="relativeDoctorLink(doc.permalink)"
-                                    class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1">
-                                    más información
-                                </UiButton>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div v-else>
-                    <p>Cargando información del doctor...</p>
-                </div>
-            </div>
-
-
             <NuxtLazyHydrate when-idle>
                 <div class="form__page grid grid-cols-subgrid col-[1/-1] mb-12" v-if="tratamiento.acf">
                     <CirugiasFormSection :data="tratamiento.acf" />
@@ -76,9 +46,49 @@
                 </div>
             </section>
         </NuxtLazyHydrate>
+
+        <NuxtLazyHydrate when-idle>
+            <div v-if="tratamiento.acf.dr_comment" class="grid grid-cols-12 mb-20 gap-y-8">
+                <h2 class="h4 col-[2/-2] lg:text-center">Nuestro Equipo</h2>
+                <div v-if="doctorsWithComments.length > 0" class="col-[2/-2] grid grid-cols-12 gap-4">
+                    <div class="overflow-hidden size-full flex flex-col items-center col-span-full lg:col-span-6 border-y border-y-blue-1/25 pt-4" v-for="({ doctor, comentario }, index) in doctorsWithComments" :key="doctor.ID">
+                        <div class="flex flex-col sm:flex-row justify-center items-center gap-x-6 mb-4 text-center">
+                            <div class="w-full min-h-56 mb-8 sm:w-80 lg:w-64 lg:aspect-square rounded-lg overflow-hidden">
+                                <img loading="lazy" :src="doctor.featured_image" :alt="doctor.post_title" class="cover absolute object-center h-full max-w-none left-1/2 -translate-x-1/2"
+                                    :aria-labelledby="'doctor-title-' + doctor.ID" />
+                            </div>
+                            <div class="w-full" v-if="doctor.post_title">
+                                <!-- Título del doctor -->
+                                <h3 class="text-clamp-xl text-left mb-2">
+                                    <strong>{{ doctor.post_title }}</strong>
+                                </h3>
+                                <!-- Comentario del doctor -->
+                                <p class="text-clamp-sm leading-tight mb-4 text-left">
+                                    {{ comentario }}
+                                </p>
+                                <!-- Botón de enlace a la página del doctor -->
+                                <UiButton :to="relativeDoctorLink(doctor.permalink)" class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1 w-fit h-fit">
+                                    más información
+                                </UiButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-else>
+                    <p>Cargando información del doctor...</p>
+                </div>
+            </div>
+        </NuxtLazyHydrate>
+
+        <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 xl:px-[calc(100%/16)] mt-32">
+            <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
+            <GoogleReviews :placeid="tratamiento.acf.placeid"/>
+        </section>
+
         <NuxtLazyHydrate when-idle>
             <LazyCirugiasRelatedPosts :treatmentsData="tratamiento.acf" />
         </NuxtLazyHydrate>
+
     </main>
 </template>
 
@@ -94,6 +104,7 @@ import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
 import { useDoctorsJson } from '~/composables/useDoctorsJson';
 import { useBusinessData } from '@/composables/useBusinessData';
 import { getClinicas } from '@/composables/useApi'
+import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -157,11 +168,14 @@ const { data: clinicasData, error: clinicasError } = await useAsyncData(
 );
 
 
-const doctors = ref([]);
+const doctorsWithComments = ref([]);
 
 // Asignar los datos de los doctores directamente desde `tratamiento.acf.doctores_relacionados`
-if (tratamiento.value && tratamiento.value.acf?.doctores_relacionados) {
-    doctors.value = tratamiento.value.acf.doctores_relacionados;
+if (tratamiento.value && tratamiento.value.acf?.dr_comment) {
+    doctorsWithComments.value = tratamiento.value.acf.dr_comment.map(commentObj => ({
+        doctor: commentObj.doctores_relacionados[0],  // Asumimos que hay un doctor en `doctores_relacionados`
+        comentario: commentObj.comentario
+    }));
 }
 
 const relativeDoctorLink = (link) => {
@@ -404,9 +418,7 @@ const { generateYoastHead } = useYoastHead(tratamiento);
 const yoastHead = generateYoastHead();
 
 // Generar los JSON-LD de los doctores usando el composable
-const doctorScripts = doctors.value.flatMap(doctor => {
-    // console.log(doctor);  // Asegurarnos de que los datos del doctor están correctos
-    
+const doctorScripts = doctorsWithComments.value.flatMap(({ doctor }) => {
     const { injectDoctorData } = useDoctorsJson(doctor);  // Composable para generar JSON-LD
     const { doctorData, publicationElements } = injectDoctorData();
 
@@ -415,8 +427,6 @@ const doctorScripts = doctors.value.flatMap(doctor => {
             type: 'application/ld+json',
             children: JSON.stringify(doctorData)
         },
-
-        /* Activar publicaciones si queremos que aparezcan en las cirugías */
         // ...publicationElements.map(publication => ({
         //     type: 'application/ld+json',
         //     children: JSON.stringify(publication)

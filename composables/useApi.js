@@ -104,13 +104,15 @@ export const getMenuTratamientos = async () => {
 // Función unificada para obtener clínicas por página o por slug
 // ***************************************************************************************************
 
-export const getClinicas = async ({ page = 1, perPage = 100, slug = null } = {}) => {
+export const getClinicas = async ({ page = 1, perPage = 100, slug = null, id = null, ids = null } = {}) => {
     let endpoint = 'wp/v2/clinica';
     let queryParameters = `?per_page=${perPage}&page=${page}`;
 
-    // Añade el slug al parámetro de consulta si se proporciona
+    // Añade el slug o el id al parámetro de consulta si se proporciona
     if (slug) {
         queryParameters += `&slug=${slug}`;
+    } else if (id) {
+        queryParameters += `/${id}`;
     }
 
     const url = `${JSON_URL}/${endpoint}${queryParameters}`;
@@ -122,6 +124,12 @@ export const getClinicas = async ({ page = 1, perPage = 100, slug = null } = {})
                 'Content-Type': 'application/json',
             },
         });
+
+        // Si se proporcionan ids, filtra las clínicas por estos ids
+        if (ids && ids.length > 0) {
+            return data.filter(clinica => ids.includes(clinica.id));
+        }
+
         // Devuelve el primer elemento si se busca por slug, ya que es único
         return slug ? data[0] : data;
     } catch (error) {

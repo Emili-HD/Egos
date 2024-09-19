@@ -1,6 +1,6 @@
 <template>
     <main class="site-main doctor bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
-        <UiBotonCita :data="doctor.acf.boton_cita" />
+        <UiBotonCita v-if="doctor && doctor.acf && doctor.acf.boton_cita" :data="doctor.acf.boton_cita" />
         <div class="doctor__content col-[1/-1] lg:col-span-11 grid grid-cols-subgrid w-fit min-h-fit">
             <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
                 v-if="doctor && doctor.title">
@@ -17,12 +17,12 @@
                 v-if="doctor && doctor.content">
                 <div class="[&p]:font-nunito" v-html="doctor.content.rendered"></div>
             </section>
-            <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max">
-                <LazyDoctorResenas :data="reviews" :name="doctor.title.rendered" />
+            <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max mx-[calc(100% / 16)]">
+                <LazyDoctorResenas :data="reviews" :name="doctor.title.rendered" class=""/>
+                <NuxtLazyHydrate when-idle>
+                    <LazyElementsReviews :ruta="route.params.slug[1]" />
+                </NuxtLazyHydrate>
             </section>
-            <NuxtLazyHydrate when-idle>
-                <LazyElementsReviews :ruta="route.params.slug[1]" />
-            </NuxtLazyHydrate>
         </div>
         <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20"
             v-if="doctor && doctor.acf">
@@ -51,6 +51,7 @@ const { data: doctor, refresh: refreshDoctor } = await useAsyncData(`doctor-${ro
 const { data: reviews, refresh: refreshReviews } = useAsyncData(`reviews-${route.params.slug[1]}`, () => getReviews({ slug: route.params.slug[1] }), {
     watch: [() => route.params.slug[1]]
 });
+
 
 watch(
     () => route.params.slug,

@@ -1,7 +1,7 @@
 <template>
     <div v-if="landingError">Error al cargar la Promoción.</div>
     <main v-else class="site-main landing-main" v-if="landing && landing.acf">
-        <UiBotonCita :data="landing.acf.boton_cita" />
+        <UiBotonCita v-if="landing.acf.boton_cita" :data="landing.acf.boton_cita" />
         <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
             <a class="gold" href="#hubspotLanding">Cita con el cirujano
             </a>
@@ -40,6 +40,8 @@ import { watch, onMounted } from 'vue';
 import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
 import { getLanding } from '@/composables/useApi';
 
+useGTM()
+
 const router = useRouter();
 const route = useRoute();
 
@@ -50,22 +52,6 @@ const loadData = () => {
 
 // Función para cargar los datos
 const { data: landing, error: landingError, refresh } = await useAsyncData(`landing-${route.params.slug}`, loadData, { initialCache: false });
-
-// watch(
-//    () => route.params.slug,
-//    async (newSlug, oldSlug) => {
-//       if (newSlug !== oldSlug) {
-//          await refresh();
-//       }
-//    },
-//    { immediate: true }
-// );
-// console.log(landing.value);
-
-// function handleClick() {
-//     const { $lenis: lenis } = useNuxtApp();
-//     lenis.scrollTo('#hubspotLanding', { offset: -20 });
-// }
 
 // Datos YOAST SEO
 useHead(() => {
@@ -116,9 +102,8 @@ useHead(() => {
         // Robots
         {
             name: 'robots',
-            content: `index=${yoast.robots.index}, follow=${yoast.robots.follow}, max-snippet=${yoast.robots['max-snippet']}, max-image-preview=${yoast.robots['max-image-preview']}, max-video-preview=${yoast.robots['max-video-preview']}`
+            content: `${yoast.robots.index}, ${yoast.robots.follow}, ${yoast.robots['max-snippet']}, ${yoast.robots['max-image-preview']}, ${yoast.robots['max-video-preview']}`
         },
-        // Añadir más tags según sean necesarios
     ];
 
     // Añadir las imágenes de Open Graph si están disponibles
@@ -129,22 +114,6 @@ useHead(() => {
             metaTags.push({ property: 'og:image:height', content: image.height.toString() });
         });
     };
-
-    // const script = [
-    //   {
-    //     type: 'text/javascript',
-    //     innerHTML: `
-    //       window.dataLayer = window.dataLayer || [];
-    //       function gtag(){dataLayer.push(arguments);}
-    //       gtag('js', new Date());
-    //       gtag('config', '${landing.value.acf?.gtag_script}');
-    //     `
-    //   },
-    //   {
-    //     src: `https://www.googletagmanager.com/gtag/js?id=${landing.value.acf?.gtag_script}`,
-    //     async: true
-    //   }
-    // ]
 
     return {
         title: yoast.title || 'Título del Post',

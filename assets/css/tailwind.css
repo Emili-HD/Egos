@@ -26,7 +26,7 @@
         @apply mb-4 text-clamp-base lg:text-clamp-sm font-nunito font-normal leading-[1.7];
     }
     h1, h2, h3, h4, h5, h6 {
-        @apply tracking-[-0.5px] mb-6 font-light leading-tight font-lora;
+        @apply tracking-[-0.5px] mb-6 font-light leading-tight font-lora text-balance;
     }
     h1, .h1 {
         @apply text-clamp-6xl;

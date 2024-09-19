@@ -1,7 +1,7 @@
 <template>
    <div class="hero__intro bg-cover bg-center w-full md:w-1/2 h-screen/85 md:h-screen overflow-hidden">
       <div class="blue-gradient-full size-full absolute z-0">
-         <UiImage :data="data" class="h-screen/85 object-cover object-center absolute" :preload="true" />
+         <UiImage :data="data" class="h-screen/85 xl:h-screen object-cover object-center absolute" :preload="true" />
       </div>
       <header class="header__landing relative px-12 py-6 bg-blue-1 flex justify-center md:justify-start w-full z-[999]" ref="cabecera">
          <nuxt-link to="/">
@@ -19,7 +19,6 @@
                <p v-else-if="data.acf.opciones_precio === 'dia'" class="h3 [&>span]:span-gradient">desde <span>{{ data.acf.precio }}€/día</span></p>
                <p v-else-if="data.acf.opciones_precio === 'desde'" class="h3 [&>span]:span-gradient">desde <span>{{ data.acf.precio }}€</span></p>
                <p v-else class="h3 [&>span]:span-gradient">desde <span>{{ data.acf.precio }}€/mes</span></p>
-               <!-- <ElementsButton class="gold md:hidden text-center flex flex-col justify-center items-center border-none rounded-xl py-3 px-6 uppercase z-2 w-fit h-fit" href="#hubspotLanding" @click.passive="handleClick">Más Información</ElementsButton> -->
             </div>
             <ElementsCountDown class="x2 max-w-lg m-0" :data="data.acf" />
          </div>

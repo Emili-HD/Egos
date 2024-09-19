@@ -38,7 +38,7 @@ export const useYoastHead = (page) => {
             { name: 'twitter:data1', content: yoast.value.twitter_misc?.['Tiempo de lectura'] || '' },
             {
                 name: 'robots',
-                content: `index=${yoast.value.robots.index}, follow=${yoast.value.robots.follow}, max-snippet=${yoast.value.robots['max-snippet']}, max-image-preview=${yoast.value.robots['max-image-preview']}, max-video-preview=${yoast.value.robots['max-video-preview']}`
+                content: `${yoast.value.robots.index}, ${yoast.value.robots.follow}, ${yoast.value.robots['max-snippet']}, ${yoast.value.robots['max-image-preview']}, ${yoast.value.robots['max-video-preview']}`
             },
         ];
 

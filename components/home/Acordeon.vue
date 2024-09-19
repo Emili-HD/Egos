@@ -19,6 +19,7 @@
                </div>
                <div class="accordion__list--item-descripcion self-end h-0 w-full xl:w-[60%] opacity-0 relative">
                   <p class="pb-1">{{ content.descripcion }}</p>
+                  <UiButton class="blue max-sm:text-xs" v-if="content.url" :to="content.url">Saber más sobre {{ content.titulo }}</UiButton>
                   <ul class="accordion__relacionados">
                      <li class="list__wrapper" v-for="categoryId in content.relacionadas" :key="categoryId">
                         <ClientOnly >
@@ -64,17 +65,21 @@ const props = defineProps({
 const categoriasPorId = ref({});
 
 watch(() => props.data.items, async (nuevosItems) => {
-  // Por cada grupo en data.items, haz las consultas para sus categorías relacionadas
-  nuevosItems.forEach(async (item) => {
-    item.relacionadas.forEach(async (categoryId) => {
-      // Evita realizar la consulta si ya tenemos los datos de esta categoría
-      if (!categoriasPorId.value[categoryId]) {
-        const { data } = await useAsyncData(`tratamiento-${categoryId}`, () => getTratamiento({ id: categoryId }));
-        categoriasPorId.value[categoryId] = data.value;
-      }
+    // Por cada grupo en data.items, haz las consultas para sus categorías relacionadas
+    nuevosItems.forEach(async (item) => {
+        // Verifica si 'relacionadas' está definida y si es un array
+        if (item.relacionadas && Array.isArray(item.relacionadas)) {
+            item.relacionadas.forEach(async (categoryId) => {
+                // Evita realizar la consulta si ya tenemos los datos de esta categoría
+                if (!categoriasPorId.value[categoryId]) {
+                    const { data } = await useAsyncData(`tratamiento-${categoryId}`, () => getTratamiento({ id: categoryId }));
+                    categoriasPorId.value[categoryId] = data.value;
+                }
+            });
+        }
     });
-  });
 }, { immediate: true, deep: true });
+
 
 const getProcessedLink = (link) => {
   if (!link) {

@@ -41,7 +41,7 @@ import { ref } from 'vue';
 const postsParams = { per_page: 100, page: 1 };
 
 // Uso de useAsyncData para cargar y procesar los posts destacados
-const { data: highlightedPostsData, error, pending } = await useAsyncData('highlightedPosts', async () => {
+const { data: highlightedPostsData, error } = await useAsyncData('highlightedPosts', async () => {
     const response = await getPosts(postsParams);
     const highlightedPosts = response.filter(
         post => post.acf && post.acf.destacar_post && post.acf.destacar_post.includes('Destacado')

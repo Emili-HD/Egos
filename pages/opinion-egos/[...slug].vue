@@ -1,6 +1,6 @@
 <template>
     <main class="site-main caso-real bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
-        <UiBotonCita :data="casoreal.acf.boton_cita" />
+        <UiBotonCita v-if="casoreal && casoreal.acf && casoreal.acf.boton_cita" :data="casoreal.acf.boton_cita" />
         <div class="caso-real__content col-[1/-1] lg:col-span-11 grid grid-cols-subgrid">
             <header class="caso-real__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
                 v-if="casoreal && casoreal.title">

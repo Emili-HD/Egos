@@ -22,9 +22,10 @@
                 class="category__title">
                 <h3 class="h5">{{ category.title.rendered }}</h3>
                 <div v-html="category.excerpt.rendered" class="[&>p]:text-clamp-sm [&>p]:mb-0 [&>p]:text-center [&>p]:text-pretty"></div>
-                <div class="button">Saber más</div>
             </div>
         </nuxt-link>
+        <UiButton v-if="category.acf && category.acf.anchor" class="button blue text-xs text-balance w-full font-semibold py-2 px-6" :to="processedLink">Saber más sobre {{ category.acf.anchor }}</UiButton>
+        <UiButton v-else class="button blue" :to="processedLink">Saber más</UiButton>
     </div>
     <div v-else>
         <p>Cargando categoría...</p>
@@ -63,7 +64,7 @@ const { data: category, error } = await useAsyncData(`tratamiento-${props.catego
 
 <style lang="scss" scoped>
 .card {
-    @apply pb-4 bg-nude-7 rounded-3xl min-h-full shadow-xl;
+    @apply pb-4 bg-nude-7 rounded-3xl min-h-full shadow-xl flex flex-col justify-between items-center;
 
     &__link {
         @apply w-full h-full block;
@@ -105,7 +106,7 @@ const { data: category, error } = await useAsyncData(`tratamiento-${props.catego
     }
 
     .button {
-        @apply w-fit py-1 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl hover:bg-blue-6 transition-colors;
+        @apply w-fit py-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl hover:bg-blue-6 transition-colors;
     }
 }
 </style>

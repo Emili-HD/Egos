@@ -7,7 +7,10 @@
                     <span>{{ item.title }}</span>
                 </nuxt-link>
                 <nuxt-link v-else :to="item.url" external>
-                    <span>{{ item.post_title }}</span>
+                    <div v-if="item.acf">
+                        <img :src="item.acf.icon" class="size-8 invert hover:scale-125 transition-transform" :alt="item.post_title" :title="item.post_title">
+                    </div>
+                    <span v-else>{{ item.post_title }}</span>
                 </nuxt-link>
             </li>
         </ul>
@@ -45,18 +48,6 @@ const isCurrentPage = (url) => {
 
 <style scoped>
 .menu-footer {
-    @apply col-span-3 xl:col-span-1 flex flex-col justify-center items-center xl:items-start text-center xl:text-left;
-
-    ul {
-        @apply list-none !mb-0 flex flex-col gap-2;
-
-        span {
-            @apply text-nude-8 uppercase;
-        }
-    }
-}
-
-.menu-social {
     @apply col-span-3 xl:col-span-1 flex flex-col justify-center items-center xl:items-end text-center xl:text-right;
 
     ul {
@@ -68,8 +59,22 @@ const isCurrentPage = (url) => {
     }
 }
 
-.menu-legal {
+.menu-trabaja {
+    @apply col-span-3 xl:col-span-1 flex justify-center items-center xl:items-end xl:justify-start text-center xl:text-left;
+
+    ul {
+        @apply list-none !mb-0 flex flex-col gap-2;
+
+        span {
+            @apply text-nude-8 uppercase;
+        }
+    }
+}
+
+.menu-legal,
+.menu-social {
     @apply col-span-3 py-4 self-start;
+    grid-template-rows: auto;
 
     ul {
         @apply list-none !mb-0 flex flex-col xl:flex-row justify-center items-center gap-8 w-full;

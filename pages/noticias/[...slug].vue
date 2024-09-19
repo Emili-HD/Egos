@@ -1,6 +1,6 @@
 <template>
     <main class="site-main noticia bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0 gap-4" v-if="noticia" >
-        <UiBotonCita :data="noticia.acf.boton_cita" />
+        <UiBotonCita v-if="noticia.acf && noticia.acf.boton_cita" :data="noticia.acf.boton_cita" />
         <header class="noticia__heading pt-36 lg:pt-48 px-8 mb-10 col-span-full group"
             v-if="noticia.title && noticia.title.rendered">
             <p class="mb-0 leading-tight h1 max-sm:text-clamp-2xl font-lora">{{ noticia.acf.subtitulo }}:</p>
@@ -147,66 +147,11 @@ onMounted(async () => {
     await injectStructuredData(); // Asegúrate de que esta función también se ejecute después de la renderización
 });
 
-// Datos YOAST SEO
-useHead(() => {
-    // Verifica si el post está cargado y tiene la estructura esperada
-    if (!noticia.value || !noticia.value.yoast_head_json) {
-        return {
-            title: 'Cargando...', // Título temporal mientras se cargan los datos
-        };
-    }
+const { generateYoastHead } = useYoastHead(noticia);
+const yoastHead = generateYoastHead();
 
-    // Accede al primer elemento del arreglo para obtener los datos de YOAST SEO
-    const yoast = noticia.value.yoast_head_json;
-
-    const link = [
-        {
-            rel: 'canonical',
-            href: (() => {
-                // Añadir "www." si no está presente y no es una subdominio diferente
-                let canonical = yoast.canonical.startsWith('https://www.') ? yoast.canonical :
-                    yoast.canonical.startsWith('https://') ? `https://www.${yoast.canonical.substring(8)}` : yoast.canonical;
-                // Asegurar que la URL termina con "/"
-                canonical = canonical.endsWith('/') ? canonical : `${canonical}/`;
-                return canonical;
-            })()
-        }
-    ];
-    const metaTags = [
-        { name: 'description', content: yoast.og_description || 'Egos | Clínica de cirugía y medicina estética' },
-        { property: 'og:title', content: yoast.og_title },
-        { property: 'og:description', content: yoast.og_description },
-        { property: 'og:url', content: yoast.og_url },
-        { property: 'og:type', content: yoast.og_type },
-        { property: 'og:locale', content: yoast.og_locale },
-        { property: 'og:site_name', content: yoast.og_site_name },
-        { property: 'article:publisher', content: yoast.article_publisher },
-        // Twitter Card
-        { name: 'twitter:card', content: yoast.twitter_card },
-        // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
-        { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
-        // Robots
-        {
-            name: 'robots',
-            content: `index=${yoast.robots.index}, follow=${yoast.robots.follow}, max-snippet=${yoast.robots['max-snippet']}, max-image-preview=${yoast.robots['max-image-preview']}, max-video-preview=${yoast.robots['max-video-preview']}`
-        },
-        // Añadir más tags según sean necesarios
-    ];
-
-    // Añadir las imágenes de Open Graph si están disponibles
-    if (yoast.og_image && yoast.og_image.length > 0) {
-        yoast.og_image.forEach((image) => {
-            metaTags.push({ property: 'og:image', content: image.url });
-            metaTags.push({ property: 'og:image:width', content: image.width.toString() });
-            metaTags.push({ property: 'og:image:height', content: image.height.toString() });
-        });
-    }
-
-    return {
-        title: yoast.title || 'Título del Post',
-        link: link,
-        meta: metaTags,
-    };
+useHead({
+    ...yoastHead,
 });
 
 const injectStructuredData = async () => {

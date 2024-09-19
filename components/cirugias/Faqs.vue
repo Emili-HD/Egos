@@ -12,7 +12,7 @@
       />
     </div>
     <div class="heading accordion__heading col-[2_/_span_14] xl:col-[9_/_span_7] self-end">
-      <h2 class="accordion__heading-title text-clamp-3xl [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0" v-html="faqsData.titulo_faqs"></h2>
+      <h2 class="h4 accordion__heading-title text-clamp-3xl [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0" v-html="faqsData.titulo_faqs"></h2>
     </div>
     <UiAccordion :data="faqsData.faqs" v-if="faqsData && faqsData.faqs" />
   </section>

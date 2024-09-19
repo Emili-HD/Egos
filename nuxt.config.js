@@ -88,79 +88,6 @@ export default defineNuxtConfig({
             },
         },
 
-        // fonts: [
-        //     {
-        //         family: 'canela',
-        //         locals: ['canela'],
-        //         fallback: ['Georgia', 'serif'],
-        //         variances: [
-        //             {
-        //                 style: 'normal',
-        //                 weight: 200,
-        //                 sources: [
-        //                     { src: '@/assets/fonts/canela/Canela-Thin.woff', type:'woff' },
-        //                     { src: '@/assets/fonts/canela/Canela-Thin.woff2', type:'woff2' }
-        //                 ]
-        //             },
-        //             {
-        //                 style: 'normal',
-        //                 weight: 300,
-        //                 sources: [
-        //                     { src: '@/assets/fonts/canela/Canela-Light.woff', type:'woff' },
-        //                     { src: '@/assets/fonts/canela/Canela-Light.woff2', type:'woff2' }
-        //                 ]
-        //             },
-        //             {
-        //                 style: 'normal',
-        //                 weight: 400,
-        //                 sources: [
-        //                     { src: '@/assets/fonts/canela/Canela-Regular.woff', type:'woff' },
-        //                     { src: '@/assets/fonts/canela/Canela-Regular.woff2', type:'woff2' }
-        //                 ]
-        //             },
-        //         ]
-        //     },
-        //     {
-        //         family: 'geomanist',
-        //         locals: ['geomanist'],
-        //         fallback: ['Gill Sans', 'sans-serif'],
-        //         variances: [
-        //             {
-        //                 style: 'normal',
-        //                 weight: 200,
-        //                 sources: [
-        //                     { src: '@/assets/fonts/geomanist/hinted-Geomanist-ExtraLight.woff', type:'woff' },
-        //                     { src: '@/assets/fonts/geomanist/hinted-Geomanist-ExtraLight.woff2', type:'woff2' }
-        //                 ]
-        //             },
-        //             {
-        //                 style: 'normal',
-        //                 weight: 300,
-        //                 sources: [
-        //                     { src: '@/assets/fonts/geomanist/hinted-Geomanist-Light.woff', type:'woff' },
-        //                     { src: '@/assets/fonts/geomanist/hinted-Geomanist-Light.woff2', type:'woff2' }
-        //                 ]
-        //             },
-        //             {
-        //                 style: 'normal',
-        //                 weight: 400,
-        //                 sources: [
-        //                     { src: '@/assets/fonts/geomanist/hinted-Geomanist-Book.woff', type:'woff' },
-        //                     { src: '@/assets/fonts/geomanist/hinted-Geomanist-Book.woff2', type:'woff2' }
-        //                 ]
-        //             },
-        //             {
-        //                 style: 'normal',
-        //                 weight: 600,
-        //                 sources: [
-        //                     { src: '@/assets/fonts/geomanist/hinted-Geomanist-Bold.woff', type:'woff' },
-        //                     { src: '@/assets/fonts/geomanist/hinted-Geomanist-Bold.woff2', type:'woff2' }
-        //                 ]
-        //             },
-        //         ]
-        //     },
-        // ],
-
         targetFormats: ['avif', 'webp', 'jpg|jpeg|png|gif'],
         componentAutoImport: false,
         componentPrefix: undefined,
@@ -259,7 +186,8 @@ export default defineNuxtConfig({
     },
 
     routeRules: {
-        // '/estetica-facial/rinoplastia/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 308 } },
+        '/doctor/dr-edgar-carmona/': { redirect: { to: '/equipo-egos/cirugia-estetica/dr-edgar-carmona/', statusCode: 308 } },
+
         '/estetica-facial/rinoplastia-ultrasonica/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 308 } },
         '/blog/page/**': { redirect: { to: '/blog/', statusCode: 308 } },
         '/category/uncategorized/**': { redirect: { to: '/blog/', statusCode: 308 } },
@@ -355,19 +283,20 @@ export default defineNuxtConfig({
         '/donde-estamos/': { redirect: { to: '/nuestras-clinicas/', statusCode: 308 } },
 
         // Redirecciones específicas para cirugía bariátrica y tratamientos para la obesidad
-        '/cirugia-estetica-corporal/cirugia-bariatrica/': { redirect: { to: '/obesidad/sleeve-gastrico/', statusCode: 308 } },
-        '/corporal/cirugia-bariatrica/': { redirect: { to: '/obesidad/sleeve-gastrico/', statusCode: 308 } },
-        '/tratamientos-para-la-obesidad/': { redirect: { to: '/obesidad/', statusCode: 308 } },
-        '/adelgazar-con-tratamiento-obesidad/': { redirect: { to: '/obesidad/', statusCode: 308 } },
-        '/tratamientos-obesidad/': { redirect: { to: '/obesidad/sleeve-gastrico/', statusCode: 308 } },
+        '/obesidad/obesidad/': { redirect: { to: '/perdida-de-peso/', statusCode: 308 } },
+        '/cirugia-estetica-corporal/cirugia-bariatrica/': { redirect: { to: '/perdida-de-peso/sleeve-gastrico/', statusCode: 308 } },
+        '/corporal/cirugia-bariatrica/': { redirect: { to: '/perdida-de-peso/sleeve-gastrico/', statusCode: 308 } },
+        '/tratamientos-para-la-obesidad/': { redirect: { to: '/perdida-de-peso/', statusCode: 308 } },
+        '/adelgazar-con-tratamiento-obesidad/': { redirect: { to: '/perdida-de-peso/', statusCode: 308 } },
+        '/tratamientos-obesidad/': { redirect: { to: '/perdida-de-peso/sleeve-gastrico/', statusCode: 308 } },
         '/tratamientos-obesidad/endomanga-en-madrid/': { redirect: { to: '/promocion/perdida-de-peso-madrid', statusCode: 308 } },
-        '/cirugia-bariatrica-en-madrid/': { redirect: { to: '/obesidad/', statusCode: 308 } },
-        '/tratamientos-obesidad/endomanga-en-barcelona/': { redirect: { to: '/obesidad/endomanga-reduccion-de-estomago-sin-cirugia/', statusCode: 308 } },
-        '/perdida-de-peso-despues-del-verano/': { redirect: { to: '/obesidad/', statusCode: 308 } },
-        '/promocion-verano-mujer/': { redirect: { to: '/obesidad/', statusCode: 308 } },
-        '/dudas-balon-gastrico/': { redirect: { to: '/obesidad/balon-gastrico/', statusCode: 308 } },
-        '/alimentacion-despues-de-la-cirugia-bariatrica/': { redirect: { to: '/obesidad/sleeve-gastrico/', statusCode: 308 } },
-        '/balon-gastrico/': { redirect: { to: '/obesidad/balon-gastrico/', statusCode: 308 } },
+        '/cirugia-bariatrica-en-madrid/': { redirect: { to: '/perdida-de-peso/', statusCode: 308 } },
+        '/tratamientos-obesidad/endomanga-en-barcelona/': { redirect: { to: '/perdida-de-peso/endomanga-reduccion-de-estomago-sin-cirugia/', statusCode: 308 } },
+        '/perdida-de-peso-despues-del-verano/': { redirect: { to: '/perdida-de-peso/', statusCode: 308 } },
+        '/promocion-verano-mujer/': { redirect: { to: '/perdida-de-peso/', statusCode: 308 } },
+        '/dudas-balon-gastrico/': { redirect: { to: '/perdida-de-peso/balon-gastrico/', statusCode: 308 } },
+        '/alimentacion-despues-de-la-cirugia-bariatrica/': { redirect: { to: '/perdida-de-peso/sleeve-gastrico/', statusCode: 308 } },
+        '/balon-gastrico/': { redirect: { to: '/perdida-de-peso/balon-gastrico/', statusCode: 308 } },
 
         // Redirecciones para entradas específicas del blog y categorías
         '/5-beneficios-de-la-blefaroplastia/': { redirect: { to: '/blog/5-beneficios-de-la-blefaroplastia', statusCode: 308 } },
@@ -562,6 +491,8 @@ export default defineNuxtConfig({
                 '/obesidad/',
                 '/politica-de-cookies/',
                 '/politica-de-privacidad/',
+                '/trabaja-con-nosotros/',
+                '/colaboraciones/',
 
                 '/equipo-egos/cirugia-estetica/dr-adriano-hug/',
                 '/equipo-egos/cirugia-estetica/dr-francisco-mora/',
@@ -572,7 +503,7 @@ export default defineNuxtConfig({
                 '/equipo-egos/cirugia-estetica/dr-santiago-elvira/',
                 '/equipo-egos/cirugia-estetica/dr-tiago-gomes/',
                 '/equipo-egos/cirugia-estetica/dra-lorena-vives/',
-                '/equipo-egos/medicina-estetica/tenille-ferreira/',
+                // '/equipo-egos/medicina-estetica/tenille-ferreira/',
                 // '/equipo-egos/unidad-obesidad/dr-carlos-rodriguez/',
                 '/equipo-egos/unidad-obesidad/dr-ricard-sorio/',
 
@@ -669,29 +600,58 @@ export default defineNuxtConfig({
                     rel: 'preconnect',
                     href: 'https://consent.cookiebot.com',
                 },
+                {
+                    rel: 'preconnect',
+                    href: 'https://www.googletagmanager.com',
+                },
+                // {
+                //     rel: 'preconnect',
+                //     href: 'https://connect.facebook.net',
+                // },
                 // {
                 //     rel: 'preconnect',
                 //     href: 'https://static.hsappstatic.net',
                 // },
                 // {
                 //     rel: 'preconnect',
-                //     href: 'https://www.googletagmanager.com',
+                //     href: 'https://js-eu1.hubspot.com',
                 // },
-
                 // {
                 //     rel: 'preconnect',
-                //     href: 'https://connect.facebook.net',
+                //     href: 'https://js-eu1.usemessages.com',
+                // },
+                // {
+                //     rel: 'preconnect',
+                //     href: 'https://js-eu1.hs-analytics.net',
+                // },
+                // {
+                //     rel: 'preconnect',
+                //     href: 'https://js-eu1.hscollectedforms.net',
+                // },
+                // {
+                //     rel: 'preconnect',
+                //     href: 'https://app-eu1.hubspot.com',
+                // },
+                // {
+                //     rel: 'preconnect',
+                //     href: 'https://js-eu1.hs-banner.com',
                 // },
                 // {
                 //     rel: 'preload',
                 //     href: 'https://connect.facebook.net/en_US/fbevents.js',
                 //     as: 'script',
                 // },
+                // {
+                //     rel: 'preload',
+                //     as: 'script',
+                //     href: 'https://consent.cookiebot.com/uc.js?cbid=784911a0-4196-4f66-bcbd-407e3ced0201'
+                // }
+            ],
+            script: [
                 {
-                    rel: 'preload',
-                    as: 'script',
-                    href: 'https://consent.cookiebot.com/uc.js?cbid=784911a0-4196-4f66-bcbd-407e3ced0201'
-                }
+                    src: 'https://consent.cookiebot.com/uc.js?cbid=784911a0-4196-4f66-bcbd-407e3ced0201',
+                    defer: true,
+                },
             ],
         }
     },

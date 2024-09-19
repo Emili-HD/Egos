@@ -22,6 +22,8 @@
 <script setup>
 import { getMenu } from '@/composables/useApi'; 
 
+useGTM()
+
 const { data: principalMenuData, error: principalMenuError } = await useAsyncData(() => getMenu('menu-principal'));
 const { data: imageData, error: imageError } = await useFetch('https://test.clinicaegos.com/wp-json/wp/v2/media/17406');
 

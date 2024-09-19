@@ -2,7 +2,7 @@
    <GoogleMap :api-key="apiKey"
       class="clinicas__egos-map size-full rounded-3xl overflow-hidden 
       [.nuestras-clinicas_&]:grid-rows-2 [.nuestras-clinicas_&]:even:grid-rows-1 [.nuestras-clinicas_&]:col-[2/-2] 
-      lg:[.nuestras-clinicas_&]:col-[2/9] lg:[.nuestras-clinicas_.card:nth-child(even)_&]:col-[9/-2] xl:[.nuestras-clinicas_&]:col-[2/7]"
+      lg:[.nuestras-clinicas_&]:col-[2/9] lg:[.nuestras-clinicas_.card:nth-child(even)_&]:col-[11/-2] xl:[.nuestras-clinicas_&]:col-[2/7]"
       ref="mapRef" :center="centerMap" :zoom="props.zoom" :styles="mapStyles">
       <Marker :options="{ position: centerMap, anchorPoint: 'BOTTOM_CENTER', icon: markerIcon }" />
    </GoogleMap>

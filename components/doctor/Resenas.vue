@@ -1,5 +1,5 @@
 <template>
-   <section v-if="data" class="resenas p-0 mb-0 !bg-transparent" ref="resenas">
+   <div v-if="data" class="resenas p-0 mb-0 !bg-transparent" ref="resenas">
       <div class="resenas__header">
          <h2>Opiniones {{ name }}</h2>
          <ElementsDivider />
@@ -29,7 +29,7 @@
          <h4 class="text-clamp-base font-normal">{{ comment.title.rendered }}</h4>
          <div class="comentario text-clamp-sm" v-html="comment.content.rendered"></div>
       </article>
-   </section>
+   </div>
 </template>
 
 <script setup>
@@ -61,7 +61,7 @@ function calculateWidth(valoracion) {
 <style lang="scss" scoped>
 // .bg-stars{clip-path:url(#SVGID_2_);fill:#CCB780;}
 .resenas {
-   @apply bg-nude-5 min-h-screen/90 flex flex-col items-center;
+   @apply bg-nude-5 pb-20 flex flex-col items-center;
 
    &__header {
       @apply w-4/5 text-center;

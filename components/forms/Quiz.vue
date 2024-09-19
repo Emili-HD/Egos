@@ -514,6 +514,7 @@ onMounted(async () => {
         display: none;
     }
 }
+
 .slide.fade-move {
     @apply !relative;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="footerMenuError || socialMenuError || legalMenuError">
+    <div v-if="footerMenuError || socialMenuError || legalMenuError || trabajaMenuError">
       Error al cargar los menús.
     </div>
    <footer v-else class="footer" >
@@ -7,15 +7,18 @@
          <div class="footer-logo">
             <img loading="lazy" src="~/assets/images/1-navigation/logo-egos.svg" alt="" width="263" height="202" />
          </div>
-         <UiMenu :data="footerMenuData.items" class="menu-footer"/>
+         <UiMenu :data="trabajaMenuData.items" class="menu-trabaja"/>
          <div class="message-footer xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25">
             <div id="block-16" class="footer__block">
                <p class="text-clamp-5xl text-center text-nude-8 font-lora mb-0">Hazlo por ti</p>
-               <p class="text-center text-nude-8"><a href="mailto:info@clinicaegos.com">info@clinicaegos.com</a></p>
+               <p class="text-center text-nude-8 flex justify-center gap-8"><a href="tel:+34722591166 ">+34 722591166</a> <a href="mailto:info@clinicaegos.com">info@clinicaegos.com</a></p>
             </div>
          </div>
-         <UiMenu :data="socialMenuData.items" class="menu-social" :isExternal="true"/>
-         <UiMenu :data="legalMenuData.items" class="menu-legal"/>
+         <UiMenu :data="footerMenuData.items" class="menu-footer"/>
+         <div class="grid grid-rows-[repeat(2,_min-content)] col-span-full max-lg:divide-y divide-white/25">
+            <UiMenu :data="socialMenuData.items" class="menu-social [&>ul]:!flex-row" :isExternal="true"/>
+            <UiMenu :data="legalMenuData.items" class="menu-legal"/>
+         </div>
       </div>
    </footer>
 </template>
@@ -25,42 +28,25 @@ import { useAsyncData } from 'nuxt/app'
 import { getMenu } from '@/composables/useApi'
 
 // Uso de useAsyncData para cargar los menús de manera asincrónica
-const { data: footerMenuData, error: footerMenuError } = await useAsyncData(
-  'menu-footer',
-  async () => {
+// Función reutilizable para cargar menús con manejo de errores
+const fetchMenuData = async (key, menuName) => {
+  return await useAsyncData(key, async () => {
     try {
-      const response = await getMenu('menu-footer');
-      return response || {}; // Asegurarse de que siempre se retorne un objeto
+      const response = await getMenu(menuName);
+      return response || {}; // Retornar un objeto vacío si la respuesta es nula
     } catch (error) {
-      console.error('Error fetching footer menu:', error);
+      console.error(`Error fetching ${menuName} menu:`, error);
       return {}; // En caso de error, retornar un objeto vacío
     }
-  }
-);
-const { data: socialMenuData, error: socialMenuError } = await useAsyncData(
-  'social-menu',
-  async () => {
-    try {
-      const response = await getMenu('social');
-      return response || {}; // Asegurarse de que siempre se retorne un objeto
-    } catch (error) {
-      console.error('Error fetching social menu:', error);
-      return {}; // En caso de error, retornar un objeto vacío
-    }
-  }
-);
-const { data: legalMenuData, error: legalMenuError } = await useAsyncData(
-  'textos-legales',
-  async () => {
-    try {
-      const response = await getMenu('textos-legales');
-      return response || {}; // Asegurarse de que siempre se retorne un objeto
-    } catch (error) {
-      console.error('Error fetching legal menu:', error);
-      return {}; // En caso de error, retornar un objeto vacío
-    }
-  }
-);
+  });
+};
+
+// Utilización de la función reutilizable para diferentes menús
+const { data: footerMenuData, error: footerMenuError } = await fetchMenuData('menu-footer', 'menu-footer');
+const { data: socialMenuData, error: socialMenuError } = await fetchMenuData('social-menu', 'social');
+const { data: legalMenuData, error: legalMenuError } = await fetchMenuData('textos-legales', 'textos-legales');
+const { data: trabajaMenuData, error: trabajaMenuError } = await fetchMenuData('trabaja-menu', 'trabaja');
+
 
 </script>
 

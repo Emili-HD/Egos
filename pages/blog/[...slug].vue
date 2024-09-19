@@ -1,11 +1,11 @@
 <template>
     <main class="site-main" v-if="post">
-        <UiBotonCita :data="post.acf.boton_cita" />
+        <UiBotonCita v-if="post.acf && post.acf.boton_cita" :data="post.acf.boton_cita" />
         <article :class="{ 'fullwidth': post.acf.quiz && post.acf.quiz.posicion === 'top' }">
             <div class="post__header before-gradient mb-12 bg-cover bg-center bg-no-repeat h-[70vh] flex flex-col justify-end items-center overflow-hidden"
                 v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
                 <UiImage :data="post" class="cover absolute" :preload="true" :aria-labelledby="'post-title-' + post.id" />
-                <h1 v-if="isCritical"
+                <h1 
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 text-balance">
                     {{ post.title.rendered }}
                 </h1>
@@ -22,7 +22,7 @@
             <div class="post__header before-gradient bg-cover bg-center bg-no-repeat h-[70vh] xl:h-[50vh] flex flex-col justify-center items-center overflow-hidden p-8"
                 v-if="post.acf && post.acf.quiz && post.acf.quiz.posicion === 'top'">
                 <UiImage :data="post" class="cover absolute" :preload="true" :aria-labelledby="'post-title-' + post.id" />
-                <h1 v-if="isCritical"
+                <h1
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 mt-20 text-balance">
                     {{ post.title.rendered }}</h1>
                 <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50">
@@ -181,11 +181,11 @@
 import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// const { isCritical } = useBoosterCritical();
+
 // Acceder a los parámetros de la ruta
 const router = useRouter();
 const route = useRoute();
-
-const { isCritical } = useBoosterCritical({ critical: true });
 
 // Acceder a gsap y lenis desde el contexto de Nuxt
 const { $gsap: gsap } = useNuxtApp();
