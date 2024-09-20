@@ -1,22 +1,33 @@
 <template>
     <main class="site-main" v-if="clinica" ref="componentRef">
         <UiBotonCita v-if="clinica.acf && clinica.acf.boton_cita" :data="clinica.acf.boton_cita" />
+
+        <!-- Encabezado -->
         <section class="clinica grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
             <Encabezado :data="clinica" />
             <NuxtLazyHydrate when-idle>
+
+                <!-- Clínicas relacionadas -->
                 <RelatedClinicas v-if="clinica.acf && clinica.acf.clinicas_relacionadas" :related="clinica.acf.clinicas_relacionadas" />
+
+                <!-- Intro -->
                 <EntryText :data="clinica" />
+
             </NuxtLazyHydrate>
         </section>
+
+        <!-- Cirugías Relacionadas -->
         <NuxtLazyHydrate when-idle>
             <Categories v-if="clinica.acf && clinica.acf.cirugias_relacionadas && clinica.acf.cirugias_relacionadas.categorias_home" :data="clinica.acf.cirugias_relacionadas"
             sectionId="cirugias" />
         </NuxtLazyHydrate>
         
+        <!-- Servicios de cirugía -->
         <NuxtLazyHydrate when-idle>
             <Acordeon v-if="clinica.acf && clinica.acf.acordeon_cirugias" :data="clinica.acf.acordeon_cirugias" />
         </NuxtLazyHydrate>
 
+        <!-- Formulario Pide Cita -->
         <NuxtLazyHydrate when-idle>
             <FormsPiceCita class="mb-12 xl:mb-32" v-if="clinica.acf && clinica.acf.formulario"
                 :portalId="String(clinica.acf.formulario.portalid)" 
@@ -27,6 +38,7 @@
                 :lng="clinica.acf.lng" />
         </NuxtLazyHydrate>
 
+        <!-- Doctors -->
         <NuxtLazyHydrate when-idle>
             <div v-if="clinica.acf && clinica.acf.dr_comment" class="grid grid-cols-12 sm:mb-20 gap-y-8">
                 <h2 class="col-[2/-2] text-center">Nuestro Equipo</h2>
@@ -64,6 +76,10 @@
             </div>
         </NuxtLazyHydrate>
 
+        <!-- Premios -->
+        <ElementsPremios />
+
+        <!-- Content -->
         <NuxtLazyHydrate when-idle>
             <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
                 <div class="panels w-full" v-if="clinica.acf && clinica.acf.tabs">
@@ -103,6 +119,8 @@
                 </div>
             </div>
         </NuxtLazyHydrate>
+
+        <!-- Google Reviews -->
         <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 xl:px-[calc(100%/16)]">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
             <GoogleReviews :placeid="clinica.acf.placeid"/>

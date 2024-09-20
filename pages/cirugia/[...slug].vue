@@ -49,7 +49,7 @@
 
         <NuxtLazyHydrate when-idle>
             <div v-if="tratamiento.acf.dr_comment" class="grid grid-cols-12 mb-20 gap-y-8">
-                <h2 class="h4 col-[2/-2] lg:text-center">Nuestro Equipo</h2>
+                <h2 class="h4 col-[2/-2] lg:text-center">Nuestro Equipo en {{ tratamiento.acf.anchor }}</h2>
                 <div v-if="doctorsWithComments.length > 0" class="col-[2/-2] grid grid-cols-12 gap-4">
                     <div class="overflow-hidden size-full flex flex-col items-center col-span-full lg:col-span-6 border-y border-y-blue-1/25 pt-4" v-for="({ doctor, comentario }, index) in doctorsWithComments" :key="doctor.ID">
                         <div class="flex flex-col sm:flex-row justify-center items-center gap-x-6 mb-4 text-center">
@@ -79,6 +79,8 @@
                 </div>
             </div>
         </NuxtLazyHydrate>
+
+        <ElementsPremios />
 
         <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 xl:px-[calc(100%/16)] mt-32">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>

@@ -35,7 +35,7 @@
       v-if="contentData && contentData.opciones_listado != 'columnas' && contentData.opciones_listado != 'antesdespues'">
       <h2 class="text-clamp-2xl mb-8">{{ contentData.heading }}</h2>
       <div class="answer p-0">
-         <div class="answer__content" v-html="contentData.content"></div>
+         <div class="answer__content [&>h3]:text-clamp-xl" v-html="contentData.content"></div>
       </div>
       <div v-if="contentData.opciones_listado == 'pestanyes'">
          <CirugiasTabs :contentData="contentData" />

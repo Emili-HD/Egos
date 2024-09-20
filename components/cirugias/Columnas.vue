@@ -21,7 +21,7 @@
         <SwiperSlide class="h-auto box-border pr-0 lg:pr-8">
           <h2 class="h4" v-html="column.list_title"></h2>
           <div
-            class="[&>ul]:list-disc [&>ul>li]:mb-6"
+            class="[&>ul]:list-disc [&>ul>li]:mb-6 [&>h3]:text-clamp-xl"
             v-html="column.content_list"
           ></div>
         </SwiperSlide>

@@ -23,6 +23,9 @@
             <LazyHomeEspecialists />
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
+            <ElementsPremios/>
+        </NuxtLazyHydrate>
+        <NuxtLazyHydrate when-idle>
             <ElementsInfluencers />
         </NuxtLazyHydrate>
     </main>

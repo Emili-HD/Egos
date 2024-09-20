@@ -6,7 +6,7 @@
                     :aria-current="isCurrentPage(item.slug) ? 'page' : undefined">
                     <span>{{ item.title }}</span>
                 </nuxt-link>
-                <nuxt-link v-else :to="item.url" external>
+                <nuxt-link v-else :to="item.url" :target="item.target" external>
                     <div v-if="item.acf">
                         <img :src="item.acf.icon" class="size-8 invert hover:scale-125 transition-transform" :alt="item.post_title" :title="item.post_title">
                     </div>
