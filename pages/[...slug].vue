@@ -24,23 +24,40 @@
 </template>
 
 <script setup>
-// import { watch, onMounted } from 'vue';
-// import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
 import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
 import { getPage } from '@/composables/useApi';
+import { useError } from '#app';
 
 const router = useRouter();
 const route = useRoute();
 
-// Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
 const { data: pages, refresh } = await useAsyncData(
     `pages-${route.params.slug}`,
     async () => {
         try {
             const response = await getPage(route.params.slug);
+
+            // Si no se encuentra la página, lanzamos un error 404
+            if (!response || Object.keys(response).length === 0) {
+                const nuxtError = useError();
+                nuxtError({
+                    statusCode: 404,
+                    statusMessage: 'Página no encontrada'
+                });
+            }
+
+            // Retornar la respuesta si todo está bien
             return response || {}; // Asegurarse de que siempre se retorne un objeto
         } catch (error) {
             console.error(`Error fetching page ${route.params.slug}:`, error);
+
+            // En caso de error del servidor, lanzamos un error 500
+            const nuxtError = useError();
+            nuxtError({
+                statusCode: 500,
+                statusMessage: 'Error en el servidor'
+            });
+
             return {}; // En caso de error, retornar un objeto vacío
         }
     },

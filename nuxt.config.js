@@ -170,6 +170,12 @@ export default defineNuxtConfig({
                 path: '/:parentCategory/:category/:slug',
                 file: '@/pages/cirugia/[...slug].vue',
             });
+
+            pages.push({
+                name: 'doctor',
+                path: '/equipo-egos/:category/:slug',
+                file: '@/pages/equipo-egos/[category]/[...slug].vue', // Ruta dinámica que coincide con el doctor
+            });
         },
     },
 
@@ -423,11 +429,9 @@ export default defineNuxtConfig({
                     '/api/sitemap/pages',
                 ],
                 urls() {
-                    // resolved when the sitemap is shown
                     return ['/']
                 },
                 exclude: [
-                    '/clinica/**',
                     '/**/&amp;',
                     '/**/&',
                     '/inicio',
@@ -465,6 +469,24 @@ export default defineNuxtConfig({
             equipo: {
                 sources: [
                     '/api/sitemap/equipo',
+                ],
+                defaults: { changefreq: 'weekly', priority: 0.7 },
+            },
+            clinicas: {
+                sources: [
+                    '/api/sitemap/clinicas',
+                ],
+                exclude: [
+                    '/clinica/andorra/',
+                    '/clinica/badalona-2/',
+                    '/clinica/barcelona-aribau/',
+                    '/clinica/barcelona-balmes/',
+                    '/clinica/barcelona-gracia/',
+                    '/clinica/egos-madrid/',
+                    '/clinica/granollers/',
+                    '/clinica/lleida/',
+                    '/clinica/egos-girona/',
+                    '/clinica/sabadell/',
                 ],
                 defaults: { changefreq: 'weekly', priority: 0.7 },
             },
@@ -544,6 +566,7 @@ export default defineNuxtConfig({
                 '/estetica-corporal/carboxiterapia/',
                 '/estetica-corporal/mesoterapia/',
                 '/estetica-corporal/presoterapia/',
+                '/estetica-corporal/cintura-de-avispa/',
                 '/estetica-facial/aumento-de-labios/',
                 '/estetica-facial/aumento-de-pomulos/',
                 '/estetica-facial/bichectomia/',
@@ -608,34 +631,34 @@ export default defineNuxtConfig({
                 //     rel: 'preconnect',
                 //     href: 'https://connect.facebook.net',
                 // },
-                // {
-                //     rel: 'preconnect',
-                //     href: 'https://static.hsappstatic.net',
-                // },
-                // {
-                //     rel: 'preconnect',
-                //     href: 'https://js-eu1.hubspot.com',
-                // },
-                // {
-                //     rel: 'preconnect',
-                //     href: 'https://js-eu1.usemessages.com',
-                // },
-                // {
-                //     rel: 'preconnect',
-                //     href: 'https://js-eu1.hs-analytics.net',
-                // },
-                // {
-                //     rel: 'preconnect',
-                //     href: 'https://js-eu1.hscollectedforms.net',
-                // },
-                // {
-                //     rel: 'preconnect',
-                //     href: 'https://app-eu1.hubspot.com',
-                // },
-                // {
-                //     rel: 'preconnect',
-                //     href: 'https://js-eu1.hs-banner.com',
-                // },
+                {
+                    rel: 'preconnect',
+                    href: 'https://static.hsappstatic.net',
+                },
+                {
+                    rel: 'preconnect',
+                    href: 'https://js-eu1.hubspot.com',
+                },
+                {
+                    rel: 'preconnect',
+                    href: 'https://js-eu1.usemessages.com',
+                },
+                {
+                    rel: 'preconnect',
+                    href: 'https://js-eu1.hs-analytics.net',
+                },
+                {
+                    rel: 'preconnect',
+                    href: 'https://js-eu1.hscollectedforms.net',
+                },
+                {
+                    rel: 'preconnect',
+                    href: 'https://app-eu1.hubspot.com',
+                },
+                {
+                    rel: 'preconnect',
+                    href: 'https://js-eu1.hs-banner.com',
+                },
                 // {
                 //     rel: 'preload',
                 //     href: 'https://connect.facebook.net/en_US/fbevents.js',
@@ -647,12 +670,16 @@ export default defineNuxtConfig({
                 //     href: 'https://consent.cookiebot.com/uc.js?cbid=784911a0-4196-4f66-bcbd-407e3ced0201'
                 // }
             ],
-            script: [
-                {
-                    src: 'https://consent.cookiebot.com/uc.js?cbid=784911a0-4196-4f66-bcbd-407e3ced0201',
-                    defer: true,
-                },
-            ],
+        }
+    },
+
+    vite: {
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    api: 'modern-compiler',
+                }
+            }
         }
     },
 

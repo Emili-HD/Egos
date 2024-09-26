@@ -1,13 +1,8 @@
 <template>
-    <!-- <div v-if="!isGraciasPage"
-        class="fixed-button bg-blue-1 fixed top-[calc(100%-4.3rem)] w-full p-4 z-[998] flex flex-row justify-center items-center gap-2 lg:hidden">
-        <ElementsButton class="gold text-clamp-xs uppercase" href="#formulario" >
-            Cita con el cirujano
-        </ElementsButton>
-    </div> -->
     <AppHeader v-if="!isPromotionPage" />
     <NuxtPage />
     <AppFooter />
+    <!-- <div ref="cookieDeclarationRef" /> -->
 </template>
 
 <script setup>
@@ -59,9 +54,14 @@ useHead({
     ].filter(Boolean), // Filtra los valores nulos o undefined
 });
 
+
+const { consentBanner } = useCookiebot({
+    blockingMode: 'auto'
+});
+consentBanner();
+
 onMounted( async () => {
     await nextTick()
-    // consentBanner();
 
     isGraciasPage.value = route.path === '/gracias/';
 

@@ -2,7 +2,7 @@
     <div :class="class">
         <ul>
             <li class="mb-0" v-for="item in data" :key="item.ID">
-                <nuxt-link v-if="!isExternal" :to="resolveUrl(item.slug)"
+                <nuxt-link v-if="!isExternal" :to="`${resolveUrl(item.slug)}/`"
                     :aria-current="isCurrentPage(item.slug) ? 'page' : undefined">
                     <span>{{ item.title }}</span>
                 </nuxt-link>

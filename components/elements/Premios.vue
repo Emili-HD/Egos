@@ -1,5 +1,5 @@
 <template>
-    <div class="premios-container flex items-stretch justify-center flex-wrap gap-4 p-8 lg:px-20 xl:px-32 xl:pb-32">
+    <div id="premios"class="premios-container flex items-stretch justify-center flex-wrap gap-4 p-8 lg:px-20 xl:px-32 xl:pb-32" data-anchor="premios">
         <h2 class="w-full text-center text-clamp-2xl">Empresas que avalan nuestra experiencia y confianza</h2>
         <div v-for="premio in premios" :key="premio.nombre"
             class="premio flex flex-col justify-between items-center p-6 bg-white rounded-xl overflow-hidden w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1rem)] shadow-2xl shadow-black/5">

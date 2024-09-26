@@ -18,14 +18,19 @@ export default defineNuxtPlugin((nuxtApp) => {
         functionality_storage: "denied",
         personalization_storage: "denied",
         security_storage: "granted",
-        wait_for_update: 2000,
+        wait_for_update: 500, // Ajustar a 500ms como sugiere Cookiebot
     });
 
-    // Carga del script de Google Analytics
+    // Establecer configuraciones adicionales según Cookiebot
+    gtag("set", "ads_data_redaction", true);
+    gtag("set", "url_passthrough", false);
+
+    // Carga del script de Google Analytics con `data-cookieconsent="ignore"`
     const loadAnalytics = () => {
         const gtagScript = document.createElement('script');
         gtagScript.defer = true;
         gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-K4KDQ4HZCX';
+        gtagScript.setAttribute('data-cookieconsent', 'ignore'); // Añadir el atributo sugerido
         document.head.appendChild(gtagScript);
 
         gtag('js', new Date());

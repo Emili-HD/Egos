@@ -36,4 +36,8 @@ const props = defineProps({
 .blue {
    @apply bg-blue-6 text-nude-8 text-center uppercase hover:bg-blue-2 transition-colors;
 }
+
+.gold-light {
+   @apply bg-nude-1 text-nude-8 text-center uppercase hover:bg-gold-2 rounded-xl transition-colors;
+}
 </style>

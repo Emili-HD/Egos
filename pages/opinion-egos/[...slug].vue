@@ -38,11 +38,37 @@ const router = useRouter();
 const route = useRoute();
 const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
-// Utiliza `useAsyncData` para cargar la página basada en el slug de la ruta, incluyendo un `uniqueId`
-const { data: casoreal, refresh } = await useAsyncData(`casoreal-${route.params.slug}`, () => {
-    // Asegúrate de pasar un objeto con la propiedad `slug` a `getTestimonios`
-    return getTestimonios({ slug: route.params.slug });
-}, { watch: [() => route.params.slug], initialCache: false });
+// Uso de `useAsyncData` para cargar los datos del caso real
+const { data: casoreal, refresh } = await useAsyncData(
+  `casoreal-${route.params.slug}`,
+  async () => {
+    try {
+      const response = await getTestimonios({ slug: route.params.slug });
+
+      // Si no hay respuesta válida, retornar null
+      if (!response || Object.keys(response).length === 0) {
+        return null;  // Retornar null si no se encuentra el caso real
+      }
+
+      return response;  // Retornar los datos si existen
+    } catch (error) {
+      console.error(`Error fetching casoreal ${route.params.slug}:`, error);
+      return null;  // Retornar null en caso de error
+    }
+  },
+  {
+    watch: [() => route.params.slug],  // Observar el `slug` para recargar los datos
+    initialCache: false  // Deshabilitar la caché inicial
+  }
+);
+
+// Observa el valor de `casoreal` y redirige si es null
+watchEffect(() => {
+  if (!casoreal.value) {
+    // Redirigir a la página de error si no se encuentra el caso real
+    router.push('/error');
+  }
+});
 
 const rawContent = computed(() => casoreal.value.content.rendered)
 

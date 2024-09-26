@@ -246,7 +246,7 @@ const dependentFields = ref([])
 const radioFieldGroups = ref([])
 const currentStep = ref(0)
 
-const loadFormStructure = async () => {
+/* const loadFormStructure = async () => {
     await nextTick()
     try {
         const { data, error } = await useFetch(`/api/getHubSpotForm`, {
@@ -283,9 +283,9 @@ const loadFormStructure = async () => {
     } finally {
         isLoading.value = false
     }
-}
+} */
 
-/* const loadFormStructure = async () => {
+const loadFormStructure = async () => {
     await nextTick(); // Asegura que los cambios de DOM estén aplicados antes de continuar.
     try {
         // Usar $fetch en lugar de useFetch
@@ -324,7 +324,7 @@ const loadFormStructure = async () => {
         // Asegurarse de que el estado de carga se desactiva
         isLoading.value = false;
     }
-}; */
+};
 
 const handleSubmit = async () => {
     await nextTick()

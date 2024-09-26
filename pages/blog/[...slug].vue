@@ -53,7 +53,7 @@
             </div>
             <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
                 <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-3xl">
-                    <h4 class="font-lora nav-content-title h6 bg-nude-4 p-4 rounded-xl">Tabla de contenidos</h4>
+                    <h2 class="h4 font-lora nav-content-title h6 bg-nude-4 p-4 rounded-xl">Tabla de contenidos</h2>
                     <ul class="pl-6 list-decimal mb-10">
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
                             v-for="(content, index) in post.acf.areas_de_contenido"><span>{{
@@ -175,13 +175,9 @@
 </template>
 
 <script setup>
-// import { onMounted, watch, ref, watchEffect } from 'vue';
-// import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
-// import { getPosts, getEquipo } from '@/composables/useApi';
 import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// const { isCritical } = useBoosterCritical();
+import { useError } from '#app';
 
 // Acceder a los parámetros de la ruta
 const router = useRouter();

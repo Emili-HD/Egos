@@ -1,5 +1,6 @@
 <template>
-    <main class="site-main doctor bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0">
+    <main class="site-main doctor bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0"
+        v-if="doctor && Object.keys(doctor).length > 0 && isCategoryValid">
         <UiBotonCita v-if="doctor && doctor.acf && doctor.acf.boton_cita" :data="doctor.acf.boton_cita" />
         <div class="doctor__content col-[1/-1] lg:col-span-11 grid grid-cols-subgrid w-fit min-h-fit">
             <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
@@ -18,7 +19,7 @@
                 <div class="[&p]:font-nunito" v-html="doctor.content.rendered"></div>
             </section>
             <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max mx-[calc(100% / 16)]">
-                <LazyDoctorResenas :data="reviews" :name="doctor.title.rendered" class=""/>
+                <LazyDoctorResenas :data="reviews" :name="doctor.title.rendered" class="" />
                 <NuxtLazyHydrate when-idle>
                     <LazyElementsReviews :ruta="route.params.slug[1]" />
                 </NuxtLazyHydrate>
@@ -34,19 +35,81 @@
 </template>
 
 <script setup>
+import { useError } from '#app';
 import { watch, onMounted, nextTick } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
-import { getEquipo, getReviews } from '@/composables/useApi';
+import { getEquipo, getReviews, getEspecialidades } from '@/composables/useApi';
 import { useScrollStore } from '@/stores/scrollStore';
 
 
 const router = useRouter();
 const route = useRoute();
+const isLoadingCategory = ref(true);  // Bandera para saber si la categoría se está verificando
+const isCategoryValid = ref(false);
+
 const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
-const { data: doctor, refresh: refreshDoctor } = await useAsyncData(`doctor-${route.params.slug}`, () => {
-    return getEquipo({ slug: route.params.slug });
-}, { watch: [() => route.params.slug] });
+// Verificar la existencia de la categoría en las especialidades
+const { data: especialidades } = await useAsyncData(
+    `especialidades`,
+    async () => {
+        return await getEspecialidades(); // Llama a la API para obtener especialidades
+    }
+);
+
+console.log('Category:', route.params.category); // Esto debe devolver "cirugia-estetica"
+console.log('Slug:', route.params.slug); 
+
+// Una vez cargadas las especialidades, verificar si la categoría es válida
+watchEffect(() => {
+  if (especialidades.value) {
+    // Comparamos el slug de la categoría con las especialidades
+    const categoriaExiste = especialidades.value.some(
+      (especialidad) => especialidad.slug === route.params.category
+    );
+
+    isCategoryValid.value = categoriaExiste;  // Establecemos si la categoría es válida o no
+    isLoadingCategory.value = false;  // Terminamos de verificar la categoría
+    
+    if (!isCategoryValid.value) {
+      router.push('/error');  // Redirigir si la categoría no es válida
+    }
+  }
+});
+
+// Uso de `useAsyncData` para cargar los datos del doctor solo si la categoría es válida
+const { data: doctor, refresh: refreshDoctor } = await useAsyncData(
+  `doctor-${route.params.slug}`,
+  async () => {
+    if (!isCategoryValid.value) {
+      return null; // Si la categoría no es válida, no cargar el doctor
+    }
+
+    try {
+      const response = await getEquipo({ slug: route.params.slug });
+
+      // Si no hay respuesta válida, retornar null
+      if (!response || Object.keys(response).length === 0) {
+        return null;
+      }
+
+      return response;
+    } catch (error) {
+      console.error(`Error fetching doctor ${route.params.slug}:`, error);
+      return null; // Retornar null en caso de error
+    }
+  },
+  {
+    watch: [() => isCategoryValid.value]  // Solo recargar los datos cuando la categoría sea válida
+  }
+);
+
+// Observa el valor de `doctor`, y redirige si es inválido
+watchEffect(() => {
+  if (!isLoadingCategory.value && !doctor.value) {
+    router.push('/error');  // Redirigir si el doctor no existe
+  }
+});
 
 const { data: reviews, refresh: refreshReviews } = useAsyncData(`reviews-${route.params.slug[1]}`, () => getReviews({ slug: route.params.slug[1] }), {
     watch: [() => route.params.slug[1]]
@@ -57,11 +120,12 @@ watch(
     () => route.params.slug,
     async (newSlug, oldSlug) => {
         if (newSlug !== oldSlug) {
-            await Promise.all([refreshDoctor(), refreshReviews()]);
+            await Promise.all([refreshReviews()]);
         }
     },
     { immediate: true }
 );
+
 
 const stickyForm = async () => {
     gsap.registerPlugin(ScrollTrigger)

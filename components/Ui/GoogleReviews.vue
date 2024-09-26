@@ -44,8 +44,8 @@
                 }"
                 :breakpoints="{
                     '768': {
-                    slidesPerView: 2,
-                    spaceBetween: 40,
+                        slidesPerView: 2,
+                        spaceBetween: 40,
                     }
                 }"
                 :modules="[SwiperPagination, SwiperNavigation]"
@@ -126,7 +126,7 @@ onMounted(async () => {
     try {
 
         const response = await $fetch(`/api/get-google-reviews?placeId=${props.placeid}`)
-        console.log('Respuesta completa del servidor:', response)
+        // console.log('Respuesta completa del servidor:', response)
 
         if (response.error) {
             hasError.value = true
@@ -152,16 +152,6 @@ onMounted(async () => {
 .text-wrapper p {
     transition: max-height 1s ease;
 }
-
-/* .ellipsis {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: max-height 1s ease;
-} */
 
 .swiper {
     @apply list-none lg:px-6 pb-16 flex flex-col lg:flex-row gap-6 w-full lg:w-5/6;

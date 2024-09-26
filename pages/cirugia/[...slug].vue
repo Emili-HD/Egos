@@ -1,17 +1,20 @@
 <template>
     <main class="site-main" v-if="tratamiento" ref="componentRef">
-        <UiBotonCita v-if="tratamiento && tratamiento.acf && tratamiento.acf.boton_cita" :data="tratamiento.acf.boton_cita" />
+        <UiBotonCita v-if="tratamiento && tratamiento.acf && tratamiento.acf.boton_cita"
+            :data="tratamiento.acf.boton_cita" />
         <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
             <CirugiasEncabezado :data="tratamiento" />
             <NuxtLazyHydrate when-idle>
                 <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
+                <ElementsAnchors v-if="tratamiento && tratamiento.acf && tratamiento.acf.tabs"
+                    :data="tratamiento.acf.tabs" :doctors="tratamiento.acf" class="col-[1/-1] sm:col-[2/-2]" />
                 <CirugiasEntryText :data="tratamiento" />
             </NuxtLazyHydrate>
 
             <NuxtLazyHydrate when-idle>
                 <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
                     <div class="panels w-full">
-                        <section :id="processAncla(content.ancla)"
+                        <section :id="processAncla(content.ancla)" :data-anchor="processAncla(content.ancla)"
                             class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8"
                             :class="content.fondo, content.opciones_listado" v-for="content in tratamiento.acf.tabs">
                             <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
@@ -19,6 +22,11 @@
                             <CirugiasColumnas :contentData="content" />
                             <LandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
                         </section>
+
+                        <ClinicasRelacionadas v-if="tratamiento.acf && tratamiento.acf.clinicas_relacionadas"
+                            :data="tratamiento.acf.clinicas_relacionadas"
+                            :titulo="tratamiento.acf.titulo_cirugias_relacionadas"
+                            :texto="tratamiento.acf.texto_cirugias_relacionadas" class="col-[1/-1]" />
 
                         <CirugiasFaqs :faqsData="tratamiento.acf" />
                     </div>
@@ -48,13 +56,17 @@
         </NuxtLazyHydrate>
 
         <NuxtLazyHydrate when-idle>
-            <div v-if="tratamiento.acf.dr_comment" class="grid grid-cols-12 mb-20 gap-y-8">
+            <div v-if="tratamiento.acf.dr_comment" id="doctores" class="grid grid-cols-12 mb-20 gap-y-8"
+                data-anchor="doctores">
                 <h2 class="h4 col-[2/-2] lg:text-center">Nuestro Equipo en {{ tratamiento.acf.anchor }}</h2>
                 <div v-if="doctorsWithComments.length > 0" class="col-[2/-2] grid grid-cols-12 gap-4">
-                    <div class="overflow-hidden size-full flex flex-col items-center col-span-full lg:col-span-6 border-y border-y-blue-1/25 pt-4" v-for="({ doctor, comentario }, index) in doctorsWithComments" :key="doctor.ID">
+                    <div class="overflow-hidden size-full flex flex-col items-center col-span-full lg:col-span-6 border-y border-y-blue-1/25 pt-4"
+                        v-for="({ doctor, comentario }, index) in doctorsWithComments" :key="doctor.ID">
                         <div class="flex flex-col sm:flex-row justify-center items-center gap-x-6 mb-4 text-center">
-                            <div class="w-full min-h-56 mb-8 sm:w-80 lg:w-64 lg:aspect-square rounded-lg overflow-hidden">
-                                <img loading="lazy" :src="doctor.featured_image" :alt="doctor.post_title" class="cover absolute object-center h-full max-w-none left-1/2 -translate-x-1/2"
+                            <div
+                                class="w-full min-h-56 mb-8 sm:w-80 lg:w-64 lg:aspect-square rounded-lg overflow-hidden">
+                                <img loading="lazy" :src="doctor.featured_image" :alt="doctor.post_title"
+                                    class="cover absolute object-center h-full max-w-none left-1/2 -translate-x-1/2"
                                     :aria-labelledby="'doctor-title-' + doctor.ID" />
                             </div>
                             <div class="w-full" v-if="doctor.post_title">
@@ -67,7 +79,8 @@
                                     {{ comentario }}
                                 </p>
                                 <!-- Botón de enlace a la página del doctor -->
-                                <UiButton :to="relativeDoctorLink(doctor.permalink)" class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1 w-fit h-fit">
+                                <UiButton :to="relativeDoctorLink(doctor.permalink)"
+                                    class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1 w-fit h-fit">
                                     más información
                                 </UiButton>
                             </div>
@@ -82,9 +95,11 @@
 
         <ElementsPremios />
 
-        <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 xl:px-[calc(100%/16)] mt-32">
+        <section id="opiniones"
+            class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 xl:px-[calc(100%/16)] mt-32"
+            data-anchor="opiniones">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
-            <GoogleReviews :placeid="tratamiento.acf.placeid"/>
+            <GoogleReviews :placeid="tratamiento.acf.placeid" />
         </section>
 
         <NuxtLazyHydrate when-idle>
@@ -95,9 +110,7 @@
 </template>
 
 <script setup>
-// import { ref, onMounted, nextTick, watch } from 'vue'
-// import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
-// import { getTratamiento, egosSettings } from '@/composables/useApi';
+import { useError } from '#app';
 import { useYoastHead } from '@/composables/useYoast';
 import { useTratamientoData } from '@/composables/useTratamientoData';
 import { useFaqJsonLd } from '@/composables/useFaqJsonLd';
@@ -107,10 +120,11 @@ import { useDoctorsJson } from '~/composables/useDoctorsJson';
 import { useBusinessData } from '@/composables/useBusinessData';
 import { getClinicas } from '@/composables/useApi'
 import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
+import ClinicasRelacionadas from '~/components/cirugias/ClinicasRelacionadas.vue';
 
+const { $gsap: gsap } = useNuxtApp();
 const router = useRouter();
 const route = useRoute();
-const { $gsap: gsap } = useNuxtApp();
 
 // Props
 const props = defineProps({
@@ -132,9 +146,28 @@ const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(
     async () => {
         try {
             const response = await getTratamiento({ slug: route.params.slug });
+
+            // Si no se encuentra el tratamiento, lanzamos un error 404
+            if (!response || Object.keys(response).length === 0) {
+                const nuxtError = useError();
+                nuxtError({
+                    statusCode: 404,
+                    statusMessage: 'Tratamiento no encontrado'
+                });
+            }
+
+            // Retornar la respuesta si todo está bien
             return response || {}; // Asegurarse de que siempre se retorne un objeto
         } catch (error) {
             console.error(`Error fetching tratamiento ${route.params.slug}:`, error);
+
+            // En caso de error, también podrías considerar mostrar un error genérico o 404
+            const nuxtError = useError();
+            nuxtError({
+                statusCode: 500,
+                statusMessage: 'Error en el servidor'
+            });
+
             return {}; // En caso de error, retornar un objeto vacío
         }
     },
@@ -478,5 +511,14 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-// estilo vacío
+#faqs,
+#presupuesto,
+#relacionadas,
+#doctores,
+#premios,
+#opiniones,
+#posts,
+[data-anchor] {
+    scroll-margin-top: 10rem;
+}
 </style>
