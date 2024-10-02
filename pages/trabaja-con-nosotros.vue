@@ -6,8 +6,9 @@
         </div>
         <div v-if="page.acf" id="formulario"
             class="form__wrapper w-full bg-blue-2 p-6 xl:pt-24 col-2 flex flex-col justify-center items-stretch">
-            <FormsCirugia class="!w-[max(360px,_35vw)] m-auto" :identificador="'topPage'" :portalId="String(page.acf.portalid)"
-                :formId="page.acf.formid" />
+            <!-- <FormsCirugia class="!w-[max(360px,_35vw)] m-auto" :identificador="'topPage'" :portalId="String(page.acf.portalid)"
+                :formId="page.acf.formid" /> -->
+            <FormsSmtpForm />
         </div>
     </section>
 </template>

@@ -40,4 +40,8 @@ const props = defineProps({
 .gold-light {
    @apply bg-nude-1 text-nude-8 text-center uppercase hover:bg-gold-2 rounded-xl transition-colors;
 }
+
+.submit {
+   @apply bg-gold-2 text-nude-8 text-center uppercase hover:bg-gold-1 hover:text-blue-1 rounded-xl transition-colors duration-500 block w-full;
+}
 </style>

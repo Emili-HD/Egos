@@ -47,6 +47,7 @@ export default defineNuxtConfig({
         'nuxt-swiper',
         "@ambitiondev/nuxt-cookiebot",
         "@nuxt/scripts",
+        'nuxt-mail',
         ['@nuxtjs/google-fonts', {
             families: {
                 Nunito: true,
@@ -55,12 +56,15 @@ export default defineNuxtConfig({
         }]
     ],
 
-    // scripts: {
-    //     registry: {
-    //         // loads the script
-    //         googleMaps: true,
-    //     },
-    // },
+    mail: {
+        message: {
+            to: 'web@clinicaegos.com',
+        },
+        smtp: {
+            host: "mail.clinicaegos.com",
+            port: 465,
+        },
+    },
 
     googleFonts: {
         base64: true
