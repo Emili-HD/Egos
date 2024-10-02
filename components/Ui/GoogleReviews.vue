@@ -30,7 +30,7 @@
                     <p class="text-xs font-light mb-0 text-center">Valoración media: {{ averageRating }} / 5</p>
                 </div>
                 <span class="nowrap">En base a <strong>{{ totalReviews }} reseñas</strong></span>
-                <img src="~/assets/images/icons/google-logo.svg" alt="Logo Google" class="w-24" />
+                <img loading="lazy" src="~/assets/images/icons/google-logo.svg" alt="Logo Google" class="w-24" />
             </div>
 
             <!-- Mostrar reseñas filtradas -->

@@ -2,7 +2,7 @@
     <AppHeader v-if="!isPromotionPage" />
     <NuxtPage />
     <AppFooter />
-    <!-- <div ref="cookieDeclarationRef" /> -->
+    <div ref="consentBannerRef" />
 </template>
 
 <script setup>
@@ -54,14 +54,16 @@ useHead({
     ].filter(Boolean), // Filtra los valores nulos o undefined
 });
 
+const consentBannerRef = ref(null)
 
 const { consentBanner } = useCookiebot({
     blockingMode: 'auto'
 });
-consentBanner();
 
 onMounted( async () => {
     await nextTick()
+
+    consentBanner(consentBannerRef);
 
     isGraciasPage.value = route.path === '/gracias/';
 

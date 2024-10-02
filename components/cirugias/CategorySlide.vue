@@ -1,10 +1,9 @@
 <template>
-  <div v-if="pending">Cargando...</div>
-  <div v-else-if="error">Error al cargar los datos: {{ error }}</div>
+  <div v-if="error">Error al cargar los datos: {{ error }}</div>
   <div v-else class="card bg-nude-7 rounded-3xl p-2 flex flex-col justify-between items-center" :class="props.classes">
       <nuxt-link :to="processedLink" class="w-full min-h-full block " aria-label="Ver detalles de cirugía" v-if="category">
           <picture class="group aspect-square block rounded-2xl overflow-hidden mb-2">
-              <UiImage :data="category" class="scale-effect" />
+              <UiImage :data="category" class="scale-effect" loading="lazy" />
           </picture>
           <div class="category__title flex flex-col justify-end items-center gap-2 p-4 relative w-full m-auto">
               <h3 v-if="category.title && category.title.rendered" class="h6 text-center text-clamp-base text-balance font-semibold mb-0 font-lora">{{ category.title.rendered }}</h3>
@@ -42,6 +41,6 @@ const processedLink = computed(() => {
   return ''; // Devuelve una ruta vacía si no hay URL
 });
 
-const { data: category, error, pending } = await useAsyncData(`tratamiento-${props.categoryId}`, () => getTratamiento({ id: props.categoryId }));
+const { data: category, error } = await useAsyncData(`tratamiento-${props.categoryId}`, () => getTratamiento({ id: props.categoryId }));
 
 </script>

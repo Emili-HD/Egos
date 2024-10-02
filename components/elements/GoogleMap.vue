@@ -1,50 +1,55 @@
 <template>
     <ClientOnly>
-        <GoogleMap :api-key="apiKey" class="size-full [&>.gmnoprint]:!hidden" ref="mapRef" :center="centerMap"
-            :zoom="zoom" :styles="mapStyles">
-            <CustomControl position="LEFT_CENTER" class="clinics ">
-                <ul class="clinics p-8 hidden lg:flex flex-col list-none">
-                    <li v-for="location in locations" :key="location.id" class="mb-1">
-                        <button
-                            class="custom-btn m-0 py-1 px-3 font-light text-sm appearance-none cursor-pointer select-none text-nude-8 bg-blue-1 rounded-md"
-                            @click="() => updateMapAndContent(location.id)" v-html="location.title.rendered"></button>
-                    </li>
-                </ul>
-            </CustomControl>
-            <Marker v-for="(location, i) in locations" :options="{
-                position: { lat: location.acf.lat, lng: location.acf.lng },
-                anchorPoint: 'BOTTOM_CENTER',
-                icon: markerIcon,
-            }" :key="i" />
-        </GoogleMap>
+        <div v-if="isMapReady" class="size-full">
+            <GoogleMap :api-key="apiKey" class="size-full [&>.gmnoprint]:!hidden" ref="mapRef" :center="centerMap"
+                :zoom="zoom" :styles="mapStyles">
+                <CustomControl position="LEFT_CENTER" class="clinics ">
+                    <ul class="clinics p-8 hidden lg:flex flex-col list-none">
+                        <li v-for="location in locations" :key="location.id" class="mb-1">
+                            <button
+                                class="custom-btn m-0 py-1 px-3 font-light text-sm appearance-none cursor-pointer select-none text-nude-8 bg-blue-1 rounded-md"
+                                @click="() => updateMapAndContent(location.id)" v-html="location.title.rendered"></button>
+                        </li>
+                    </ul>
+                </CustomControl>
+                <Marker v-for="(location, i) in locations" :options="{
+                    position: { lat: location.acf.lat, lng: location.acf.lng },
+                    anchorPoint: 'BOTTOM_CENTER',
+                    icon: markerIcon,
+                }" :key="i" />
+            </GoogleMap>
+        </div>
     </ClientOnly>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
 import { getClinicas } from '@/composables/useApi'
-const apiKey = useRuntimeConfig().public.googleMapsApiKey
 
 import { GoogleMap, Marker, CustomControl } from 'vue3-google-map'
 
+const { googleMaps } = useRuntimeConfig().public;
+const apiKey = googleMaps.apiKey;
+
+
 // Definir props
 const props = defineProps({
-  related: {
-    type: Array,
-    default: () => null
-  },
-  lat: {
-    type: Number,
-    default: null
-  },
-  lng: {
-    type: Number,
-    default: null
-  },
-  zoom: {
-    type: Number,
-    default: null
-  }
+    related: {
+        type: Array,
+        default: () => null
+    },
+    lat: {
+        type: Number,
+        default: null
+    },
+    lng: {
+        type: Number,
+        default: null
+    },
+    zoom: {
+        type: Number,
+        default: null
+    }
 })
 // console.log('Cirugias relacionadas', props.related);
 
@@ -70,32 +75,12 @@ const defaultZoom = 7.25
 
 // Inicializar `centerMap` y `zoom` usando las props si están definidas, sino usar los valores por defecto
 const centerMap = ref({
-  lat: props.lat !== null ? props.lat : defaultCenter.lat,
-  lng: props.lng !== null ? props.lng : defaultCenter.lng
+    lat: props.lat !== null ? props.lat : defaultCenter.lat,
+    lng: props.lng !== null ? props.lng : defaultCenter.lng
 })
 
 const zoom = ref(props.zoom !== null ? props.zoom : defaultZoom)
 
-// Métodos
-const updateMapAndContent = (locationId) => {
-    // Buscar por el ID numérico del objeto, que es location.id
-    const location = locations.value.find((loc) => loc.id === locationId)
-    if (location) {
-        centerMap.value = { lat: location.acf.lat, lng: location.acf.lng }
-        zoom.value = 15
-        emit('update-content', location.content.rendered)
-    }
-}
-
-// Verificar si `props.related` tiene contenido y pasar los IDs si están presentes
-const { data: locations, error: locationsError } = await useAsyncData('locations', async () => {
-    const response = await getClinicas({
-        ids: props.related && props.related.length > 0 ? props.related : null
-    });
-    return response.filter(
-        clinica => clinica.acf && clinica.acf.destacar_post && clinica.acf.destacar_post.includes('Destacado')
-    );
-});
 
 // Diseño del mapa
 const mapStyles = [
@@ -445,6 +430,35 @@ const mapStyles = [
         ],
     },
 ]
+
+// Bandera para cargar el mapa solo cuando esté listo
+const isMapReady = ref(false)
+
+onMounted(() => {
+  // Simular un retardo en la carga si es necesario, pero ahora se utiliza el `defer` para la carga diferida.
+  isMapReady.value = true
+})
+
+// Métodos
+const updateMapAndContent = (locationId) => {
+    // Buscar por el ID numérico del objeto, que es location.id
+    const location = locations.value.find((loc) => loc.id === locationId)
+    if (location) {
+        centerMap.value = { lat: location.acf.lat, lng: location.acf.lng }
+        zoom.value = 15
+        emit('update-content', location.content.rendered)
+    }
+}
+
+// Verificar si `props.related` tiene contenido y pasar los IDs si están presentes
+const { data: locations, error: locationsError } = await useAsyncData('locations', async () => {
+    const response = await getClinicas({
+        ids: props.related && props.related.length > 0 ? props.related : null
+    });
+    return response.filter(
+        clinica => clinica.acf && clinica.acf.destacar_post && clinica.acf.destacar_post.includes('Destacado')
+    );
+});
 
 </script>
 

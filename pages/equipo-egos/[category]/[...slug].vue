@@ -19,16 +19,19 @@
                 <div class="[&p]:font-nunito" v-html="doctor.content.rendered"></div>
             </section>
             <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max mx-[calc(100% / 16)]">
+                <DoctorCirugiasRelacionadas :treatmentsData="doctor.acf"
+                    :relatedId="doctor.acf.cirugias_relacionadas" />
+            </section>
+            <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max mx-[calc(100% / 16)]">
                 <LazyDoctorResenas :data="reviews" :name="doctor.title.rendered" class="" />
                 <NuxtLazyHydrate when-idle>
                     <LazyElementsReviews :ruta="route.params.slug[1]" />
                 </NuxtLazyHydrate>
             </section>
         </div>
-        <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20"
-            v-if="doctor && doctor.acf">
+        <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20">
             <!-- <FormsCirugia :identificador="'formulario'" :portalId="String(doctor.acf.portalid)" :formId="doctor.acf.formid" /> -->
-            <FormsCustomForm :identificador="'formulario'" :portalId="String(doctor.acf.portalid)"
+            <FormsCustomForm v-if="doctor && doctor.acf" :identificador="'formulario'" :portalId="String(doctor.acf.portalid)"
                 :formId="doctor.acf.formid" />
         </aside>
     </main>
@@ -57,63 +60,67 @@ const { data: especialidades } = await useAsyncData(
     }
 );
 
-console.log('Category:', route.params.category); // Esto debe devolver "cirugia-estetica"
-console.log('Slug:', route.params.slug); 
+// console.log('Category:', route.params.category); // Esto debe devolver "cirugia-estetica"
+// console.log('Slug:', route.params.slug);
 
 // Una vez cargadas las especialidades, verificar si la categoría es válida
 watchEffect(() => {
-  if (especialidades.value) {
-    // Comparamos el slug de la categoría con las especialidades
-    const categoriaExiste = especialidades.value.some(
-      (especialidad) => especialidad.slug === route.params.category
-    );
+    if (especialidades.value) {
+        // Comparamos el slug de la categoría con las especialidades
+        const categoriaExiste = especialidades.value.some(
+            (especialidad) => especialidad.slug === route.params.category
+        );
 
-    isCategoryValid.value = categoriaExiste;  // Establecemos si la categoría es válida o no
-    isLoadingCategory.value = false;  // Terminamos de verificar la categoría
-    
-    if (!isCategoryValid.value) {
-      router.push('/error');  // Redirigir si la categoría no es válida
+        isCategoryValid.value = categoriaExiste;  // Establecemos si la categoría es válida o no
+        isLoadingCategory.value = false;  // Terminamos de verificar la categoría
+
+        if (!isCategoryValid.value) {
+            router.push('/error');  // Redirigir si la categoría no es válida
+        }
     }
-  }
 });
 
 // Uso de `useAsyncData` para cargar los datos del doctor solo si la categoría es válida
 const { data: doctor, refresh: refreshDoctor } = await useAsyncData(
-  `doctor-${route.params.slug}`,
-  async () => {
-    if (!isCategoryValid.value) {
-      return null; // Si la categoría no es válida, no cargar el doctor
+    `doctor-${route.params.slug}`,
+    async () => {
+        if (!isCategoryValid.value) {
+            return null; // Si la categoría no es válida, no cargar el doctor
+        }
+
+        try {
+            const response = await getEquipo({ slug: route.params.slug });
+
+            // Si no hay respuesta válida, retornar null
+            if (!response || Object.keys(response).length === 0) {
+                return null;
+            }
+
+            return response;
+        } catch (error) {
+            console.error(`Error fetching doctor ${route.params.slug}:`, error);
+            return null; // Retornar null en caso de error
+        }
+    },
+    {
+        watch: [() => isCategoryValid.value]  // Solo recargar los datos cuando la categoría sea válida
     }
-
-    try {
-      const response = await getEquipo({ slug: route.params.slug });
-
-      // Si no hay respuesta válida, retornar null
-      if (!response || Object.keys(response).length === 0) {
-        return null;
-      }
-
-      return response;
-    } catch (error) {
-      console.error(`Error fetching doctor ${route.params.slug}:`, error);
-      return null; // Retornar null en caso de error
-    }
-  },
-  {
-    watch: [() => isCategoryValid.value]  // Solo recargar los datos cuando la categoría sea válida
-  }
+    
 );
+// console.log('Doctor:', doctor.value);
 
 // Observa el valor de `doctor`, y redirige si es inválido
 watchEffect(() => {
-  if (!isLoadingCategory.value && !doctor.value) {
-    router.push('/error');  // Redirigir si el doctor no existe
-  }
+    if (!isLoadingCategory.value && !doctor.value) {
+        router.push('/error');  // Redirigir si el doctor no existe
+    }
 });
 
-const { data: reviews, refresh: refreshReviews } = useAsyncData(`reviews-${route.params.slug[1]}`, () => getReviews({ slug: route.params.slug[1] }), {
+const { data: reviews, refresh: refreshReviews } = useAsyncData(`reviews-${route.params.slug[1]}`, () => getReviews({ page: 1, per_page: 100, slug: route.params.slug }), {
     watch: [() => route.params.slug[1]]
 });
+// console.log('Reviews:', route.params.slug);
+
 
 
 watch(

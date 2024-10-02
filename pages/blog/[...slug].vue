@@ -56,15 +56,17 @@
                     <h2 class="h4 font-lora nav-content-title h6 bg-nude-4 p-4 rounded-xl">Tabla de contenidos</h2>
                     <ul class="pl-6 list-decimal mb-10">
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                            v-for="(content, index) in post.acf.areas_de_contenido"><span>{{
-                                content.titulo_area }}</span>
+                            v-for="(content, index) in post.acf.areas_de_contenido">
+                            <NuxtLink :to="`#area-${index}`"><span>{{ content.titulo_area }}</span></NuxtLink>
                         </li>
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                            v-if="post.acf.post_description.titulo_recomendaciones"><span
-                                v-html="post.acf.post_description.titulo_recomendaciones"></span></li>
+                            v-if="post.acf.post_description.titulo_recomendaciones">
+                            <NuxtLink to="#recomendadiones"><span v-html="post.acf.post_description.titulo_recomendaciones"></span></NuxtLink>
+                        </li>
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                            v-if="post.acf.post_faqs.titulo_faqs"><span
-                                v-html="post.acf.post_faqs.titulo_faqs"></span></li>
+                            v-if="post.acf.post_faqs.titulo_faqs">
+                            <NuxtLink to="#faqs"><span v-html="post.acf.post_faqs.titulo_faqs"></span></NuxtLink>
+                        </li>
                     </ul>
 
                     <div v-if="post.acf.doctores_relacionados">
@@ -93,7 +95,7 @@
                     <div v-if="post.content.rendered" class="[&_h2]:font-lora [&_p]:font-nunito post__content-text pb-4" v-html="post.content.rendered">
                     </div>
                     <div class="post__content-text pb-4" v-for="(content, index) in post.acf.areas_de_contenido"
-                        :id="`area-${index}`">
+                        :id="`area-${index}`" >
                         <h2 class="area-title font-lora">{{ content.titulo_area }}</h2>
                         <div class="[&_p]:font-nunito" v-html="content.contenido_area"></div>
                         <div class="post__content-image" v-if="content.imagen_area.url">
@@ -333,7 +335,7 @@ useHead({
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     .arrows {
         z-index: 99;
     }
@@ -372,13 +374,21 @@ useHead({
         @apply rounded-xl overflow-hidden;
     }
     
-    .post__content-text {
+    :deep(.post__content-text) {
+        scroll-margin-top: 7.5rem;
+        @apply p-10 mb-8 rounded-xl bg-white;
+
+        &:nth-child(1) {
+            @apply p-0 mb-8 rounded-xl bg-transparent;
+            p { @apply text-clamp-base; }
+        }
+
         a {
             @apply font-medium text-blue-6;
         }
 
         h3 {
-            @apply text-clamp-lg font-normal;
+            @apply text-clamp-lg font-semibold font-nunito mt-6;
         }
         
         iframe {
@@ -395,9 +405,13 @@ useHead({
     }
 
     
-    .post__content-text .faqs .accordion__heading,
-    .post__content-text .faqs .accordion__list {
-        @apply col-span-full;
+    .post__content-text.faqs {
+        @apply bg-transparent p-0 mt-12;
+
+        & .accordion__heading,
+        & .accordion__list {
+            @apply col-span-full;
+        }
     }
 
 

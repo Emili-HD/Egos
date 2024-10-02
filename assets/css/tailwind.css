@@ -19,14 +19,9 @@
     a {
         @apply font-nunito font-normal;
     }
-    main  a {
-        @apply font-nunito font-semibold underline text-blue-6;
+    .post__content  a {
+        @apply font-nunito font-semibold underline text-gold-3;
     }
-
-    main .card>a {
-        @apply font-nunito font-normal text-inherit;
-        text-decoration: none
-     }
     ul {
         @apply list-disc;
     }

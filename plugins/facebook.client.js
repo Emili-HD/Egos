@@ -38,7 +38,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         };
 
         // Agregar listeners para detectar interacción del usuario (scroll o touch)
-        window.addEventListener('scroll', handleUserInteraction, { once: true });
+        // window.addEventListener('scroll', handleUserInteraction, { once: true });
+        document.body.addEventListener('mouseover', handleUserInteraction, { once: true })
         window.addEventListener('touchstart', handleUserInteraction, { once: true });
     }
 });

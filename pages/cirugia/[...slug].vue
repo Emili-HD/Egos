@@ -122,6 +122,10 @@ import { getClinicas } from '@/composables/useApi'
 import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
 import ClinicasRelacionadas from '~/components/cirugias/ClinicasRelacionadas.vue';
 
+definePageMeta({
+  middleware: 'validate-url', // Aplicar el middleware a esta página
+});
+
 const { $gsap: gsap } = useNuxtApp();
 const router = useRouter();
 const route = useRoute();
@@ -244,19 +248,37 @@ const observeDOM = () => {
     }
 };
 
-watch(() => route.params.slug, async (newSlug) => {
-    isLoading.value = true;
-    errorMessage.value = "";
-    try {
-        // Refresca los datos tanto del tratamiento como de los ajustes del formulario.
-        await refreshTratamiento();
-        await refreshFormData();
-    } catch (error) {
-        errorMessage.value = "No se pudo cargar la información.";
-    } finally {
-        isLoading.value = false;
+// Unificar el watch del `slug` para manejar tanto el refresco de los datos como la validación de URLs malformadas
+watch(
+    () => route.params.slug,
+    async (newSlug) => {
+        isLoading.value = true;
+        errorMessage.value = "";
+        
+        // Validar si la URL está malformada
+        const fullPath = route.fullPath;
+        
+        
+    const httpCount = (fullPath.match(/https?:\/\//g) || []).length;
+
+    if (httpCount > 1) {
+      // Si la URL contiene más de un "http" o "https", redirigimos a la página de error
+      router.push('/error');
+      return;
     }
-}, { immediate: true });
+
+    try {
+      // Refresca los datos del tratamiento y el formulario
+      await refreshTratamiento();
+      await refreshFormData();
+    } catch (error) {
+      errorMessage.value = "No se pudo cargar la información.";
+    } finally {
+      isLoading.value = false;
+    }
+  },
+  { immediate: true }
+);
 
 watch(tratamiento, (nuevoValor) => {
     // Si 'tratamiento' es nulo o indefinido, redirige a '/error'.
@@ -269,6 +291,7 @@ watch(tratamiento, (nuevoValor) => {
 if (!tratamiento.value) {
     router.push('/error');
 }
+
 
 const mainActive = async () => {
     await nextTick()
@@ -507,6 +530,14 @@ onMounted(async () => {
     await mainActive()
     await mostrarAnchorsMenu()
     observeDOM()
+
+    const fullHref = window.location.href;
+    console.log("Full Href:", fullHref);
+
+    // Comprobar si la URL contiene '/http', lo que indicaría una URL malformada
+    if (fullHref.includes('/http')) {
+        router.push('/error');
+    }
 })
 </script>
 
