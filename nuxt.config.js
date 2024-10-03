@@ -58,7 +58,7 @@ export default defineNuxtConfig({
 
     mail: {
         message: {
-            to: 'web@clinicaegos.com',
+            to: 'rrhh@clinicaegos.com',
         },
         smtp: {
             host: "mail.clinicaegos.com",

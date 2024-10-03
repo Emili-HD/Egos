@@ -390,6 +390,10 @@ useHead({
         h3 {
             @apply text-clamp-lg font-semibold font-nunito mt-6;
         }
+
+        h4 {
+            @apply text-clamp-base font-semibold font-nunito mt-6;
+        }
         
         iframe {
             @apply w-full aspect-video h-fit my-6;

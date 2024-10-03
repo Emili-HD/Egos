@@ -170,7 +170,7 @@ const handleSubmit = async () => {
                 name: form.value.name,
                 address: form.value.email,
             },
-            to: 'contacto@egos.com', // Cambiar por el correo de destino deseado
+            to: 'rrhh@clinicaegos.com',
             subject: 'Solicitud de empleo',
             text: `Interés: ${form.value.interest}\nNombre: ${form.value.name}\nCorreo: ${form.value.email}\nTeléfono: ${form.value.phone}\nAcepta comunicaciones: ${form.value.acceptMarketing ? 'Sí' : 'No'}`,
             attachments,

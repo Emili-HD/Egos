@@ -416,6 +416,31 @@ const mostrarAnchorsMenu = async () => {
     }
 }
 
+const mostrarRiesgos = async () => {
+    // Seleccionamos los elementos necesarios
+    let disparador = document.querySelector('#riesgos.panel .panel__content h2');
+    let icono = document.querySelector('#riesgos.panel .panel__content h2 svg');
+    let contenido = document.querySelector('#riesgos.panel .panel__content .answer');
+
+    if (disparador && contenido && icono) {
+        // Añadir un solo listener para alternar entre mostrar y ocultar
+        disparador.addEventListener('click', () => {
+            if (contenido.classList.contains('isExpanded')) {
+                // Contraer el contenido
+                icono.style.transform = "rotate(0deg)";
+                contenido.style.maxHeight = '0px';
+                contenido.classList.remove('isExpanded');
+            } else {
+                // Expandir el contenido
+                icono.style.transform = "rotate(45deg)";
+                contenido.style.maxHeight = '1000px';
+                contenido.classList.add('isExpanded');
+            }
+        });
+    }
+};
+
+
 const currentUrl = route.fullPath
 
 // Recorremos todos los tabs y generamos los JSON-LD para los vídeos
@@ -529,6 +554,7 @@ onMounted(async () => {
     await cellHeights()
     await mainActive()
     await mostrarAnchorsMenu()
+    await mostrarRiesgos()
     observeDOM()
 
     const fullHref = window.location.href;

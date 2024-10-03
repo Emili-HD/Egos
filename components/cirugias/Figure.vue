@@ -33,7 +33,10 @@
 
    <div class="panel__content"
       v-if="contentData && contentData.opciones_listado != 'columnas' && contentData.opciones_listado != 'antesdespues'">
-      <h2 class="text-clamp-2xl mb-8">{{ contentData.heading }}</h2>
+      <h2 class="text-clamp-xl 2xl:text-clamp-2xl mb-8 [&>svg]:hidden [#riesgos_&>svg]:block [#riesgos_&]:flex [#riesgos_&]:justify-between [#riesgos_&]:items-center">
+         {{ contentData.heading }}
+         <svg data-v-620efb82="" class="w-6 aspect-square bg-white box-content p-4 rounded-full stroke-blue-1 stroke-1 transition-all duration-300 ease-in-out origin-center" viewbox="0 0 24 24"><path class="iconV" d="M 12,0 V 24"></path><path class="iconH" d="M 0,12 H 24"></path></svg>
+      </h2>
       <div class="answer p-0">
          <div class="answer__content [&>h3]:text-clamp-xl" v-html="contentData.content"></div>
       </div>
