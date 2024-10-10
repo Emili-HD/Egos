@@ -1,51 +1,86 @@
 <template>
     <ClientOnly>
-        <div v-if="isMapReady" class="clinicas__egos-map size-full rounded-3xl overflow-hidden 
-            [.nuestras-clinicas_&]:grid-rows-2 [.nuestras-clinicas_&]:even:grid-rows-1 [.nuestras-clinicas_&]:col-[2/-2] 
-            lg:[.nuestras-clinicas_&]:col-[2/9] lg:[.nuestras-clinicas_.card:nth-child(even)_&]:col-[11/-2] xl:[.nuestras-clinicas_&]:col-[2/7]">
-            <GoogleMap :api-key="apiKey"
-                class="size-full"
-                ref="mapRef" :center="centerMap" :zoom="props.zoom" :styles="mapStyles">
-                <Marker :options="{ position: centerMap, anchorPoint: 'BOTTOM_CENTER', icon: markerIcon }" />
+        <div v-if="isMapReady"
+            class="clinicas__egos-map size-full rounded-3xl overflow-hidden 
+                    [.nuestras-clinicas_&]:grid-rows-2 [.nuestras-clinicas_&]:even:grid-rows-1 [.nuestras-clinicas_&]:col-[2/-2] 
+                    lg:[.nuestras-clinicas_&]:col-[2/9] lg:[.nuestras-clinicas_.card:nth-child(even)_&]:col-[11/-2] xl:[.nuestras-clinicas_&]:col-[2/7]">
+            <GoogleMap :api-key="apiKey" class="size-full" ref="mapRef" :center="centerMap" :zoom="props.zoom"
+                :styles="mapStyles">
+                <Marker v-for="(location, i) in locations" :key="i" :options="{
+                    position: { lat: location.lat, lng: location.lng },
+                    anchorPoint: 'BOTTOM_CENTER',
+                    icon: markerIcon,
+                }" />
             </GoogleMap>
         </div>
     </ClientOnly>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, watchEffect, onMounted } from 'vue';
 import {
-    GoogleMap,
-    Marker,
-} from 'vue3-google-map'
+  GoogleMap,
+  Marker,
+} from 'vue3-google-map';
 
+// Obtenemos la API key desde la configuración
 const { googleMaps } = useRuntimeConfig().public;
-const apiKey = googleMaps.apiKey; // Extraemos la API Key desde googleMaps
+const apiKey = googleMaps.apiKey;
 
 // Estados reactivos
-const mapRef = ref(null)
-
-// Bandera para cargar el mapa solo cuando esté listo
-const isMapReady = ref(false);
+const mapRef = ref(null);
+const isMapReady = ref(false); // Bandera para saber si el mapa está listo
 
 // Props
 const props = defineProps({
-    lat: Number,
-    lng: Number,
-    zoom: Number
+  locations: {
+    type: Array,
+    required: true
+  },
+  zoom: {
+    type: Number,
+    default: 14
+  },
 });
 
-const centerMap = ref({ lat: props.lat, lng: props.lng });
+// Estados derivados de las props
+const locations = ref(props.locations);
+const zoom = ref(props.zoom);
+const centerMap = ref(null);
+
+// Icono del marcador
 let markerIcon;
 
-// Cargamos el icono del marcador y esperamos a que esté disponible antes de cargar el mapa
+// Cargar el icono del marcador
 import('/images/marker_1.png').then((module) => {
-    markerIcon = module.default;
+  markerIcon = module.default;
+  checkMapReadiness(); // Comprobar si el mapa está listo después de cargar el icono
 });
 
-// Cargamos el mapa cuando el componente esté montado
+// Función para verificar si todas las condiciones están listas para mostrar el mapa
+function checkMapReadiness() {
+  if (locations.value && locations.value.length > 0 && markerIcon) {
+    centerMap.value = {
+      lat: locations.value[0].lat,
+      lng: locations.value[0].lng,
+    };
+    isMapReady.value = true; // Solo habilitar el mapa cuando todas las condiciones se cumplan
+  }
+}
+
+// Observamos los cambios en las props y configuramos el centro del mapa y la bandera de readiness
+watchEffect(() => {
+  if (props.locations && props.locations.length > 0) {
+    locations.value = props.locations;
+    zoom.value = props.zoom || 14;
+
+    checkMapReadiness();
+  }
+});
+
+// Repetimos la comprobación cuando el componente esté montado
 onMounted(() => {
-    isMapReady.value = true; // Hacemos visible el mapa solo cuando todo esté listo
+  checkMapReadiness();
 });
 
 const mapStyles = [

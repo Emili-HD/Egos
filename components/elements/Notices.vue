@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full min-h-12 overflow-hidden bg-[#B7AB87] relative">
+    <div class="w-full min-h-12 overflow-hidden bg-[#B7AB87] [.blackfriday_&]:bg-dark-2 relative">
         <div v-if="ofertas.length > 0">
             <div 
                 v-for="(oferta, index) in ofertas" 
@@ -64,6 +64,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.blackfriday .offer-display {
+    @apply !bg-dark-2 !text-white;
+}
 .offer-display {
     backface-visibility: hidden;
 }

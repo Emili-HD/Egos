@@ -1,5 +1,5 @@
 <template>
-   <figure class="panel__image h-fit rounded-xl overflow-hidden grid-row-1z-2
+   <figure class="panel__image h-fit rounded-xl overflow-hidden 
             has-[img]:aspect-square
             has-[img]:col-[9_/_span_7]
             has-[img]:row-start-1 gap-8
@@ -8,7 +8,8 @@
             [.columnas_&]:lg:col-[6/12] [.columnas_&]:lg:row-start-1 [.columnas_&]:lg:px-16 [.columnas_&]:aspect-[3/2] [.columnas_&]:lg:aspect-[2/3] [.columnas_&]:rounded-none
             [#precio_&]:col-[2/-2] [#precio_&]:mb-8 [#precio_&]:lg:col-start-9 [#precio_&]:lg:mb-0
             [#paciente\_ideal_&]:has-[img]:col-[2/-2] [#paciente\_ideal_&]:has-[img]:lg:col-[2/_span_7]
-            [#caso-real_&]:col-[2/-2] [#caso-real_&]:lg:col-[9/-2] [#caso-real_&]:mb-8 [#caso-real_&]:lg:mb-0"
+            [#caso-real_&]:col-[2/-2] [#caso-real_&]:lg:col-[9/-2] [#caso-real_&]:mb-8 [#caso-real_&]:lg:mb-0
+            [#resultados_&]:col-[2/-2] [#resultados_&]:lg:col-[9/-2] [#resultados_&]:mb-8 [#resultados_&]:lg:mb-0"
       v-if="contentData.fondo != 'sin'">
       <div v-if="contentData.fondo == 'vHorizontal'" class="video__player aspect-video">
          <div class="size-full">

@@ -54,6 +54,10 @@ const { data: trabajaMenuData, error: trabajaMenuError } = await fetchMenuData('
 .footer {
    @apply bg-blue-1 px-12 xl:px-24 pt-24 pb-6 flex flex-col justify-center items-center z-[999];
 
+   .blackfriday & {
+      @apply bg-dark-1;
+   }
+
    &__inner {
       @apply grid grid-cols-3 auto-rows-auto xl:auto-rows-fr items-center gap-4 w-full gap-y-4 xl:gap-y-8 gap-x-4 xl:gap-x-8;
    }

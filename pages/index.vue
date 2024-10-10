@@ -23,7 +23,7 @@
             <LazyHomeEspecialists />
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
-            <ElementsPremios/>
+            <ElementsPremios />
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
             <ElementsInfluencers />
@@ -39,11 +39,23 @@ import { getPage } from '@/composables/useApi';
 const { data: home, error } = await useAsyncData(() => getPage(8))
 const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);
 
+// Obtener los premios del composable
+const { awards } = useAwardsSchema();
+
+// Convertir los premios a JSON-LD
+const awardsJsonLd = JSON.stringify(awards);
+
 // Genera los metadatos de Yoast
 const { generateYoastHead } = useYoastHead(home);
 const yoastHead = generateYoastHead();
 
 useHead({
+    // script: [
+    //     {
+    //         type: 'application/ld+json',
+    //         children: awardsJsonLd
+    //     }
+    // ],
     ...yoastHead,
 });
 

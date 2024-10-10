@@ -92,7 +92,7 @@ const { data: pages, error: pagesError } = await useAsyncData(
             return {}; // En caso de error, retornar un objeto vacío
         }
     },
-    { initialCache: false }
+    { initialCache: true }
 );
 
 

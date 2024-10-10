@@ -1,12 +1,16 @@
 <template>
-    <div class="header-nav flex flex-row justify-end items-stretch size-full" v-if="menuTratamientosData">
+    <div class="header-nav flex flex-row justify-end items-stretch size-full">
         <nav aria-label="Global" class="nav-categories">
-            <ul class="menu-list hidden" @mouseover="loadImages" ref="menuContainer">
+            <ul class="menu-list hidden" @mouseover="loadImages" ref="menuContainer" v-if="menuTratamientosData">
                 <li v-for="tratamiento in menuTratamientosData" :key="tratamiento.ID"
                     :class="{ 'hasSubmenu': tratamiento.child_items }">
                     <div class="menu-tab" :data-title="tratamiento.title">
+
+                        <!-- Enlace en desktop -->
                         <nuxt-link 
-                            :to="tratamiento.path" 
+                            :to="tratamiento.classes.includes('nofollow') ? tratamiento.url : tratamiento.path" 
+                            :rel="tratamiento.classes.includes('nofollow') ? 'nofollow noopener' : '' " 
+                            :target="tratamiento.classes.includes('nofollow') ? '_blank' : '' " 
                             class="nav-title" 
                             active-class="router-link-active" 
                             :class="[
@@ -17,9 +21,20 @@
                             <span>{{ tratamiento.title }}</span>
                         </nuxt-link>
                         <ArrowDownRightIcon class="arrow-down xl:hidden" v-if="tratamiento.child_items.length > 0" alt="Abrir menú" />
+
                     </div>
                     <div class="menu-wrapper">
-                        <nuxt-link :to="tratamiento.path" class="nav-link" active-class="router-link-active">
+                        
+                        <!-- Si el link tiene la class 'nofollow' aplicar link externo -->
+                        <a v-if="tratamiento.classes == 'nofollow'" :href="tratamiento.url" class="nav-link" active-class="router-link-active" rel="nofollow noopener" target="_blank">
+                            <span class="">{{ tratamiento.title }}</span>
+                            <ArrowUpRightIcon
+                                class="arrow-up size-8 p-2 rounded-full order-2 absolute lg:hidden right-4 opacity-50 text-blue-1 hidden"
+                                alt="Cerrar menú" />
+                        </a>
+
+                        <!-- sino aplicar link interno -->
+                        <nuxt-link v-else :to="tratamiento.path" class="nav-link" active-class="router-link-active">
                             <span class="">{{ tratamiento.title }}</span>
                             <ArrowUpRightIcon
                                 class="arrow-up size-8 p-2 rounded-full order-2 absolute lg:hidden right-4 opacity-50 text-blue-1 hidden"
@@ -46,6 +61,7 @@
                                 <ul class="submenu__right-list">
                                     <li class="submenu-child" v-for="(subTratamiento, index) in tratamiento.child_items"
                                         :key="subTratamiento.ID" :data-index="index">
+                                        
                                         <nuxt-link v-if="!subTratamiento.child_items" :to="subTratamiento.path"
                                             class="nav-link" :class="subTratamiento.classes"
                                             active-class="nuxt-link-active">
@@ -60,7 +76,15 @@
                                                 v-for="(subSubTratamiento, subIndex) in subTratamiento.child_items"
                                                 :key="subSubTratamiento.ID" :data-index="subIndex">
 
-                                                <nuxt-link :to="subSubTratamiento.path" class="nav-link"
+                                                <a v-if="subSubTratamiento.classes == 'nofollow'" :href="subSubTratamiento.url" class="nav-link"
+                                                    :class="subSubTratamiento.classes" active-class="nuxt-link-active" rel="nofollow noopener" target="_blank">
+                                                    {{ subSubTratamiento.title }}
+                                                    <ArrowUpRightIcon
+                                                        class="arrow-up  hidden [.is-tablet_&,_.is-tablet_&]:block"
+                                                        alt="Cerrar menú" />
+                                                </a>
+
+                                                <nuxt-link v-else :to="subSubTratamiento.path" class="nav-link"
                                                     :class="subSubTratamiento.classes" active-class="nuxt-link-active">
                                                     {{ subSubTratamiento.title }}
                                                     <ArrowUpRightIcon
@@ -103,7 +127,7 @@ const initializeMenus = () => {
         let mm = gsap.matchMedia();
         mm.add("(max-width: 1200px)", () => {
 
-            const groups = gsap.utils.toArray(".hasSubmenu");
+            const groups = gsap.utils.toArray(".hasSubmenu:has(.arrow-down)");
             const animations = [];
 
             groups.forEach((group, index) => {
@@ -344,7 +368,7 @@ const props = defineProps({
 
 .is-desktop:not(.is-ipad-pro, .is-tablet) .egos-header {
     .nav-categories {
-        @apply bg-white rounded-bl-xl rounded-tl-xl px-8 flex flex-col justify-center items-stretch w-fit;
+        @apply bg-white rounded-bl-xl rounded-tl-xl px-8 flex flex-col justify-center items-stretch w-fit min-w-[54vw] h-16;
     }
 
     .header-wrapper {
@@ -381,6 +405,10 @@ const props = defineProps({
             .submenu__left,
             .submenu__right {
                 @apply bg-blue-1/80 shadow opacity-0 pointer-events-auto will-change-transform;
+
+                .blackfriday & {
+                    @apply bg-dark-2/80;
+                }
             }
 
             .submenu__left {
@@ -564,8 +592,25 @@ const props = defineProps({
                 &>li:nth-child(7) {
                     @apply bg-nude-2;
 
-                    .menu-tab::before {
-                        background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-04.svg);
+                    .menu-tab {
+                        &::before {
+                            background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-04.svg);
+                        }
+
+                        .nofollow {
+                            @apply inline-block text-gold-2 uppercase
+                        }
+
+                        &:has(.nofollow) {
+                            &::after {
+                                @apply content-none;
+                            }
+
+                            svg {
+                                @apply hidden;
+                            }
+                        }
+                        
                     }
                 }
 

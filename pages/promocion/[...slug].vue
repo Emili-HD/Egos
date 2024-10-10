@@ -51,7 +51,7 @@ const loadData = () => {
 };
 
 // Función para cargar los datos
-const { data: landing, error: landingError, refresh } = await useAsyncData(`landing-${route.params.slug}`, loadData, { initialCache: false });
+const { data: landing, error: landingError, refresh } = await useAsyncData(`landing-${route.params.slug}`, loadData, { initialCache: true });
 
 // Datos YOAST SEO
 useHead(() => {

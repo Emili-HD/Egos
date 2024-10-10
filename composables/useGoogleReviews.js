@@ -10,7 +10,6 @@ export const useGoogleReviews = async (placeId) => {
 
     const { data, error } = await useFetch(
         `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total,reviews&language=es&key=${apiKey}`
-        // `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total,reviews&language=es&key=${apiKey}`
     )
 
     if (error.value) {
@@ -22,11 +21,3 @@ export const useGoogleReviews = async (placeId) => {
 
     return data.value?.result?.reviews || []
 }
-
-
-/* 
-
-*.clinicaegos.com/*	
-localhost:3000/*	
-
-*/

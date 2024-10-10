@@ -179,7 +179,6 @@
 <script setup>
 import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useError } from '#app';
 
 // Acceder a los parámetros de la ruta
 const router = useRouter();
@@ -196,7 +195,7 @@ const loadData = async () => {
 };
 
 // Utiliza `useAsyncData` con un key dinámico y dependencias de reactividad
-const { data: post, refresh } = await useAsyncData(`post-${route.params.slug}`, loadData, { watch: [() => route.params.slug], initialCache: false });
+const { data: post, refresh } = await useAsyncData(`post-${route.params.slug}`, loadData, { watch: [() => route.params.slug], initialCache: true });
 
 // Step 2: Definir una referencia para el doctor relacionado
 const doctor = ref(null);

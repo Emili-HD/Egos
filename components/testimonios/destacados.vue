@@ -9,8 +9,8 @@
                     <UiImage :data="testimonio" class="cover" loading="lazy" />
                 </div>
                 <div
-                    class="testimonios__content bg-blue-1 p-6 text-center flex flex-col justify-between items-center">
-                    <h3 class="h6 text-clamp-base font-medium text-nude-8">{{ testimonio.title }}</h3>
+                    class="testimonios__content bg-blue-1 [.blackfriday_&]:!bg-gold-2 p-6 text-center flex flex-col justify-center items-center">
+                    <h3 class="h6 text-clamp-base xl:text-clamp-xl font-medium text-nude-8">{{ testimonio.title }}</h3>
                     <div
                         class="button pt-1 px-6 border border-solid text-nude-8 border-nude-8/25 text-center uppercase rounded-3xl">
                         Saber más

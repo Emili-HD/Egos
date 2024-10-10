@@ -23,7 +23,7 @@ const scrollStore = useScrollStore();
 
 
 // Obtener datos
-const { data: pages, error: paginaError } = await useAsyncData('paginaEspecial', () => getPage(562), {initialCache: false});
+const { data: pages, error: paginaError } = await useAsyncData('paginaEspecial', () => getPage(562), {initialCache: true});
 
 </script>
 

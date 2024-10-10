@@ -187,6 +187,12 @@ export default defineNuxtConfig({
             });
 
             pages.push({
+                name: 'tratamiento-subhijo',
+                path: '/:parentCategory/:category/:categoryChild/:slug',
+                file: '@/pages/cirugia/[...slug].vue',
+            });
+
+            pages.push({
                 name: 'doctor',
                 path: '/equipo-egos/:category/:slug',
                 file: '@/pages/equipo-egos/[category]/[...slug].vue', // Ruta dinámica que coincide con el doctor
@@ -243,6 +249,7 @@ export default defineNuxtConfig({
         '/pechos/aumento-de-mamas-con-grasa-propia/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
         '/cirugia-de-pechos/aumento-de-mamas-con-grasa-propia/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
         '/pechos/aumento-de-pecho-en-barcelona/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
+        '/cirugia-mamaria/aumento-mamas/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
 
         // Redirecciones específicas dentro de /cirugia-mamaria/
         '/cirugia-mamaria/ginecomastia/': { redirect: { to: '/cirugia-de-pechos/ginecomastia/', statusCode: 301 } },
@@ -427,6 +434,27 @@ export default defineNuxtConfig({
         '/obesidad/sleeve-gastrico/': { redirect: { to: '/perdida-de-peso/sleeve-gastrico/', statusCode: 301 } },
         '/obesidad/bypass-gastrico/': { redirect: { to: '/perdida-de-peso/bypass-gastrico/', statusCode: 301 } },
         '/obesidad/tratamiento-farmacologico-obesidad/': { redirect: { to: '/perdida-de-peso/tratamiento-farmacologico-obesidad/', statusCode: 301 } },
+
+        // Blog
+        '/blog/cuanto-cuesta-una-rinoplastia/': { redirect: { to: '/estetica-facial/rinoplastia/', statusCode: 301 } },
+        '/blog/clinica-egos-manresa-cirugia-plastica-medicina-estetica/': { redirect: { to: '/nuestras-clinicas/egos-manresa-cirugia-plastica/', statusCode: 301 } },
+        '/blog/presoterpia-secreto-piernas-mas-bonitas/': { redirect: { to: '/estetica-corporal/presoterapia/', statusCode: 301 } },
+        '/blog/todo-lo-que-tienes-que-saber-rinoplastia/': { redirect: { to: '/estetica-facial/rinoplastia/', statusCode: 301 } },
+        '/blog/calcular-aumento-de-pecho/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
+        '/blog/aumento-de-pecho-sin-cicatrices/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
+        '/blog/guia-labios-bonitos/': { redirect: { to: '/estetica-facial/aumento-de-labios/', statusCode: 301 } },
+        '/blog/tendencias-medicina-estetica/': { redirect: { to: '/medicina-estetica/', statusCode: 301 } },
+        '/blog/egos-abre-en-mataro/': { redirect: { to: '/nuestras-clinicas/egos-mataro-cirugia-plastica/', statusCode: 301 } },
+        '/blog/precio-del-aumento-de-labios-permanente/': { redirect: { to: '/estetica-facial/queiloplastia/', statusCode: 301 } },
+        '/blog/rejuvenecimiento-facial-con-medicina-estetica/': { redirect: { to: '/estetica-facial/tratamiento-antiarrugas/', statusCode: 301 } },
+        '/blog/protesis-mamarias-opcion-segura/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
+        '/blog/braquioplastia-lifting-de-brazos/': { redirect: { to: '/estetica-corporal/lifting-de-brazos-braquioplastia/', statusCode: 301 } },
+        '/blog/rinoplastia-ultrasonica/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 301 } },
+        '/blog/paciente-ideal-de-la-cirugia-capilar/': { redirect: { to: '/injerto-capilar/injerto-capilar/', statusCode: 301 } },
+        '/blog/como-conseguir-un-vientre-plano/': { redirect: { to: '/estetica-corporal/abdominoplastia/', statusCode: 301 } },
+        '/blog/lifting-facial-todo-lo-que-debes-saber/': { redirect: { to: '/estetica-facial/lifting-facial/', statusCode: 301 } },
+        '/blog/cuanto-cuesta-una-otoplastia/': { redirect: { to: '/estetica-facial/otoplastia/', statusCode: 301 } },
+        '/blog/rinomodelacion-sin-cirugia/': { redirect: { to: '/estetica-facial/rinomodelacion/', statusCode: 301 } },
     },
 
     // Configuración de nuxt-simple-robots
@@ -466,7 +494,7 @@ export default defineNuxtConfig({
                 ],
 
                 exclude: [
-                    
+
                 ],
                 defaults: { changefreq: 'weekly', priority: 0.9 },
             },

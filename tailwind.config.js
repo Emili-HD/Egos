@@ -46,6 +46,10 @@ module.exports = {
                 'nude-6': '#e8e4dd',
                 'nude-7': '#f0ede9',
                 'nude-8': '#f8f7f4',
+                'dark-1': '#181818',
+                'dark-2': '#222222',
+                'red-1': '#942f2f',
+                'red-2': '#862a2a',
             },
             backgroundColor: {
                 'bg-blue-1': '#1c2c44',

@@ -61,6 +61,42 @@
 
 @layer components {
 
+    body.blackfriday {
+        --tw-bg-blue-1: #181818;
+        
+        .bg-blue-1 {
+            @apply bg-dark-1;
+        }
+        
+        .bg-blue-2 {
+            @apply bg-dark-2;
+        }
+
+        .form__wrapper,
+        .half-right,
+        .widgets,
+        .footer {
+            @apply bg-gradient-to-tr from-dark-1 to-[#555050];
+        }
+
+        .widgets .form__wrapper {
+            background: transparent;
+        }
+    }
+
+    body.sanvalentin {
+        --tw-bg-blue-1: #181818;
+        
+        .bg-blue-1 {
+            @apply bg-red-1;
+        }
+        
+        .bg-blue-2 {
+            @apply bg-red-2;
+        }
+    }
+
+
     .site-main {
         @apply bg-nude-8 overflow-hidden w-[100vw];
     }

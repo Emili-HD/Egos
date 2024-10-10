@@ -19,6 +19,19 @@
                     class="[&>p:has(img.aligncenter)]:inline-flex [&>p:has(img.aligncenter)]:justify-center [&>p:has(img.aligncenter)]:w-[33%] [&>p:has(img.aligncenter)]:max-md:w-[100%] [&>p>img]:w-full">
                 </div>
             </section>
+
+            <!-- <NuxtLazyHydrate when-idle>
+                <div v-if="casoreal.acf.dr_comment" id="doctores" class="grid grid-cols-12 mb-20 gap-y-8 col-[2_/-2]"
+                    data-anchor="doctores">
+                    <h2 class="h4 col-span-full lg:text-center">Qué opina el doctor</h2>
+                    <DoctorComentario :data="doctorsWithComments" class="doctor-full" />
+                </div>
+
+                <ClinicasRelacionadas v-if="casoreal.acf && casoreal.acf.clinicas_relacionadas"
+                            :data="casoreal.acf.clinicas_relacionadas"
+                            :titulo="casoreal.acf.titulo_cirugias_relacionadas"
+                            :texto="casoreal.acf.texto_cirugias_relacionadas" class="col-[1/-1]" />
+            </NuxtLazyHydrate> -->
         </div>
         <aside class="form__wrapper bg-blue-2 col-[1_/_span_16] lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20 h-full"
             v-if="casoreal && casoreal.acf">
@@ -32,7 +45,7 @@
 import { ref, watch, nextTick, computed } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getTestimonios } from '@/composables/useApi';
-
+import ClinicasRelacionadas from '~/components/cirugias/ClinicasRelacionadas.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -58,7 +71,7 @@ const { data: casoreal, refresh } = await useAsyncData(
   },
   {
     watch: [() => route.params.slug],  // Observar el `slug` para recargar los datos
-    initialCache: false  // Deshabilitar la caché inicial
+    initialCache: true  // Deshabilitar la caché inicial
   }
 );
 
@@ -109,6 +122,16 @@ const waitForElement = (selector, timeout = 10000) => {
         }, 100);
     });
 };
+
+const doctorsWithComments = ref([]);
+
+// Asignar los datos de los doctores directamente desde `casoreal.acf.doctores_relacionados`
+if (casoreal.value && casoreal.value.acf?.dr_comment) {
+    doctorsWithComments.value = casoreal.value.acf.dr_comment.map(commentObj => ({
+        doctor: commentObj.doctores_relacionados[0],  // Asumimos que hay un doctor en `doctores_relacionados`
+        comentario: commentObj.comentario
+    }));
+}
 
 const stickyForm = async () => {
     await nextTick(); // Espera a la próxima renderización

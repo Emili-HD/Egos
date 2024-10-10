@@ -31,7 +31,7 @@
             <div class="testimonios__list max-w-full min-h-screen p-8 lg:px-20 lg:pt-0 lg:pb-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4"
                 v-if="testimonios">
                 <article v-for="testimonio in testimonios" :key="testimonio.id"
-                    class="card item rounded-3xl overflow-hidden flex flex-col justify-between items-center gap-2 lg:gap-8 bg-nude-6 p-0"
+                    class="card item rounded-3xl overflow-hidden flex flex-col justify-center items-center gap-2 lg:gap-8 bg-nude-6 p-0"
                     :class="getCategoriesNames(testimonio)">
                     <nuxt-link :to="`/opinion-egos/${testimonio.slug}`" class="size-full">
                         <div class="testimonios__image overflow-hidden w-full h-[60%]"
@@ -39,8 +39,8 @@
                             <UiImage :data="testimonio" class="cover" loading="lazy" />
                         </div>
                         <div
-                            class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-between items-center">
-                            <h3 class="h6 text-clamp-base font-medium">{{ testimonio.title.rendered }}</h3>
+                            class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-center items-center">
+                            <h3 class="h6 text-clamp-base lg:text-clamp-lg font-medium">{{ testimonio.title.rendered }}</h3>
                             <div
                                 class="button pt-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">
                                 Saber más
@@ -101,7 +101,7 @@ const { data: pages, error: pagesError } = await useAsyncData(
             return {}; // En caso de error, retornar un objeto vacío
         }
     },
-    { initialCache: false }
+    { initialCache: true }
 );
 
 

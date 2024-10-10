@@ -1,14 +1,13 @@
 <template>
-    <div class="destacado">
-        <div v-if="pending" class="loading">Loading...</div>
-        <div v-else-if="error" class="error">Error loading posts</div>
+    <div class="destacado rounded-3xl m-auto w-full p-0 col-[2/-2] flex max-w-full min-h-[40vh]">
+        <div v-if="error" class="error">Error loading posts</div>
         <div class="post-list w-full mt-0 flex" v-else>
-            <article v-for="post in highlightedPostsData" :key="post.id" class="card">
-                <nuxt-link class="post-link" :to="'/blog/' + post.slug + '/'">
+            <article v-for="post in highlightedPostsData" :key="post.id" class="card bg-blue-1 aspect-auto w-full rounded-3xl overflow-hidden">
+                <nuxt-link class="post-link text-blue-1 h-full p-0 flex flex-col lg:flex-row" :to="'/blog/' + post.slug + '/'">
                     <UiImage :data="post" class="card__image" loading="eager" />
-                    <div class="card__content">
+                    <div class="card__content p-8 text-nude-8 items-start flex flex-col lg:flex-row">
                         <div class="card__content-wrapper text-left [&_h2,&_h3]:text-clamp-xl [&_h2,&_h3]:font-light">
-                            <p class="card__content-cat">
+                            <p class="card__content-cat text-gold-2 font-normal text-clamp-base w-full">
                                 <span>Categoría: {{ post.categories_names.join(', ') }}</span>
                                 <br />
                                 <time :datetime="post.date_gmt">
@@ -33,9 +32,9 @@
 </template>
 
 <script setup>
-import { useAsyncData } from 'nuxt/app';
+// import { useAsyncData } from 'nuxt/app';
 import { getPosts } from '@/composables/useApi';
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
 // Define los parámetros de la petición
 const postsParams = { per_page: 100, page: 1 };
@@ -61,26 +60,6 @@ const formatDate = (date) => {
 };
 </script>
 
+<style scoped>
 
-
-<style lang="scss" scoped>
-.destacado {
-    @apply rounded-3xl m-auto w-full p-0 col-[2/-2] flex max-w-full min-h-[40vh];
-
-    .card {
-        @apply bg-blue-1 aspect-auto w-full rounded-3xl overflow-hidden;
-
-        &__content {
-            @apply p-8 text-nude-8 items-start flex flex-col lg:flex-row;
-
-            &-cat {
-                @apply text-gold-2 font-normal text-clamp-base w-full;
-            }
-        }
-    }
-
-    .post-link {
-        @apply text-blue-1 h-full p-0 flex flex-col lg:flex-row;
-    }
-}
 </style>

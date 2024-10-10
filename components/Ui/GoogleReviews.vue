@@ -2,7 +2,6 @@
     <div>
         <!-- <h2 class="text-2xl font-bold">Reseñas de Google</h2> -->
         <div class="flex flex-col lg:flex-row mb-24 ">
-            <!-- Mostrar calificación promedio y número total de reseñas -->
             <div v-if="!hasError && averageRating !== null && totalReviews !== null" class="my-4 w-full lg:w-1/6 flex flex-col items-center">
                 <div class="rating-text font-bold text-clamp-2xl">
                     <strong class=""> Excelente </strong>
@@ -87,9 +86,6 @@
                     </div>
                     <div class="text-wrapper">
                         <p class="italic text-sm" >"{{ review.text }}"</p>
-                        <!-- <a href="#" @click.prevent="toggleExpand(index)" class="block w-full text-center text-blue-6 hover:decoration-blue-6 hover:underline" >
-                            {{ isExpanded[index] ? 'Leer menos' : 'Leer más' }}
-                        </a> -->
                     </div>
                 </SwiperSlide>
             </Swiper>
@@ -112,8 +108,6 @@ const averageRating = ref(null) // Para la calificación promedio
 const totalReviews = ref(null)  // Para el número total de reseñas
 const hasError = ref(false)
 const errorMessage = ref('')
-const isExpanded = ref([])
-const collapsedHeight = 110;
 
 // Función para calcular el ancho basado en la valoración
 function calculateWidth(rating) {
@@ -126,7 +120,6 @@ onMounted(async () => {
     try {
 
         const response = await $fetch(`/api/get-google-reviews?placeId=${props.placeid}`)
-        // console.log('Respuesta completa del servidor:', response)
 
         if (response.error) {
             hasError.value = true

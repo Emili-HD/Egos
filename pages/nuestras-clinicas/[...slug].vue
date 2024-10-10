@@ -8,8 +8,8 @@
             <NuxtLazyHydrate when-idle>
 
                 <!-- Clínicas relacionadas -->
-                <RelatedClinicas v-if="clinica.acf && clinica.acf.clinicas_relacionadas"
-                    :related="clinica.acf.clinicas_relacionadas" />
+                <RelatedClinicas v-if="clinica.acf && clinica.acf.localizaciones"
+                    :related="clinica.acf.localizaciones" />
 
                 <!-- Intro -->
                 <EntryText :data="clinica" />
@@ -21,7 +21,7 @@
         <NuxtLazyHydrate when-idle>
             <Categories
                 v-if="clinica.acf && clinica.acf.cirugias_relacionadas && clinica.acf.cirugias_relacionadas.categorias_home"
-                :data="clinica.acf.cirugias_relacionadas" sectionId="cirugias" />
+                :data="clinica.acf.cirugias_relacionadas" sectionId="cirugias" class="[&_.home__services]:!min-h-screen/75" />
         </NuxtLazyHydrate>
 
         <!-- Servicios de cirugía -->
@@ -31,15 +31,28 @@
 
         <!-- Formulario Pide Cita -->
         <NuxtLazyHydrate when-idle>
-            <FormsPiceCita class="mb-12 xl:mb-32" v-if="clinica.acf && clinica.acf.formulario"
+            <!-- <FormsPiceCita class="mb-12 xl:mb-32" v-if="clinica.acf && clinica.acf.formulario"
                 :portalId="String(clinica.acf.formulario.portalid)" :formId="clinica.acf.formulario.formid"
                 :related="clinica.acf.clinicas_relacionadas" :zoom="clinica.acf.zoom" :lat="clinica.acf.lat"
-                :lng="clinica.acf.lng" />
+                :lng="clinica.acf.lng" /> -->
+            <section
+                class="pidecita w-screen col-span-full grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-screen/70 py-0 lg:gap-0">
+                <div class="col-span-full lg:col-span-11 min-h-screen/60">
+                    <LazyElementsSingleGoogleMap :locations="clinica.acf.localizaciones" :zoom="15" />
+                </div>
+                <div id="formulario" class="half-right bg-blue-1 col-span-5">
+                    <!-- <div class="map-info mb-12 [&>*]:!text-blue-1 [&>ul>li]:!text-blue-1 [&>ul>li]:list-none [&>ul]:border-t [&>ul]:border-blue-1/50 [&>ul]:pt-2 [&>*]:mb-2 [&>ul>li]:mb-0" v-html="content"></div> -->
+                    <div class="form__wrapper">
+                        <!-- <FormsCirugia :identificador="'map'" :portalId="portalId" :formId="formId" /> -->
+                        <FormsCustomForm :identificador="'map'" :portalId="String(clinica.acf.formulario.portalid)" :formId="clinica.acf.formulario.formid" />
+                    </div>
+                </div>
+            </section>
         </NuxtLazyHydrate>
 
         <!-- Doctors -->
         <NuxtLazyHydrate when-idle>
-            <div v-if="clinica.acf && clinica.acf.dr_comment" class="grid grid-cols-12 sm:mb-20 gap-y-8">
+            <div v-if="clinica.acf && clinica.acf.dr_comment" class="grid grid-cols-12 sm:mb-20 gap-y-8 pt-20">
                 <h2 class="col-[2/-2] text-center">Nuestro Equipo</h2>
                 <!-- <ElementsDivider class="col-[2/-2]" /> -->
                 <div v-if="doctorsWithComments.length > 0" class="col-[2/-2] grid grid-cols-12 gap-4">
@@ -134,6 +147,7 @@ import Acordeon from '~/components/home/Acordeon.vue';
 import Player from '~/components/vimeo/player.vue';
 import RelatedClinicas from '~/components/elements/RelatedClinicas.vue';
 import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
+import SingleMap from '~/components/forms/SingleMap.vue'
 
 const router = useRouter()
 const route = useRoute();
@@ -240,12 +254,22 @@ const breadcrumbJson = generateBreadcrumbData();
 const { generateYoastHead } = useYoastHead(clinica);
 const yoastHead = generateYoastHead();
 
+// Obtener los premios del composable
+const { awards } = useAwardsSchema();
+
+// Convertir los premios a JSON-LD
+const awardsJsonLd = JSON.stringify(awards);
+
 useHead({
     script: [
         breadcrumbJson && {
             type: 'application/ld+json',
             children: JSON.stringify(breadcrumbJson),
         },
+        // awardsJsonLd && {
+        //     type: 'application/ld+json',
+        //     children: awardsJsonLd
+        // },
         // JSON-LD para los doctores
         ...doctorScripts
     ].filter(Boolean), // Filtra los valores nulos o undefined
@@ -266,6 +290,14 @@ useHead({
     .accordion__list {
         @apply mt-6;
     }
+}
+
+:deep(.home__services) {
+    @apply min-h-screen/75;
+}
+
+:deep(.clinicas__egos-map) {
+    @apply rounded-none;
 }
 
 .panel {

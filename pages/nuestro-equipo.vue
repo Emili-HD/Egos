@@ -116,7 +116,7 @@ const { data: especialidades, error: especialidadesError } = await useAsyncData(
       return {}; // En caso de error, retornar un objeto vacío
     }
   },
-  { initialCache: false }
+  { initialCache: true }
 );
 const { data: pages, error: paginaError } = await useAsyncData(
   'paginaEspecial',
@@ -129,7 +129,7 @@ const { data: pages, error: paginaError } = await useAsyncData(
       return {}; // En caso de error, retornar un objeto vacío
     }
   },
-  { initialCache: false }
+  { initialCache: true }
 );
 const { data: doctor, error: equipoError } = await useAsyncData(
   'equipo',
@@ -142,7 +142,7 @@ const { data: doctor, error: equipoError } = await useAsyncData(
       return {}; // En caso de error, retornar un objeto vacío
     }
   },
-  { initialCache: false }
+  { initialCache: true }
 );
 
 

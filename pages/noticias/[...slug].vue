@@ -100,7 +100,7 @@ const { data: noticia, refresh } = await useAsyncData(
     },
     {
         watch: [() => route.params.slug],  // Observar el `slug` para recargar los datos
-        initialCache: false  // Deshabilitar la caché inicial
+        initialCache: true  // Deshabilitar la caché inicial
     }
 );
 

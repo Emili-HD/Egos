@@ -59,37 +59,7 @@
             <div v-if="tratamiento.acf.dr_comment" id="doctores" class="grid grid-cols-12 mb-20 gap-y-8"
                 data-anchor="doctores">
                 <h2 class="h4 col-[2/-2] lg:text-center">Nuestro Equipo en {{ tratamiento.acf.anchor }}</h2>
-                <div v-if="doctorsWithComments.length > 0" class="col-[2/-2] grid grid-cols-12 gap-4">
-                    <div class="overflow-hidden size-full flex flex-col items-center col-span-full lg:col-span-6 border-y border-y-blue-1/25 pt-4"
-                        v-for="({ doctor, comentario }, index) in doctorsWithComments" :key="doctor.ID">
-                        <div class="flex flex-col sm:flex-row justify-center items-center gap-x-6 mb-4 text-center">
-                            <div
-                                class="w-full min-h-56 mb-8 sm:w-80 lg:w-64 lg:aspect-square rounded-lg overflow-hidden">
-                                <img loading="lazy" :src="doctor.featured_image" :alt="doctor.post_title"
-                                    class="cover absolute object-center h-full max-w-none left-1/2 -translate-x-1/2"
-                                    :aria-labelledby="'doctor-title-' + doctor.ID" />
-                            </div>
-                            <div class="w-full" v-if="doctor.post_title">
-                                <!-- Título del doctor -->
-                                <h3 class="text-clamp-xl text-left mb-2">
-                                    <strong>{{ doctor.post_title }}</strong>
-                                </h3>
-                                <!-- Comentario del doctor -->
-                                <p class="text-clamp-sm leading-tight mb-4 text-left">
-                                    {{ comentario }}
-                                </p>
-                                <!-- Botón de enlace a la página del doctor -->
-                                <UiButton :to="relativeDoctorLink(doctor.permalink)"
-                                    class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1 w-fit h-fit">
-                                    más información
-                                </UiButton>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div v-else>
-                    <p>Cargando información del doctor...</p>
-                </div>
+                <DoctorComentario :data="doctorsWithComments" />
             </div>
         </NuxtLazyHydrate>
 
@@ -110,472 +80,491 @@
 </template>
 
 <script setup>
-import { useError } from '#app';
-import { useYoastHead } from '@/composables/useYoast';
-import { useTratamientoData } from '@/composables/useTratamientoData';
-import { useFaqJsonLd } from '@/composables/useFaqJsonLd';
-import { useVideoJsonLd } from '@/composables/useVideoJsonLd';
-import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
-import { useDoctorsJson } from '~/composables/useDoctorsJson';
-import { useBusinessData } from '@/composables/useBusinessData';
-import { getClinicas } from '@/composables/useApi'
-import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
-import ClinicasRelacionadas from '~/components/cirugias/ClinicasRelacionadas.vue';
+    import { useError } from '#app';
+    import { useYoastHead } from '@/composables/useYoast';
+    import { useTratamientoData } from '@/composables/useTratamientoData';
+    import { useFaqJsonLd } from '@/composables/useFaqJsonLd';
+    import { useVideoJsonLd } from '@/composables/useVideoJsonLd';
+    import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
+    import { useDoctorsJson } from '~/composables/useDoctorsJson';
+    import { useBusinessData } from '@/composables/useBusinessData';
+    import { getClinicas } from '@/composables/useApi'
+    import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
+    import ClinicasRelacionadas from '~/components/cirugias/ClinicasRelacionadas.vue';
 
-definePageMeta({
-  middleware: 'validate-url', // Aplicar el middleware a esta página
-});
+    // definePageMeta({
+    //     middleware: 'validate-url', // Aplicar el middleware a esta página
+    // });
 
-const { $gsap: gsap } = useNuxtApp();
-const router = useRouter();
-const route = useRoute();
+    const { $gsap: gsap } = useNuxtApp();
+    const router = useRouter();
+    const route = useRoute();
 
-// Props
-const props = defineProps({
-    category: {
-        type: String,
-        required: false,
-        default: '',
-    },
-})
+    // Props
+    const props = defineProps({
+        category: {
+            type: String,
+            required: false,
+            default: '',
+        },
+    })
 
-// Estados reactivos
-const componentRef = ref(null)
-const form = ref({ form_settings: null });
-const isLoading = ref(false);
-const errorMessage = ref("");
+    // Estados reactivos
+    const componentRef = ref(null)
+    const form = ref({ form_settings: null });
+    const isLoading = ref(false);
+    const errorMessage = ref("");
 
-const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(
-    `tratamiento-${route.params.slug}`,
-    async () => {
-        try {
-            const response = await getTratamiento({ slug: route.params.slug });
+    // Verificar si estamos en el cliente o servidor
+    const isClient = import.meta.client;
+    const isServer = import.meta.server;
 
-            // Si no se encuentra el tratamiento, lanzamos un error 404
-            if (!response || Object.keys(response).length === 0) {
-                const nuxtError = useError();
-                nuxtError({
-                    statusCode: 404,
-                    statusMessage: 'Tratamiento no encontrado'
+    // Manejo del tratamiento
+    const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(
+        `tratamiento-${route.params.slug}`,
+        async () => {
+            try {
+                // Depurar si estamos en cliente o servidor
+                // console.log(`Ejecución en el ${isClient ? 'cliente' : 'servidor'}`);
+
+                // Verificar el estado de la solicitud dependiendo del entorno
+                // if (isServer) {
+                //     console.log('SSR: Realizando solicitud desde el servidor');
+                // } else {
+                //     console.log('CSR: Realizando solicitud desde el cliente');
+                // }
+
+                const response = await getTratamiento({ slug: route.params.slug });
+
+                // Depurar la respuesta de la API
+                // console.log('Respuesta de la API (tratamiento):', response);
+
+                // Verifica si la respuesta es válida
+                if (!response || typeof response !== 'object' || Object.keys(response).length === 0) {
+                    throw createError({
+                        statusCode: 404,
+                        statusMessage: 'Tratamiento no encontrado'
+                    });
+                }
+
+                return response;
+            } catch (error) {
+                console.error(`Error fetching tratamiento ${route.params.slug}:`, error);
+
+                // Lanzar un error genérico si hay un problema con la solicitud
+                throw createError({
+                    statusCode: 500,
+                    statusMessage: 'Error en el servidor'
                 });
             }
-
-            // Retornar la respuesta si todo está bien
-            return response || {}; // Asegurarse de que siempre se retorne un objeto
-        } catch (error) {
-            console.error(`Error fetching tratamiento ${route.params.slug}:`, error);
-
-            // En caso de error, también podrías considerar mostrar un error genérico o 404
-            const nuxtError = useError();
-            nuxtError({
-                statusCode: 500,
-                statusMessage: 'Error en el servidor'
-            });
-
-            return {}; // En caso de error, retornar un objeto vacío
+        },
+        {
+            watch: [() => route.params.slug],
+            initialCache: true
         }
-    },
-    {
-        watch: [() => route.params.slug]
-    }
-);
+    );
 
-const { data: formData, refresh: refreshFormData } = await useAsyncData(
-    'formSettings',
-    async () => {
-        try {
-            const response = await egosSettings('form_settings');
-            return response || {}; // Asegurarse de que siempre se retorne un objeto
-        } catch (error) {
-            console.error('Error fetching form settings:', error);
-            return {}; // En caso de error, retornar un objeto vacío
-        }
-    }
-);
-
-const { data: clinicasData, error: clinicasError } = await useAsyncData(
-    'clinicas',
-    async () => {
-        try {
-            const response = await getClinicas();
-            return response || []; // Asegurarse de que siempre se retorne un array
-        } catch (error) {
-            console.error('Error fetching clinicas:', error);
-            return []; // En caso de error, retornar un array vacío
-        }
-    }
-);
-
-
-const doctorsWithComments = ref([]);
-
-// Asignar los datos de los doctores directamente desde `tratamiento.acf.doctores_relacionados`
-if (tratamiento.value && tratamiento.value.acf?.dr_comment) {
-    doctorsWithComments.value = tratamiento.value.acf.dr_comment.map(commentObj => ({
-        doctor: commentObj.doctores_relacionados[0],  // Asumimos que hay un doctor en `doctores_relacionados`
-        comentario: commentObj.comentario
-    }));
-}
-
-const relativeDoctorLink = (link) => {
-    if (link) {
-        const url = new URL(link);
-        return url.pathname;
-    }
-    return '';
-};
-
-
-// Observar el DOM
-const observeDOM = () => {
-    // Asegurarse de que este código se ejecute solo en el cliente
-    if (import.meta.client) {
-        const observer = new MutationObserver((mutations, obs) => {
-            const panels = document.querySelectorAll('.treatment-panel');
-            if (panels.length) {
-                obs.disconnect();
+    // Manejo de los datos del formulario
+    const { data: formData, refresh: refreshFormData } = await useAsyncData(
+        'formSettings',
+        async () => {
+            try {
+                const response = await egosSettings('form_settings');
+                return response || {}; // Asegurarse de que siempre se retorne un objeto
+            } catch (error) {
+                console.error('Error fetching form settings:', error);
+                return {}; // En caso de error, retornar un objeto vacío
             }
-        });
-
-        if (componentRef.value) {
-            observer.observe(componentRef.value, {
-                childList: true,
-                subtree: true,
-            });
-        } else {
-            console.error('Elemento a observar no está disponible');
         }
-    }
-};
+    );
 
-// Unificar el watch del `slug` para manejar tanto el refresco de los datos como la validación de URLs malformadas
-watch(
-    () => route.params.slug,
-    async (newSlug) => {
-        isLoading.value = true;
-        errorMessage.value = "";
-        
-        // Validar si la URL está malformada
-        const fullPath = route.fullPath;
-        
-        
-    const httpCount = (fullPath.match(/https?:\/\//g) || []).length;
-
-    if (httpCount > 1) {
-      // Si la URL contiene más de un "http" o "https", redirigimos a la página de error
-      router.push('/error');
-      return;
-    }
-
-    try {
-      // Refresca los datos del tratamiento y el formulario
-      await refreshTratamiento();
-      await refreshFormData();
-    } catch (error) {
-      errorMessage.value = "No se pudo cargar la información.";
-    } finally {
-      isLoading.value = false;
-    }
-  },
-  { immediate: true }
-);
-
-watch(tratamiento, (nuevoValor) => {
-    // Si 'tratamiento' es nulo o indefinido, redirige a '/error'.
-    if (!nuevoValor) {
-        router.push('/error');
-    }
-}, { immediate: true });
-
-// Si no se encuentra el tratamiento, redirecciona a '/error'
-if (!tratamiento.value) {
-    router.push('/error');
-}
-
-
-const mainActive = async () => {
-    await nextTick()
-    let main = document.querySelector('body')
-    main.classList.add('visible')
-}
-
-const processAncla = (ancla) => {
-    // Convertir a minúsculas
-    let processed = ancla.toLowerCase()
-
-    // Reemplazar acentos y caracteres especiales
-    processed = processed.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-
-    // Reemplazar espacios con guiones bajos
-    processed = processed.replace(/\s+/g, '_')
-
-    return processed
-}
-
-const cellHeights = async () => {
-    await nextTick();
-    const imageContainers = document.querySelectorAll('.image_container');
-    const celdas = document.querySelectorAll('.contenido_tabla > div')
-
-    // Recoge todos los altos
-    let maxAltura = 0;
-    imageContainers.forEach(container => {
-        const altura = container.offsetHeight;
-        if (altura > maxAltura) {
-            maxAltura = altura;
+    // Manejo de los datos de las clínicas
+    const { data: clinicasData, error: clinicasError } = await useAsyncData(
+        'clinicas',
+        async () => {
+            try {
+                const response = await getClinicas();
+                return response || []; // Asegurarse de que siempre se retorne un array
+            } catch (error) {
+                console.error('Error fetching clinicas:', error);
+                return []; // En caso de error, retornar un array vacío
+            }
         }
-    });
+    );
 
-    // Aplica el alto máximo a todos los containers
-    imageContainers.forEach(container => {
-        container.style.height = maxAltura + 'px';
-    });
+    const doctorsWithComments = ref([]);
 
-    let maxCelda = 0;
-    celdas.forEach(celda => {
-        const altura = celda.offsetHeight;
-        if (altura > maxCelda) {
-            maxCelda = altura;
-        }
-    });
+    // Asignar los datos de los doctores directamente desde `tratamiento.acf.doctores_relacionados`
+    if (tratamiento.value && tratamiento.value.acf?.dr_comment) {
+        doctorsWithComments.value = tratamiento.value.acf.dr_comment.map(commentObj => ({
+            doctor: commentObj.doctores_relacionados[0],  // Asumimos que hay un doctor en `doctores_relacionados`
+            comentario: commentObj.comentario
+        }));
+    }
 
-    // Aplica el alto máximo a todos los containers
-    celdas.forEach(celda => {
-        celda.style.height = maxCelda + 'px';
-    });
-};
 
-const mostrarAnchorsMenu = async () => {
-    await nextTick()
-    let navigation = document.querySelector('.nav-pages')
-    let button = document.querySelector('.kebab')
 
-    if (navigation) {
-        // console.log('navegación secundaria');
-        let totalMenu = document.querySelector('.header-wrapper').offsetWidth
-        let totalCat = document.querySelector('.nav-categories').offsetWidth
-        let totalButton = document.querySelector('.nav-secondary').offsetWidth
-        let maxMenuWidth = (totalMenu - totalCat - totalButton - 20) + 'px'
-
-        // console.log(totalButton);
-
-        let mm = gsap.matchMedia()
-        mm.add("(min-width: 768px)", () => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: navigation,
-                    start: "300 top",
-                    toggleActions: "play none reverse none",
-                    // markers: true 
+    // Observar el DOM
+    const observeDOM = () => {
+        // Asegurarse de que este código se ejecute solo en el cliente
+        if (import.meta.client) {
+            const observer = new MutationObserver((mutations, obs) => {
+                const panels = document.querySelectorAll('.treatment-panel');
+                if (panels.length) {
+                    obs.disconnect();
                 }
-            }, 0)
-
-            tl.to('.nav-pages',
-                {
-                    ease: 'power1.out',
-                    maxWidth: maxMenuWidth,
-                    duration: 0.5
-                }, 0)
-                .to('.nav-panels ul', { autoAlpha: 1 }, '<')
-                .to('.nav-pages svg', { autoAlpha: 0 }, '<')
-        })
-
-        mm.add("(max-width: 767px)", () => {
-            let menuAbierto = false;
-            button.addEventListener('click', () => {
-                // console.log('botón clicado');
-
-                if (!menuAbierto) {
-                    // Si el menú está cerrado, lo abrimos
-                    gsap.to(navigation, {
-                        ease: 'power1.out',
-                        maxWidth: '50vw',
-                        height: 'fit-content',
-                        paddingTop: '4em',
-                        ease: 'power1.inOut',
-                        duration: 0.75
-                    }, 0);
-                    gsap.to('.nav-panels ul', { autoAlpha: 1 }, '<');
-                } else {
-                    // Si el menú está abierto, lo cerramos
-                    gsap.to(navigation, {
-                        ease: 'power1.out',
-                        maxWidth: '8.25em', // Asume que este es el estado inicial de tu menú
-                        height: '100%', // Ajusta estos valores según sea necesario
-                        paddingTop: '0em',
-                        ease: 'power1.inOut',
-                        duration: 0.75
-                    }, 0);
-                    gsap.to('.nav-panels ul', { autoAlpha: 0 }, '<');
-                }
-
-                menuAbierto = !menuAbierto; // Cambia el estado del menú
             });
-        })
 
-    }
-}
-
-const mostrarRiesgos = async () => {
-    // Seleccionamos los elementos necesarios
-    let disparador = document.querySelector('#riesgos.panel .panel__content h2');
-    let icono = document.querySelector('#riesgos.panel .panel__content h2 svg');
-    let contenido = document.querySelector('#riesgos.panel .panel__content .answer');
-
-    if (disparador && contenido && icono) {
-        // Añadir un solo listener para alternar entre mostrar y ocultar
-        disparador.addEventListener('click', () => {
-            if (contenido.classList.contains('isExpanded')) {
-                // Contraer el contenido
-                icono.style.transform = "rotate(0deg)";
-                contenido.style.maxHeight = '0px';
-                contenido.classList.remove('isExpanded');
+            if (componentRef.value) {
+                observer.observe(componentRef.value, {
+                    childList: true,
+                    subtree: true,
+                });
             } else {
-                // Expandir el contenido
-                icono.style.transform = "rotate(45deg)";
-                contenido.style.maxHeight = '1000px';
-                contenido.classList.add('isExpanded');
-            }
-        });
-    }
-};
-
-
-const currentUrl = route.fullPath
-
-// Recorremos todos los tabs y generamos los JSON-LD para los vídeos
-let allVideosJsonLd = [];
-const uniqueVideoIds = new Set();
-
-if (tratamiento.value.acf?.applicationldjson?.[0] === 'true') {
-    for (const tab of tratamiento.value.acf.tabs) {
-        if (Array.isArray(tab.videos) && tab.videos.length > 0) {
-            // Filtra vídeos que sean exclusivamente de YouTube
-            const validVideos = tab.videos.filter(video => {
-                const videoUrl = video.video;
-                return videoUrl && (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be'));
-            });
-
-            if (validVideos.length > 0) {
-                const videoJsonLd = await useVideoJsonLd(validVideos, currentUrl);
-
-                // Filtra videos duplicados por videoId
-                const filteredVideoJsonLd = videoJsonLd.itemListElement.filter(video => {
-                    const videoId = video.embedUrl.split('/').pop();
-                    if (uniqueVideoIds.has(videoId)) {
-                        return false;
-                    } else {
-                        uniqueVideoIds.add(videoId);
-                        return true;
-                    }
-                });
-
-                allVideosJsonLd.push(...filteredVideoJsonLd);
+                console.error('Elemento a observar no está disponible');
             }
         }
-    }
-} else {
-    console.error('applicationldjson no está habilitado o no se encontró.');
-}
+    };
 
-// Inicializamos tratamientoJsonLd como null
-let tratamientoJsonLd = null;
+    // Unificar el watch del `slug` para manejar tanto el refresco de los datos como la validación de URLs malformadas
+    watch(
+        () => route.params.slug,
+        async (newSlug) => {
+            isLoading.value = true;
+            errorMessage.value = "";
 
-// Genera el JSON-LD para el tratamiento solo si servicetype existe
-if (tratamiento.value.acf?.datos?.servicetype && clinicasData.value) {
-    const { generateStructuredData } = useTratamientoData(tratamiento, clinicasData);
-    tratamientoJsonLd = generateStructuredData();
-}
+            // Validar si la URL está malformada
+            const fullPath = route.fullPath;
 
-let faqJsonLd = null;
-// Genera el JSON-LD para las FAQs
-if (tratamiento.value.acf?.faqs) {
-    faqJsonLd = useFaqJsonLd(tratamiento.value.acf.faqs);
-}
 
-const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
-const breadcrumbJson = generateBreadcrumbData();
+            const httpCount = (fullPath.match(/https?:\/\//g) || []).length;
 
-// Genera los metadatos de Yoast
-const { generateYoastHead } = useYoastHead(tratamiento);
-const yoastHead = generateYoastHead();
+            if (httpCount > 1) {
+                // Si la URL contiene más de un "http" o "https", redirigimos a la página de error
+                router.push('/error');
+                return;
+            }
 
-// Generar los JSON-LD de los doctores usando el composable
-const doctorScripts = doctorsWithComments.value.flatMap(({ doctor }) => {
-    const { injectDoctorData } = useDoctorsJson(doctor);  // Composable para generar JSON-LD
-    const { doctorData, publicationElements } = injectDoctorData();
-
-    return [
-        doctorData && {
-            type: 'application/ld+json',
-            children: JSON.stringify(doctorData)
+            try {
+                // Refresca los datos del tratamiento y el formulario
+                await refreshTratamiento();
+                await refreshFormData();
+            } catch (error) {
+                errorMessage.value = "No se pudo cargar la información.";
+            } finally {
+                isLoading.value = false;
+            }
         },
-        // ...publicationElements.map(publication => ({
-        //     type: 'application/ld+json',
-        //     children: JSON.stringify(publication)
-        // }))
-    ].filter(Boolean);
-});
+        { immediate: true }
+    );
 
-// Inyectar todos los scripts JSON-LD en un solo `useHead`
-useHead({
-    script: [
-        // JSON-LD para el tratamiento
-        tratamientoJsonLd && {
-            type: 'application/ld+json',
-            children: JSON.stringify(tratamientoJsonLd),
-        },
-        // JSON-LD para el breadcrumb
-        breadcrumbJson && {
-            type: 'application/ld+json',
-            children: JSON.stringify(breadcrumbJson),
-        },
-        // JSON-LD para los videos
-        allVideosJsonLd.length > 0 && {
-            type: 'application/ld+json',
-            children: JSON.stringify({
-                "@context": "https://schema.org/",
-                "@type": "ItemList",
-                "itemListElement": allVideosJsonLd
-            }),
-        },
-        // JSON-LD para las preguntas frecuentes
-        faqJsonLd && {
-            type: 'application/ld+json',
-            children: JSON.stringify(faqJsonLd),
-        },
-        // JSON-LD para los doctores
-        ...doctorScripts
-    ].filter(Boolean),  // Filtrar valores nulos o undefined
-    ...yoastHead
-});
+    watch(tratamiento, (nuevoValor) => {
+        // Si 'tratamiento' es nulo o indefinido, redirige a '/error'.
+        if (!nuevoValor) {
+            router.push('/error');
+        }
+    }, { immediate: true });
 
-onMounted(async () => {
-    await cellHeights()
-    await mainActive()
-    await mostrarAnchorsMenu()
-    await mostrarRiesgos()
-    observeDOM()
-
-    const fullHref = window.location.href;
-    console.log("Full Href:", fullHref);
-
-    // Comprobar si la URL contiene '/http', lo que indicaría una URL malformada
-    if (fullHref.includes('/http')) {
+    // Si no se encuentra el tratamiento, redirecciona a '/error'
+    if (!tratamiento.value) {
         router.push('/error');
     }
-})
+
+
+    const mainActive = async () => {
+        await nextTick()
+        let main = document.querySelector('body')
+        main.classList.add('visible')
+    }
+
+    const processAncla = (ancla) => {
+        // Convertir a minúsculas
+        let processed = ancla.toLowerCase()
+
+        // Reemplazar acentos y caracteres especiales
+        processed = processed.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+
+        // Reemplazar espacios con guiones bajos
+        processed = processed.replace(/\s+/g, '_')
+
+        return processed
+    }
+
+    const cellHeights = async () => {
+        await nextTick();
+        const imageContainers = document.querySelectorAll('.image_container');
+        const celdas = document.querySelectorAll('.contenido_tabla > div')
+
+        // Recoge todos los altos
+        let maxAltura = 0;
+        imageContainers.forEach(container => {
+            const altura = container.offsetHeight;
+            if (altura > maxAltura) {
+                maxAltura = altura;
+            }
+        });
+
+        // Aplica el alto máximo a todos los containers
+        imageContainers.forEach(container => {
+            container.style.height = maxAltura + 'px';
+        });
+
+        let maxCelda = 0;
+        celdas.forEach(celda => {
+            const altura = celda.offsetHeight;
+            if (altura > maxCelda) {
+                maxCelda = altura;
+            }
+        });
+
+        // Aplica el alto máximo a todos los containers
+        celdas.forEach(celda => {
+            celda.style.height = maxCelda + 'px';
+        });
+    };
+
+    const mostrarAnchorsMenu = async () => {
+        await nextTick()
+        let navigation = document.querySelector('.nav-pages')
+        let button = document.querySelector('.kebab')
+
+        if (navigation) {
+            // console.log('navegación secundaria');
+            let totalMenu = document.querySelector('.header-wrapper').offsetWidth
+            let totalCat = document.querySelector('.nav-categories').offsetWidth
+            let totalButton = document.querySelector('.nav-secondary').offsetWidth
+            let maxMenuWidth = (totalMenu - totalCat - totalButton - 20) + 'px'
+
+            // console.log(totalButton);
+
+            let mm = gsap.matchMedia()
+            mm.add("(min-width: 768px)", () => {
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: navigation,
+                        start: "300 top",
+                        toggleActions: "play none reverse none",
+                        // markers: true 
+                    }
+                }, 0)
+
+                tl.to('.nav-pages',
+                    {
+                        ease: 'power1.out',
+                        maxWidth: maxMenuWidth,
+                        duration: 0.5
+                    }, 0)
+                    .to('.nav-panels ul', { autoAlpha: 1 }, '<')
+                    .to('.nav-pages svg', { autoAlpha: 0 }, '<')
+            })
+
+            mm.add("(max-width: 767px)", () => {
+                let menuAbierto = false;
+                button.addEventListener('click', () => {
+                    // console.log('botón clicado');
+
+                    if (!menuAbierto) {
+                        // Si el menú está cerrado, lo abrimos
+                        gsap.to(navigation, {
+                            ease: 'power1.out',
+                            maxWidth: '50vw',
+                            height: 'fit-content',
+                            paddingTop: '4em',
+                            ease: 'power1.inOut',
+                            duration: 0.75
+                        }, 0);
+                        gsap.to('.nav-panels ul', { autoAlpha: 1 }, '<');
+                    } else {
+                        // Si el menú está abierto, lo cerramos
+                        gsap.to(navigation, {
+                            ease: 'power1.out',
+                            maxWidth: '8.25em', // Asume que este es el estado inicial de tu menú
+                            height: '100%', // Ajusta estos valores según sea necesario
+                            paddingTop: '0em',
+                            ease: 'power1.inOut',
+                            duration: 0.75
+                        }, 0);
+                        gsap.to('.nav-panels ul', { autoAlpha: 0 }, '<');
+                    }
+
+                    menuAbierto = !menuAbierto; // Cambia el estado del menú
+                });
+            })
+
+        }
+    }
+
+    const mostrarRiesgos = async () => {
+        // Seleccionamos los elementos necesarios
+        let disparador = document.querySelector('#riesgos.panel .panel__content h2');
+        let icono = document.querySelector('#riesgos.panel .panel__content h2 svg');
+        let contenido = document.querySelector('#riesgos.panel .panel__content .answer');
+
+        if (disparador && contenido && icono) {
+            // Añadir un solo listener para alternar entre mostrar y ocultar
+            disparador.addEventListener('click', () => {
+                if (contenido.classList.contains('isExpanded')) {
+                    // Contraer el contenido
+                    icono.style.transform = "rotate(0deg)";
+                    contenido.style.maxHeight = '0px';
+                    contenido.classList.remove('isExpanded');
+                } else {
+                    // Expandir el contenido
+                    icono.style.transform = "rotate(45deg)";
+                    contenido.style.maxHeight = '1000px';
+                    contenido.classList.add('isExpanded');
+                }
+            });
+        }
+    };
+
+
+    const currentUrl = route.fullPath
+
+    // Recorremos todos los tabs y generamos los JSON-LD para los vídeos
+    let allVideosJsonLd = [];
+    const uniqueVideoIds = new Set();
+
+    if (tratamiento.value.acf?.applicationldjson?.[0] === 'true') {
+        for (const tab of tratamiento.value.acf.tabs) {
+            if (Array.isArray(tab.videos) && tab.videos.length > 0) {
+                // Filtra vídeos que sean exclusivamente de YouTube
+                const validVideos = tab.videos.filter(video => {
+                    const videoUrl = video.video;
+                    return videoUrl && (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be'));
+                });
+
+                if (validVideos.length > 0) {
+                    const videoJsonLd = await useVideoJsonLd(validVideos, currentUrl);
+
+                    // Filtra videos duplicados por videoId
+                    const filteredVideoJsonLd = videoJsonLd.itemListElement.filter(video => {
+                        const videoId = video.embedUrl.split('/').pop();
+                        if (uniqueVideoIds.has(videoId)) {
+                            return false;
+                        } else {
+                            uniqueVideoIds.add(videoId);
+                            return true;
+                        }
+                    });
+
+                    allVideosJsonLd.push(...filteredVideoJsonLd);
+                }
+            }
+        }
+    } else {
+        // console.error('applicationldjson no está habilitado o no se encontró.');
+    }
+
+    // Inicializamos tratamientoJsonLd como null
+    let tratamientoJsonLd = null;
+
+    // Genera el JSON-LD para el tratamiento solo si servicetype existe
+    if (tratamiento.value.acf?.datos?.servicetype && clinicasData.value) {
+        const { generateStructuredData } = useTratamientoData(tratamiento, clinicasData);
+        tratamientoJsonLd = generateStructuredData();
+    }
+
+    let faqJsonLd = null;
+    // Genera el JSON-LD para las FAQs
+    if (tratamiento.value.acf?.faqs) {
+        faqJsonLd = useFaqJsonLd(tratamiento.value.acf.faqs);
+    }
+
+    const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
+    const breadcrumbJson = generateBreadcrumbData();
+
+    // Genera los metadatos de Yoast
+    const { generateYoastHead } = useYoastHead(tratamiento);
+    const yoastHead = generateYoastHead();
+
+    // Generar los JSON-LD de los doctores usando el composable
+    const doctorScripts = doctorsWithComments.value.flatMap(({ doctor }) => {
+        const { injectDoctorData } = useDoctorsJson(doctor);  // Composable para generar JSON-LD
+        const { doctorData, publicationElements } = injectDoctorData();
+
+        return [
+            doctorData && {
+                type: 'application/ld+json',
+                children: JSON.stringify(doctorData)
+            },
+            // ...publicationElements.map(publication => ({
+            //     type: 'application/ld+json',
+            //     children: JSON.stringify(publication)
+            // }))
+        ].filter(Boolean);
+    });
+
+    // Obtener los premios del composable
+    const { awards } = useAwardsSchema();
+
+    // Convertir los premios a JSON-LD
+    const awardsJsonLd = JSON.stringify(awards);
+
+    // Inyectar todos los scripts JSON-LD en un solo `useHead`
+    useHead({
+        script: [
+            // JSON-LD para el tratamiento
+            tratamientoJsonLd && {
+                type: 'application/ld+json',
+                children: JSON.stringify(tratamientoJsonLd),
+            },
+            // JSON-LD para el breadcrumb
+            breadcrumbJson && {
+                type: 'application/ld+json',
+                children: JSON.stringify(breadcrumbJson),
+            },
+            // JSON-LD para los videos
+            allVideosJsonLd.length > 0 && {
+                type: 'application/ld+json',
+                children: JSON.stringify({
+                    "@context": "https://schema.org/",
+                    "@type": "ItemList",
+                    "itemListElement": allVideosJsonLd
+                }),
+            },
+            // JSON-LD para las preguntas frecuentes
+            faqJsonLd && {
+                type: 'application/ld+json',
+                children: JSON.stringify(faqJsonLd),
+            },
+            // awardsJsonLd && {
+            //     type: 'application/ld+json',
+            //     children: awardsJsonLd
+            // },
+            // JSON-LD para los doctores
+            ...doctorScripts
+        ].filter(Boolean),  // Filtrar valores nulos o undefined
+        ...yoastHead
+    });
+
+    onMounted(async () => {
+        await cellHeights()
+        await mainActive()
+        await mostrarAnchorsMenu()
+        await mostrarRiesgos()
+        observeDOM()
+
+        const fullHref = window.location.href;
+        // console.log("Full Href:", fullHref);
+
+        // Comprobar si la URL contiene '/http', lo que indicaría una URL malformada
+        if (fullHref.includes('/http')) {
+            router.push('/error');
+        }
+    })
 </script>
 
 <style lang="scss" scoped>
-#faqs,
-#presupuesto,
-#relacionadas,
-#doctores,
-#premios,
-#opiniones,
-#posts,
-[data-anchor] {
-    scroll-margin-top: 10rem;
-}
+
+    #faqs,
+    #presupuesto,
+    #relacionadas,
+    #doctores,
+    #premios,
+    #opiniones,
+    #posts,
+    [data-anchor] {
+        scroll-margin-top: 10rem;
+    }
 </style>

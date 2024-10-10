@@ -60,8 +60,36 @@ const { consentBanner } = useCookiebot({
     blockingMode: 'auto'
 });
 
-onMounted( async () => {
+const campanya = ref({});
+const fetchCampanas = async () => {
+    try {
+        const data = await egosSettings('celebraciones');
+        campanya.value = data.celebraciones;
+    } catch (error) {
+        console.error('Error fetching campañas:', error);
+    }
+};
+
+onMounted(async () => {
     await nextTick()
+
+    fetchCampanas();
+
+    // Watch para observar cambios en `campanya`
+    watch(campanya, (newCampanya) => {
+        if (newCampanya?.activar_campana) {
+            // Asegurarse de que estamos en el lado del cliente
+            if (typeof window !== 'undefined') {
+                document.body.classList.add(newCampanya.campana);
+            }
+        } else {
+            if (typeof window !== 'undefined') {
+                document.body.classList.remove(newCampanya.campana);
+            }
+        }
+    });
+
+    // document.body.classList.add('blackfriday')
 
     consentBanner(consentBannerRef);
 
@@ -87,26 +115,6 @@ onBeforeUnmount(() => {
 <style>
 html {
     scroll-behavior: smooth;
-}
-html.lenis,
-html.lenis body {
-    height: auto;
-}
-
-.lenis.lenis-smooth {
-    scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-    overflow: hidden;
-}
-
-.lenis.lenis-smooth iframe {
-    pointer-events: none;
 }
 
 .cc--anim {

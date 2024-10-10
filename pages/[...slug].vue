@@ -24,134 +24,131 @@
 </template>
 
 <script setup>
-import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
-import { getPage } from '@/composables/useApi';
-import { useError } from '#app';
+    import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
+    import { getPage } from '@/composables/useApi';
+    import { useError } from '#app';
 
-const router = useRouter();
-const route = useRoute();
+    const router = useRouter();
+    const route = useRoute();
 
-const { data: pages, refresh } = await useAsyncData(
-    `pages-${route.params.slug}`,
-    async () => {
-        try {
-            const response = await getPage(route.params.slug);
+    const { data: pages, refresh } = await useAsyncData(
+        `pages-${route.params.slug}`,
+        async () => {
+            try {
+                const response = await getPage(route.params.slug);
 
-            // Si no se encuentra la página, lanzamos un error 404
-            if (!response || Object.keys(response).length === 0) {
-                const nuxtError = useError();
-                nuxtError({
-                    statusCode: 404,
-                    statusMessage: 'Página no encontrada'
+                // Verifica si la respuesta está vacía
+                if (!response || Object.keys(response).length === 0) {
+                    // Llama a `useError` dentro del bloque `setup` o dentro de `useAsyncData`
+                    throw createError({
+                        statusCode: 404,
+                        statusMessage: 'Página no encontrada'
+                    });
+                }
+
+                // Si la respuesta es válida, devuélvela
+                return response || {};
+            } catch (error) {
+                console.error(`Error fetching page ${route.params.slug}:`, error);
+
+                // Si ocurre un error, lanza un error 500
+                throw createError({
+                    statusCode: 500,
+                    statusMessage: 'Error en el servidor'
                 });
             }
-
-            // Retornar la respuesta si todo está bien
-            return response || {}; // Asegurarse de que siempre se retorne un objeto
-        } catch (error) {
-            console.error(`Error fetching page ${route.params.slug}:`, error);
-
-            // En caso de error del servidor, lanzamos un error 500
-            const nuxtError = useError();
-            nuxtError({
-                statusCode: 500,
-                statusMessage: 'Error en el servidor'
-            });
-
-            return {}; // En caso de error, retornar un objeto vacío
+        },
+        {
+            watch: [() => route.params.slug],
+            initialCache: true
         }
-    },
-    {
-        watch: [() => route.params.slug],
-        initialCache: false
-    }
-);
+    );
 
-watch(() => route.params.slug, async (newSlug, oldSlug) => {
-    if (newSlug !== oldSlug) {
-        // Llamar explícitamente a `refresh` para recargar los datos
-        await refresh();
-    }
-    // Aquí puedes incluir cualquier lógica adicional necesaria cuando cambie el slug
-}, { immediate: true });
+    watch(() => route.params.slug, async (newSlug, oldSlug) => {
+        if (newSlug !== oldSlug) {
+            // Llamar explícitamente a `refresh` para recargar los datos
+            await refresh();
+        }
+        // Aquí puedes incluir cualquier lógica adicional necesaria cuando cambie el slug
+    }, { immediate: true });
 
 
-// Métodos
-const textReveal = async () => {
-    gsap.registerPlugin(ScrollTrigger, SplitText);
+    // Métodos
+    const textReveal = async () => {
+        gsap.registerPlugin(ScrollTrigger, SplitText);
 
-    await nextTick()
+        await nextTick()
 
-    let split = new SplitText(".content__header-title", { type: "lines" });
-    let masks;
-    function makeItHappen() {
-        masks = [];
-        split.lines.forEach((target) => {
-            let mask = document.createElement("span");
-            mask.className = "mask-reveal";
-            target.append(mask);
-            masks.push(mask);
-            gsap.to(mask, {
-                scaleX: 0,
-                transformOrigin: "right center",
-                ease: "none",
-                scrollTrigger: {
-                    trigger: target,
-                    scrub: true,
-                    start: "top center",
-                    end: "bottom center",
-                    pinSpacing: false,
-                    // markers: true
-                }
+        let split = new SplitText(".content__header-title", { type: "lines" });
+        let masks;
+        function makeItHappen() {
+            masks = [];
+            split.lines.forEach((target) => {
+                let mask = document.createElement("span");
+                mask.className = "mask-reveal";
+                target.append(mask);
+                masks.push(mask);
+                gsap.to(mask, {
+                    scaleX: 0,
+                    transformOrigin: "right center",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: target,
+                        scrub: true,
+                        start: "top center",
+                        end: "bottom center",
+                        pinSpacing: false,
+                        // markers: true
+                    }
+                });
             });
-        });
-    }
+        }
 
-    window.addEventListener("resize", newTriggers);
+        window.addEventListener("resize", newTriggers);
 
-    function newTriggers() {
-        ScrollTrigger.getAll().forEach((trigger, i) => {
-            trigger.kill();
-            masks[i].remove();
-        });
-        split.split();
+        function newTriggers() {
+            ScrollTrigger.getAll().forEach((trigger, i) => {
+                trigger.kill();
+                masks[i].remove();
+            });
+            split.split();
+            makeItHappen();
+        }
+
         makeItHappen();
     }
 
-    makeItHappen();
-}
-
-const rAF = () => {
-    return new Promise(r => window.requestAnimationFrame(r));
-}
-
-// Ciclo de vida
-onMounted(async () => {
-    await nextTick()
-    await rAF()
-    if (pages && pages.acf) {
-        // Datos disponibles
-        textReveal()
+    const rAF = () => {
+        return new Promise(r => window.requestAnimationFrame(r));
     }
-    if (!pages.value) {
-        router.push('/error');
-    }
-})
 
-let tratamiento = pages
-const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
-const breadcrumbJson = generateBreadcrumbData();
+    // Ciclo de vida
+    onMounted(async () => {
+        await nextTick()
+        await rAF()
+        if (pages && pages.acf) {
+            // Datos disponibles
+            textReveal()
+        }
+        if (!pages.value) {
+            router.push('/error');
+        }
+    })
 
-const { generateYoastHead } = useYoastHead(pages);
-const yoastHead = generateYoastHead();
+    let tratamiento = pages
+    const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
+    const breadcrumbJson = generateBreadcrumbData();
 
-useHead({
-    script: [
-        breadcrumbJson && {
-            type: 'application/ld+json',
-            children: JSON.stringify(breadcrumbJson),
-        },
-    ].filter(Boolean), // Filtra los valores nulos o undefined
-    ...yoastHead,
-});
+    const { generateYoastHead } = useYoastHead(pages);
+    const yoastHead = generateYoastHead();
+
+    useHead({
+        script: [
+            breadcrumbJson && {
+                type: 'application/ld+json',
+                children: JSON.stringify(breadcrumbJson),
+            },
+        ].filter(Boolean), // Filtra los valores nulos o undefined
+        ...yoastHead,
+    });
 </script>

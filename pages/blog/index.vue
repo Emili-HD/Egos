@@ -8,7 +8,7 @@
                 <ElementsDivider class="mt-8 !mb-4 col-[2/-2] lg:col-[4/-4]" />
                 <div class="blog__header-content text-center col-[2/-2] lg:col-[4/-4]"
                     v-html="blogPage.content.rendered"></div>
-                <BlogPostDestacado critical />
+                <BlogPostDestacado />
             </header>
 
             <div class="post-list grid grid-cols-16 gap-4 mt-20 " v-if="posts" aria-label="Lista de publicaciones">
@@ -18,11 +18,11 @@
                     :aria-labelledby="'post-title-' + post.id">
                     <nuxt-link class="flex flex-col xl:flex-row h-full" :to="'/blog/' + post.slug + '/'"
                         :aria-label="'Leer más sobre ' + post.title.rendered">
-                        <UiImage :data="post" class="card__image !aspect-square" loading="lazy" />
-                        <!-- <img class="card__image aspect-square w-full xl:w-[45%] min-w-[22rem] object-cover object-center rounded-2xl overflow-hidden"
+                        <!-- <UiImage :data="post" class="card__image !aspect-square" loading="lazy" /> -->
+                        <img class="card__image aspect-square w-full xl:w-[45%] min-w-[22rem] object-cover object-center rounded-2xl overflow-hidden"
                             loading="lazy" v-if="post.featured_image_data" :src="post.featured_image_data.url"
                             :srcset="post.featured_image_data.srcset" :alt="post.featured_image_data.alt"
-                            :aria-labelledby="'post-title-' + post.id" /> -->
+                            :aria-labelledby="'post-title-' + post.id" />
                         <div class="card__content p-4 flex flex-col w-full">
                             <div
                                 class="card__content-wrapper text-left [&_h2,&_h3]:text-clamp-xl [&_h2,&_h3]:font-light">
@@ -58,63 +58,76 @@
 </template>
 
 <script setup>
-import { useAsyncData } from 'nuxt/app';
-import { getPosts, getPage } from '@/composables/useApi';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+    import { useAsyncData } from 'nuxt/app';
+    import { getPosts, getPage } from '@/composables/useApi';
+    import { ref, onMounted, onBeforeUnmount } from 'vue';
+    import ScrollTrigger from 'gsap/ScrollTrigger';
 
+    const postsPerPage = 100;
+    const { $gsap: gsap } = useNuxtApp();
+    const showLoadingIndicator = ref(true);
+    const page = ref(1);
 
-
-const postsPerPage = 100;
-const { $gsap: gsap } = useNuxtApp();
-const showLoadingIndicator = ref(true);
-const page = ref(1);
-
-// Carga inicial de posts
-const { data: posts, refresh: refreshPosts, error: postsError } = await useAsyncData('posts', () => getPosts({ page: page.value, perPage: postsPerPage }), { initialCache: false });
-
-// Carga de información de la página del blog
-const { data: blogPage, error: blogPageError } = await useAsyncData('blogPage', () => getPage(934), { initialCache: false });
-
-// Carga más posts
-const loadMorePosts = async () => {
-    page.value++;
-    await refreshPosts();
-};
-
-const formatDate = (date) => {
-    const newDate = new Date(date)
-    const day = newDate.getDate().toString().padStart(2, '0')
-    const month = (newDate.getMonth() + 1).toString().padStart(2, '0') // Meses comienzan en 0
-    const year = newDate.getFullYear()
-    return `${day}/${month}/${year}`
-}
-
-// Mounted lifecycle
-onMounted(() => {
-    if (import.meta.client) {
-        gsap.registerPlugin(ScrollTrigger);
-
-        ScrollTrigger.create({
-            trigger: '.loading-indicator',
-            start: 'bottom bottom',
-            onEnter: () => {
-                if (page.value < paginationData.value.totalPages) {
-                    loadMorePosts();
-                }
-            }
-        });
+    // Carga inicial de posts con try/catch
+    let posts, refreshPosts;
+    try {
+        const { data: postsData, refresh } = await useAsyncData('posts', () => getPosts({ page: page.value, perPage: postsPerPage }), { initialCache: true });
+        posts = postsData;
+        refreshPosts = refresh;
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        postsError.value = error; // Guardar el error en una variable reactiva
     }
-});
 
-const { generateYoastHead } = useYoastHead(blogPage);
-const yoastHead = generateYoastHead();
+    // Carga de información de la página del blog con try/catch
+    let blogPage;
+    try {
+        const { data: blogPageData } = await useAsyncData('blogPage', () => getPage(934), { initialCache: true });
+        blogPage = blogPageData;
+    } catch (error) {
+        console.error('Error fetching blog page:', error);
+        blogPageError.value = error; // Guardar el error en una variable reactiva
+    }
 
-useHead({
-    ...yoastHead,
-});
+    // Carga más posts
+    const loadMorePosts = async () => {
+        page.value++;
+        await refreshPosts();
+    };
+
+    const formatDate = (date) => {
+        const newDate = new Date(date)
+        const day = newDate.getDate().toString().padStart(2, '0')
+        const month = (newDate.getMonth() + 1).toString().padStart(2, '0') // Meses comienzan en 0
+        const year = newDate.getFullYear()
+        return `${day}/${month}/${year}`
+    }
+
+    // Mounted lifecycle
+    onMounted(() => {
+        if (import.meta.client) {
+            gsap.registerPlugin(ScrollTrigger);
+
+            ScrollTrigger.create({
+                trigger: '.loading-indicator',
+                start: 'bottom bottom',
+                onEnter: () => {
+                    if (page.value < paginationData.value.totalPages) {
+                        loadMorePosts();
+                    }
+                }
+            });
+        }
+    });
+
+    const { generateYoastHead } = useYoastHead(blogPage);
+    const yoastHead = generateYoastHead();
+
+    useHead({
+        ...yoastHead,
+    });
 </script>
 
-<style lang="scss" scoped>
-// empty style
+<style scoped>
+    /* // empty style */
 </style>

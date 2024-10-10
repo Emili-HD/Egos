@@ -68,8 +68,8 @@ const categories = computed(() => {
   }).filter(category => category.slug === 'cirugia-estetica'); // Filtra solo la categoría deseada
 });
 
-const { data: especialidades, error: especialidadesError } = await useAsyncData('especialidades', getEspecialidades, {initialCache: false});
-const { data: doctor, error: equipoError } = await useAsyncData('equipo', () => getEquipo({ perPage: 4 }), {initialCache: false});
+const { data: especialidades, error: especialidadesError } = await useAsyncData('especialidades', getEspecialidades, {initialCache: true});
+const { data: doctor, error: equipoError } = await useAsyncData('equipo', () => getEquipo({ perPage: 4 }), {initialCache: true});
 
 const doctorByCategory = (categoryId) => {
     return doctor.value.filter((d) => d.especialidad.includes(categoryId));
