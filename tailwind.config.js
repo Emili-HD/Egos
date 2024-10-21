@@ -50,6 +50,10 @@ module.exports = {
                 'dark-2': '#222222',
                 'red-1': '#942f2f',
                 'red-2': '#862a2a',
+                'crema': '#FFFFF0',
+                'vermell': '#6D1636',
+                'blau': '#BEE4FF',
+                'rosa': '#fad1c8',
             },
             backgroundColor: {
                 'bg-blue-1': '#1c2c44',

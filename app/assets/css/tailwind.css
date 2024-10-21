@@ -1,0 +1,309 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    *,
+    *::before,
+    *::after {
+        @apply box-border m-0 relative;
+    }
+
+    body {
+        @apply font-nunito font-normal leading-[1.7] text-clamp-base lg:text-clamp-sm text-blue-1 antialiased overflow-x-hidden;
+    }
+    
+    p {
+        @apply mb-6 text-clamp-base lg:text-clamp-sm font-nunito font-normal leading-[1.7];
+    }
+    a {
+        @apply font-nunito font-normal;
+    }
+    .post__content  a {
+        @apply font-nunito font-semibold underline text-gold-3;
+    }
+    ul {
+        @apply list-disc;
+    }
+    li {
+        @apply mb-4 text-clamp-base lg:text-clamp-sm font-nunito font-normal leading-[1.7];
+    }
+    h1, h2, h3, h4, h5, h6 {
+        @apply tracking-[-0.5px] mb-6 font-light leading-tight font-lora text-balance;
+    }
+    h1, .h1 {
+        @apply text-clamp-6xl;
+    }
+    h2, .h2 {
+        @apply text-clamp-5xl;
+    }
+    h3, .h3 {
+        @apply text-clamp-4xl;
+    }
+    h4, .h4 {
+        @apply text-clamp-3xl;
+    }
+    h5, .h5 {
+        @apply text-clamp-2xl;
+    }
+    h6, .h6 {
+        @apply text-clamp-xl;
+    }
+
+    u {
+        @apply no-underline border-b-[1px] border-b-nude-8/50
+    }
+    b, strong {
+        @apply font-semibold;
+    }
+
+}
+
+@layer components {
+
+    body.blackfriday {
+        --tw-bg-blue-1: #181818;
+        
+        .bg-blue-1 {
+            @apply bg-dark-1;
+        }
+        
+        .bg-blue-2,
+        .bg-blue-3 {
+            @apply bg-dark-2;
+        }
+
+        .form__wrapper,
+        .hero__form,
+        .half-right,
+        .widgets,
+        .footer {
+            @apply bg-gradient-to-tr from-dark-1 to-[#555050];
+        }
+
+        .widgets .form__wrapper {
+            background: transparent;
+        }
+
+        .financiacion::before {
+            @apply !bg-gold-3;
+        }
+    }
+
+    body.sanvalentin {
+        --tw-bg-blue-1: #181818;
+        
+        .bg-blue-1 {
+            @apply bg-red-1;
+        }
+        
+        .bg-blue-2 {
+            @apply bg-red-2;
+        }
+    }
+
+    /* body.estetica {
+
+        .site-main #opciones {
+            @apply bg-[#FAD1C8] text-blue-1;
+        }
+
+        .site-main #opciones .answer__destacado .answer__content {
+            @apply bg-crema text-blue-1;
+        }
+
+        form {
+            background-color: #22355208;
+            border: 1px solid white
+        }
+
+        form * {
+            @apply text-blue-1 
+        }
+        .form__label {
+            @apply text-blue-1
+        }
+        .form-landing input,
+        .form-landing select {
+            @apply border-b-blue-1/50
+        }
+        h2>span {
+            @apply !text-vermell;
+        }
+
+        .notices, 
+        .offer-display {
+            @apply !text-white !bg-vermell;
+        }
+    } */
+
+
+    .site-main {
+        @apply bg-nude-8 overflow-hidden w-[100vw];
+    }
+    
+    .panel#cuidados {
+        @apply mb-0;
+    }
+    
+    .panel#riesgos {
+        .panel__content {
+            @apply col-[2/-2] bg-nude-6 px-4 py-12 lg:p-8 xl:p-12 rounded-xl;
+
+            h2 {
+                @apply text-left mb-0 cursor-pointer;
+            }
+
+            .answer {
+                @apply max-h-0 overflow-hidden transition-[max-height] duration-700 ease-in-out;
+
+                .answer__content {
+                    @apply pt-6;
+                    
+                    ul {
+                        @apply my-12 px-2 lg:columns-2 lg:gap-x-8 xl:gap-x-24 list-none;
+    
+                        &::before, &::after {
+                             @apply content-[''] absolute left-0 h-px w-full bg-blue-1/25;
+                        }
+    
+                        &::before {
+                            @apply -top-6;
+                        }
+    
+                        &::after {
+                            @apply -bottom-6;
+                        }
+    
+                        &>li::after {
+                            @apply content-[''] size-5 absolute -left-7 top-1  bg-[url(~/assets/images/icons/advertencia.svg)] bg-contain
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    .panel#paciente_ideal {
+        @apply items-center gap-y-8;
+    }
+    
+    .tabla {
+        @apply py-40; 
+
+        .panel__content {
+            @apply col-[2/-2] lg:col-[4/14] row-start-1 w-full text-center;
+        }
+    }
+    
+    .related__posts h3 > div {
+        @apply text-center !important;
+        @apply pb-12 font-semibold font-nunito uppercase;
+    }
+    
+    #procedimiento,
+    #resultados {
+        @apply items-center gap-y-8;
+        
+        .panel__content {
+            @apply col-[2_/_span_14] xl:col-[2_/_span_6] row-start-2 xl:row-start-1;
+        }
+        .panel__image {
+            @apply col-[2_/_span_14] xl:col-[9_/_span_7] ;
+        }
+    }
+    
+    .landing-main .antesdespues {
+        @apply p-8 xl:p-24;
+    }
+    
+    .answer__columnas {
+        .columna1 {
+            @apply row-start-1 col-[1_/_-1] xl:col-span-5;
+        }
+        .columna2 {
+            @apply row-start-3 xl:row-start-1 col-[1_/_-1] xl:col-[12_/_17] xl:-left-20;
+        }
+    }
+
+    .answer__content ul li {
+        @apply ml-6;
+    }
+    
+    .video__player {
+        .plyr {
+            @apply rounded-2xl;
+        }
+    }
+
+    .vHorizontal {
+        .panel__image {
+            @apply aspect-video col-[2/-2] lg:col-[2/11]
+        }
+
+        .panel__content {
+            @apply col-[2/-2] lg:col-[12/-2]
+        }
+    }
+    
+    .panel__image:has(.video__player) {
+        @apply col-[2/-2] lg:col-[2_/_span_7] rounded-none;
+    }
+    
+    .skill {
+        h3 {
+            @apply !font-semibold !text-lg mb-1 leading-6;
+        }
+    }
+    
+    .nuestras-clinicas .clinicas__egos-card:nth-child(even) .clinicas__egos-map {
+        @apply xl:col-[11/-2];
+    }
+    
+    .team__form .form-landing {
+        @apply max-w-full h-screen md:h-auto w-[max(360px,40vw)] bg-blue-1 p-8 rounded-2xl border-nude-1/20 top-0 flex justify-center items-center;
+    }
+
+    .form-after {
+        @apply after:content-[''] after:border after:border-solid after:border-nude-8/[0.1] after:bg-nude-8/[0.025] after:absolute after:-top-6 after:-left-6 after:rounded-2xl after:w-[calc(100%+3rem)] after:h-[calc(100%+3rem)] after:pointer-events-none;
+    }
+
+    .swiperColumn {
+        .swiper-slide {
+            @apply h-auto box-border;
+        }
+    }
+}
+
+@layer utilities {
+    #orden-1 { @apply row-start-2; }
+    #orden-2 { @apply row-start-3; }
+    #orden-3 { @apply row-start-4; }
+    #orden-4 { @apply row-start-5; }
+    #orden-5 { @apply row-start-6; }
+    #orden-6 { @apply row-start-7; }
+    #orden-7 { @apply row-start-8; }
+    #orden-8 { @apply row-start-9; }
+    #orden-9 { @apply row-start-10; }
+    #orden-10 { @apply row-start-11; }
+
+    .before-gradient {
+        @apply before:content-[''] before:size-full before:z-[1] before:absolute before:left-0 before:top-0 before:opacity-80 before:mix-blend-multiply before:bg-gradient-to-b from-transparent from-[10%] to-blue-1;
+    }
+
+    .span-gradient {
+        @apply text-clamp-4xl bg-[length:80%] xl:bg-[length:30%] font-semibold bg-clip-text text-transparent bg-gold-gradient-text leading-tight;
+    }
+
+    .blue-gradient-full {
+        @apply before:absolute before:inset-0 before:bg-gradient-to-b before:from-blue-1 before:via-blue-1/0 before:to-blue-1 before:bg-opacity-25 before:mix-blend-multiply
+    }
+    
+    .overlay-blue {
+        @apply before:absolute before:inset-0 before:bg-blue-1 before:bg-opacity-75 before:mix-blend-multiply
+    }
+
+    .separador-lista {
+        @apply after:bg-current after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-25 first:before:bg-current first:before:content-[''] first:before:absolute first:before:top-0 first:before:left-0  first:before:w-full first:before:h-[1px] first:before:opacity-25;
+    }
+}

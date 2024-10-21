@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
+    future: {
+        compatibilityVersion: 4
+    },
+    
     devtools: { enabled: false },
 
     site: {
@@ -455,6 +459,46 @@ export default defineNuxtConfig({
         '/blog/lifting-facial-todo-lo-que-debes-saber/': { redirect: { to: '/estetica-facial/lifting-facial/', statusCode: 301 } },
         '/blog/cuanto-cuesta-una-otoplastia/': { redirect: { to: '/estetica-facial/otoplastia/', statusCode: 301 } },
         '/blog/rinomodelacion-sin-cirugia/': { redirect: { to: '/estetica-facial/rinomodelacion/', statusCode: 301 } },
+
+        '/blog/causas-pechos-tuberosos/': { redirect: { to: '/cirugia-de-pechos/mamas-tuberosas/', statusCode: 301 } },
+        '/blog/perder-peso-rapido-guia-definitiva/': { redirect: { to: '/perdida-de-peso/', statusCode: 301 } },
+        '/blog/perdida-de-peso-despues-del-verano/': { redirect: { to: '/perdida-de-peso/', statusCode: 301 } },
+
+        // Clínicas
+        '/nuestras-clinicas/egos-reus/': { redirect: { to: 	'/nuestras-clinicas/egos-reus-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/egos-girona/': { redirect: { to: 	'/nuestras-clinicas/nuestras-clinicas-egos-girona-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/barcelona-balmes/': { redirect: { to: 	'/nuestras-clinicas/egos-barcelona-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/barcelona-aribau/': { redirect: { to: 	'/nuestras-clinicas/egos-barcelona-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/barcelona-gracia/': { redirect: { to: 	'/nuestras-clinicas/egos-barcelona-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/egos-madrid/': { redirect: { to: 	'/nuestras-clinicas/egos-madrid-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/badalona-2/': { redirect: { to: 	'/nuestras-clinicas/egos-badalona-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/egos-hospitalet/': { redirect: { to: 	'/nuestras-clinicas/egos-hospitalet-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/egos-mataro/': { redirect: { to: 	'/nuestras-clinicas/egos-mataro-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/granollers/': { redirect: { to: 	'/nuestras-clinicas/egos-granollers-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/sabadell/': { redirect: { to: 	'/nuestras-clinicas/egos-sabadell-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/egos-girona/': { redirect: { to: 	'/nuestras-clinicas/nuestras-clinicas-egos-girona-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/egos-terrassa/': { redirect: { to: 	'https://www.clinicaegos.com/', statusCode: 301 } },
+        '/nuestras-clinicas/egos-manresa/': { redirect: { to: 	'/nuestras-clinicas/egos-manresa-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/tarragona/': { redirect: { to: 	'https://www.clinicaegos.com/', statusCode: 301 } },
+        '/nuestras-clinicas/lleida/': { redirect: { to: 	'/nuestras-clinicas/egos-lleida-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/andorra/': { redirect: { to: 	'/nuestras-clinicas/egos-andorra-cirugia-plastica/', statusCode: 301 } },
+
+        '/estetica-facial/marcacion-mandibular-medicina-estetica/': { redirect: { to: 	'/medicina-estetica/marcacion-mandibular-medicina-estetica/', statusCode: 301 } },
+        '/estetica-facial/relleno-de-ojeras/': { redirect: { to: 	'/medicina-estetica/relleno-de-ojeras/', statusCode: 301 } },
+        '/estetica-corporal/presoterapia/': { redirect: { to: 	'/medicina-estetica/presoterapia/', statusCode: 301 } },
+        '/estetica-corporal/mesoterapia/': { redirect: { to: 	'/medicina-estetica/mesoterapia/', statusCode: 301 } },
+        '/estetica-corporal/carboxiterapia/': { redirect: { to: 	'/medicina-estetica/carboxiterapia/', statusCode: 301 } },
+        '/estetica-corporal/tratamiento-de-morpheus-8/': { redirect: { to: 	'/medicina-estetica/tratamiento-de-morpheus-8/', statusCode: 301 } },
+        '/estetica-corporal/tratamiento-varices-sin-cirugia/': { redirect: { to: 	'/medicina-estetica/tratamiento-varices-sin-cirugia/', statusCode: 301 } },
+        '/estetica-facial/hilos-tensores/': { redirect: { to: 	'/medicina-estetica/hilos-tensores/', statusCode: 301 } },
+        '/estetica-facial/eliminar-arrugas-de-expresion/': { redirect: { to: 	'/medicina-estetica/eliminar-arrugas-de-expresion/', statusCode: 301 } },
+        '/estetica-facial/hidratacion-de-labios/': { redirect: { to: 	'/medicina-estetica/hidratacion-de-labios/', statusCode: 301 } },
+        '/estetica-facial/hidratacion-de-labios/': { redirect: { to: 	'/medicina-estetica/hidratacion-de-labios/', statusCode: 301 } },
+        '/estetica-facial/sonrisa-gingival/': { redirect: { to: 	'/medicina-estetica/sonrisa-gingival/', statusCode: 301 } },
+        '/estetica-facial/tratamiento-antiarrugas/': { redirect: { to: 	'/medicina-estetica/tratamiento-antiarrugas/', statusCode: 301 } },
+        '/estetica-facial/rinomodelacion/': { redirect: { to: 	'/medicina-estetica/rinomodelacion/', statusCode: 301 } },
+        '/estetica-facial/aumento-de-labios/': { redirect: { to: 	'/medicina-estetica/aumento-de-labios/', statusCode: 301 } },
+        '/cirugia-de-pechos/eliminar-cicatrices/': { redirect: { to: 	'/medicina-estetica/eliminar-cicatrices/', statusCode: 301 } },
     },
 
     // Configuración de nuxt-simple-robots
