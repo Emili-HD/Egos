@@ -1,6 +1,6 @@
 <template>
-    <header class="heading__cirugias">
-        <UiImage :data="data" class="hero" :preload="true" />
+    <header class="heading__cirugias min-h-[90vh] xl:h-screen h-screen max-h-[820px] 2xl:max-h-[68.75rem] px-8 xl:px-16 py-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex justify-center items-end bg-cover bg-center">
+        <UiImage :data="data" class="hero h-screen max-h-[820px] 2xl:max-h-[68.75rem]" :preload="true" />
         <div class="header__content z-10">
 
             <!-- Contador rebajas -->
@@ -55,7 +55,7 @@
         </div>
     </header>
     <div v-if="data.acf && data.acf.formulario" id="formulario"
-        class="form__wrapper [.site-main:not(.tratamiento-113)_&]:bg-blue-1 [.estetica_&]:bg-crema p-6 xl:pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
+        class="form__wrapper [.site-main:not(.tratamiento-113)_&]:bg-blue-1 [html:not(.estetica)_&]:bg-blue-1 [.estetica_&]:!bg-crema p-6 xl:pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
         <FormsEsteticaForm v-if="data.acf.formulario.tipo_de_formulario === 'Bloom'" :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)"
             :formId="data.acf.formulario.formid" :name="data.title.rendered"/>
         <FormsCustomForm v-else :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)"
@@ -148,11 +148,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-.heading__cirugias {
-    @apply min-h-[90vh] xl:h-screen max-h-[68.75rem] px-8 xl:px-16 py-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex justify-center items-end bg-cover bg-center;
-
-}
-
 .heading__cirugias::before {
     @apply content-[''] size-full absolute z-[1] left-0 top-0 opacity-80 mix-blend-multiply bg-gradient-to-b from-transparent from-[10%] to-blue-1
 }

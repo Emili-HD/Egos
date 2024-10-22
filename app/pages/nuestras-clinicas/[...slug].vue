@@ -1,5 +1,5 @@
 <template>
-    <main class="site-main" v-if="clinica" ref="componentRef">
+    <main class="site-main [html:not(.estetica)_&]:bg-blue-1 [.estetica_&]:!bg-crema " v-if="clinica" ref="componentRef">
         <UiBotonCita v-if="clinica.acf && clinica.acf.boton_cita" :data="clinica.acf.boton_cita" />
 
         <!-- Encabezado -->
@@ -40,11 +40,12 @@
                 <div class="col-span-full lg:col-span-11 min-h-screen/60">
                     <LazyElementsSingleGoogleMap :locations="clinica.acf.localizaciones" :zoom="15" />
                 </div>
-                <div id="formulario" class="half-right bg-blue-1 col-span-5 flex flex-col justify-center items-center">
+                <div id="formulario" class="half-right [html:not(.estetica)_&]:bg-blue-1 [.estetica_&]:!bg-crema  col-span-5 flex flex-col justify-center items-center">
                     <!-- <div class="map-info mb-12 [&>*]:!text-blue-1 [&>ul>li]:!text-blue-1 [&>ul>li]:list-none [&>ul]:border-t [&>ul]:border-blue-1/50 [&>ul]:pt-2 [&>*]:mb-2 [&>ul>li]:mb-0" v-html="content"></div> -->
-                    <div class="form__wrapper">
-                        <!-- <FormsCirugia :identificador="'map'" :portalId="portalId" :formId="formId" /> -->
-                        <FormsCustomForm :identificador="'map'" :portalId="String(clinica.acf.formulario.portalid)" :formId="clinica.acf.formulario.formid" />
+                    <div class="form__wrapper ">
+                        <FormsEsteticaForm v-if="clinica.acf.formulario.tipo_de_formulario === 'Bloom'" :identificador="'topPage'" :portalId="String(clinica.acf.formulario.portalid)"
+                            :formId="clinica.acf.formulario.formid" :name="clinica.title.rendered"/>
+                        <FormsCustomForm v-else :identificador="'map'" :portalId="String(clinica.acf.formulario.portalid)" :formId="clinica.acf.formulario.formid" />
                     </div>
                 </div>
             </section>
@@ -228,6 +229,46 @@ const relativeDoctorLink = (link) => {
 };
 
 // console.log(route.params.slug[0]);
+
+let htmlClassAdded = false; // Para evitar duplicar clases
+
+    // Función para agregar la clase 'estetica' a la etiqueta <html>
+    function addHtmlClass(className) {
+        if (!htmlClassAdded && document.documentElement) {
+            document.documentElement.classList.add(className);
+            htmlClassAdded = true;
+            console.log('Clase añadida a <html>:', document.documentElement.classList);
+        }
+    }
+
+    // Función para eliminar la clase cuando el componente se desmonta
+    function removeHtmlClass(className) {
+        if (htmlClassAdded && document.documentElement) {
+            document.documentElement.classList.remove(className);
+            htmlClassAdded = false;
+            console.log('Clase eliminada de <html>:', document.documentElement.classList);
+        }
+    }
+
+    // Función para verificar si la clase debe aplicarse
+    function checkAndApplyClass() {
+        if (route.path.includes('/clinica-de-medicina-estetica-en-barcelona-bloome-by-egos')) {
+            addHtmlClass('estetica');
+        } else {
+            removeHtmlClass('estetica');
+        }
+    }
+
+    // Aplicar la clase al montar el componente
+    onMounted(() => {
+        checkAndApplyClass();
+    });
+
+    // Eliminar la clase cuando el componente se desmonte
+    onUnmounted(() => {
+        removeHtmlClass('estetica');
+    });
+
 
 // Generar los JSON-LD de los doctores usando el composable
 const doctorScripts = doctorsWithComments.value.flatMap(({ doctor }) => {

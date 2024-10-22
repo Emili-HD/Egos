@@ -5,6 +5,7 @@
             :data="tratamiento.acf.boton_cita" />
         <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
             <CirugiasEncabezado :data="tratamiento" />
+
             <NuxtLazyHydrate when-idle>
                 <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
                 <ElementsAnchors v-if="tratamiento && tratamiento.acf && tratamiento.acf.tabs"
@@ -179,14 +180,9 @@
         }
     }
 
-    // Aplicar la clase al montar el componente
-    onBeforeMount(() => {
-        checkAndApplyClass();
-    });
-
     // Eliminar la clase cuando el componente se desmonte
-    onBeforeUnmount(() => {
-        // removeHtmlClass('estetica');
+    onUnmounted(() => {
+        removeHtmlClass('estetica');
     });
 
     // Manejo de los datos del formulario
@@ -572,6 +568,8 @@
         await mostrarAnchorsMenu()
         await mostrarRiesgos()
         observeDOM()
+
+        checkAndApplyClass();
 
 
         const fullHref = window.location.href;

@@ -1,8 +1,7 @@
 <template>
     <div v-if="!isLoading && formStructure && formStructure.fieldGroups" :id="props.identificador"
         class="form-landing max-w-full w-[clamp(400px,_60vw,_600px)] m-auto">
-        <form @submit.prevent="handleSubmit"
-            class="flex flex-col p-8  border border-vermell rounded-2xl">
+        <form @submit.prevent="handleSubmit" class="flex flex-col p-8  border border-vermell rounded-2xl">
             <div v-for="group in formStructure.fieldGroups" :key="group.richText"
                 class="[&_h2]:font-lora [&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance [&_h2]:text-vermell [&_h2_span]:!text-[#e6450f]">
                 <template v-if="group.fields && Array.isArray(group.fields)">
@@ -91,15 +90,10 @@
                         <template v-if="field && field.hidden">
                             <template v-if="field.fieldType === 'single_line_text'">
                                 <div class="form__group field hidden">
-                                <input
-                                    type="hidden"
-                                    :id="field.name"
-                                    v-model="utmData[field.name]"
-                                    :required="field.required"
-                                    :placeholder="field.label"
-                                    :class="{ 'border-red-500': errors[field.name] }"
-                                    class="form-input form__field"
-                                />
+                                    <input type="hidden" :id="field.name" v-model="utmData[field.name]"
+                                        :required="field.required" :placeholder="field.label"
+                                        :class="{ 'border-red-500': errors[field.name] }"
+                                        class="form-input form__field" />
                                 </div>
                             </template>
                         </template>
@@ -172,7 +166,7 @@
     const submitButtonText = ref('Enviar')
     const dependentFields = ref([])
 
-    
+
 
     const loadFormStructure = async () => {
         await nextTick()
@@ -234,49 +228,62 @@
             default:
                 return '';  // Retorna una cadena vacía si no hay coincidencia
         }
-        };
+    };
 
     const handleSubmit = async () => {
-        await nextTick()
-        errors.value = {}
+        await nextTick();
+        errors.value = {};
 
-        const isValid = validateForm()
+        const isValid = validateForm();
         if (!isValid) {
-            return
+            return;
         }
 
         try {
-            const legalConsentOptions = formStructure.value.legalConsentOptions ? {
-                consentToProcess: true,
-                text: "I agree to allow Example Company to store and process my personal data.",
-                communications: Array.isArray(formStructure.value.legalConsentOptions.communicationsCheckboxes)
-                    ? formStructure.value.legalConsentOptions.communicationsCheckboxes.map(checkbox => ({
-                        value: !!formData.value[checkbox.subscriptionTypeId],
-                        subscriptionTypeId: checkbox.subscriptionTypeId,
-                        text: checkbox.label || ''
-                    }))
-                    : []
-            } : undefined
+            // Preparar las opciones de consentimiento legal
+            const legalConsentOptions = formStructure.value.legalConsentOptions
+                ? {
+                    consentToProcess: true,
+                    text: "I agree to allow Example Company to store and process my personal data.",
+                    communications: Array.isArray(formStructure.value.legalConsentOptions.communicationsCheckboxes)
+                        ? formStructure.value.legalConsentOptions.communicationsCheckboxes.map(checkbox => ({
+                            value: !!formData.value[checkbox.subscriptionTypeId],
+                            subscriptionTypeId: checkbox.subscriptionTypeId,
+                            text: checkbox.label || ''
+                        }))
+                        : []
+                }
+                : undefined;
 
+            // Filtrar y mapear los campos de formData
             const formDataFiltered = Object.keys(formData.value)
                 .filter(key => key !== 'consent')
                 .map(key => ({
                     name: key,
                     value: formData.value[key]
-                }))
+                }));
 
+            // Añadir los campos UTM de utmData a formDataFiltered
+            const utmFields = Object.keys(utmData).map(key => ({
+                name: key,
+                value: utmData[key]
+            }));
+
+            // Combinar formDataFiltered con los valores de UTM
+            const combinedFields = [...formDataFiltered, ...utmFields];
+
+            // Crear el objeto de datos que se enviará
             const submissionData = {
-                fields: formDataFiltered,
+                fields: combinedFields,
                 context: {
                     pageUri: window.location.href,
                     pageName: document.title
                 },
                 legalConsentOptions: legalConsentOptions ? { consent: legalConsentOptions } : undefined
-            }
+            };
 
-            // console.log('Datos de envío a HubSpot:', JSON.stringify(submissionData, null, 2))
-
-            const hubspotFormEndpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${props.portalId}/${props.formId}`
+            // Enviar el formulario a HubSpot
+            const hubspotFormEndpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${props.portalId}/${props.formId}`;
 
             const response = await fetch(hubspotFormEndpoint, {
                 method: 'POST',
@@ -284,32 +291,29 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(submissionData)
-            })
+            });
 
-            const textResponse = await response.text()
-
-            // console.log('Raw Response from HubSpot:', textResponse)
+            const textResponse = await response.text();
 
             try {
-                const jsonResponse = JSON.parse(textResponse)
-
-                // console.log('Parsed Response from HubSpot:', jsonResponse)
+                const jsonResponse = JSON.parse(textResponse);
 
                 if (!response.ok) {
-                    console.error('Error Response Data:', jsonResponse)
-                    throw new Error(jsonResponse.message || 'Error al enviar el formulario')
+                    console.error('Error Response Data:', jsonResponse);
+                    throw new Error(jsonResponse.message || 'Error al enviar el formulario');
                 }
 
-                // Redirigir a la URL de gracias
-                router.push('https://heybloome.com/calendarios/')
+                // Redirigir a la URL de gracias si todo fue bien
+                window.location.href = 'https://heybloome.com/calendarios/';
             } catch (e) {
-                console.error('Response is not valid JSON:', textResponse)
-                throw new Error('Response is not valid JSON')
+                console.error('Response is not valid JSON:', textResponse);
+                throw new Error('Response is not valid JSON');
             }
         } catch (e) {
-            console.error('Error submitting form:', e.message)
+            console.error('Error submitting form:', e.message);
         }
-    }
+    };
+
 
     // Función para añadir el prefijo del país
     const addCountryPrefix = (fieldName) => {
@@ -407,7 +411,7 @@
     }
 
     .button {
-        @apply mt-8 bg-gold-2  text-nude-8 uppercase font-normal p-2 rounded-full cursor-pointer animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4 font-nunito;
+        @apply mt-8 bg-gold-2 text-nude-8 uppercase font-normal p-2 rounded-full cursor-pointer animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4 font-nunito;
     }
 
     .estetica .button {

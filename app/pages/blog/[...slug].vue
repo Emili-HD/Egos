@@ -98,7 +98,7 @@
                         :id="`area-${index}`" >
                         <h2 class="area-title font-lora">{{ content.titulo_area }}</h2>
                         <div class="[&_p]:font-nunito" v-html="content.contenido_area"></div>
-                        <div class="post__content-image" v-if="content.imagen_area.url">
+                        <div class="post__content-image" v-if="content.imagen_area && content.imagen_area.url">
                             <img loading="lazy" :src="content.imagen_area.url" :srcset="content.imagen_area.srcset"
                                 :width="content.imagen_area.width" :height="content.imagen_area.height"
                                 :alt="content.imagen_area.alt" />

@@ -11,8 +11,14 @@
         <FormsCustomForm v-else :identificador="'formPage'" :portalId="String(data.formulario.portalid)"
             :formId="data.formulario.formid" />
     </div>
-    <div class="form__image col-[1/-1] xl:col-[9/-1] bg-cover h-[50vh] xl:h-auto"
-        :style="`background-image: url(${data.formulario.form_image.url});`"></div>
+    <div class="form__image col-[1/-1] xl:col-[9/-1] bg-cover h-[50vh] xl:h-auto" >
+        <nuxt-img loading="lazy" v-if="data && data.formulario.form_image && data.formulario.form_image.url"
+        :src="data.formulario.form_image.url"
+        :srcset="data.formulario.form_image.srcset"
+        :width="data.formulario.form_image.width"
+        :height="data.formulario.form_image.height"
+        :alt="data.formulario.form_image.alt || 'Imagen sin descripción'" />
+    </div>
 </template>
 
 <script setup>
