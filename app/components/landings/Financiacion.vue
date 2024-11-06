@@ -1,5 +1,5 @@
 <template>
-   <section class="financiacion" ref="financiacion" :style="`background-image: url(${data.financiacion.fondo.url})`">
+   <section class="financiacion overlay-blue" ref="financiacion" :style="`background-image: url(${data.financiacion.fondo.url})`">
       <div class="financiacion__content">
          <h2 class="mb-2 text-balance font-bold">{{ data.financiacion.titulo }}</h2>
          <p class="mb-8" v-html="data.financiacion.descripcion"></p>
@@ -25,7 +25,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .financiacion {
-   @apply overlay-blue p-10 mb-0 min-h-screen/40 bg-cover bg-center flex flex-col justify-center items-center;
+   @apply p-10 mb-0 min-h-screen/40 bg-cover bg-center flex flex-col justify-center items-center;
 
    &__content {
       @apply text-nude-8 text-center;

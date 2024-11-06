@@ -29,7 +29,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .home__services {
-   @apply bg-white flex flex-row justify-center items-stretch flex-wrap min-h-screen w-full pt-12 xl:px-20 xl:py-16; 
+   @apply bg-crema flex flex-row justify-center items-stretch flex-wrap w-full pt-12 xl:px-20 xl:py-16; 
 
    &-description {
       @apply w-full pt-0 px-10 xl:px-24 pb-12 text-center;

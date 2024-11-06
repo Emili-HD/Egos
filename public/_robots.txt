@@ -1,0 +1,5 @@
+# Para el dominio principal: clinicaegos.com
+User-agent: *
+Allow: /
+
+Sitemap: https://www.clinicaegos.com/sitemap_index.xml

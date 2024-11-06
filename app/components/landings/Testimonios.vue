@@ -1,5 +1,5 @@
 <template>
-   <section class="testimonios px-8 xl:px-24 py-10 xl:py-20 mb-0" ref="testimonios">
+   <section class="testimonios [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-1 px-8 xl:px-24 py-10 xl:py-20 mb-0" ref="testimonios">
       <div class="testimonios__header pt-6">
          <h2>{{ data.testimonios.titulo }}</h2>
          <ElementsDivider />
@@ -39,7 +39,7 @@ const props = defineProps({
 }
 
 .testimonios {
-   @apply min-h-screen bg-blue-1 text-nude-8 flex flex-col items-center;
+   @apply min-h-screen text-nude-8 flex flex-col items-center;
 
    &__header {
       @apply w-full text-center;

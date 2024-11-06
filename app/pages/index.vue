@@ -14,7 +14,7 @@
         </NuxtLazyHydrate>
         <HomeTestimonios />
         <NuxtLazyHydrate when-idle>
-            <LazyFormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid" />
+            <LazyFormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid" :tipo="home.acf.formulario.tipo_de_formulario" :name="home.title.rendered" />
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
             <LazyHomeAcordeon :data="home.acf.acordeon_cirugias" />
@@ -32,9 +32,13 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, provide } from 'vue';
 import { useAsyncData } from 'nuxt/app'
 import { getPage } from '@/composables/useApi';
+
+const route = useRoute();
+
+provide('routePath', route.fullPath);
 
 const { data: home, error } = await useAsyncData(() => getPage(8))
 const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);

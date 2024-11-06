@@ -1,5 +1,5 @@
 <template>
-    <main class="site-main [html:not(.estetica)_&]:bg-blue-1 [.estetica_&]:!bg-crema " v-if="clinica" ref="componentRef">
+    <main class="site-main [html:not(.estetica)_&]:bg-nude-8 [.estetica_&]:!bg-crema " v-if="clinica" ref="componentRef">
         <UiBotonCita v-if="clinica.acf && clinica.acf.boton_cita" :data="clinica.acf.boton_cita" />
 
         <!-- Encabezado -->
@@ -31,20 +31,15 @@
 
         <!-- Formulario Pide Cita -->
         <NuxtLazyHydrate when-idle>
-            <!-- <FormsPiceCita class="mb-12 xl:mb-32" v-if="clinica.acf && clinica.acf.formulario"
-                :portalId="String(clinica.acf.formulario.portalid)" :formId="clinica.acf.formulario.formid"
-                :related="clinica.acf.clinicas_relacionadas" :zoom="clinica.acf.zoom" :lat="clinica.acf.lat"
-                :lng="clinica.acf.lng" /> -->
             <section
                 class="pidecita w-screen col-span-full grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-screen/70 py-0 lg:gap-0">
                 <div class="col-span-full lg:col-span-11 min-h-screen/60">
                     <LazyElementsSingleGoogleMap :locations="clinica.acf.localizaciones" :zoom="15" />
                 </div>
-                <div id="formulario" class="half-right [html:not(.estetica)_&]:bg-blue-1 [.estetica_&]:!bg-crema  col-span-5 flex flex-col justify-center items-center">
-                    <!-- <div class="map-info mb-12 [&>*]:!text-blue-1 [&>ul>li]:!text-blue-1 [&>ul>li]:list-none [&>ul]:border-t [&>ul]:border-blue-1/50 [&>ul]:pt-2 [&>*]:mb-2 [&>ul>li]:mb-0" v-html="content"></div> -->
+                <div id="formulario" class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema  col-start-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
                     <div class="form__wrapper ">
                         <FormsEsteticaForm v-if="clinica.acf.formulario.tipo_de_formulario === 'Bloom'" :identificador="'topPage'" :portalId="String(clinica.acf.formulario.portalid)"
-                            :formId="clinica.acf.formulario.formid" :name="clinica.title.rendered"/>
+                            :formId="clinica.acf.formulario.formid" :name="clinica.title.rendered" :route="route.fullPath"/>
                         <FormsCustomForm v-else :identificador="'map'" :portalId="String(clinica.acf.formulario.portalid)" :formId="clinica.acf.formulario.formid" />
                     </div>
                 </div>
@@ -84,7 +79,7 @@
                         </div>
                     </div>
                     <div v-if="clinica.acf.descripcion_cirujanos"
-                        class="col-span-full sm:col-[7/-1] sm:row-[1/3] text-left sm:text-center flex justify-center items-center text-nude-8 bg-blue-1 p-4 rounded-xl">
+                        class="col-span-full sm:col-[7/-1] sm:row-[1/3] text-left sm:text-center flex justify-center items-center [.blackfriday_&]:text-gold-1 [html:not(.blackfriday)_&]:text-nude-8 [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-1 p-4 rounded-xl">
                         <p class="mb-0 text-balance text-clamp-lg">{{ clinica.acf.descripcion_cirujanos }}</p>
                     </div>
                 </div>
@@ -141,6 +136,7 @@
 </template>
 
 <script setup>
+import { provide } from 'vue';
 import Encabezado from '~/components/cirugias/Encabezado.vue';
 import EntryText from '~/components/cirugias/EntryText.vue';
 import Categories from '~/components/home/Categories.vue';
@@ -153,6 +149,8 @@ import SingleMap from '~/components/forms/SingleMap.vue'
 const router = useRouter()
 const route = useRoute();
 const { $gsap: gsap } = useNuxtApp();
+
+provide('routePath', route.fullPath);
 
 // Estados reactivos
 const componentRef = ref(null)
@@ -237,7 +235,7 @@ let htmlClassAdded = false; // Para evitar duplicar clases
         if (!htmlClassAdded && document.documentElement) {
             document.documentElement.classList.add(className);
             htmlClassAdded = true;
-            console.log('Clase añadida a <html>:', document.documentElement.classList);
+            // console.log('Clase añadida a <html>:', document.documentElement.classList);
         }
     }
 
@@ -252,7 +250,7 @@ let htmlClassAdded = false; // Para evitar duplicar clases
 
     // Función para verificar si la clase debe aplicarse
     function checkAndApplyClass() {
-        if (route.path.includes('/clinica-de-medicina-estetica-en-barcelona-bloome-by-egos')) {
+        if (route.path.includes('/medicina-estetica-en-cataluna-bloome-by-egos')) {
             addHtmlClass('estetica');
         } else {
             removeHtmlClass('estetica');

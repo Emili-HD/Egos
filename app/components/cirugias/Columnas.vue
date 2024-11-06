@@ -7,7 +7,7 @@
       v-for="(column, index) in contentData.list_tabs"
       :key="index"
       :class="`columna${index + 1}`"
-      class="bg-nude-6 [.estetica_&]:bg-rosa p-8 mt-0 xl:mt-24 w-full xl:w-[calc(100%+5rem)] max-h-[unset] xl:max-h-[80vh] h-fit xl:h-auto flex flex-col justify-center items-start gap-8"
+      class="p-8 mt-0 xl:mt-24 w-full xl:w-[calc(100%+5rem)] max-h-[unset] xl:max-h-[80vh] h-fit xl:h-auto flex flex-col justify-center items-start gap-8"
     >
       <Swiper
         :direction="'vertical'"

@@ -1,20 +1,24 @@
 <template>
     <div v-if="landingError">Error al cargar la Promoción.</div>
-    <main v-else class="site-main landing-main" v-if="landing && landing.acf">
+    <main v-else class="site-main landing-main has-[.notices]:mt-12" v-if="landing && landing.acf">
+        <ElementsNotices class="[html:not(.blackfriday)_&]:hidden !fixed top-0 left-0 z-[9999]"/>
         <UiBotonCita v-if="landing.acf.boton_cita" :data="landing.acf.boton_cita" />
         <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
             <a class="gold" href="#hubspotLanding">Cita con el cirujano
             </a>
         </div>
-        <section class="hero m-0 p-0 min-h-screen flex flex-col lg:flex-row justify-between items-stretch">
+        <section class="hero m-0 p-0 min-h-screen flex flex-col lg:flex-row justify-between items-stretch xl:max-h-[1100px]">
             <LandingsHeader :data="landing" />
-            <div id="formulario" class="hero__form bg-blue-1 p-12 w-full lg:w-1/2 flex flex-col justify-around">
+            <div id="formulario" class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 px-4 py-8 lg:p-12 w-full lg:w-1/2 flex flex-col justify-around">
                 <div class="insignia mb-8 flex flex-row justify-center text-center">
                     <img class="max-w-[19rem]" loading="lazy" :src="landing.acf.insignia.url" alt="" />
                 </div>
-                <FormsLanding :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" />
-                <!-- <FormsCustomForm v-else-if="landing.acf.form_type === 'Hubspot'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid"
-                    identificador="topPage" /> -->
+                <FormsEsteticaForm
+                    v-if="landing && landing.acf && landing.acf.form[0] && landing.acf.form[0].tipo_de_formulario === 'Bloom'"
+                    :identificador="'topPage'" :portalId="String(landing.acf.form[0].portalid)"
+                    :formId="landing.acf.form[0].formid" :name="landing.title.rendered" :route="route.fullPath" />
+
+                <FormsLanding v-else :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" />
             </div>
         </section>
 
@@ -25,7 +29,7 @@
         <div v-if="landing.acf && landing.acf.quiz_multiple && landing.acf.quiz_multiple.multiple_forms" id="presupuesto"
             class="form__wrapper bg-blue-2 flex flex-wrap justify-center gap-0 items-stretch">
             <FormsQuiz v-for="(form, index) in landing.acf.quiz_multiple.multiple_forms" :image="form.imagen" :identificador="'formPage-' + index" :portalId="String(form.portalid)" :formId="form.formid"
-                :titulo="form.titulo_form" class="[&_form]:!w-[clamp(200px,_70vw,_700px)] [&_form]:mx-auto even:bg-blue-1" />
+                :titulo="form.titulo_form" :name="landing.title.rendered" class="[&_form]:!w-[clamp(200px,_70vw,_700px)] [&_form]:mx-auto even:bg-blue-1" />
         </div>
         <LandingsFinanciacion :data="landing.acf" />
         <LandingsPasos :data="landing.acf" />
@@ -36,7 +40,7 @@
 </template>
 
 <script setup>
-import { watch, onMounted } from 'vue';
+import { watch, onMounted, provide } from 'vue';
 import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
 import { getLanding } from '@/composables/useApi';
 
@@ -44,6 +48,8 @@ useGTM()
 
 const router = useRouter();
 const route = useRoute();
+
+provide('routePath', route.fullPath);
 
 const loadData = () => {
     const slug = route.params.slug;

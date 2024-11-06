@@ -90,7 +90,7 @@ onMounted(async () => {
     //     }
     // });
 
-    // document.body.classList.add('blackfriday')
+    document.documentElement.classList.add('blackfriday')
 
 
     isGraciasPage.value = route.path === '/gracias/';

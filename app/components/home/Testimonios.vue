@@ -14,7 +14,7 @@
          class="testimonios__list max-w-full grid-row-2 col-[1_/_span_16] p-8 xl:px-24 grid grid-cols-4 gap-8 xl:gap-4"
          v-if="testimoniosData">
          <article v-for="testimonio in testimoniosDestacados" :key="testimonio.id"
-            class="card rounded-2xl overflow-hidden p-2 bg-white !aspect-auto col-[1/-1] sm:col-span-2 xl:col-auto flex flex-col justify-between items-center gap-8 shadow-2xl shadow-nude-7 h-full">
+            class="card rounded-2xl overflow-hidden p-2 !aspect-auto col-[1/-1] sm:col-span-2 xl:col-auto flex flex-col justify-between items-center gap-8 h-full">
             <div v-if="testimonio.acf.vimeo_video" class="video__player rounded-xl w-full overflow-hidden">
                <div class="size-full aspect-[9/16]">
                   <VimeoPlayer :videoId="testimonio.acf.vimeo_video" />

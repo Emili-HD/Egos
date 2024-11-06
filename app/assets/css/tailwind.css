@@ -57,6 +57,10 @@
         @apply font-semibold;
     }
 
+    .bg-blackfriday {
+        @apply bg-gradient-to-tr from-dark-1 to-[#555050];
+    }
+
 }
 
 @layer components {
@@ -261,7 +265,7 @@
     }
     
     .team__form .form-landing {
-        @apply max-w-full h-screen md:h-auto w-[max(360px,40vw)] bg-blue-1 p-8 rounded-2xl border-nude-1/20 top-0 flex justify-center items-center;
+        @apply max-w-full h-screen md:h-auto w-[max(360px,40vw)] [html:not(.blackfriday)_&]:bg-blue-1 [.blackfriday_&]:bg-blackfriday p-8 rounded-2xl border-nude-1/20 top-0 flex justify-center items-center;
     }
 
     .form-after {

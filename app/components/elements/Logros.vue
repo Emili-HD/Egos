@@ -1,5 +1,5 @@
 <template>
-    <li class="logros">
+    <li class="logros [html:not(.blackfriday)_&]:bg-blue-1 [.blackfriday_&]:bg-blackfriday">
         <div class="mejorValorada logros__icon">
             <img class="google-icon" src="/images/icons/google.svg"
                 alt="Clínica mejor valorada en google" width="32" height="32" />
@@ -19,7 +19,7 @@ import {ref, onMounted} from 'vue'
 
 <style scoped>
 .logros {
-    @apply text-nude-8 bg-blue-1 rounded-xl text-clamp-xs hidden lg:flex justify-center items-center absolute bottom-6 w-fit h-20 px-6 py-3 gap-4;
+    @apply text-nude-8 rounded-xl text-clamp-xs hidden lg:flex justify-center items-center absolute bottom-6 w-fit h-20 px-6 py-3 gap-4;
 }
 
 .logros__icon {

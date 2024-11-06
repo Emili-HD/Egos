@@ -95,7 +95,7 @@
 
 <style lang="scss" scoped>
     .card {
-        @apply pb-4 bg-nude-7 rounded-3xl min-h-full shadow-xl flex flex-col justify-between items-center;
+        @apply pb-4 rounded-3xl min-h-full flex flex-col justify-between items-center;
 
         &__link {
             @apply w-full h-full block;

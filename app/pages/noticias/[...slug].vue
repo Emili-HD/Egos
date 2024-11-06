@@ -62,7 +62,7 @@
         </div>
 
         <!-- aside right -->
-        <aside class="form__wrapper bg-blue-2 col-span-full lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20 h-full"
+        <aside class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-2 [.blackfriday_&]:bg-blackfriday col-span-full lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20 h-full"
             v-if="noticia && noticia.acf">
             <FormsCustomForm :identificador="'formulario'" :portalId="String(noticia.acf.formulario.portalid)"
                 :formId="noticia.acf.formulario.formid" />
@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick } from 'vue';
+import { ref, watch, nextTick, provide } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getNoticias } from '@/composables/useApi';
 
@@ -79,6 +79,8 @@ import { getNoticias } from '@/composables/useApi';
 const router = useRouter();
 const route = useRoute();
 const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
+
+provide('routePath', route.fullPath);
 
 // Uso de `useAsyncData` para cargar los datos de la noticia
 const { data: noticia, refresh } = await useAsyncData(

@@ -1,10 +1,10 @@
 <template>
-    <div class="nav-secondary bg-white min-w-fit p-1 rounded-tr-2xl rounded-br-2xl hidden xl:flex  h-full gap-2">
-        <a class="button pedircita bg-blue-1 text-nude-8 min-w-28 text-center flex flex-col justify-center items-center border-none rounded-xl p-0 w-full h-full z-2"
+    <div class="nav-secondary bg-crema min-w-fit p-1 rounded-tr-2xl rounded-br-2xl hidden xl:flex  h-full gap-2">
+        <a class="button pedircita [html:not(.blackfriday)_&]:bg-blue-1 [.blackfriday_&]:bg-black text-nude-8 min-w-28 text-center flex flex-col justify-center items-center border-none rounded-xl p-0 w-full h-full z-2"
             href="#formulario" >
             Pide Cita
         </a>
-        <a v-if="showPresupuestoLink" class="button gold bg-blue-1 text-nude-8 min-w-28 text-center flex flex-col justify-center items-center border-none rounded-xl p-0 w-full h-full z-2 leading-none"
+        <a v-if="showPresupuestoLink" class="button gold [html:not(.blackfriday)_&]:bg-blue-1 [.blackfriday_&]:bg-black text-nude-8 min-w-28 text-center flex flex-col justify-center items-center border-none rounded-xl p-0 w-full h-full z-2 leading-none"
             href="#presupuesto" >
             Calcula tu presupuesto
         </a>

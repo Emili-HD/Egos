@@ -32,17 +32,12 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.is-desktop:not(.is-ipad-pro, .is-tablet) .navTrigger {
-  @apply hidden;
-}
 
 .navTrigger {
   @apply size-16 rounded-xl flex justify-center place-items-center bg-nude-8 xl:hidden;
 }
 
-.is-ipad-pro .navTrigger,
-.is-tablet .navTrigger,
-.is-mobile .navTrigger {
+.navTrigger {
   @apply bg-white absolute z-[1000] right-0 size-16  flex justify-center items-center focus:outline-none border-none outline-none cursor-pointer appearance-none rounded-xl xl:flex;
 
   svg {

@@ -1,6 +1,6 @@
 <template>
   <div v-if="error">Error al cargar los datos: {{ error }}</div>
-  <div v-else class="card bg-nude-7 [.estetica_&]:bg-rosa rounded-3xl p-2 flex flex-col justify-between items-center" :class="props.classes">
+  <div v-else class="card p-2 flex flex-col justify-between items-center" :class="props.classes">
       <nuxt-link :to="processedLink" class="w-full min-h-full block " aria-label="Ver detalles de cirugía" v-if="category">
           <picture class="group aspect-square block rounded-2xl overflow-hidden mb-2">
               <UiImage :data="category" class="scale-effect" loading="lazy" />

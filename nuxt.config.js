@@ -45,13 +45,15 @@ export default defineNuxtConfig({
         '@nuxtjs/tailwindcss',
         '@nuxtjs/device',
         '@pinia/nuxt',
-        'nuxt-lazy-hydrate',
         '@nuxtjs/robots',
+        "@nuxt/scripts",
+        // '@nuxtjs/partytown',
+        "@ambitiondev/nuxt-cookiebot",
+        'nuxt-lazy-hydrate',
         'nuxt-booster',
         'nuxt-swiper',
-        "@ambitiondev/nuxt-cookiebot",
-        "@nuxt/scripts",
         'nuxt-mail',
+        'nuxt-viewport',
         ['@nuxtjs/google-fonts', {
             families: {
                 Nunito: true,
@@ -78,12 +80,37 @@ export default defineNuxtConfig({
         cookieBotId: import.meta.env.COOKIEBOT_ID,
     },
 
+    // partytown: {
+    //     // Configuración de Partytown
+    //     debug: false,  // Cambia a true si necesitas depuración
+    //     lib: '/~partytown/',  // Ruta donde se almacenarán los archivos del Worker
+    // },
+
     gsap: {
         extraPlugins: {
             scrollTrigger: true,
             scrollTo: true,
             splitText: true,
         }
+    },
+
+    viewport: {
+        breakpoints: {
+            xs: 320,
+            sm: 640,
+            md: 768,
+            lg: 1024,
+            xl: 1280,
+            '2xl': 1536,
+        },
+
+        defaultBreakpoints: {
+            desktop: 'lg',
+            mobile: 'xs',
+            tablet: 'md',
+        },
+
+        fallbackBreakpoint: 'lg'
     },
 
     booster: {
@@ -128,6 +155,24 @@ export default defineNuxtConfig({
         ipx: {
             maxAge: 3600
         },
+
+        // providers: {
+        //     // Configuración para manejar imágenes de WordPress
+        //     wp: {
+        //         // Nombre del proveedor personalizado
+        //         name: 'wp',
+        //         // URL base de la API de WordPress, reemplaza con la URL de tu dominio
+        //         provider: 'ipx',
+        //         options: {
+        //             baseURL: 'https://test.clinicaegos.com/wp-content/uploads/',
+        //         },
+        //     },
+        // },
+        // // Define el proveedor por defecto que quieres usar
+        // domains: ['test.clinicaegos.com'],
+        // // Configura el proveedor por defecto si es necesario
+        // provider: 'wp',
+
         // Opciones de @nuxt/image
         screens: {
             xs: 320,
@@ -474,7 +519,8 @@ export default defineNuxtConfig({
         '/nuestras-clinicas/badalona-2/': { redirect: { to: 	'/nuestras-clinicas/egos-badalona-cirugia-plastica/', statusCode: 301 } },
         '/nuestras-clinicas/egos-hospitalet/': { redirect: { to: 	'/nuestras-clinicas/egos-hospitalet-cirugia-plastica/', statusCode: 301 } },
         '/nuestras-clinicas/egos-mataro/': { redirect: { to: 	'/nuestras-clinicas/egos-mataro-cirugia-plastica/', statusCode: 301 } },
-        '/nuestras-clinicas/granollers/': { redirect: { to: 	'/nuestras-clinicas/egos-granollers-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/granollers/': { redirect: { to: 	'/nuestras-clinicas/egos-mataro-cirugia-plastica/', statusCode: 301 } },
+        '/nuestras-clinicas/egos-granollers-cirugia-plastica/': { redirect: { to: 	'/nuestras-clinicas/egos-mataro-cirugia-plastica/', statusCode: 301 } },
         '/nuestras-clinicas/sabadell/': { redirect: { to: 	'/nuestras-clinicas/egos-sabadell-cirugia-plastica/', statusCode: 301 } },
         '/nuestras-clinicas/egos-girona/': { redirect: { to: 	'/nuestras-clinicas/nuestras-clinicas-egos-girona-cirugia-plastica/', statusCode: 301 } },
         '/nuestras-clinicas/egos-terrassa/': { redirect: { to: 	'https://www.clinicaegos.com/', statusCode: 301 } },
@@ -502,13 +548,13 @@ export default defineNuxtConfig({
     },
 
     // Configuración de nuxt-simple-robots
-    robots: {
-        // Opciones de configuración
-        UserAgent: '*',
-        Disallow: '/admin',
-        Allow: '/',
-        Sitemap: 'https://www.clinicaegos.com/sitemap_index.xml',
-    },
+    // robots: {
+    //     // Opciones de configuración
+    //     UserAgent: '*',
+    //     Disallow: '/admin',
+    //     Allow: '/',
+    //     Sitemap: 'https://www.clinicaegos.com/sitemap_index.xml',
+    // },
 
     sitemap: {
         cacheMaxAgeSeconds: 3600, // 1 hour
@@ -623,15 +669,15 @@ export default defineNuxtConfig({
                 // '/equipo-egos/unidad-obesidad/dr-carlos-rodriguez/',
                 '/equipo-egos/unidad-obesidad/dr-ricard-sorio/',
 
-                '/promocion/aumento-de-gluteos/',
-                '/promocion/blefaroplastia/',
-                '/promocion/cirugia-de-pechos/',
-                '/promocion/cirugia-facial/',
-                '/promocion/cirugia-intima/',
-                '/promocion/cirugias-corporales/',
-                '/promocion/ginecomastia/',
-                '/promocion/perdida-de-peso/',
-                '/promocion/rinoplastia/',
+                // '/promocion/aumento-de-gluteos/',
+                // '/promocion/blefaroplastia/',
+                // '/promocion/cirugia-de-pechos/',
+                // '/promocion/cirugia-facial/',
+                // '/promocion/cirugia-intima/',
+                // '/promocion/cirugias-corporales/',
+                // '/promocion/ginecomastia/',
+                // '/promocion/perdida-de-peso/',
+                // '/promocion/rinoplastia/',
 
                 '/cirugia-de-pechos/aumento-de-pecho/',
                 '/cirugia-de-pechos/cambio-implantes-mamarios/',
@@ -706,8 +752,27 @@ export default defineNuxtConfig({
         }
     },
 
+    // proxy: {
+    //     // Define la ruta del proxy
+    //     '/cookiebot-proxy/': {
+    //         target: 'https://consent.cookiebot.com',
+    //         pathRewrite: { '^/cookiebot-proxy/': '' },
+    //         changeOrigin: true,
+    //         secure: false,
+    //     },
+    // },
+
     app: {
         head: {
+            // script: [
+            //     {
+            //         id: 'Cookiebot',
+            //         src: '/cookiebot-proxy/uc.js', // Utiliza el proxy en vez del URL directo
+            //         'data-cbid': '784911a0-4196-4f66-bcbd-407e3ced0201',
+            //         'data-blockingmode': 'auto',
+            //         type: 'text/partytown',
+            //     },
+            // ],
             link: [
                 {
                     rel: 'preconnect',
@@ -721,48 +786,6 @@ export default defineNuxtConfig({
                     rel: 'preconnect',
                     href: 'https://www.googletagmanager.com',
                 },
-                // {
-                //     rel: 'preconnect',
-                //     href: 'https://connect.facebook.net',
-                // },
-                {
-                    rel: 'preconnect',
-                    href: 'https://static.hsappstatic.net',
-                },
-                {
-                    rel: 'preconnect',
-                    href: 'https://js-eu1.hubspot.com',
-                },
-                {
-                    rel: 'preconnect',
-                    href: 'https://js-eu1.usemessages.com',
-                },
-                {
-                    rel: 'preconnect',
-                    href: 'https://js-eu1.hs-analytics.net',
-                },
-                {
-                    rel: 'preconnect',
-                    href: 'https://js-eu1.hscollectedforms.net',
-                },
-                {
-                    rel: 'preconnect',
-                    href: 'https://app-eu1.hubspot.com',
-                },
-                {
-                    rel: 'preconnect',
-                    href: 'https://js-eu1.hs-banner.com',
-                },
-                // {
-                //     rel: 'preload',
-                //     href: 'https://connect.facebook.net/en_US/fbevents.js',
-                //     as: 'script',
-                // },
-                // {
-                //     rel: 'preload',
-                //     as: 'script',
-                //     href: 'https://consent.cookiebot.com/uc.js?cbid=784911a0-4196-4f66-bcbd-407e3ced0201'
-                // }
             ],
         }
     },

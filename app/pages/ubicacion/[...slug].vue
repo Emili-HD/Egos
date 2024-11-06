@@ -6,11 +6,11 @@
             <a class="gold" href="#hubspotLanding">Cita con el cirujano
             </a>
         </div>
-        <section class="hero m-0 p-0 min-h-screen flex flex-col lg:flex-row justify-between items-stretch">
+        <section class="hero m-0 p-0 flex flex-col lg:flex-row justify-between items-stretch">
             <LocalesHeader :data="landing" />
-            <div id="formulario" class="hero__form bg-blue-1 p-12 w-full lg:w-1/3 flex flex-col justify-around [.blackfriday_&]">
-                <FormsLanding :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" />
-            </div>
+            <!-- <div id="formulario" class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 p-12 w-full lg:w-1/3 flex flex-col justify-around">
+                <FormsEsteticaForm :identificador="'formulario'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" :name="landing.title.rendered" />
+            </div> -->
         </section>
         <CirugiasEntryText :data="landing" class="mt-6 lg:mt-20 p-6 [&>p]:text-clamp-base [&>p]:leading-relaxed" />
 
@@ -30,9 +30,9 @@
                 <div class="col-span-full lg:col-span-11 min-h-screen/60">
                     <LazyElementsSingleGoogleMap :locations="landing.acf.localizaciones" :zoom="15" />
                 </div>
-                <div id="formulario" class="half-right bg-blue-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
+                <div id="formulario" class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
                     <div class="form__wrapper">
-                        <FormsCustomForm :identificador="'map'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" />
+                        <FormsEsteticaForm :identificador="'map'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" :name="landing.title.rendered" />
                     </div>
                 </div>
             </section>
@@ -75,6 +75,16 @@
                 </div>
             </div>
         </section>
+
+        <NuxtLazyHydrate when-idle>
+            <div class="form__page grid grid-cols-subgrid col-[1/-1] my-12 lg:my-24" v-if="landing.acf && landing.acf.quiz && landing.acf.quiz.formid">
+                <div id="presupuesto"
+                    class="form__wrapper p-8 xl:p-20 col-[1/-1] xl:col-[1/9] bg-blue-1 flex flex-col justify-center items-center min-h-screen/80">
+                    <FormsQuiz :identificador="'formPage'" :portalId="String(landing.acf.quiz.portalid)" :formId="landing.acf.quiz.formid"
+                        :titulo="landing.acf.quiz.titulo_form" :name="landing.title.rendered" class="max-w-[max(360px,_45vw)]" />
+                </div>
+            </div>
+        </NuxtLazyHydrate>
 
         <!-- Doctores -->
         <NuxtLazyHydrate when-idle>
@@ -132,7 +142,7 @@
 </template>
 
 <script setup>
-// import { watch, onMounted } from 'vue';
+import { watch, onMounted, provide } from 'vue';
 // import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
 import RelatedClinicas from '~/components/elements/RelatedClinicas.vue';
 import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
@@ -142,6 +152,8 @@ useGTM()
 
 const router = useRouter();
 const route = useRoute();
+
+provide('routePath', route.fullPath);
 
 const loadData = () => {
     const slug = route.params.slug;

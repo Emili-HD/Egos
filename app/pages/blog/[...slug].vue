@@ -40,7 +40,7 @@
                 <div id="calculadora" class="lg:px-12 lg:pb-12">
                     <FormsQuiz v-if="post && post.acf" :identificador="'topPage'"
                         :portalId="String(post.acf.quiz.portalid)" :formId="post.acf.quiz.formid"
-                        :titulo="post.acf.quiz.titulo_form" />
+                        :titulo="post.acf.quiz.titulo_form" :name="post.title.rendered" />
                 </div>
             </aside>
 
@@ -159,7 +159,7 @@
                         <div id="presupuesto" class="lg:px-12 lg:pb-12">
                             <FormsQuiz v-if="post && post.acf" :identificador="'topPage'"
                                 :portalId="String(post.acf.quiz.portalid)" :formId="post.acf.quiz.formid"
-                                :titulo="post.acf.quiz.titulo_form" />
+                                :titulo="post.acf.quiz.titulo_form" :name="post.title.rendered" />
                         </div>
                     </div>
 
@@ -167,8 +167,13 @@
                 <aside class="widgets bg-blue-2 p-6 col-[2/-2] xl:col-[13/17] rounded-3xl"
                     v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
                     <div id="formulario" class="form__wrapper p-2 p-xs-6 ">
-                        <FormsCustomForm v-if="post && post.acf" :identificador="'topPage'"
+
+                        <FormsEsteticaForm v-if="post && post.acf && post.acf.formulario && post.acf.formulario.portalid === '25632462'" :identificador="'topPage'"
+                            :portalId="String(post.acf.formulario.portalid)" :formId="post.acf.formulario.formid" :name="post.title.rendered"/>
+
+                        <FormsCustomForm v-else-if="post && post.acf && post.acf.formulario" :identificador="'topPage'"
                             :portalId="String(post.acf.formulario.portalid)" :formId="post.acf.formulario.formid" />
+
                     </div>
                 </aside>
             </section>
@@ -179,10 +184,13 @@
 <script setup>
 import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { provide } from 'vue';
 
 // Acceder a los parámetros de la ruta
 const router = useRouter();
 const route = useRoute();
+
+provide('routePath', route.fullPath);
 
 // Acceder a gsap y lenis desde el contexto de Nuxt
 const { $gsap: gsap } = useNuxtApp();

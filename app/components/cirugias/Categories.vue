@@ -27,7 +27,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .home__services {
-   @apply bg-white flex flex-row justify-start items-center flex-wrap min-h-[100vh] w-full pt-16 overflow-hidden;
+   @apply bg-crema flex flex-row justify-start items-center flex-wrap min-h-[100vh] w-full pt-16 overflow-hidden;
 
    &::before {
       @apply content-[''] absolute opacity-10:z-[-1] border border-blue-1 rounded-s-full size-[75vw] left-1/2 top-1/2 translate-y-[5%] before:translate-x-[35%];

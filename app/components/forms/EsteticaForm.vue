@@ -1,9 +1,9 @@
 <template>
     <div v-if="!isLoading && formStructure && formStructure.fieldGroups" :id="props.identificador"
         class="form-landing max-w-full w-[clamp(400px,_60vw,_600px)] m-auto">
-        <form @submit.prevent="handleSubmit" class="flex flex-col p-8  border border-vermell rounded-2xl">
+        <form @submit.prevent="handleSubmit" class="flex flex-col p-8  rounded-2xl">
             <div v-for="group in formStructure.fieldGroups" :key="group.richText"
-                class="[&_h2]:font-lora [&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance [&_h2]:text-vermell [&_h2_span]:!text-[#e6450f]">
+                class="[&_h2]:font-lora [&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance [html:not(.blackfriday).estetica_&_h2]:text-vermell [html:not(.blackfriday).estetica_&_h2_span]:!text-[#e6450f] [.blackfriday_&_h2]:text-crema">
                 <template v-if="group.fields && Array.isArray(group.fields)">
                     <template v-for="field in group.fields" :key="field.name">
                         <template v-if="field && !field.hidden">
@@ -51,10 +51,10 @@
                                         <select :id="field.name" v-model="formData[field.name]"
                                             :required="field.required" :class="{ 'border-red-500': errors[field.name] }"
                                             :placeholder="field.label"
-                                            class="form__select form__field focus:outline-none mt-4">
+                                            class="form__select form__field focus:outline-none mt-2">
                                             <option v-for="option in field.options" :key="option.value"
                                                 :value="option.value"
-                                                class="[.is-windows_&]:bg-black [.is-windows_&]:text-vermell [.is-windows_&]:font-light">
+                                                class="[.estetica_.is-windows_&]:bg-black [.blackfriday_.is-windows_&]:text-black [.estetica_.is-windows_&]:text-vermell [.estetica_.is-windows_&]:font-light">
                                                 {{ option.label }}
                                             </option>
                                         </select>
@@ -71,7 +71,7 @@
                                                 :required="shouldShowDependentField(subField) && subField.dependentField.required"
                                                 :class="{ 'border-red-500': errors[subField.dependentField.name] }"
                                                 :placeholder="subField.dependentField.label"
-                                                class="form__select form__field focus:outline-none mt-4">
+                                                class="form__select form__field focus:outline-none mt-2">
                                                 <option v-for="option in subField.dependentField.options"
                                                     :key="option.value" :value="option.value"
                                                     class="[.is-windows_&]:bg-black [.is-windows_&]:text-nude-8 [.is-windows_&]:font-light">
@@ -89,6 +89,14 @@
                         </template>
                         <template v-if="field && field.hidden">
                             <template v-if="field.fieldType === 'single_line_text'">
+                                <div class="form__group field hidden">
+                                    <input type="hidden" :id="field.name" v-model="utmData[field.name]"
+                                        :required="field.required" :placeholder="field.label"
+                                        :class="{ 'border-red-500': errors[field.name] }"
+                                        class="form-input form__field" />
+                                </div>
+                            </template>
+                            <template v-if="field.fieldType === 'single_checkbox'">
                                 <div class="form__group field hidden">
                                     <input type="hidden" :id="field.name" v-model="utmData[field.name]"
                                         :required="field.required" :placeholder="field.label"
@@ -156,8 +164,14 @@
         name: {
             type: String,
             required: true
-        }
+        },
+        route: String,
     })
+
+    const routePath = inject('routePath')
+
+    // console.log('ruta routePath:', routePath);
+    
 
     const formData = ref({})
     const formStructure = ref(null)
@@ -165,8 +179,6 @@
     const errors = ref({})
     const submitButtonText = ref('Enviar')
     const dependentFields = ref([])
-
-
 
     const loadFormStructure = async () => {
         await nextTick()
@@ -184,7 +196,7 @@
             const formStructureData = response.data
             formStructure.value = formStructureData
 
-            console.log('Form Structure:', formStructure.value)
+            // console.log('Estetica Structure:', formStructure.value)
 
             formStructure.value.fieldGroups.forEach(group => {
                 if (group.fields) {
@@ -209,7 +221,8 @@
         utm_content: '',
         utm_medium: '',
         utm_source: '',
-        utm_term: ''
+        utm_term: '',
+        isEgosSurgery: ''
     });
 
     // Función para obtener el valor según el ID del campo
@@ -222,9 +235,12 @@
             case 'utm_medium':
                 return 'Web';
             case 'utm_source':
-                return 'web';
+                const rutaFinal = `https://clinicaegos.com${routePath}`
+                return rutaFinal;
             case 'utm_term':
                 return props.name;  // Usar el nombre de la página
+            case 'isEgosSurgery':
+                return 'true';  // Usar el nombre de la página
             default:
                 return '';  // Retorna una cadena vacía si no hay coincidencia
         }
@@ -378,13 +394,13 @@
             return false
         }
         if (condition.operator === 'set_any') {
-            return condition.values.includes(formData.value['interes'])
+            return condition.values.includes(formData.value['surgery_type'])
         }
         return false
     }
 
     // Vigilar el campo principal para actualizar la visibilidad de los campos dependientes
-    watch(() => formData.value['interes'], (newValue) => {
+    watch(() => formData.value['surgery_type'], (newValue) => {
         // console.log('Interes changed to:', newValue)
     })
 
@@ -397,6 +413,7 @@
         utmData['utm_medium'] = getValueForField('utm_medium');
         utmData['utm_source'] = getValueForField('utm_source');
         utmData['utm_term'] = getValueForField('utm_term');
+        utmData['isEgosSurgery'] = getValueForField('isEgosSurgery');
 
         await nextTick();  // Espera un ciclo de actualización si es necesario
         // console.log('Valores de formData asignados:', utmData);
@@ -406,7 +423,10 @@
 
 <style scoped>
 
-    label {
+    .blackfriday label, label{
+        @apply mt-4 text-crema;
+    }
+    html:not(.blackfriday).estetica label {
         @apply mt-4 text-vermell;
     }
 
@@ -414,24 +434,34 @@
         @apply mt-8 bg-gold-2 text-nude-8 uppercase font-normal p-2 rounded-full cursor-pointer animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4 font-nunito;
     }
 
-    .estetica .button {
+    .estetica:not(.blackfriday) .button {
         @apply !bg-vermell;
         background-image: none;
     }
 
-    .form-landing {
+    .estetica.blackfriday .button {
+        @apply !bg-crema text-vermell;
+        background-image: none;
+    }
+
+    html:not(.blackfriday) .form-landing {
 
         input,
         select {
-            @apply w-full flex py-2 px-4 text-vermell bg-transparent border-b border-b-vermell/30 pointer-events-auto font-nunito;
+            @apply w-full flex py-2 px-4 [.estetica_&]:text-vermell bg-transparent border-b [.estetica_&]:border-b-vermell/30 pointer-events-auto font-nunito;
         }
     }
 
     .form__group {
-        @apply relative pt-5 w-full;
+        @apply relative pt-3 w-full;
     }
 
+    .blackfriday .form__field,
     .form__field {
+        @apply border-t-0 border-x-0 border-b border-b-crema/30 w-full outline-0 text-crema py-2 bg-transparent transition-[border-color];
+    }
+
+    html:not(.blackfriday).estetica .form__field {
         @apply border-t-0 border-x-0 border-b border-b-vermell/30 w-full outline-0 text-vermell py-2 bg-transparent transition-[border-color];
     }
 
@@ -457,8 +487,26 @@
         transition: background-color 5000s ease-in-out 0s;
     }
 
-    .form__label {
-        @apply absolute -top-3 block transition-all text-vermell pointer-events-none font-nunito;
+    .estetica input:-webkit-autofill,
+    .estetica input:-webkit-autofill:hover,
+    .estetica input:-webkit-autofill:focus,
+    .estetica textarea:-webkit-autofill,
+    .estetica textarea:-webkit-autofill:hover,
+    .estetica textarea:-webkit-autofill:focus,
+    .estetica select:-webkit-autofill,
+    .estetica select:-webkit-autofill:hover,
+    .estetica select:-webkit-autofill:focus {
+        -webkit-text-fill-color: #6D1636;
+        -webkit-box-shadow: 0 0 0px 1000px #FFFFF0 inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+
+    html:not(.blackfriday) .form__label {
+        @apply absolute block transition-all [.estetica_&]:text-vermell pointer-events-none font-nunito;
+    }
+    .blackfriday .form__label {
+        @apply absolute -top-5 block transition-all text-crema pointer-events-none font-nunito;
     }
 
     .form__field:focus {
@@ -467,17 +515,30 @@
         border-image-slice: 1;
     }
 
+    .blackfriday .form__field:focus~.form__label,
     .form__field:focus~.form__label {
-        @apply text-vermell transition-all block absolute -top-3;
+        @apply text-crema transition-all block absolute -top-5;
+    }
+
+    html:not(.blackfriday).estetica .form__field:focus~.form__label {
+        @apply text-vermell transition-all block absolute -top-5;
     }
 
     .select .form__label {
-        @apply top-6;
+        @apply top-4;
     }
 
+
     .form__select:focus~.form__label,
-    .form__select:has(> option:checked:not([value=""]))~.form__label {
-        @apply -top-1 text-vermell;
+    .form__select:has(> option:checked:not([value=""]))~.form__label,
+    .blackfriday .form__select:focus~.form__label,
+    .blackfriday .form__select:has(> option:checked:not([value=""]))~.form__label {
+        @apply -top-3 !text-crema;
+    }
+
+    html:not(.blackfriday).estetica .form__select:focus~.form__label,
+    html:not(.blackfriday).estetica .form__select:has(> option:checked:not([value=""]))~.form__label {
+        @apply -top-3 text-vermell;
     }
 
     /* reset input */

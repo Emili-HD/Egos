@@ -2,9 +2,9 @@
     <div v-if="!isLoading && formStructure && formStructure.fieldGroups" :id="props.identificador"
         class="form-landing max-w-full w-[clamp(400px,_60vw,_600px)] m-auto">
         <form @submit.prevent="handleSubmit"
-            class="flex flex-col p-8 bg-nude-8/[0.025] border border-nude-8/10 [.estetica_&]:border-vermell rounded-2xl">
+            class="flex flex-col p-8 bg-nude-8/[0.025] border border-nude-8/10 [.estetica:not(.blackfriday)_&]:border-vermell rounded-2xl">
             <div v-for="group in formStructure.fieldGroups" :key="group.richText"
-                class="[&_h2]:font-lora [&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance [.estetica_&_h2]:!text-vermell [.estetica_&]:[&_h2_span]:!text-[#e6450f]">
+                class="[&_h2]:font-lora [&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance [.estetica_&_h2]:!text-vermell [.estetica:not(.blackfriday)_&]:[&_h2_span]:!text-[#e6450f]">
                 <template v-if="group.fields && Array.isArray(group.fields)">
                     <template v-for="field in group.fields" :key="field.name">
                         <template v-if="field && !field.hidden">

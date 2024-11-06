@@ -6,8 +6,8 @@
          <p v-html="data.antes_despues.subtitulo_antesdespues"></p>
       </div>
 
-      <div class="antesdespues__content flex flex-col xl:flex-row justify-center items-start gap-12 w-full p-0 xl:has-[.vertical]:flex-wrap">
-         <div class="antesdespues__content-images text-center w-full flex flex-row xl:flex-col xl:has-[.vertical]:flex-row gap-0 flex-wrap xl:w-[30vw]"
+      <div class="antesdespues__content flex flex-row flex-wrap justify-center items-start gap-4 xl:gap-12 w-full p-0 xl:has-[.vertical]:flex-wrap">
+         <div class="antesdespues__content-images text-center flex flex-row xl:flex-col xl:has-[.vertical]:flex-row gap-0 flex-wrap w-full md:w-[calc(50%-.5rem)] xl:w-[30%]"
             v-for="elem in data.antes_despues.cirugias_relacionadas">
             <h5 class="antesdespues__content-images-title w-full my-4 min-h-[2.5em] text-clamp-lg flex flex-col justify-center">{{ elem.cirugia }}</h5>
             <figure

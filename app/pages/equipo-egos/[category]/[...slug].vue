@@ -1,8 +1,8 @@
 <template>
-    <main class="site-main doctor bg-nude-8 grid grid-cols-16 min-h-[100vh] mb-0"
+    <main class="site-main doctor bg-nude-8 grid grid-cols-16 mb-0"
         v-if="doctor && Object.keys(doctor).length > 0 && isCategoryValid">
         <UiBotonCita v-if="doctor && doctor.acf && doctor.acf.boton_cita" :data="doctor.acf.boton_cita" />
-        <div class="doctor__content col-[1/-1] lg:col-span-11 grid grid-cols-subgrid w-fit min-h-fit">
+        <div class="doctor__content col-[1/-1] lg:col-start-1 lg:col-span-11 grid grid-cols-subgrid w-fit min-h-fit">
             <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
                 v-if="doctor && doctor.title">
                 <h1 class="font-lora">{{ doctor.title.rendered }}</h1>
@@ -29,17 +29,16 @@
                 </NuxtLazyHydrate>
             </section>
         </div>
-        <aside class="form__wrapper bg-blue-1 col-[1_/_span_16] lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20">
-            <!-- <FormsCirugia :identificador="'formulario'" :portalId="String(doctor.acf.portalid)" :formId="doctor.acf.formid" /> -->
-            <FormsCustomForm v-if="doctor && doctor.acf" :identificador="'formulario'" :portalId="String(doctor.acf.portalid)"
-                :formId="doctor.acf.formid" />
+        <aside class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-1 [.blackfriday_&]:bg-blackfriday col-[1_/_span_16] lg:col-start-12 lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20">
+            <FormsEsteticaForm v-if="doctor && doctor.acf" :identificador="'formulario'" :portalId="String(doctor.acf.portalid)"
+                :formId="doctor.acf.formid" :name="doctor.title.rendered"/>
         </aside>
     </main>
 </template>
 
 <script setup>
 import { useError } from '#app';
-import { watch, onMounted, nextTick } from 'vue';
+import { watch, onMounted, nextTick, provide } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getEquipo, getReviews, getEspecialidades } from '@/composables/useApi';
 import { useScrollStore } from '@/stores/scrollStore';
@@ -51,6 +50,8 @@ const isLoadingCategory = ref(true);  // Bandera para saber si la categoría se 
 const isCategoryValid = ref(false);
 
 const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
+
+provide('routePath', route.fullPath);
 
 // Verificar la existencia de la categoría en las especialidades
 const { data: especialidades } = await useAsyncData(

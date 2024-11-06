@@ -5,7 +5,7 @@
             <div>
                 <label for="interest" class="block text-sm font-medium text-white">Me interesa trabajar de...</label>
                 <select v-model="form.interest" id="interest"
-                    class="mt-1 block w-full px-4 py-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    class="mt-1 block w-full px-4 py-3 border border-gray-300 bg-white/5 text-white rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required>
                     <option disabled value="">Selecciona</option>
                     <option value="auxiliar_estetico">Auxiliar estético</option>
@@ -18,9 +18,34 @@
             </div>
 
             <div>
+                <label for="lugar" class="block text-sm font-medium text-white">Me gustaría trabajar en...</label>
+                <select v-model="form.lugar" id="lugar"
+                    class="mt-1 block w-full px-4 py-3 border border-gray-300 bg-white/5 text-white rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    required>
+                    <option disabled value="">Selecciona</option>
+                    <option value="barcelona_guinardo">Barcelona (Guinardó)</option>
+                    <option value="barcelona_balmes">Barcelona (Balmes)</option>
+                    <option value="barcelona_aribau">Barcelona (Aribau)</option>
+                    <option value="badalona">Badalona</option>
+                    <option value="granollers">Granollers</option>
+                    <option value="sabadell">Sabadell</option>
+                    <option value="madrid">Madrid</option>
+                    <option value="girona">Girona</option>
+                    <option value="hospitalet">Hospitalet</option>
+                    <option value="mataro">Mataró</option>
+                    <option value="manresa">Manresa</option>
+                    <option value="lleida">Lleida</option>
+                    <option value="tarragona">Tarragona</option>
+                    <option value="reus">Reus</option>
+                    <option value="andorra">Andorra</option>
+                </select>
+                <span v-if="errors.lugar" class="text-red-500 text-sm">{{ errors.lugar }}</span>
+            </div>
+
+            <div>
                 <label for="name" class="block text-sm font-medium text-white">Nombre</label>
                 <input type="text" v-model="form.name" id="name"
-                    class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    class="mt-1 block w-full px-4 py-3 bg-white/5 text-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required />
                 <span v-if="errors.name" class="text-red-500 text-sm">{{ errors.name }}</span>
             </div>
@@ -28,7 +53,7 @@
             <div>
                 <label for="email" class="block text-sm font-medium text-white">Correo</label>
                 <input type="email" v-model="form.email" id="email"
-                    class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    class="mt-1 block w-full px-4 py-3 bg-white/5 text-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required />
                 <span v-if="errors.email" class="text-red-500 text-sm">{{ errors.email }}</span>
             </div>
@@ -36,7 +61,7 @@
             <div>
                 <label for="phone" class="block text-sm font-medium text-white">Teléfono</label>
                 <input type="tel" v-model="form.phone" id="phone"
-                    class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    class="mt-1 block w-full px-4 py-3 bg-white/5 text-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required />
                 <span v-if="errors.phone" class="text-red-500 text-sm">{{ errors.phone }}</span>
             </div>
@@ -88,6 +113,7 @@ import { ref, computed } from 'vue';
 
 const form = ref({
     interest: '',
+    lugar: '',
     name: '',
     email: '',
     phone: '',
@@ -114,6 +140,9 @@ const validateForm = () => {
 
     if (!form.value.interest) {
         errors.value.interest = 'Este campo es obligatorio.';
+    }
+    if (!form.value.lugar) {
+        errors.value.lugar = 'Este campo es obligatorio.';
     }
     if (!form.value.name) {
         errors.value.name = 'Este campo es obligatorio.';
@@ -172,7 +201,7 @@ const handleSubmit = async () => {
             },
             to: 'rrhh@clinicaegos.com',
             subject: 'Solicitud de empleo',
-            text: `Interés: ${form.value.interest}\nNombre: ${form.value.name}\nCorreo: ${form.value.email}\nTeléfono: ${form.value.phone}\nAcepta comunicaciones: ${form.value.acceptMarketing ? 'Sí' : 'No'}`,
+            text: `Interés: ${form.value.interest}\nLugar: ${form.value.lugar}\nNombre: ${form.value.name}\nCorreo: ${form.value.email}\nTeléfono: ${form.value.phone}\nAcepta comunicaciones: ${form.value.acceptMarketing ? 'Sí' : 'No'}`,
             attachments,
         });
 

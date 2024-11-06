@@ -1,5 +1,5 @@
 <template>
-    <div class="anchors-cirugia ">
+    <div class="anchors-cirugia relative">
         <div class="anchor" v-for="item in data" :key="item.ancla">
             <a :href="`#${processAncla(item.ancla)}`">{{ item.ancla }}</a>
         </div>
@@ -51,18 +51,16 @@ const processAncla = (ancla) => {
 
 <style lang="scss" scoped>
 .anchors-cirugia {
-    @apply bg-nude-6 p-6 xl:p-8 flex flex-wrap gap-2 xl:gap-4;
+    @apply p-6 xl:p-8 flex flex-wrap gap-2 xl:gap-4;
 
     .anchor {
-        @apply uppercase w-full sm:w-[calc(50%-.5rem)] lg:w-[calc(33.333%-.5rem)] xl:w-[calc(25%-1rem)] 2xl:w-[calc(20%-1rem)] bg-nude-8 px-4 py-2 border-l-8 border-nude-1 text-clamp-xs;
+        @apply uppercase w-full sm:w-[calc(50%-.5rem)] lg:w-[calc(33.333%-.5rem)] xl:w-[calc(25%-1rem)] 2xl:w-[calc(20%-1rem)] bg-blue-1/5 px-4 py-2 border-l-8 border-blue-1 text-clamp-xs;
     }
 }
 
 .tratamiento-113 .anchors-cirugia {
-    @apply bg-rosa;
-
     .anchor {
-        @apply uppercase w-full sm:w-[calc(50%-.5rem)] lg:w-[calc(33.333%-.5rem)] xl:w-[calc(25%-1rem)] 2xl:w-[calc(20%-1rem)] bg-crema px-4 py-2 border-l-8 border-vermell text-clamp-xs;
+        @apply uppercase w-full sm:w-[calc(50%-.5rem)] lg:w-[calc(33.333%-.5rem)] xl:w-[calc(25%-1rem)] 2xl:w-[calc(20%-1rem)] bg-vermell/5 px-4 py-2 border-l-8 border-vermell text-clamp-xs;
     }
 }
 </style>

@@ -45,7 +45,7 @@ module.exports = {
                 'nude-5': '#e0dad2',
                 'nude-6': '#e8e4dd',
                 'nude-7': '#f0ede9',
-                'nude-8': '#f8f7f4',
+                'nude-8': '#FFFFF0',
                 'dark-1': '#181818',
                 'dark-2': '#222222',
                 'red-1': '#942f2f',
@@ -54,6 +54,7 @@ module.exports = {
                 'vermell': '#6D1636',
                 'blau': '#BEE4FF',
                 'rosa': '#fad1c8',
+                'orange-1': '#e6450f',
             },
             backgroundColor: {
                 'bg-blue-1': '#1c2c44',

@@ -7,10 +7,20 @@ export default defineNuxtPlugin((nuxtApp) => {
             const hsScript = document.createElement('script');
             hsScript.type = 'text/javascript';
             hsScript.id = 'hs-script-loader';
-            // hsScript.async = true;
             hsScript.defer = true;
             hsScript.src = 'https://js-eu1.hs-scripts.com/143602274.js';
-            document.head.appendChild(hsScript);
+
+            // Carga usando requestIdleCallback si está disponible
+            if ('requestIdleCallback' in window) {
+                window.requestIdleCallback(() => {
+                    document.head.appendChild(hsScript);
+                });
+            } else {
+                // Si no está disponible, usar un setTimeout como fallback
+                setTimeout(() => {
+                    document.head.appendChild(hsScript);
+                }, 0);
+            }
         };
 
         const handleUserInteraction = () => {
@@ -19,8 +29,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         };
 
         // Agregar listeners para detectar interacción del usuario (scroll o touch)
-        // window.addEventListener('scroll', handleUserInteraction, { once: true });
-        document.body.addEventListener('mouseover', handleUserInteraction, { once: true })
+        document.body.addEventListener('mouseover', handleUserInteraction, { once: true });
         window.addEventListener('touchstart', handleUserInteraction, { once: true });
     }
 });

@@ -3,14 +3,16 @@
       <div class="blue-gradient-full size-full absolute z-0">
          <UiImage :data="data" class="h-screen/85 xl:h-screen object-cover object-center absolute" :preload="true" />
       </div>
-      <header class="header__landing relative px-12 py-6 bg-blue-1 flex justify-center md:justify-start w-full z-[999]" ref="cabecera">
+      <header class="header__landing relative px-12 py-6 [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-1 flex justify-center md:justify-start w-full z-[999]" ref="cabecera">
          <nuxt-link to="/">
             <img class="header__landing-logo max-w-20 md:max-w-16" src="/assets/images/icons/logo-landings.svg" alt=""  width="133" height="100" />
+            <div class="text-black absolute w-[calc(100%+2rem)] -bottom-6 -left-4 font-semibold text-xs text-center bg-gold-1 uppercase rounded-md">Black Days</div>
          </nuxt-link>
       </header>
       <div class="header__landing-content text-nude-8 text-center p-5 md:px-24 w-full flex flex-col justify-end items-center h-screen/85 md:h-full">
          <h1 class="header__landing-content-title [&>span]:span-gradient [&>span]:border-b-[1px] [&>span]:border-b-white/20 [&>span]:block" v-html="data.acf.titulo_landing"></h1>
          <div class="flex flex-col items-center gap-4 w-full">
+            <ElementsPlazas v-if="data.acf.plazas?.numero_plazas" :data="data.acf.plazas" />
             <ElementsButton  v-if="data.acf && data.acf.quiz_multiple && data.acf.quiz_multiple.multiple_forms " class="gold text-clamp-sm uppercase text-center w-fit" href="#presupuesto">
                Calcula tu presupuesto
             </ElementsButton>

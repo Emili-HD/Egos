@@ -7,11 +7,12 @@
                 @update-options="handleOptionsUpdate" 
                 :related="related" :lat="lat" :lng="lng" :zoom="zoom" />
         </div>
-        <div id="formulario" class="half-right">
+        <div id="formulario" class="half-right [.blackfriday_&]:!bg-blackfriday">
             <div class="map-info mb-12 [&>*]:!text-blue-1 [&>ul>li]:!text-blue-1 [&>ul>li]:list-none [&>ul]:border-t [&>ul]:border-blue-1/50 [&>ul]:pt-2 [&>*]:mb-2 [&>ul>li]:mb-0" v-html="content"></div>
             <div class="form__wrapper">
-                <!-- <FormsCirugia :identificador="'map'" :portalId="portalId" :formId="formId" /> -->
-                <FormsCustomForm :identificador="'map'" :portalId="String(portalId)" :formId="formId" />
+                <FormsEsteticaForm v-if="tipo === 'Bloom'" :identificador="'map'" :portalId="String(portalId)"
+                    :formId="formId" :name="name"/>
+                <!-- <FormsCustomForm v-else  :identificador="'map'" :portalId="String(portalId)" :formId="formId" /> -->
             </div>
         </div>
     </section>
@@ -33,6 +34,8 @@ const props = defineProps({
     related: {
         type: Array
     },
+    name: String,
+    tipo: String,
     portalId: String,
     formId: String,
     identificador: String,
@@ -56,7 +59,7 @@ const handleOptionsUpdate = (newOptions) => {
 .half-right {
     @apply bg-blue-1 p-6 xl:p-12 h-fit lg:h-full w-full mb-0 top-0 flex flex-col justify-center col-span-full lg:col-[12/17] row-start-2 lg:row-start-1 lg:min-h-screen;
 
-    .blackfriday & {
+    .blackfriday:not(.estetica) & {
         @apply bg-dark-1;
     }
 

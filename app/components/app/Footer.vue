@@ -6,12 +6,13 @@
       <div class="footer__inner">
          <div class="footer-logo">
             <img loading="lazy" src="~/assets/images/1-navigation/logo-egos.svg" alt="" width="263" height="202" />
+            <div class="text-black absolute w-fit -bottom-6 left-0 right-0 m-auto px-4 font-semibold text-lg text-center bg-gold-2 uppercase rounded-md">Black Days</div>
          </div>
          <UiMenu :data="trabajaMenuData.items" class="menu-trabaja"/>
          <div class="message-footer xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25">
             <div id="block-16" class="footer__block">
                <p class="text-clamp-5xl text-center text-nude-8 font-lora mb-0">Hazlo por ti</p>
-               <p class="text-center text-nude-8 flex justify-center gap-8"><a href="tel:+34722591166 ">+34 722591166</a> <a href="mailto:info@clinicaegos.com">info@clinicaegos.com</a></p>
+               <p class="text-center text-nude-8 flex justify-center gap-8"><a href="tel:+34616987740 ">+34 616 98 77 40</a> <a href="mailto:info@clinicaegos.com">info@clinicaegos.com</a></p>
             </div>
          </div>
          <UiMenu :data="footerMenuData.items" class="menu-footer"/>
@@ -54,7 +55,7 @@ const { data: trabajaMenuData, error: trabajaMenuError } = await fetchMenuData('
 .footer {
    @apply bg-blue-1 px-12 xl:px-24 pt-24 pb-6 flex flex-col justify-center items-center z-[999];
 
-   .blackfriday & {
+   .blackfriday:not(.estetica) & {
       @apply bg-dark-1;
    }
 
@@ -63,7 +64,7 @@ const { data: trabajaMenuData, error: trabajaMenuError } = await fetchMenuData('
    }
 
    &-logo {
-      @apply col-span-3 h-[20vh] flex flex-row justify-center;
+      @apply col-span-3 h-[20vh] flex flex-row justify-center mb-12;
    }
 }
 

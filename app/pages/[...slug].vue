@@ -16,7 +16,7 @@
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
             <FormsPiceCita v-if="pages.acf && pages.acf.formulario" :titulo="`¿No encuentras tu cirugía?`"
-                :portalId="String(pages.acf.formulario.portalid)" :formId="pages.acf.formulario.formid" />
+                :portalId="String(pages.acf.formulario.portalid)" :formId="pages.acf.formulario.formid" :tipo="pages.acf.formulario.tipo_de_formulario"  :name="pages.title.rendered" :route="route.fullPath"/>
             <div class="clear-both"></div>
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
@@ -35,13 +35,16 @@
     import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
     import { getPage } from '@/composables/useApi';
     import { useError } from '#app';
+    import { provide } from 'vue';
 
     const router = useRouter();
 
     // Estado reactivo para manejar la carga
     const isLoading = ref(true);
     const error = ref(null);
-    const route = useRoute();
+    const route = useRoute();    
+
+    provide('routePath', route.fullPath);
 
     // Carga dinámica de la página
     const { data: pages, refresh } = await useAsyncData(

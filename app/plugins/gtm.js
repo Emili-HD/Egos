@@ -30,7 +30,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         const gtagScript = document.createElement('script');
         gtagScript.defer = true;
         gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-K4KDQ4HZCX';
-        gtagScript.setAttribute('data-cookieconsent', 'ignore'); // Añadir el atributo sugerido
+        gtagScript.setAttribute('data-cookieconsent', 'ignore');
+        // gtagScript.type = 'text/partytown';
         document.head.appendChild(gtagScript);
 
         gtag('js', new Date());

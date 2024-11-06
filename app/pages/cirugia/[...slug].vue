@@ -4,68 +4,84 @@
         <UiBotonCita v-if="tratamiento && tratamiento.acf && tratamiento.acf.boton_cita"
             :data="tratamiento.acf.boton_cita" />
         <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
-            <CirugiasEncabezado :data="tratamiento" />
-
             <NuxtLazyHydrate when-idle>
+                <CirugiasEncabezado :data="tratamiento" :route="route.fullPath"/>
                 <CirugiasDetallesCirugia :detallesData="tratamiento.acf.detalles_intervencion" />
+            </NuxtLazyHydrate>
+        </section>
+
+        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
+            <NuxtLazyHydrate when-idle>
                 <ElementsAnchors v-if="tratamiento && tratamiento.acf && tratamiento.acf.tabs"
                     :data="tratamiento.acf.tabs" :doctors="tratamiento.acf" class="col-[1/-1] sm:col-[2/-2]" />
                 <CirugiasEntryText :data="tratamiento" />
             </NuxtLazyHydrate>
+        </section>
 
-            <NuxtLazyHydrate when-idle>
-                <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
-                    <div class="panels w-full">
-                        <section :id="processAncla(content.ancla)" :data-anchor="processAncla(content.ancla)"
-                            class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8 [.tratamiento-113_&.tabla]:bg-rosa"
-                            :class="content.fondo, content.opciones_listado" v-for="content in tratamiento.acf.tabs">
-                            <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
-                            <CirugiasTabla :contentData="content" />
-                            <CirugiasColumnas :contentData="content" />
-                            <LandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
-                        </section>
-
-                        <ClinicasRelacionadas v-if="tratamiento.acf && tratamiento.acf.clinicas_relacionadas"
-                            :data="tratamiento.acf.clinicas_relacionadas"
-                            :titulo="tratamiento.acf.titulo_cirugias_relacionadas"
-                            :texto="tratamiento.acf.texto_cirugias_relacionadas" class="col-[1/-1]" />
-
-                        <CirugiasFaqs :faqsData="tratamiento.acf" />
+        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
+            <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
+                <div class="panels w-full">
+                    <div :id="processAncla(content.ancla)" :data-anchor="processAncla(content.ancla)"
+                        class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8 [.tratamiento-113_&.tabla]:bg-transparent [.blackfriday_&.tabla]:!bg-blackfriday"
+                        :class="content.fondo, content.opciones_listado" v-for="content in tratamiento.acf.tabs">
+                        <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
+                        <CirugiasTabla v-if="content.opciones_listado === 'tabla'" :contentData="content" />
+                        <CirugiasColumnas v-if="content.opciones_listado === 'columnas'" :contentData="content" />
+                        <LandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
                     </div>
                 </div>
-            </NuxtLazyHydrate>
+            </div>
+        </section>
 
+
+        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
+            <ClinicasRelacionadas v-if="tratamiento.acf && tratamiento.acf.clinicas_relacionadas"
+                :data="tratamiento.acf.clinicas_relacionadas"
+                :titulo="tratamiento.acf.titulo_cirugias_relacionadas"
+                :texto="tratamiento.acf.texto_cirugias_relacionadas" class="col-[1/-1]" />
+        </section>
+
+        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
+            <CirugiasFaqs class="grid grid-cols-16 col-[1/-1]" :faqsData="tratamiento.acf" />
+        </section>
+
+        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
             <NuxtLazyHydrate when-idle>
-                <div class="form__page grid grid-cols-subgrid col-[1/-1] mb-12" v-if="tratamiento.acf">
-                    <CirugiasFormSection :data="tratamiento.acf" :name="tratamiento" />
+                <div class="form__page grid grid-cols-16 col-[1/-1] mb-12" v-if="tratamiento.acf">
+                    <CirugiasFormSection :data="tratamiento.acf" :name="tratamiento" :route="route.fullPath" />
                 </div>
             </NuxtLazyHydrate>
         </section>
-        <NuxtLazyHydrate when-idle>
-            <ClientOnly>
-                <LazyCirugiasRelatedTreatments :treatmentsData="tratamiento.acf"
-                    :relatedId="tratamiento.acf.cirugias_relacionadas" :category="category" />
-            </ClientOnly>
-        </NuxtLazyHydrate>
-
-        <NuxtLazyHydrate when-idle>
-            <section class="oferta__form py-12 xl:py-24 mb-0" v-for="setting in form.form_settings"
-                :key="setting.formid">
-                <div class="oferta" v-if="setting.ubicacion === 'oferta'">
-                    <FormsOferta :data="setting" :portalId="setting.portalid" :formId="setting.formid" />
-                </div>
-            </section>
-        </NuxtLazyHydrate>
-
-        <NuxtLazyHydrate when-idle>
-            <div v-if="tratamiento.acf.dr_comment" id="doctores" class="grid grid-cols-12 mb-20 gap-y-8"
-                data-anchor="doctores">
-                <h2 class="h4 col-[2/-2] lg:text-center">Nuestro Equipo en {{ tratamiento.acf.anchor }}</h2>
-                <DoctorComentario :data="doctorsWithComments" />
+        
+        <ClientOnly>
+            <LazyCirugiasRelatedTreatments :treatmentsData="tratamiento.acf"
+                :relatedId="tratamiento.acf.cirugias_relacionadas" :category="category" />
+        </ClientOnly>
+    
+        <section class="oferta__form py-12 xl:py-24 mb-0" v-for="setting in form.form_settings"
+            :key="setting.formid">
+            <div class="oferta" v-if="setting.ubicacion === 'oferta'">
+                <FormsOferta :data="setting" :portalId="setting.portalid" :formId="setting.formid" />
             </div>
-        </NuxtLazyHydrate>
+        </section>
+
+        <section v-if="tratamiento.acf.dr_comment" id="doctores" class="grid grid-cols-12 mb-20 gap-y-8"
+            data-anchor="doctores">
+            <h2 class="h4 col-[2/-2] lg:text-center">Nuestro Equipo en {{ tratamiento.acf.anchor }}</h2>
+            <DoctorComentario :data="doctorsWithComments" />
+        </section>
 
         <ElementsPremios />
+
+        <section>
+            <div
+                class="detalles__header p-12 lg:p-24 flex justify-center items-center gap-4 md:gap-8 text-nude-8 [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-3 w-full">
+                <h2 class="h4 mb-0 text-clamp-lg">Avalados por</h2>
+                <img loading="lazy" class="max-w-[50%]"
+                    src="https://test.clinicaegos.com/wp-content/uploads/2024/02/quiron-salud.svg" alt="quiron-salud"
+                    width="250" height="53">
+            </div>
+        </section>
 
         <section id="opiniones"
             class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 xl:px-[calc(100%/16)] mt-32"
@@ -74,34 +90,28 @@
             <GoogleReviews :placeid="tratamiento.acf.placeid" />
         </section>
 
-        <NuxtLazyHydrate when-idle>
-            <LazyCirugiasRelatedPosts :treatmentsData="tratamiento.acf" />
-        </NuxtLazyHydrate>
+        <LazyCirugiasRelatedPosts :treatmentsData="tratamiento.acf" />
 
     </main>
 </template>
 
 <script setup>
-    import { useError } from '#app';
+    import { provide } from 'vue';
     import { useYoastHead } from '@/composables/useYoast';
     import { useTratamientoData } from '@/composables/useTratamientoData';
     import { useFaqJsonLd } from '@/composables/useFaqJsonLd';
     import { useVideoJsonLd } from '@/composables/useVideoJsonLd';
     import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
     import { useDoctorsJson } from '~/composables/useDoctorsJson';
-    import { useBusinessData } from '@/composables/useBusinessData';
     import { getClinicas } from '@/composables/useApi'
     import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
     import ClinicasRelacionadas from '~/components/cirugias/ClinicasRelacionadas.vue';
 
-    // definePageMeta({
-    //     middleware: 'validate-url', // Aplicar el middleware a esta página
-    // });
-
+    
     const { $gsap: gsap } = useNuxtApp();
     const router = useRouter();
     const route = useRoute();
-
+    provide('routePath', route.fullPath);
 
     // Props
     const props = defineProps({
@@ -117,6 +127,9 @@
     const form = ref({ form_settings: null });
     const isLoading = ref(false);
     const errorMessage = ref("");
+
+    // const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(`tratamiento-${route.params.slug}`, { watch: [() => route.params.slug], initialCache: true });
+
 
     // Manejo del tratamiento
     const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(
@@ -135,7 +148,7 @@
 
                 return response;
             } catch (error) {
-                console.error(`Error fetching tratamiento ${route.params.slug}:`, error);
+                // console.error(`Error fetching tratamiento ${route.params.slug}:`, error);
 
                 // Lanzar un error genérico si hay un problema con la solicitud
                 throw createError({
@@ -158,7 +171,7 @@
         if (!htmlClassAdded && document.documentElement) {
             document.documentElement.classList.add(className);
             htmlClassAdded = true;
-            console.log('Clase añadida a <html>:', document.documentElement.classList);
+            // console.log('Clase añadida a <html>:', document.documentElement.classList);
         }
     }
 
@@ -473,8 +486,6 @@
                 }
             }
         }
-    } else {
-        // console.error('applicationldjson no está habilitado o no se encontró.');
     }
 
     // Inicializamos tratamientoJsonLd como null
@@ -590,8 +601,7 @@
     })
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
     #faqs,
     #presupuesto,
     #relacionadas,

@@ -2,8 +2,8 @@
     <div v-if="isLoading">
         <!-- ...Cargando -->
     </div>
-    <div class="fixed-button [html:not(.estetica)_&]:bg-blue-1 [.estetica_&]:bg-vermell" v-else-if="!isLoading && botonCita">
-        <ElementsButton class="gold [.estetica_&]:!bg-rosa [.estetica_&]:![background-image:none] [.estetica_&]:!text-vermell text-clamp-xs uppercase" href="#formulario">
+    <div class="fixed-button [html:not(.estetica):not(.blackfriday)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:bg-vermell [.blackfriday_&]:bg-blackfriday" v-else-if="!isLoading && botonCita">
+        <ElementsButton class="gold [.estetica:not(.blackfriday)_&]:!bg-rosa [.estetica:not(.blackfriday)_&]:![background-image:none] [.estetica:not(.blackfriday)_&]:!text-vermell text-clamp-xs uppercase" href="#formulario">
             {{ botonCita }}
         </ElementsButton>
     </div>
