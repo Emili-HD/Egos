@@ -4,9 +4,10 @@ import puppeteer from 'puppeteer';
 const urls = [
     // 'http://localhost:3000',
     // 'http://localhost:3000/cirugia-de-pechos/',
-    'http://localhost:3000/cirugia-de-pechos/aumento-de-pecho/',
+    // 'http://localhost:3000/cirugia-de-pechos/aumento-de-pecho/',
     // 'http://localhost:3000/promocion/cirugia-de-pechos/',
     // 'http://localhost:3000/ubicacion/liposuccion-en-manresa/',
+    'http://localhost:3000/nuestras-clinicas/',
 ];
 
 async function autoScroll(page) {
@@ -41,6 +42,7 @@ async function captureScreenshots() {
             // await autoScroll(page);
 
             const fileName = `screenshot-${url.replace(/https?:\/\//, '').replace(/\//g, '-')}.png`;
+            await page.setViewport({ width: 360 });
             await page.screenshot({ path: fileName, fullPage: true });
             console.log(`Captura completa guardada: ${fileName}`);
         } catch (error) {
