@@ -83,7 +83,10 @@
             </div>
         </section>
 
-        <CirugiasTestimoniosRelacionados :data="tratamiento.acf.testimonios.testimonios_cirugia" />
+        <section id="testimonios-cirugias" class="p-8 lg:p-20  2xl:p-32 pb-0" v-if="tratamiento.acf.testimonios && tratamiento.acf.testimonios.testimonios_cirugia && tratamiento.acf.testimonios.testimonios_cirugia.length > 0">
+            <h2 class="lg:text-center mb-8">{{ tratamiento.acf.testimonios.titulo }}</h2>
+            <CirugiasTestimoniosRelacionados :data="tratamiento.acf.testimonios.testimonios_cirugia" />
+        </section>
 
         <section id="opiniones"
             class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 xl:px-[calc(100%/16)] mt-32"

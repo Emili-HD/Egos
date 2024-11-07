@@ -22,6 +22,9 @@
             <a href="#opiniones">Opiniones</a>
         </div>
         <div class="anchor">
+            <a href="#testimonios-cirugias">Testimonios</a>
+        </div>
+        <div class="anchor">
             <a href="#posts">Posts</a>
         </div>
     </div>

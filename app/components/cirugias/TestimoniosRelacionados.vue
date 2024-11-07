@@ -1,5 +1,5 @@
 <template>
-    <div class="testimonios__list max-w-full p-8 lg:p-20  2xl:p-32 pb-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4"
+    <div class="testimonios__list max-w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4"
         v-if="data">
         <article v-for="testimonio in data" :key="testimonio.id"
             class="card item rounded-xl overflow-hidden min-h-[300px] 2xl:min-h-[600px] flex flex-col justify-center items-center gap-2 lg:gap-8 bg-nude-6 p-0">
