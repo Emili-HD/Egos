@@ -25,14 +25,14 @@
                <h3 class="h6 text-clamp-lg min-h-32">{{ testimonio.title.rendered }}</h3>
                <!-- <ElementsButton :to="`/opinion-egos/${testimonio.slug}`" class="blue">Saber más</ElementsButton> -->
                <nuxt-link :to="`/opinion-egos/${testimonio.slug}`"
-                  class="pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl hover:bg-blue-6 transition-colors">Saber
+                  class="pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-xl hover:bg-blue-6 transition-colors">Saber
                   más</nuxt-link>
             </div>
          </article>
       </div>
       <div class="col-[2/-2] flex justify-center">
          <nuxt-link :to="`/casos-reales/`"
-            class="w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl hover:bg-blue-6 transition-colors">Ver
+            class="w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-xl hover:bg-blue-6 transition-colors">Ver
             todos nuestros casos reales</nuxt-link>
       </div>
    </section>

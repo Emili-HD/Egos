@@ -16,7 +16,7 @@
       <article
         v-for="post in stickyPosts"
         :key="post.id"
-        class="card rounded-3xl overflow-hidden col-[2/-2]
+        class="card rounded-xl overflow-hidden col-[2/-2]
                lg:[&:nth-child(2n-1)]:col-[2/9] lg:[&:nth-child(2n)]:col-[9/16] bg-nude-8"
         :aria-labelledby="'post-title-' + post.id"
       >

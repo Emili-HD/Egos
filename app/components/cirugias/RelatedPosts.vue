@@ -26,7 +26,7 @@
                     }"
                 >
                     <SwiperSlide v-for="post in posts" :key="post.id" 
-                        class="card rounded-3xl overflow-hidden flex flex-shrink-0 justify-center items-start h-full"
+                        class="card rounded-xl overflow-hidden flex flex-shrink-0 justify-center items-start h-full"
                         :aria-labelledby="'post-title-' + post.id">
                         <nuxt-link v-if="post.title && post.title.rendered" :to="`/blog/${post.slug}`" :aria-label="post.title ? 'Leer más sobre ' + post.title.rendered : 'Leer más'
                             " class="post-link size-full">

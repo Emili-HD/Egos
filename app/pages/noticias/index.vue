@@ -14,7 +14,7 @@
             <div class="noticias__list max-w-full p-8 lg:px-20 lg:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4"
                 v-if="noticias">
                 <article v-for="noticia in noticias" :key="noticia.id"
-                    class="card item rounded-3xl overflow-hidden flex flex-col justify-between items-center gap-2 lg:gap-8 bg-nude-6 p-0"
+                    class="card item rounded-xl overflow-hidden flex flex-col justify-between items-center gap-2 lg:gap-8 bg-nude-6 p-0"
                     >
                     <nuxt-link :to="`/noticias/${noticia.slug}`" class="size-full">
                         <div class="noticias__image overflow-hidden w-full h-3/5">
@@ -30,7 +30,7 @@
                                 {{ noticia.title.rendered }}
                             </h3>
                             <div
-                                class="button py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">
+                                class="button py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-xl">
                                 Leer Noticia
                             </div>
                         </div>

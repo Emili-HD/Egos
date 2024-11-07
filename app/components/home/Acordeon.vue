@@ -36,7 +36,7 @@
          </div>
       </div>
    
-      <div class="panel__image col-[2_/_span_14] xl:col-[9_/_span_7] sm:row-1 xl:row-1 aspect-square w-full h-full overflow-hidden rounded-3xl self-center">
+      <div class="panel__image col-[2_/_span_14] xl:col-[9_/_span_7] sm:row-1 xl:row-1 aspect-square w-full h-full overflow-hidden rounded-xl self-center">
          <figure class="panel__image-img" v-for="(image, index) in data.items" :key="index" v-show="activeIndex === index">
             <img 
                loading="lazy" 

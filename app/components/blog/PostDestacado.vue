@@ -1,8 +1,8 @@
 <template>
-    <div class="destacado rounded-3xl m-auto w-full p-0 col-[2/-2] flex max-w-full min-h-[40vh]">
+    <div class="destacado rounded-xl m-auto w-full p-0 col-[2/-2] flex max-w-full min-h-[40vh]">
         <div v-if="error" class="error">Error loading posts</div>
         <div class="post-list w-full mt-0 flex" v-else>
-            <article v-for="post in highlightedPostsData" :key="post.id" class="card bg-blue-1 aspect-auto w-full rounded-3xl overflow-hidden">
+            <article v-for="post in highlightedPostsData" :key="post.id" class="card bg-blue-1 aspect-auto w-full rounded-xl overflow-hidden">
                 <nuxt-link class="post-link text-blue-1 h-full p-0 flex flex-col lg:flex-row" :to="'/blog/' + post.slug + '/'">
                     <UiImage :data="post" class="card__image" loading="eager" />
                     <div class="card__content p-8 text-nude-8 items-start flex flex-col lg:flex-row">

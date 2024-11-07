@@ -12,7 +12,7 @@
             </header>
 
             <div class="post-list grid grid-cols-16 gap-4 mt-20 " v-if="posts" aria-label="Lista de publicaciones">
-                <article v-for="post in posts" :key="post.id" class="card aspect-none bg-nude-6 rounded-3xl overflow-hidden col-[2/-2]
+                <article v-for="post in posts" :key="post.id" class="card aspect-none bg-nude-6 rounded-xl overflow-hidden col-[2/-2]
                 sm:[&:nth-child(2n-1)]:col-[2/9] sm:[&:nth-child(2n)]:col-[9/16]
                 lg:[&:nth-child(2n-1)]:col-[2/9] lg:[&:nth-child(2n)]:col-[9/16]"
                     :aria-labelledby="'post-title-' + post.id">

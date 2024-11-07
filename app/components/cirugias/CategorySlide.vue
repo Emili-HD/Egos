@@ -10,8 +10,8 @@
               <div v-if="category.excerpt && category.excerpt.rendered" v-html="category.excerpt.rendered" class="[&>p]:text-clamp-sm [&>p]:mb-0 [&>p]:text-center [&>p]:font-nunito"></div>
             </div>
       </nuxt-link>
-      <UiButton v-if="category.acf && category.acf.anchor" :to="processedLink" class="button text-xs font-semibold py-1 px-6 border border-solid border-blue-1/25 [.estetica_&]:border-vermell text-center uppercase rounded-3xl text-balance w-full">Saber más sobre {{ category.acf.anchor }}</UiButton>
-      <UiButton v-else :to="processedLink" class="button py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más</UiButton>
+      <UiButton v-if="category.acf && category.acf.anchor" :to="processedLink" class="button text-xs font-semibold py-1 px-6 border border-solid border-blue-1/25 [.estetica_&]:border-vermell text-center uppercase rounded-xl text-balance w-full">Saber más sobre {{ category.acf.anchor }}</UiButton>
+      <UiButton v-else :to="processedLink" class="button py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-xl">Saber más</UiButton>
   </div>
 </template>
 

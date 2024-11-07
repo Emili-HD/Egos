@@ -95,7 +95,7 @@
 
 <style lang="scss" scoped>
     .card {
-        @apply pb-4 rounded-3xl min-h-full flex flex-col justify-between items-center;
+        @apply pb-4 rounded-xl min-h-full flex flex-col justify-between items-center;
 
         &__link {
             @apply w-full h-full block;
@@ -138,7 +138,7 @@
         }
 
         .button {
-            @apply w-fit py-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl hover:bg-blue-6 transition-colors;
+            @apply w-fit py-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-xl hover:bg-blue-6 transition-colors;
         }
     }
 </style>

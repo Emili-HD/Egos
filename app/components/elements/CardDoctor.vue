@@ -5,11 +5,11 @@
             <!-- <article class=""> -->
                 <ul class="grid grid-cols-4 xl:grid-cols-12 gap-4 lg:gap-8 lg:px-32">
                     <li v-for="miembro in doctorByCategory(category.id)" :key="miembro.id"
-                        class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden col-span-4 md:col-span-2 xl:col-span-3 list-none">
+                        class="card !aspect-[4/5] bg-nude-6 rounded-xl overflow-hidden col-span-4 md:col-span-2 xl:col-span-3 list-none">
                         <div class="card__member block relative size-full overflow-hidden">
-                          <UiImage :data="miembro" class="absolute w-full object-center object-cover min-h-full overflow-hidden rounded-3xl" loading="lazy"/>
+                          <UiImage :data="miembro" class="absolute w-full object-center object-cover min-h-full overflow-hidden rounded-xl" loading="lazy"/>
                             <div
-                                class="card__description text-nude-6 bg-gold-3/10 p-4 absolute bottom-0 rounded-3xl size-full z-10 flex flex-col justify-between items-start gap-2">
+                                class="card__description text-nude-6 bg-gold-3/10 p-4 absolute bottom-0 rounded-xl size-full z-10 flex flex-col justify-between items-start gap-2">
                                 <div>
                                     <h3 class="heading card__title h6 !mb-0 !font-normal">
                                         {{ miembro.title ? miembro.title.rendered : 'No Title' }}

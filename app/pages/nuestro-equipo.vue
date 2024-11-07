@@ -45,17 +45,17 @@
                 <article class="equipo__right-column col-[2/-2] xl:col-[8/-2]">
                     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-8">
                         <li v-for="miembro in doctorByCategory(category.id)" :key="miembro.id"
-                            class="card !aspect-[4/5] bg-nude-6 rounded-3xl overflow-hidden xl:[&:nth-child(2n)]:translate-y-1/3 list-none">
+                            class="card !aspect-[4/5] bg-nude-6 rounded-xl overflow-hidden xl:[&:nth-child(2n)]:translate-y-1/3 list-none">
                             <div class="card__member block relative size-full overflow-hidden">
                                 <img loading="lazy"
-                                    class="card__image absolute w-full object-center object-cover min-h-full overflow-hidden rounded-3xl"
+                                    class="card__image absolute w-full object-center object-cover min-h-full overflow-hidden rounded-xl"
                                     v-if="miembro.featured_image_data" :src="miembro.featured_image_data.url"
                                     :srcset="miembro.featured_image_data.srcset"
                                     :width="miembro.featured_image_data.width"
                                     :height="miembro.featured_image_data.height"
                                     :alt="miembro.featured_image_data.alt" />
                                 <div
-                                    class="card__description text-nude-6 bg-gold-3/10 p-4 absolute bottom-0 rounded-3xl size-full z-10 flex flex-col justify-between items-start gap-2">
+                                    class="card__description text-nude-6 bg-gold-3/10 p-4 absolute bottom-0 rounded-xl size-full z-10 flex flex-col justify-between items-start gap-2">
                                     <div>
                                         <h3 class="card__title h6 !mb-0 font-normal">
                                             {{ miembro.title ? miembro.title.rendered : 'No Title' }}
@@ -251,7 +251,7 @@
     }
 
     .team__panel {
-        @apply p-8 pt-16 md:pt-24 sm:px-16 sm:pb-16 bg-white rounded-3xl fixed right-0 top-0 md:top-20 w-screen xl:w-screen/70 h-screen md:h-[calc(100vh-var(--header-height)-1rem)] z-[1001] translate-x-[100%] transition-transform duration-500 ;
+        @apply p-8 pt-16 md:pt-24 sm:px-16 sm:pb-16 bg-white rounded-xl fixed right-0 top-0 md:top-20 w-screen xl:w-screen/70 h-screen md:h-[calc(100vh-var(--header-height)-1rem)] z-[1001] translate-x-[100%] transition-transform duration-500 ;
 
         &-content {
             @apply overscroll-contain;

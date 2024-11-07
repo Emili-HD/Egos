@@ -36,6 +36,6 @@ const props = defineProps({
 }
 
 .blue {
-   @apply w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-3xl hover:bg-blue-6 transition-colors;
+   @apply w-fit pb-1 pt-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-xl hover:bg-blue-6 transition-colors;
 }
 </style>

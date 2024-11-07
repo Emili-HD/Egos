@@ -5,7 +5,7 @@
         <p class="text-center max-w-[50ch] lg:max-w-[60ch] text-pretty">No te preocupes, tenemos un montón de contenido que te puede interesar. Navega a
             través de nuestro menú o vuelve a la página de inicio. </p>
         <ElementsButton
-            class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl cursor-pointer"
+            class="py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-xl cursor-pointer"
             @click="handleError">Ir a Clinicaegos</ElementsButton>
     </div>
 </template>

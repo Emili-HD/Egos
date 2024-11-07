@@ -1,6 +1,6 @@
 <template>
     <div v-if="error">Error al cargar los datos: {{ error }}</div>
-    <div v-else class="card bg-nude-7 rounded-3xl p-2 flex flex-col justify-between items-center"
+    <div v-else class="card bg-nude-7 rounded-xl p-2 flex flex-col justify-between items-center"
         :class="props.classes">
         <nuxt-link :to="processedLink" class="w-full min-h-full flex justify-start items-start"
             aria-label="Ver detalles de cirugía" v-if="category">
@@ -15,10 +15,10 @@
             </div>
         </nuxt-link>
         <UiButton v-if="category.acf && category.acf.anchor" :to="processedLink"
-            class="button text-xs font-semibold py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl text-balance w-full">
+            class="button text-xs font-semibold py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-xl text-balance w-full">
             Saber más sobre {{ category.acf.anchor }}</UiButton>
         <UiButton v-else :to="processedLink"
-            class="button py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-3xl">Saber más
+            class="button py-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-xl">Saber más
         </UiButton>
     </div>
 </template>

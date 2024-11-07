@@ -35,7 +35,7 @@
             </div>
 
             <!-- FORM QUIZ SÓLO SI ESTÁ PRESENTE -->
-            <aside class="bg-blue-1 p-6 w-full lg:w-[70vw] xl:w-[45vw] m-auto mb-20 lg:-mt-36 lg:rounded-3xl z-20"
+            <aside class="bg-blue-1 p-6 w-full lg:w-[70vw] xl:w-[45vw] m-auto mb-20 lg:-mt-36 lg:rounded-xl z-20"
                 v-if="post.acf && post.acf.quiz && post.acf.quiz.posicion === 'top'">
                 <div id="calculadora" class="lg:px-12 lg:pb-12">
                     <FormsQuiz v-if="post && post.acf" :identificador="'topPage'"
@@ -52,7 +52,7 @@
                 <div class="pl-4 mb-0 leading-none italic opacity-50">{{ post.title.rendered }}</div>
             </div>
             <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
-                <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-3xl">
+                <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-xl">
                     <h2 class="h4 font-lora nav-content-title h6 bg-nude-4 p-4 rounded-xl">Tabla de contenidos</h2>
                     <ul class="pl-6 list-decimal mb-10">
                         <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
@@ -154,7 +154,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-blue-1 p-6 w-full lg:rounded-3xl z-20"
+                    <div class="bg-blue-1 p-6 w-full lg:rounded-xl z-20"
                         v-if="post.acf && post.acf.quiz && post.acf.quiz.posicion === 'bottom'">
                         <div id="presupuesto" class="lg:px-12 lg:pb-12">
                             <FormsQuiz v-if="post && post.acf" :identificador="'topPage'"
@@ -164,7 +164,7 @@
                     </div>
 
                 </div>
-                <aside class="widgets bg-blue-2 p-6 col-[2/-2] xl:col-[13/17] rounded-3xl"
+                <aside class="widgets bg-blue-2 p-6 col-[2/-2] xl:col-[13/17] rounded-xl"
                     v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
                     <div id="formulario" class="form__wrapper p-2 p-xs-6 ">
 

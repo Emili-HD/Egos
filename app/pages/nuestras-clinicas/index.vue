@@ -16,7 +16,7 @@
 
                         <!-- Info -->
                         <div
-                            class="bg-nude-8/80 backdrop-blur-sm rounded-3xl min-h-[50%] p-8 flex flex-col gap-4 justify-center col-[2/-2] lg:col-[7/13] xl:col-[7/11] row-start-1 self-end pointer-events-none z-10">
+                            class="bg-nude-8/80 backdrop-blur-sm rounded-xl min-h-[50%] p-8 flex flex-col gap-4 justify-center col-[2/-2] lg:col-[7/13] xl:col-[7/11] row-start-1 self-end pointer-events-none z-10">
                             <div class="[&>*]:!text-blue-1 left-0 right-0 bottom-0 [&>p>span]:block  lg:[.card:nth-child(even)>&]:col-[5/11] xl:[.card:nth-child(even)>&]:col-[7/11] [&>*]:mb-3 [&>p]:leading-snug [&>ul]:list-none [&>ul>li]:mb-0 [&>ul>li]:leading-tight"
                                 v-html="clinica.texto_clinica"></div>
                             <div v-for="item in clinica.link_relacionadas" class=" pointer-events-auto">
@@ -28,7 +28,7 @@
                         </div>
 
                         <!-- Image -->
-                        <div class="col-[2/-2] lg:col-[9/-2] xl:col-[7/-2] row-start-1 pointer-events-none rounded-3xl overflow-hidden lg:[.card:nth-child(even)>&]:col-[2/9] xl:[.card:nth-child(even)>&]:col-[2/11]"
+                        <div class="col-[2/-2] lg:col-[9/-2] xl:col-[7/-2] row-start-1 pointer-events-none rounded-xl overflow-hidden lg:[.card:nth-child(even)>&]:col-[2/9] xl:[.card:nth-child(even)>&]:col-[2/11]"
                             :to="`/nuestras-clinicas/${clinica.slug}`"
                              @click.passive>
                             <img loading="lazy" v-if="clinica.imagen_clinica"

@@ -2,7 +2,7 @@
     <ClientOnly>
         <div v-if="isMapReady"
             class="clinicas__egos-map size-full overflow-hidden 
-                    [.nuestras-clinicas_&]:grid-rows-2 [.nuestras-clinicas_&]:even:grid-rows-1 [.nuestras-clinicas_&]:col-[2/-2] [.nuestras-clinicas_&]:rounded-3xl
+                    [.nuestras-clinicas_&]:grid-rows-2 [.nuestras-clinicas_&]:even:grid-rows-1 [.nuestras-clinicas_&]:col-[2/-2] [.nuestras-clinicas_&]:rounded-xl
                     lg:[.nuestras-clinicas_&]:col-[2/9] lg:[.nuestras-clinicas_.card:nth-child(even)_&]:col-[11/-2] xl:[.nuestras-clinicas_&]:col-[2/7]">
             <GoogleMap :api-key="apiKey" class="size-full" ref="mapRef" :center="centerMap" :zoom="props.zoom"
                 :styles="mapStyles">

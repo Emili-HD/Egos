@@ -32,7 +32,7 @@ const props = defineProps({
    }
 
    .perdircita {
-      @apply mt-4 border-[1px] border-solid border-nude-8/50 bg-transparent px-8 py-2 rounded-3xl uppercase;
+      @apply mt-4 border-[1px] border-solid border-nude-8/50 bg-transparent px-8 py-2 rounded-xl uppercase;
    }
 }
 </style>
