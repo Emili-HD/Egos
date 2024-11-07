@@ -306,6 +306,34 @@ export const getReviews = async ({ slug }) => {
 };
 
 // ***************************************************************************************************
+// Función para obtener comentarios de Insta
+// ***************************************************************************************************
+
+export const getInstaComments = async ({ slug }) => {
+    const page = 1;
+    const perPage = 100;
+    let url = `https://test.clinicaegos.com/wp-json/wp/v2/instagram?page=${page}&per_page=${perPage}`;
+
+    // Si se proporciona un slug, añádelo a la URL como filtro
+    if (slug) {
+        url += `&publicar_en=${slug}`;
+    }
+
+    try {
+        const data = await $fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        return data;
+    } catch (error) {
+        console.error("Fetch error: ", error);
+        throw error;
+    }
+};
+
+// ***************************************************************************************************
 // Función para obtener miembros del equipo, con soporte para paginación
 // ***************************************************************************************************
 

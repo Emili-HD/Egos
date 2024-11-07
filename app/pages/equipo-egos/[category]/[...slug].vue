@@ -17,6 +17,7 @@
                 class="doctor__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="doctor && doctor.content">
                 <div class="[&p]:font-nunito" v-html="doctor.content.rendered"></div>
+                <LazyDoctorInsta :data="insta" :name="doctor.title.rendered" :image="doctor.featured_image_data" class="" />
             </section>
             <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max mx-[calc(100% / 16)]">
                 <DoctorCirugiasRelacionadas :treatmentsData="doctor.acf"
@@ -120,6 +121,10 @@ watchEffect(() => {
 const { data: reviews, refresh: refreshReviews } = useAsyncData(`reviews-${route.params.slug[1]}`, () => getReviews({ page: 1, per_page: 100, slug: route.params.slug }), {
     watch: [() => route.params.slug[1]]
 });
+
+const { data: insta, refresh: refresInsta } = useAsyncData(`insta-${route.params.slug[1]}`, () => getInstaComments({ page: 1, per_page: 100, slug: route.params.slug }), {
+    watch: [() => route.params.slug[1]]
+});
 // console.log('Reviews:', route.params.slug);
 
 
@@ -129,6 +134,15 @@ watch(
     async (newSlug, oldSlug) => {
         if (newSlug !== oldSlug) {
             await Promise.all([refreshReviews()]);
+        }
+    },
+    { immediate: true }
+);
+watch(
+    () => route.params.slug,
+    async (newSlug, oldSlug) => {
+        if (newSlug !== oldSlug) {
+            await Promise.all([refresInsta()]);
         }
     },
     { immediate: true }
