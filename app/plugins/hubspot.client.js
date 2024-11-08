@@ -8,7 +8,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             hsScript.type = 'text/javascript';
             hsScript.id = 'hs-script-loader';
             hsScript.defer = true;
-            hsScript.src = 'https://js-eu1.hs-scripts.com/143602274.js';
+            hsScript.src = 'https://js-eu1.hs-scripts.com/25632462.js';
 
             // Carga usando requestIdleCallback si está disponible
             if ('requestIdleCallback' in window) {

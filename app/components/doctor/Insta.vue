@@ -1,11 +1,11 @@
 <template>
-    <div v-if="data" class="comments p-0 mb-0 !bg-transparent flex flex-wrap bg-nude-5 pb-20 justify-between gap-4" ref="comments">
+    <div v-if="filteredComments.length" class="comments p-0 mb-0 !bg-transparent flex flex-wrap bg-nude-5 pb-20 justify-between gap-4" ref="comments">
         <div class="comments__header w-full">
             <h2>Que opinan en instagram del {{ name }}</h2>
             <ElementsDivider />
         </div>
         <article
-            v-for="comment in data"
+            v-for="comment in filteredComments"
             :key="comment.id"
             class="bg-white p-8 rounded-2xl mb-6 w-[calc(50%-1rem)] border border-blue-1/20 flex items-center gap-6"
         >
@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 // Estado reactivo
 const comments = ref(null);
@@ -45,13 +45,22 @@ const comments = ref(null);
 // Props
 const props = defineProps({
     data: {
-        type: Array as () => Array<{ acf: { fecha_publicacion: string }, [key: string]: any }>,
+        type: Array as () => Array<{ acf: { fecha_publicacion: string; publicar_en: string }, [key: string]: any }>,
         required: true,
     },
     name: {
         type: String,
         required: true,
-    }
+    },
+    ruta: {
+        type: String,
+        required: true,
+    },
+});
+
+// Propiedad calculada para filtrar los comentarios por la ruta
+const filteredComments = computed(() => {
+    return props.data.filter(comment => comment.acf.publicar_en === props.ruta);
 });
 
 // Función para formatear la fecha relativa
@@ -101,23 +110,22 @@ function formatRelativeTime(dateString: string): string {
 }
 </script>
 
-
 <style scoped>
-    .comments {
-        &__header {
-            @apply w-4/5 text-center;
+.comments {
+    &__header {
+        @apply w-4/5 text-center;
 
-            @media (max-width: 767px) {
-                @apply w-full;
-            }
+        @media (max-width: 767px) {
+            @apply w-full;
         }
     }
+}
 
-    .border-wrap {
-        max-width: 250px;
-        padding: 1rem;
-        position: relative;
-        background: linear-gradient(to right, red, purple);
-        padding: 3px;
-    }
+.border-wrap {
+    max-width: 250px;
+    padding: 1rem;
+    position: relative;
+    background: linear-gradient(to right, red, purple);
+    padding: 3px;
+}
 </style>

@@ -1,18 +1,17 @@
 <template>
     <section
-        class="pidecita w-screen col-span-full grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-screen py-0 lg:gap-0">
-        <div class="col-span-full lg:col-span-11 min-h-screen/60">
+        class="pidecita col-span-full flex flex-col lg:flex-row justify-between items-stretch">
+        <div class="w-full lg:w-2/3 min-h-[600px]">
             <LazyElementsGoogleMap 
                 @update-content="handleContentUpdate" 
                 @update-options="handleOptionsUpdate" 
                 :related="related" :lat="lat" :lng="lng" :zoom="zoom" />
         </div>
-        <div id="formulario" class="half-right [.blackfriday_&]:!bg-blackfriday">
+        <div id="formulario" class="half-right [.blackfriday_&]:!bg-blackfriday w-full lg:w-1/3">
             <div class="map-info mb-12 [&>*]:!text-blue-1 [&>ul>li]:!text-blue-1 [&>ul>li]:list-none [&>ul]:border-t [&>ul]:border-blue-1/50 [&>ul]:pt-2 [&>*]:mb-2 [&>ul>li]:mb-0" v-html="content"></div>
             <div class="form__wrapper">
                 <FormsEsteticaForm v-if="tipo === 'Bloom'" :identificador="'map'" :portalId="String(portalId)"
                     :formId="formId" :name="name"/>
-                <!-- <FormsCustomForm v-else  :identificador="'map'" :portalId="String(portalId)" :formId="formId" /> -->
             </div>
         </div>
     </section>
@@ -55,9 +54,28 @@ const handleOptionsUpdate = (newOptions) => {
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.pidecita {
+    width: 100%;
+    @media (min-width: 1025px) {
+        height: 900px;
+    }
+    @media (min-width: 1440px) {
+        height: 1100px;
+    }
+    @media (max-width: 1024px) {
+        height: 700px;
+    }
+    @media (max-width: 768px) {
+        height: auto;
+    }
+    @media (max-width: 560px) {
+        height: auto;
+    }
+}
+
 .half-right {
-    @apply bg-blue-1 p-6 xl:p-12 h-fit lg:h-full w-full mb-0 top-0 flex flex-col justify-center col-span-full lg:col-[12/17] row-start-2 lg:row-start-1 lg:min-h-screen;
+    @apply bg-blue-1 p-6 xl:p-12 lg:h-full mb-0 top-0 flex flex-col justify-center;
 
     .blackfriday:not(.estetica) & {
         @apply bg-dark-1;

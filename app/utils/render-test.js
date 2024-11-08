@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer';
 // Define un array con las URLs de tu aplicación
 const urls = [
     // 'http://localhost:3000',
-    // 'http://localhost:3000/cirugia-de-pechos/',
+    'http://localhost:3000/cirugia-de-pechos/',
     // 'http://localhost:3000/cirugia-de-pechos/aumento-de-pecho/',
     // 'http://localhost:3000/promocion/cirugia-de-pechos/',
     // 'http://localhost:3000/ubicacion/liposuccion-en-manresa/',

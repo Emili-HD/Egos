@@ -21,8 +21,8 @@
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
             <section v-if="pages.acf && pages.acf.hero && pages.acf.hero.texto_imagen"
-                class="quote font-base text-balance normal-case font-semibold py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid">
-                <ElementsReveal :titulo="pages.acf.hero.texto_imagen" tag="div" />
+                class="quote font-base text-balance normal-case font-semibold py-20 xl:py-40 w-full col-[1_/_span_16] grid grid-cols-subgrid">
+                <div v-html="pages.acf.hero.texto_imagen" class="col-start-1 xl:col-start-4 col-span-full xl:col-span-10  max-sm:px-8 max-lg:px-12 max-xl:px-16 content__header-title blue-1 w-full p-0 [&>p]:font-semibold [&>p]:leading-normal [&>p]:text-clamp-xl lg:[&>p]:text-clamp-4xl"></div>
             </section>
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
@@ -101,7 +101,7 @@
 
 
     // Métodos
-    const textReveal = async () => {
+    /* const textReveal = async () => {
         gsap.registerPlugin(ScrollTrigger, SplitText);
 
         await nextTick()
@@ -143,7 +143,7 @@
         }
 
         makeItHappen();
-    }
+    } */
 
     const rAF = () => {
         return new Promise(r => window.requestAnimationFrame(r));
@@ -185,10 +185,10 @@
     onMounted(async () => {
         await nextTick()
         await rAF()
-        if (pages && pages.acf) {
-            // Datos disponibles
-            textReveal()
-        }
+        // if (pages && pages.acf) {
+        //     // Datos disponibles
+        //     textReveal()
+        // }
         if (!pages.value) {
             router.push('/error');
         }

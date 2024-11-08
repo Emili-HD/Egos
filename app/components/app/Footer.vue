@@ -12,7 +12,7 @@
          <div class="message-footer xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25">
             <div id="block-16" class="footer__block">
                <p class="text-clamp-5xl text-center text-nude-8 font-lora mb-0">Hazlo por ti</p>
-               <p class="text-center text-nude-8 flex justify-center gap-8"><a href="tel:+34616987740 ">+34 616 98 77 40</a> <a href="mailto:info@clinicaegos.com">info@clinicaegos.com</a></p>
+               <address class="text-center text-nude-8 flex justify-center gap-8"><a href="tel:+34616987740" class="not-italic">+34 616 98 77 40</a> <a href="mailto:info@clinicaegos.com" class="not-italic">info@clinicaegos.com</a></address>
             </div>
          </div>
          <UiMenu :data="footerMenuData.items" class="menu-footer"/>

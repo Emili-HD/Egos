@@ -17,7 +17,7 @@
                 class="doctor__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="doctor && doctor.content">
                 <div class="[&p]:font-nunito" v-html="doctor.content.rendered"></div>
-                <LazyDoctorInsta :data="insta" :name="doctor.title.rendered" :image="doctor.featured_image_data" class="" />
+                <LazyDoctorInsta :data="insta" :name="doctor.title.rendered" :ruta="route.params.slug" class="" />
             </section>
             <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max mx-[calc(100% / 16)]">
                 <DoctorCirugiasRelacionadas :treatmentsData="doctor.acf"
@@ -44,7 +44,6 @@ import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getEquipo, getReviews, getEspecialidades } from '@/composables/useApi';
 import { useScrollStore } from '@/stores/scrollStore';
 
-
 const router = useRouter();
 const route = useRoute();
 const isLoadingCategory = ref(true);  // Bandera para saber si la categoría se está verificando
@@ -53,6 +52,9 @@ const isCategoryValid = ref(false);
 const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 provide('routePath', route.fullPath);
+
+// console.log(route.params.slug);
+
 
 // Verificar la existencia de la categoría en las especialidades
 const { data: especialidades } = await useAsyncData(

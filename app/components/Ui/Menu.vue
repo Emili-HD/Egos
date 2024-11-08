@@ -48,7 +48,7 @@ const isCurrentPage = (url) => {
 
 <style scoped>
 .menu-footer {
-    @apply col-span-3 xl:col-span-1 flex flex-col justify-center items-center xl:items-end text-center xl:text-right;
+    @apply col-span-3 lg:col-span-1 flex flex-col justify-center items-center lg:items-end lg:justify-end text-center lg:text-right;
 
     ul {
         @apply list-none !mb-0 flex flex-col gap-2;
@@ -60,7 +60,7 @@ const isCurrentPage = (url) => {
 }
 
 .menu-trabaja {
-    @apply col-span-3 xl:col-span-1 flex justify-center items-center xl:items-end xl:justify-start text-center xl:text-left;
+    @apply col-span-3 lg:col-span-1 flex justify-center items-center lg:items-start lg:justify-start text-center lg:text-left;
 
     ul {
         @apply list-none !mb-0 flex flex-col gap-2;
@@ -77,7 +77,7 @@ const isCurrentPage = (url) => {
     grid-template-rows: auto;
 
     ul {
-        @apply list-none !mb-0 flex flex-col xl:flex-row justify-center items-center gap-8 w-full;
+        @apply list-none !mb-0 flex flex-col sm:flex-row justify-center items-center gap-8 w-full;
 
         span {
             @apply text-nude-8;
@@ -89,7 +89,7 @@ const isCurrentPage = (url) => {
         @apply content-[''] w-full h-px absolute -bottom-1 left-0 bg-nude-1;
 }
 
-@media (min-width: 820px) and (max-width: 1180px) {
+/* @media (min-width: 820px) and (max-width: 1180px) {
     .is-tablet {
         .menu-footer {
             @apply text-left col-span-1 items-start;
@@ -103,5 +103,5 @@ const isCurrentPage = (url) => {
             @apply flex-row
         }
     }
-}
+} */
 </style>

@@ -1,5 +1,5 @@
 <template>
-   <div class="content__header col-[2_/_span_14] xl:col-[4_/_span_10]" ref="reveal">
+   <div class="content__header col-start-2 xl:col-start-4 col-span-14 xl:col-span-10" ref="reveal">
       <component 
          :is="props.tag" 
          class="content__header-title blue-1 w-full p-0 [&>p]:font-semibold leading-normal" 
@@ -94,6 +94,3 @@ onMounted(async () => {
 })
 </script>
 
-<style lang="scss" scoped>
-// estilo vacío
-</style>

@@ -170,7 +170,7 @@
 
     const routePath = inject('routePath')
 
-    // console.log('ruta routePath:', routePath);
+    // console.log('routePath:', routePath);
     
 
     const formData = ref({})
@@ -319,8 +319,12 @@
                     throw new Error(jsonResponse.message || 'Error al enviar el formulario');
                 }
 
-                // Redirigir a la URL de gracias si todo fue bien
-                window.location.href = 'https://heybloome.com/calendarios/';
+                // Redirigir según la ruta actual a la página gracias o al calendario de bloome
+                if (routePath && routePath.includes('/medicina-estetica/')) {
+                    window.location.href = 'https://heybloome.com/calendarios/';
+                } else {
+                    await router.push('/gracias');
+                }
             } catch (e) {
                 console.error('Response is not valid JSON:', textResponse);
                 throw new Error('Response is not valid JSON');

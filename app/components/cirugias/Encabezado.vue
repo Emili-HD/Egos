@@ -5,19 +5,19 @@
         <div class="header__content z-10">
 
             <!-- Contador rebajas -->
-            <div v-if="data.acf && data.acf.rebaja">
+            <div v-if="data.acf && data.acf.rebaja" class="flex flex-col-reverse gap-4">
                 <h1 v-if="data.title && data.title.rendered"
-                    class="text-nude-8 mb-6 text-clamp-6xl text-balance leading-none"><u>{{ data.title.rendered }}</u>
+                    class="text-nude-8 mb-6 text-clamp-4xl lg:text-clamp-6xl text-balance leading-none text-center"><u>{{ data.title.rendered }}</u>
                 </h1>
                 
-                <div class="flex flex-col xl:flex-row-reverse gap-8">
-                    <div class="flex gap-2 bg-blue-1/60 backdrop-blur-lg p-8 w-fit rounded-2xl m-0">
+                <div class="flex flex-col sm:flex-row-reverse gap-8 justify-center items-center">
+                    <div class="flex gap-2 bg-blue-1/60 backdrop-blur-lg p-4 xl:p-8 w-fit rounded-2xl m-0">
                         <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline [&>span]:text-red-600 [&>span]:opacity-50"
                             v-if="data.acf && data.acf.precio_desde" v-html="data.acf.precio_desde"></div>
                         <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline"
                             v-if="data.acf && data.acf.rebaja" v-html="data.acf.rebaja"></div>
                     </div>
-                    <ElementsButton v-if="showPresupuestoLink" class="gold text-clamp-xs uppercase text-center"
+                    <ElementsButton v-if="showPresupuestoLink" class="gold text-clamp-xs uppercase text-center h-fit"
                         href="#presupuesto">
                         Calcula tu presupuesto
                     </ElementsButton>
@@ -60,10 +60,7 @@
     <div v-if="data.acf && data.acf.formulario" id="formulario"
         class="form__wrapper min-h-[620px] [.site-main:not(.tratamiento-113)_&]:bg-blue-1 [html:not(.estetica)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema [.blackfriday_&]:!bg-blackfriday p-6 xl:pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
         <FormsEsteticaForm :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)"
-            :formId="data.acf.formulario.formid" :name="data.title.rendered" :route="route"/>
-        <!-- <FormsCustomForm v-else :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)"
-            :formId="data.acf.formulario.formid" /> -->
-        
+            :formId="data.acf.formulario.formid" :name="data.title.rendered" :route="route"/>        
     </div>
 </template>
 
