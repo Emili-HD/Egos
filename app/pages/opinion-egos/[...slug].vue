@@ -7,7 +7,7 @@
                 <h1 class="">{{ casoreal.title.rendered }}</h1>
                 <div v-if="casoreal.acf.vimeo_video"
                     class="caso-real__video video__player col-start-2 col-span-10 flex flex-row justify-center items-start">
-                    <div class="w-full bg-nude-5 h-[max(400px,_65vh)] rounded-2xl">
+                    <div class="w-full bg-nude-5 h-[400px] lg:h-[650px] rounded-2xl">
                         <VimeoPlayer :videoId="casoreal.acf.vimeo_video" />
                     </div>
                 </div>

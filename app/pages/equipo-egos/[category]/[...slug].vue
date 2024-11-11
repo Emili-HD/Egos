@@ -3,12 +3,12 @@
         v-if="doctor && Object.keys(doctor).length > 0 && isCategoryValid">
         <UiBotonCita v-if="doctor && doctor.acf && doctor.acf.boton_cita" :data="doctor.acf.boton_cita" />
         <div class="doctor__content col-[1/-1] lg:col-start-1 lg:col-span-11 grid grid-cols-subgrid w-fit min-h-fit">
-            <header class="doctor__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
+            <header class="doctor__heading pt-36 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
                 v-if="doctor && doctor.title">
                 <h1 class="font-lora">{{ doctor.title.rendered }}</h1>
                 <div v-if="doctor.featured_image_data"
                     class="doctor__media col-start-2 col-span-10 flex flex-row justify-center items-start">
-                    <div class="w-full bg-nude-5 h-[max(400px,_65vh)] rounded-2xl overflow-hidden">
+                    <div class="w-full bg-nude-5 h-[400px] lg:h-[650px] rounded-2xl overflow-hidden">
                         <UiImage :data="doctor" class="cover absolute" :preload="true" />
                     </div>
                 </div>
@@ -43,18 +43,15 @@ import { watch, onMounted, nextTick, provide } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getEquipo, getReviews, getEspecialidades } from '@/composables/useApi';
 import { useScrollStore } from '@/stores/scrollStore';
+const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 const router = useRouter();
 const route = useRoute();
 const isLoadingCategory = ref(true);  // Bandera para saber si la categoría se está verificando
 const isCategoryValid = ref(false);
 
-const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
-
 provide('routePath', route.fullPath);
-
 // console.log(route.params.slug);
-
 
 // Verificar la existencia de la categoría en las especialidades
 const { data: especialidades } = await useAsyncData(

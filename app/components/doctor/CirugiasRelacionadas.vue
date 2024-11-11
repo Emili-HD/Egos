@@ -1,5 +1,5 @@
 <template>
-    <section v-if="treatmentsData.cirugias_relacionadas" class="tratamientos__wrapper px-0 xl:pb-24 my-0"
+    <div v-if="treatmentsData.cirugias_relacionadas" class="tratamientos__wrapper px-0 pb-12 xl:pb-24 my-0"
         id="relacionadas" ref="related" data-anchor="relacionadas">
         <div class="tratamientos__services flex flex-col flex-wrap items-center gap-0 lg:gap-4" data-color="#ffffff">
             <div class="cards__title mb-12 col-[2/-2]">
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </template>
 
 <script setup>
