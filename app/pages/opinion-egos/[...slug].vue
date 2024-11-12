@@ -283,3 +283,5 @@
     // Ejecuta la función asíncrona y espera su finalización
     injectStructuredData().catch(console.error);
 </script>
+
+<style></style>
