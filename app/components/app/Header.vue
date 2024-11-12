@@ -3,8 +3,8 @@
         <ElementsNotices />
         <div class="header-wrapper flex flex-row justify-between px-4 mt-2 w-full h-16">
             <AppHeaderBrand />
+            <AppNavMobile v-if="$viewport.isLessThan('xl')"  :menuData="menuTratamientosData"/>
             <AppNavPrimary v-if="$viewport.isGreaterOrEquals('xl')" :menuData="menuTratamientosData" />
-            <AppNavMobile v-else  :menuData="menuTratamientosData"/>
             <AppNavSecondary />
         </div>
     </header>

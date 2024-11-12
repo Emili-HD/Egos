@@ -228,7 +228,7 @@ useHead(() => {
         // Twitter Card
         { name: 'twitter:card', content: yoast.twitter_card },
         // Tiempo de lectura de Twitter (Personalizado, considerar adecuación a estándares)
-        { name: 'twitter:data1', content: yoast.twitter_misc['Tiempo de lectura'] },
+        { name: 'twitter:data1', content: yoast.twitter_misc?.['Tiempo de lectura'] },
         // Robots
         {
             name: 'robots',

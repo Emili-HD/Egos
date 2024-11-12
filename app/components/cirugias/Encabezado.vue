@@ -2,7 +2,7 @@
     <header 
         class="heading__cirugias px-8 xl:px-16 py-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex justify-center items-end bg-cover bg-center"
         :style="`background: linear-gradient(to bottom, rgba(28, 44, 68, 0) 10%, rgba(28, 44, 68, 0.75) 80%), url('${data.featured_image_data.url}'); background-size: cover; background-position: center;`">
-        <div class="header__content z-10">
+        <div class="header__content z-10 lg:mb-16">
 
             <!-- Contador rebajas -->
             <div v-if="data.acf && data.acf.rebaja" class="flex flex-col-reverse gap-4">
@@ -154,9 +154,11 @@ onBeforeUnmount(() => {
     width: 100%;
     @media (min-width: 1025px) {
         height: 900px;
+        max-height: 100vh;
     }
     @media (min-width: 1440px) {
         height: 1100px;
+        max-height: 100vh;
     }
     @media (max-width: 1024px) {
         height: 700px;

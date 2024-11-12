@@ -10,7 +10,7 @@
         </div>
     </header>
     <div v-if="data.acf && data.acf.formulario"
-        class="form__wrapper min-h-[620px] h-screen max-h-[820px] 2xl:max-h-[68.75rem] bg-blue-1 [.blackfriday_&]:!bg-blackfriday p-12 pt-24 col-start-1 col-span-full xl:col-start-12 xl:col-span-5 flex flex-col justify-center items-stretch [.estetica:not(.blackfriday)_&]:bg-crema">
+        class="form__wrapper min-h-[620px] max-h-[820px] 2xl:max-h-[68.75rem] bg-blue-1 [.blackfriday_&]:!bg-blackfriday p-12 pt-24 col-start-1 col-span-full xl:col-start-12 xl:col-span-5 flex flex-col justify-center items-stretch [.estetica:not(.blackfriday)_&]:bg-crema">
          <FormsEsteticaForm :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)"
             :formId="data.acf.formulario.formid" :name="data.title.rendered" :route="route"/>
     </div>
@@ -35,7 +35,7 @@ const props = defineProps({
         height: 900px;
     }
     @media (min-width: 1440px) {
-        height: 1100px;
+        height: 920px;
     }
     @media (max-width: 1024px) {
         height: 700px;

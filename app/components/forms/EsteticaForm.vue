@@ -54,7 +54,7 @@
                                             class="form__select form__field focus:outline-none mt-2">
                                             <option v-for="option in field.options" :key="option.value"
                                                 :value="option.value"
-                                                class="[.estetica_.is-windows_&]:bg-black [.blackfriday_.is-windows_&]:text-black [.estetica_.is-windows_&]:text-vermell [.estetica_.is-windows_&]:font-light">
+                                                class="[.is-windows_&]:bg-crema [windows_&]:text-black [.estetica:not(.blackfriday)_.is-windows_&]:text-vermell [.is-windows_&]:font-light">
                                                 {{ option.label }}
                                             </option>
                                         </select>
@@ -74,7 +74,7 @@
                                                 class="form__select form__field focus:outline-none mt-2">
                                                 <option v-for="option in subField.dependentField.options"
                                                     :key="option.value" :value="option.value"
-                                                    class="[.is-windows_&]:bg-black [.is-windows_&]:text-nude-8 [.is-windows_&]:font-light">
+                                                    class="[.is-windows_&]:bg-crema [windows_&]:text-black [.estetica:not(.blackfriday)_.is-windows_&]:text-vermell [.is-windows_&]:font-light">
                                                     {{ option.label }}
                                                 </option>
                                             </select>

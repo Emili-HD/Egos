@@ -16,7 +16,7 @@
                 class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="casoreal && casoreal.content">
                 <div v-html="processedContent"
-                    class="[&>p:has(img)]:w-full [&>p:has(img)]:inline-flex [&>p:has(img)]:justify-center [&>p:has(img)]:gap-2 [&>p:has(img)_img]:w-[31%] [&>p:has(img)]:max-md:w-[100%] [&>p>img]:w-full [&>p>a]:text-blue-2 [&>p>a]:font-semibold [&>p>a]:underline">
+                    class="[&>p:has(img)]:w-full [&>p:has(img)]:inline-flex [&>p:has(img)]:flex-col lg:[&>p:has(img)]:flex-row [&>p:has(img)]:justify-center [&>p:has(img)]:gap-2 [&>p:has(img)_img]:w-full lg:[&>p:has(img)_img]:w-[31%] [&>p:has(img)]:max-md:w-[100%] [&>p>img]:w-full [&>p>a]:text-blue-2 [&>p>a]:font-semibold [&>p>a]:underline">
                 </div>
             </section>
 
