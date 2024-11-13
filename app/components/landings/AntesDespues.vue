@@ -11,7 +11,7 @@
             v-for="elem in data.antes_despues.cirugias_relacionadas">
             <h5 class="antesdespues__content-images-title w-full my-4 min-h-[2.5em] text-clamp-lg flex flex-col justify-center">{{ elem.cirugia }}</h5>
             <figure
-               class="antes aspect-[3/2] [&.vertical]:aspect-[2/3]" :class="elem.orientacion">
+               class="antes aspect-[3/2] [&.vertical]:aspect-[2/3]" :class="elem.orientacion" v-if="elem.orientacion === 'vertical' || elem.orientacion === 'horizontal'">
                <img loading="lazy"
                   v-if="elem.imagen_antes && elem.imagen_antes.url"
                   class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-nude-1"
@@ -26,7 +26,7 @@
                   Antes</figcaption>
             </figure>
             <figure
-               class="despues aspect-[3/2] [&.vertical]:aspect-[2/3]" :class="elem.orientacion">
+               class="despues aspect-[3/2] [&.vertical]:aspect-[2/3]" :class="elem.orientacion" v-if="elem.orientacion === 'vertical' || elem.orientacion === 'horizontal'">
                <img loading="lazy"
                   v-if="elem.imagen_despues && elem.imagen_despues.url"
                   class="object-cover object-center max-w-[unset] size-full absolute border-b-4 border-b-nude-1"
@@ -39,6 +39,11 @@
                <figcaption
                   class="bg-nude-1 py-2 px-6 rounded-tl-xl rounded-tr-xl left-1/2 -translate-x-1/2 absolute bottom-0">
                   Después</figcaption>
+            </figure>
+
+            <figure class="min-h-[550px]" :class="elem.orientacion" v-if="elem.orientacion === 'video'">
+               <VimeoPlayer :videoId="elem.video_url" />
+               <!-- <figcaption>Exhibit B. The <cite>Rough Copy</cite> trailer.</figcaption> -->
             </figure>
          </div>
       </div>

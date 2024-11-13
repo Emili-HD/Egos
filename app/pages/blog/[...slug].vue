@@ -9,7 +9,7 @@
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 text-balance">
                     {{ post.title.rendered }}
                 </h1>
-                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50">
+                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50 cursor-pointer" @click="scrollToBreadcrumbs">
                     <svg class="arrows scale-50 w-[60px] h-[75px]">
                         <path class="a1" d="M0 0 L30 32 L60 0"></path>
                         <path class="a2" d="M0 20 L30 52 L60 20"></path>
@@ -25,7 +25,7 @@
                 <h1
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 mt-20 text-balance">
                     {{ post.title.rendered }}</h1>
-                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50">
+                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50 cursor-pointer" @click="scrollToBreadcrumbs">
                     <svg class="arrows scale-50 w-[60px] h-[75px]">
                         <path class="a1" d="M0 0 L30 32 L60 0"></path>
                         <path class="a2" d="M0 20 L30 52 L60 20"></path>
@@ -44,13 +44,15 @@
                 </div>
             </aside>
 
-            <div class="breadcrumbs flex gap-4 p-4 divide-x divide-blue-1/50 font-nunito rounded-xl shadow-lg w-[calc(100%-4rem)] mx-auto mb-8">
+            <!-- Breadcrumbs -->
+            <div id="breadcrumbs" class="breadcrumbs flex gap-4 p-4 divide-x divide-blue-1/50 font-nunito rounded-xl shadow-lg w-[calc(100%-4rem)] mx-auto mb-8" style="scroll-margin-top: 5rem">
                 <NuxtLink class="pl-4 mb-0 leading-none font-normal" to="/">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 2048 2048"><path fill="currentColor" d="m1024 165l941 942l-90 90l-83-82v805h-640v-640H896v640H256v-805l-83 82l-90-90zm640 1627V987l-640-640l-640 640v805h384v-640h512v640z"/></svg>
                 </NuxtLink>
                 <NuxtLink class="pl-4 mb-0 leading-none font-normal" to="/blog/">Blog</NuxtLink>
                 <div class="pl-4 mb-0 leading-none italic opacity-50">{{ post.title.rendered }}</div>
             </div>
+
             <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
                 <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-xl">
                     <h2 class="h4 font-lora nav-content-title h6 bg-nude-4 p-4 rounded-xl">Tabla de contenidos</h2>
@@ -245,6 +247,13 @@ watch(post, (newPost) => {
         router.push('/error');
     }
 }, { immediate: true });
+
+function scrollToBreadcrumbs() {
+    const breadcrumbsSection = document.getElementById("breadcrumbs");
+    if (breadcrumbsSection) {
+        breadcrumbsSection.scrollIntoView({ behavior: "smooth" });
+    }
+}
 
 const initAccordion = async () => {
     const groups = gsap.utils.toArray(".accordion__list--item");
