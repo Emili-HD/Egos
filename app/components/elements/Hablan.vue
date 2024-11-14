@@ -4,7 +4,9 @@
             <h2 class="h4 w-full my-0">Hablan de EGOS</h2>
         </div>
         <div class="flex justify-center flex-wrap items-center h-full lg:gap-4 px-4">
-            <img v-for="item in data.hablan_de_egos" loading="lazy" class="h-12 xl:h-20 w-fit grayscale" :src="item.logo.url" :alt="item.logo.alt" :width="item.logo.width" :height="item.logo.height">
+            <div v-for="item in data.hablan_de_egos">
+                <img v-if="item && item.logo && item.logo.url" loading="lazy" class="h-12 xl:h-20 w-fit grayscale" :src="item.logo.url" :alt="item.logo.alt" :width="item.logo.width" :height="item.logo.height">
+            </div>
         </div>
     </section>
 </template>

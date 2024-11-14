@@ -661,7 +661,7 @@ export default defineNuxtConfig({
                 '/equipo-egos/cirugia-estetica/dr-holidey-cano/',
                 '/equipo-egos/cirugia-estetica/dr-javier-paez/',
                 '/equipo-egos/cirugia-estetica/dr-jose-sarria/',
-                '/equipo-egos/cirugia-estetica/dr-munoz-del-olmo/',
+                // '/equipo-egos/cirugia-estetica/dr-munoz-del-olmo/',
                 '/equipo-egos/cirugia-estetica/dr-santiago-elvira/',
                 '/equipo-egos/cirugia-estetica/dr-tiago-gomes/',
                 '/equipo-egos/cirugia-estetica/dra-lorena-vives/',
