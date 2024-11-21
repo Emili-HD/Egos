@@ -56,20 +56,22 @@
             <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
                 <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-xl">
                     <h2 class="h4 font-lora nav-content-title h6 bg-nude-4 p-4 rounded-xl">Tabla de contenidos</h2>
-                    <ul class="pl-6 list-decimal mb-10">
-                        <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                            v-for="(content, index) in post.acf.areas_de_contenido">
-                            <NuxtLink :to="`#area-${index}`"><span>{{ content.titulo_area }}</span></NuxtLink>
-                        </li>
-                        <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                            v-if="post.acf.post_description.titulo_recomendaciones">
-                            <NuxtLink to="#recomendadiones"><span v-html="post.acf.post_description.titulo_recomendaciones"></span></NuxtLink>
-                        </li>
-                        <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                            v-if="post.acf.post_faqs.titulo_faqs">
-                            <NuxtLink to="#faqs"><span v-html="post.acf.post_faqs.titulo_faqs"></span></NuxtLink>
-                        </li>
-                    </ul>
+                    <nav>
+                        <ul class="pl-6 list-decimal mb-10">
+                            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
+                                v-for="(content, index) in post.acf.areas_de_contenido">
+                                <NuxtLink :to="`#area-${index}`"><span>{{ content.titulo_area }}</span></NuxtLink>
+                            </li>
+                            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
+                                v-if="post.acf.post_description.titulo_recomendaciones">
+                                <NuxtLink to="#recomendadiones"><span v-html="post.acf.post_description.titulo_recomendaciones"></span></NuxtLink>
+                            </li>
+                            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
+                                v-if="post.acf.post_faqs.titulo_faqs">
+                                <NuxtLink to="#faqs"><span v-html="post.acf.post_faqs.titulo_faqs"></span></NuxtLink>
+                            </li>
+                        </ul>
+                    </nav>
 
                     <div v-if="post.acf.doctores_relacionados">
                         <div v-if="doctor">
@@ -94,7 +96,7 @@
                 </aside>
 
                 <div class="post__content-areas p-0 xl:py-6 xl:px-10 col-[2/-2] xl:col-[4/13]">
-                    <div v-if="post.content.rendered" class="[&_h2]:font-lora [&_p]:font-nunito post__content-text pb-4" v-html="post.content.rendered">
+                    <div v-if="post.content.rendered" class="[&_h2]:font-lora [&_p]:font-nunito post__content-text pb-4 border-none" v-html="post.content.rendered">
                     </div>
                     <div class="post__content-text pb-4" v-for="(content, index) in post.acf.areas_de_contenido"
                         :id="`area-${index}`" >
@@ -392,7 +394,7 @@ useHead({
     
     :deep(.post__content-text) {
         scroll-margin-top: 7.5rem;
-        @apply p-10 mb-8 rounded-xl bg-white;
+        @apply p-10 mb-8 rounded-xl border border-blue-1/25;
 
         &:nth-child(1) {
             @apply p-0 mb-8 rounded-xl bg-transparent;
@@ -400,7 +402,7 @@ useHead({
         }
 
         a {
-            @apply font-medium text-blue-6;
+            @apply font-medium text-gold-2;
         }
 
         h3 {
@@ -426,7 +428,7 @@ useHead({
 
     
     .post__content-text.faqs {
-        @apply bg-transparent p-0 mt-12;
+        @apply bg-transparent p-0 mt-12 border-none;
 
         & .accordion__heading,
         & .accordion__list {

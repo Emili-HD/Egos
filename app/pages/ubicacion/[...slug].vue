@@ -26,8 +26,8 @@
         <!-- Formulario Pide Cita -->
         <NuxtLazyHydrate when-idle>
             <section
-                class="pidecita w-screen col-span-full grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-screen/70 py-0 lg:gap-0">
-                <div class="col-span-full lg:col-span-11 min-h-screen/60">
+                class="pidecita w-screen col-span-full grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-vh/70 py-0 lg:gap-0">
+                <div class="col-span-full lg:col-span-11 min-h-vh/60">
                     <LazyElementsSingleGoogleMap :locations="landing.acf.localizaciones" :zoom="15" />
                 </div>
                 <div id="formulario" class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
@@ -79,7 +79,7 @@
         <NuxtLazyHydrate when-idle>
             <div class="form__page grid grid-cols-subgrid col-[1/-1] my-12 lg:my-24" v-if="landing.acf && landing.acf.quiz && landing.acf.quiz.formid">
                 <div id="presupuesto"
-                    class="form__wrapper p-8 xl:p-20 col-[1/-1] xl:col-[1/9] bg-blue-1 flex flex-col justify-center items-center min-h-screen/80">
+                    class="form__wrapper p-8 xl:p-20 col-[1/-1] xl:col-[1/9] bg-blue-1 flex flex-col justify-center items-center min-h-vh/80">
                     <FormsQuiz :identificador="'formPage'" :portalId="String(landing.acf.quiz.portalid)" :formId="landing.acf.quiz.formid"
                         :titulo="landing.acf.quiz.titulo_form" :name="landing.title.rendered" class="max-w-[max(360px,_45vw)]" />
                 </div>

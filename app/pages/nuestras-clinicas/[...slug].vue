@@ -21,7 +21,7 @@
         <NuxtLazyHydrate when-idle>
             <Categories
                 v-if="clinica.acf && clinica.acf.cirugias_relacionadas && clinica.acf.cirugias_relacionadas.categorias_home"
-                :data="clinica.acf.cirugias_relacionadas" sectionId="cirugias" class="[&_.home__services]:!min-h-screen/75" />
+                :data="clinica.acf.cirugias_relacionadas" sectionId="cirugias" class="[&_.home__services]:!min-h-vh/75" />
         </NuxtLazyHydrate>
 
         <!-- Servicios de cirugía -->
@@ -32,8 +32,8 @@
         <!-- Formulario Pide Cita -->
         <NuxtLazyHydrate when-idle>
             <section
-                class="pidecita w-screen col-span-full grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-screen/70 py-0 lg:gap-0">
-                <div class="col-span-full lg:col-span-11 min-h-screen/60">
+                class="pidecita w-screen col-span-full grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-vh/70 py-0 lg:gap-0">
+                <div class="col-span-full lg:col-span-11 min-h-vh/60">
                     <LazyElementsSingleGoogleMap :locations="clinica.acf.localizaciones" :zoom="15" />
                 </div>
                 <div id="formulario" class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema  col-start-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
@@ -127,6 +127,10 @@
             </div>
         </NuxtLazyHydrate>
 
+        <section class="grid grid-cols-16 bg-transparent min-h-max mx-[calc(100% / 16)]">
+            <ClinicasCirugiasRelacionadas :data="clinica.acf" />
+        </section>
+
         <!-- Google Reviews -->
         <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 xl:px-[calc(100%/16)]">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
@@ -218,6 +222,9 @@ if (clinica.value && clinica.value.acf?.dr_comment) {
     }));
 }
 
+// console.log('Datos cirugias:', clinica.value.acf?.acordeon_cirugias?.items);
+
+
 const relativeDoctorLink = (link) => {
     if (link) {
         const url = new URL(link);
@@ -290,6 +297,9 @@ let tratamiento = clinica
 const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
 const breadcrumbJson = generateBreadcrumbData();
 
+const { generateSinglePlaceData } = useSinglePlaceData();
+const singlePlaceJson = generateSinglePlaceData(clinica.value);
+
 const { generateYoastHead } = useYoastHead(clinica);
 const yoastHead = generateYoastHead();
 
@@ -304,6 +314,10 @@ useHead({
         breadcrumbJson && {
             type: 'application/ld+json',
             children: JSON.stringify(breadcrumbJson),
+        },
+        singlePlaceJson && {
+            type: 'application/ld+json',
+            children: JSON.stringify(singlePlaceJson),
         },
         // awardsJsonLd && {
         //     type: 'application/ld+json',
@@ -332,7 +346,7 @@ useHead({
 }
 
 :deep(.home__services) {
-    @apply min-h-screen/75;
+    @apply min-h-vh/75;
 }
 
 :deep(.clinicas__egos-map) {

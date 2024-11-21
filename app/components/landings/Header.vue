@@ -1,7 +1,7 @@
 <template>
-   <div class="hero__intro bg-cover bg-center w-full md:w-1/2 h-screen/85 md:h-screen overflow-hidden">
+   <div class="hero__intro bg-cover bg-center w-full md:w-1/2 h-vh/90 md:h-vh overflow-hidden">
       <div class="blue-gradient-full size-full absolute z-0">
-         <UiImage :data="data" class="h-screen/85 xl:h-screen object-cover object-center absolute" :preload="true" />
+         <UiImage :data="data" class="h-vh/90 xl:h-vh object-cover object-center absolute" :preload="true" />
       </div>
       <header class="header__landing relative px-12 py-6 [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-1 flex justify-center md:justify-start w-full z-[999]" ref="cabecera">
          <nuxt-link to="/">
@@ -9,8 +9,8 @@
             <div class="text-black absolute w-[calc(100%+2rem)] -bottom-6 -left-4 font-semibold text-xs text-center bg-gold-1 uppercase rounded-md">Black Days</div>
          </nuxt-link>
       </header>
-      <div class="header__landing-content text-nude-8 text-center p-5 md:px-24 w-full flex flex-col justify-end items-center h-screen/85 md:h-full">
-         <h1 class="header__landing-content-title [&>span]:span-gradient [&>span]:border-b-[1px] [&>span]:border-b-white/20 [&>span]:block" v-html="data.acf.titulo_landing"></h1>
+      <div class="header__landing-content text-nude-8 text-center p-5 md:p-24 pb-24 size-full flex flex-col justify-end items-center">
+         <h1 class="header__landing-content-title text-clamp-4xl [&>span]:span-gradient [&>span]:border-b-[1px] [&>span]:border-b-white/20 [&>span]:block" v-html="data.acf.titulo_landing"></h1>
          <div class="flex flex-col items-center gap-4 w-full">
             <ElementsPlazas v-if="data.acf.plazas?.numero_plazas" :data="data.acf.plazas" />
             <ElementsButton  v-if="data.acf && data.acf.quiz_multiple && data.acf.quiz_multiple.multiple_forms " class="gold text-clamp-sm uppercase text-center w-fit" href="#presupuesto">

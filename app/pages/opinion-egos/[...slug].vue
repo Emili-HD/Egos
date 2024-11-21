@@ -16,7 +16,7 @@
                 class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="casoreal && casoreal.content">
                 <div v-html="processedContent"
-                    class="[&>p:has(img)]:w-full [&>p:has(img)]:inline-flex [&>p:has(img)]:flex-col lg:[&>p:has(img)]:flex-row [&>p:has(img)]:justify-center [&>p:has(img)]:gap-2 [&>p:has(img)_img]:w-full lg:[&>p:has(img)_img]:w-[31%] [&>p:has(img)]:max-md:w-[100%] [&>p>img]:w-full [&>p>a]:text-blue-2 [&>p>a]:font-semibold [&>p>a]:underline">
+                    class="[&>p:has(img)]:w-full [&>p:has(img)]:inline-flex [&>p:has(img)]:flex-col lg:[&>p:has(img)]:flex-row [&>p:has(img)]:justify-center [&>p:has(img)]:gap-2 [&>p:has(img)_img]:w-full lg:[&>p:has(img)_img]:w-full [&>p:has(img)]:max-md:w-[100%] [&>p>img]:w-full [&>p>a]:text-blue-2 [&>p>a]:font-semibold [&>p>a]:underline">
                 </div>
             </section>
 
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="doctor__info-description bg-white p-8 rounded-xl -mt-3 h-3/5 grid grid-rows-[min-content]" v-if="doctor.post_title">
                                     <!-- Nombre del doctor -->
-                                    <h3 class="text-clamp-lg text-left mb-2 font-nunito font-semibold">
+                                    <h3 class="text-clamp-base text-left mb-2 font-nunito font-semibold">
                                         {{ doctor.post_title }}
                                     </h3>
                                     <!-- Comentario del doctor -->
@@ -59,7 +59,7 @@
                                 <img loading="lazy" :src="clinica.featured_image"  class="w-full"/>
                             </div>
                             <div class="h-3/5 w-full bg-white p-8 rounded-xl -mt-3 grid grid-rows-[min-content]">
-                                <h2 class="text-clamp-lg font-nunito font-semibold">{{ casoreal.acf.titulo_cirugias_relacionadas }}</h2>
+                                <h2 class="text-clamp-base font-nunito font-semibold">{{ casoreal.acf.titulo_cirugias_relacionadas }}</h2>
                                 <div v-html="casoreal.acf.texto_cirugias_relacionadas" class="[&>p]:leading-tight"></div>
                                 <UiButton  :to="formatPermalink(clinica.permalink)" class="self-end blue uppercase text-xs text-nude-8 !px-4 !py-4 max-lg:!w-[calc(50%-0.2rem)] lg:min-w-[calc(50%-1rem)]">{{ clinica.post_excerpt }}</UiButton>
                             </div>
@@ -73,7 +73,7 @@
                                 <img loading="lazy" :src="cirugia.featured_image"  class="w-full"/>
                             </div>
                             <div class="h-3/5 bg-white p-8 rounded-xl -mt-3 grid grid-rows-[min-content]">
-                                <h2 class="text-clamp-lg font-nunito font-semibold">{{ casoreal.acf.titulo_cirugias_testimonios }}</h2>
+                                <h2 class="text-clamp-base font-nunito font-semibold">{{ casoreal.acf.titulo_cirugias_testimonios }}</h2>
                                 <div v-html="casoreal.acf.texto_cirugias_testimonios" class="[&>p]:leading-tight"></div>
                                 <UiButton :key="cirugia.ID" :to="formatPermalink(cirugia.permalink)" class="self-end blue uppercase text-xs text-nude-8 !px-4 !py-4 max-lg:!w-[calc(50%-0.2rem)] lg:min-w-[calc(50%-1rem)]">Más info sobre {{ casoreal.acf.titulo_cirugias_testimonios }}</UiButton>
                             </div>

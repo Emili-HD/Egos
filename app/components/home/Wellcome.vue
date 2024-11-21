@@ -1,6 +1,6 @@
 <template>
     <section class="intro">
-        <div class="intro__image bg-cover bg-[75%] h-[920px] lg:h-[768px] 2xl:h-[1100px] lg:bg-center" :style="`background-image: url('${data.featured_image_data.url}');`">
+        <div class="intro__image bg-cover bg-[75%] h-[calc(100*var(--vh))] lg:bg-center" :style="`background-image: url('${data.featured_image_data.url}');`">
             <!-- <UiImage :data="data" class="girl" :preload="true" /> -->
             <div>
                 <p class="intro__title">
@@ -82,7 +82,7 @@
     }
 
     .intro {
-        @apply h-[920px] lg:h-[768px] 2xl:h-[1100px];
+        @apply h-[calc(100*var(--vh))];
 
         &__image {
             @apply flex flex-col justify-evenly items-start gap-8;
@@ -94,7 +94,7 @@
     }
 
     .girl {
-        @apply h-screen w-screen object-cover object-[75%] xl:object-center absolute z-0 left-0;
+        @apply h-vh w-screen object-cover object-[75%] xl:object-center absolute z-0 left-0;
     }
 
     .intro__title {

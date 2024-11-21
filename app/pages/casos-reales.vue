@@ -28,7 +28,7 @@
             <TestimoniosDestacados />
 
             <!-- Listado de todos los testimonios filtrados -->
-            <div class="testimonios__list max-w-full min-h-screen p-8 lg:px-20 lg:pt-0 lg:pb-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4"
+            <div class="testimonios__list max-w-full min-h-vh p-8 lg:px-20 lg:pt-0 lg:pb-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4"
                 v-if="testimonios">
                 <article v-for="testimonio in testimonios" :key="testimonio.id"
                     class="card item rounded-xl overflow-hidden flex flex-col justify-center items-center gap-2 lg:gap-8 bg-nude-6 p-0"

@@ -1,7 +1,7 @@
 <template>
     <section
-        class="pidecita w-screen col-span-full grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-screen py-0 lg:gap-0">
-        <div class="col-span-full lg:col-span-11 min-h-screen/60">
+        class="pidecita w-screen col-span-full grid grid-cols-16 grid-rows-2 lg:grid-rows-1 min-h-vh py-0 lg:gap-0">
+        <div class="col-span-full lg:col-span-11 min-h-vh/60">
             <LazyElementsGoogleMap 
                 @update-content="handleContentUpdate" 
                 @update-options="handleOptionsUpdate" 
@@ -54,7 +54,7 @@ const handleOptionsUpdate = (newOptions) => {
 
 <style lang="scss" scoped>
 .half-right {
-    @apply bg-blue-1 p-6 xl:p-12 h-fit lg:h-full w-full mb-0 top-0 flex flex-col justify-center col-span-full lg:col-[12/17] row-start-2 lg:row-start-1 lg:min-h-screen;
+    @apply bg-blue-1 p-6 xl:p-12 h-fit lg:h-full w-full mb-0 top-0 flex flex-col justify-center col-span-full lg:col-[12/17] row-start-2 lg:row-start-1 lg:min-h-vh;
 
     .form__wrapper {
         @apply p-0 mb-12 lg:p-12 xl:p-0;

@@ -5,14 +5,12 @@
         {{ data.cirugias.titulo_cirugias }}
       </h2>
       <div v-if="data.cirugias && data.cirugias.cirugias_relacionadas" class="cirugias__grid-inner flex flex-wrap col-[2_/_span_14]">
-        <div
-          class="card__wrapper w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 p-2"
-          v-for="categoryId in data.cirugias.cirugias_relacionadas"
-          :key="categoryId"
+        <div class="card__wrapper w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 p-2"
+          v-for="categoryId in data.cirugias.cirugias_relacionadas" :key="categoryId"
         >
           <CirugiasCategorySlide
             :categoryId="categoryId"
-            :classes="'aspect-[2/3]'"
+            :classes="'aspect-square'"
           />
         </div>
       </div>

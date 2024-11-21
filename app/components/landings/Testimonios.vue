@@ -1,12 +1,12 @@
 <template>
-   <section class="testimonios [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-1 px-8 xl:px-24 py-10 xl:py-20 mb-0" ref="testimonios">
+   <section class="testimonios bg-gold-2 px-8 xl:px-24 py-10 pb-60 xl:pt-20 mb-0" ref="testimonios">
       <div class="testimonios__header pt-6">
          <h2>{{ data.testimonios.titulo }}</h2>
          <ElementsDivider />
          <p class="h6" v-html="data.testimonios.descripcion"></p>
       </div>
       <div class="testimonios__videos">
-         <figure class="testimonios__videos-item min-w-[25vw]" v-for="testimonio in data.testimonios.videos">
+         <figure class="testimonios__videos-item min-w-[25vw] md:w-[calc(50%-.5rem)] xl:w-[30%]" v-for="testimonio in data.testimonios.videos">
             <div v-if="testimonio.video_vimeo" class="video__player rounded-xl overflow-hidden">
                <div class="size-full aspect-[9/16]">
                   <VimeoPlayer :videoId="testimonio.video_vimeo" />
@@ -39,7 +39,7 @@ const props = defineProps({
 }
 
 .testimonios {
-   @apply min-h-screen text-nude-8 flex flex-col items-center;
+   @apply min-h-vh text-nude-8 flex flex-col items-center;
 
    &__header {
       @apply w-full text-center;
@@ -49,7 +49,7 @@ const props = defineProps({
       display: flex;
       flex-direction: row;
       justify-content: center;
-      gap: 2rem;
+      gap: 3rem;
       width: 100%;
 
       @media (max-width: 767px) {

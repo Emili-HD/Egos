@@ -1,6 +1,6 @@
 <template>
     <header 
-        class="heading__cirugias px-8 xl:px-16 py-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex justify-center items-end bg-cover bg-center"
+        class="heading__cirugias h-vh px-8 xl:px-16 py-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex justify-center items-end bg-cover bg-center"
         :style="`background: linear-gradient(to bottom, rgba(28, 44, 68, 0) 10%, rgba(28, 44, 68, 0.75) 80%), url('${data.featured_image_data.url}'); background-size: cover; background-position: center;`">
         <div class="header__content z-10 lg:mb-16">
 
@@ -152,7 +152,9 @@ onBeforeUnmount(() => {
 <style scoped>
 .heading__cirugias {
     width: 100%;
-    @media (min-width: 1025px) {
+    /* height: calc(100 * var(--vh) - 50px); */
+    /* min-height: 700px; */
+    /* @media (min-width: 1025px) {
         height: 900px;
         max-height: 100vh;
     }
@@ -168,6 +170,6 @@ onBeforeUnmount(() => {
     }
     @media (max-width: 560px) {
         height: 800px;
-    }
+    } */
 }
 </style>

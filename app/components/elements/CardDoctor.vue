@@ -21,7 +21,7 @@
                                     <NuxtLink :to="processedPath(miembro.link)" class="button bg-nude-1 rounded-full py-1 text-blue-1 w-full text-center shadow-lg hover:bg-nude-6 hover:text-gold-3 transition-colors" v-if="category.form === true">Opiniones</NuxtLink>
                                     <NuxtLink
                                       :to="processedPath(miembro.link)"
-                                      class="button bg-gold-3 rounded-full py-1 text-nude-8 w-full text-center shadow-lg hover:bg-gold-1 hover:text-blue-1 transition-colors"
+                                      class="button bg-blue-1 rounded-full py-1 text-nude-8 w-full text-center shadow-lg hover:bg-gold-1 hover:text-blue-1 transition-colors"
                                       v-if="category.form === true"
                                       @click="handleAppointmentClick"
                                     >

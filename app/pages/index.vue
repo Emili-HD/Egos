@@ -32,16 +32,13 @@
 </template>
 
 <script setup>
-import { onMounted, computed, provide } from 'vue';
-import { useAsyncData } from 'nuxt/app'
-import { getPage } from '@/composables/useApi';
-
 const route = useRoute();
 
 provide('routePath', route.fullPath);
 
 const { data: home, error } = await useAsyncData(() => getPage(8))
 const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);
+const { data: cirugias, error: cirugiasError } = await useAsyncData('cirugia', () => getTratamiento({ getAll: true }));
 
 // Obtener los premios del composable
 const { awards } = useAwardsSchema();
@@ -49,17 +46,21 @@ const { awards } = useAwardsSchema();
 // Convertir los premios a JSON-LD
 const awardsJsonLd = JSON.stringify(awards);
 
+// Generar JSON-LD para todas las cirugías
+const { generateSchema } = useCirugiaServiceSchema(cirugias);
+const schemaData = generateSchema();
+
 // Genera los metadatos de Yoast
 const { generateYoastHead } = useYoastHead(home);
 const yoastHead = generateYoastHead();
 
 useHead({
-    // script: [
-    //     {
-    //         type: 'application/ld+json',
-    //         children: awardsJsonLd
-    //     }
-    // ],
+    script: [
+        {
+            type: 'application/ld+json',
+            children: JSON.stringify(schemaData)
+        }
+    ],
     ...yoastHead,
 });
 

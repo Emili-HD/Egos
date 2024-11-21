@@ -80,6 +80,9 @@ watch(() => props.data.items, async (nuevosItems) => {
     });
 }, { immediate: true, deep: true });
 
+// console.log('Datos cirugías:', props.data);
+
+
 
 const getProcessedLink = (link) => {
   if (!link) {

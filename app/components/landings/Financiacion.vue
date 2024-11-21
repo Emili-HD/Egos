@@ -25,7 +25,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .financiacion {
-   @apply p-10 mb-0 min-h-screen/40 bg-cover bg-center flex flex-col justify-center items-center;
+   @apply p-10 mb-0 min-h-vh/40 bg-cover bg-center flex flex-col justify-center items-center;
 
    &__content {
       @apply text-nude-8 text-center;

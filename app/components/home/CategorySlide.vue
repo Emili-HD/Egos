@@ -106,7 +106,7 @@
         }
 
         &__picture {
-            @apply aspect-square xl:max-h-screen/70 bg-nude-8 block min-h-full rounded-2xl overflow-hidden mb-4;
+            @apply aspect-square xl:max-h-vh/70 bg-nude-8 block min-h-full rounded-2xl overflow-hidden mb-4;
 
             &-img {
                 @apply size-full object-cover object-center;

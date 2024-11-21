@@ -94,7 +94,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed } from 'vue'
+import { useAsyncData, useHead } from '#imports'
 
 const props = defineProps({
     placeid: {
@@ -103,38 +104,62 @@ const props = defineProps({
     }
 })
 
-const reviews = ref([])
-const averageRating = ref(null) // Para la calificación promedio
-const totalReviews = ref(null)  // Para el número total de reseñas
-const hasError = ref(false)
-const errorMessage = ref('')
-
-// Función para calcular el ancho basado en la valoración
-function calculateWidth(rating) {
-    const percentage = rating * 20;
-    const width = 171.7 * (percentage / 100);
-    return `${width}`;
-}
-
-onMounted(async () => {
-    try {
-
-        const response = await $fetch(`/api/get-google-reviews?placeId=${props.placeid}`)
-
-        if (response.error) {
-            hasError.value = true
-            errorMessage.value = response.error
-        } else {
-            averageRating.value = response.averageRating || null  // Calificación promedio
-            totalReviews.value = response.totalReviews || null    // Número total de reseñas
-            reviews.value = response.reviews || []
-        }
-    } catch (error) {
-        hasError.value = true
-        errorMessage.value = 'Error en la solicitud de reseñas.'
-    }
+// Cargar reseñas y calificaciones en el servidor usando useAsyncData
+const { data, error } = await useAsyncData(async () => {
+    return await $fetch(`/api/get-google-reviews?placeId=${props.placeid}`);
 })
 
+// Valores de reseñas y calificaciones
+const reviews = ref(data.value?.reviews || [])
+const averageRating = ref(data.value?.averageRating || null)
+const totalReviews = ref(data.value?.totalReviews || null)
+const hasError = ref(!!error)
+const errorMessage = ref(error ? 'Error en la solicitud de reseñas.' : '')
+
+// Función para calcular el ancho de las estrellas
+function calculateWidth(rating) {
+    return `${(rating * 20) * 171.7 / 100}`;
+}
+
+// Generar JSON-LD de reseñas
+const reviewsJsonLd = computed(() => {
+    if (!averageRating.value || !totalReviews.value || !reviews.value.length) return null;
+
+    return JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Nombre de la Clínica", // Cambia esto por el nombre de la clínica
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": averageRating.value,
+            "reviewCount": totalReviews.value
+        },
+        "review": reviews.value.map((review) => ({
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": review.author_name
+            },
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": review.rating,
+                "bestRating": 5
+            },
+            "datePublished": new Date(review.time * 1000).toISOString(), // Convierte `time` a formato ISO
+            "description": review.text
+        }))
+    });
+});
+
+// Insertar JSON-LD en la cabecera usando useHead
+useHead({
+    script: [
+        {
+            type: 'application/ld+json',
+            children: reviewsJsonLd.value
+        }
+    ]
+});
 </script>
 
 <style scoped>

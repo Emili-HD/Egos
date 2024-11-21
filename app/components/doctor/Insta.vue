@@ -60,7 +60,9 @@ const props = defineProps({
 
 // Propiedad calculada para filtrar los comentarios por la ruta
 const filteredComments = computed(() => {
-    return props.data.filter(comment => comment.acf.publicar_en === props.ruta);
+    return Array.isArray(props.data)
+        ? props.data.filter(comment => comment.acf.publicar_en === props.ruta)
+        : [];
 });
 
 // Función para formatear la fecha relativa

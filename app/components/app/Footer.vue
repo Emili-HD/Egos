@@ -18,7 +18,8 @@
          <UiMenu :data="footerMenuData.items" class="menu-footer"/>
          <div class="grid grid-rows-[repeat(2,_min-content)] col-span-full max-lg:divide-y divide-white/25">
             <UiMenu :data="socialMenuData.items" class="menu-social [&>ul]:!flex-row" :isExternal="true"/>
-            <UiMenu :data="legalMenuData.items" class="menu-legal"/>
+            <UiMenu :data="clinicasMenuData.items" class="menu-clinicas uppercase"/>
+            <UiMenu :data="legalMenuData.items" class="menu-legal [&_ul_li]:text-xs [&_ul_li]:tracking-wide opacity-60"/>
          </div>
       </div>
    </footer>
@@ -47,6 +48,7 @@ const { data: footerMenuData, error: footerMenuError } = await fetchMenuData('me
 const { data: socialMenuData, error: socialMenuError } = await fetchMenuData('social-menu', 'social');
 const { data: legalMenuData, error: legalMenuError } = await fetchMenuData('textos-legales', 'textos-legales');
 const { data: trabajaMenuData, error: trabajaMenuError } = await fetchMenuData('trabaja-menu', 'trabaja');
+const { data: clinicasMenuData, error: clinicasMenuError } = await fetchMenuData('clinicas-menu', 'clinicas');
 
 
 </script>

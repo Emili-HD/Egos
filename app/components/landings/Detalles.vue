@@ -1,5 +1,5 @@
 <template>
-   <section class="detalles md:pb-12 min-h-screen bg-nude-7 flex content-start justify-between items-center flex-wrap">
+   <section class="detalles md:pb-12 min-h-vh bg-nude-7 flex content-start justify-between items-center flex-wrap">
       <div class="detalles__header p-12 mb-12 flex justify-center items-center gap-4 md:gap-8 text-nude-8 [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-3 w-full">
          <h2 class="h4 mb-0 text-clamp-lg">{{ data.detalles.avalados }}</h2>
          <img loading="lazy" class="max-w-[50%]" :src="data.detalles.logo_avalados.url" :alt="data.detalles.logo_avalados.alt" width="250" height="53" />
@@ -11,7 +11,7 @@
          </figure>
       </div>
       <div class="bg__detalles py-5 px-3 w-1/2 hidden md:flex flex-col items-center">
-         <figure class="bg__detalles-img w-3/4 overflow-hidden h-screen/70 rounded-2xl">
+         <figure class="bg__detalles-img w-3/4 overflow-hidden h-vh/70 rounded-2xl">
             <img loading="lazy" class="absolute object-cover object-center h-full w-full" 
                :src="data.detalles.imagen_avalados.url" 
                :srcset="data.detalles.imagen_avalados.srcset" 

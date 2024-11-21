@@ -67,9 +67,9 @@
                                             @click.passive="showMemberPanel(miembro)"
                                             class="button border border-solid bg-nude-1 border-nude-1/20 rounded-full py-1 w-full text-center">+
                                             Info</a>
-                                        <UiButton :to="processedPath(miembro.link)" class="bg-nude-1 !w-1/2 text-center"
+                                        <UiButton :to="processedPath(miembro.link)" class="bg-nude-1 !w-1/2 text-center text-blue-1"
                                             v-if="category.form === true">+ Info</UiButton>
-                                        <UiButton class="bg-gold-3 !w-1/2 text-center" v-if="category.form === true"
+                                        <UiButton class="bg-blue-1 !w-1/2 text-center" v-if="category.form === true"
                                             @click="openPopup">Pedir Cita</UiButton>
                                     </div>
                                 </div>
@@ -251,7 +251,7 @@
     }
 
     .team__panel {
-        @apply p-8 pt-16 md:pt-24 sm:px-16 sm:pb-16 bg-white rounded-xl fixed right-0 top-0 md:top-20 w-screen xl:w-screen/70 h-screen md:h-[calc(100vh-var(--header-height)-1rem)] z-[1001] translate-x-[100%] transition-transform duration-500 ;
+        @apply p-8 pt-16 md:pt-24 sm:px-16 sm:pb-16 bg-white rounded-xl fixed right-0 top-0 md:top-20 w-screen xl:w-screen/70 h-vh md:h-[calc((100*var(--vh))-var(--header-height)-1rem)] z-[1001] translate-x-[100%] transition-transform duration-500 ;
 
         &-content {
             @apply overscroll-contain;

@@ -10,48 +10,53 @@
             </NuxtLazyHydrate>
         </section>
 
-        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
-            <NuxtLazyHydrate when-idle>
-                <ElementsAnchors v-if="tratamiento && tratamiento.acf && tratamiento.acf.tabs"
+        <NuxtLazyHydrate when-idle>
+            <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
+                <LazyElementsAnchors v-if="tratamiento && tratamiento.acf && tratamiento.acf.tabs"
                     :data="tratamiento.acf.tabs" :doctors="tratamiento.acf" class="col-[1/-1] sm:col-[2/-2]" />
-                <CirugiasEntryText :data="tratamiento" />
-            </NuxtLazyHydrate>
-        </section>
+                <LazyCirugiasEntryText :data="tratamiento" />
+            </section>
+        </NuxtLazyHydrate>
 
-        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
-            <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
-                <div class="panels w-full">
-                    <div :id="processAncla(content.ancla)" :data-anchor="processAncla(content.ancla)"
-                        class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8 [.tratamiento-113_&.tabla]:bg-transparent [.blackfriday_&.tabla]:!bg-blackfriday"
-                        :class="content.fondo, content.opciones_listado" v-for="content in tratamiento.acf.tabs">
-                        <CirugiasFigure v-if="content.opciones_listado != 'columnas'" :contentData="content" />
-                        <CirugiasTabla v-if="content.opciones_listado === 'tabla'" :contentData="content" />
-                        <CirugiasColumnas v-if="content.opciones_listado === 'columnas'" :contentData="content" />
-                        <LandingsAntesDespues v-if="content.opciones_listado === 'antesdespues'" :data="content" />
+        <NuxtLazyHydrate when-idle>
+            <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit" v-if="tratamiento && tratamiento.acf && tratamiento.acf.tabs">
+                <div class="tratamiento__content col-[1_/_span_16] py-2 px-0">
+                    <div class="panels w-full">
+                        <div :id="processAncla(content.ancla)" :data-anchor="processAncla(content.ancla)"
+                            class="panel grid grid-cols-16 row-gap-4 xl:gap-2 xl:mb-32 py-12 [&.tabla]:bg-blue-1 [&.tabla]:text-nude-8 [.tratamiento-113_&.tabla]:bg-transparent [.blackfriday_&.tabla]:!bg-blackfriday"
+                            :class="content.fondo, content.opciones_listado" v-for="content in tratamiento.acf.tabs">
+                            <LazyCirugiasFigure v-if="content.opciones_listado === 'pestanyes' || content.opciones_listado === 'sinListado'" :contentData="content" />
+                            <LazyCirugiasTabla v-else-if="content.opciones_listado === 'tabla'" :contentData="content" />
+                            <LazyCirugiasColumnas v-else-if="content.opciones_listado === 'columnas'" :contentData="content" />
+                            <LazyLandingsAntesDespues v-else-if="content.opciones_listado === 'antesdespues'" :data="content" />
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </NuxtLazyHydrate>
 
+        <NuxtLazyHydrate when-idle>
+            <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
+                <LazyCirugiasClinicasRelacionadas v-if="tratamiento.acf && tratamiento.acf.clinicas_relacionadas"
+                    :data="tratamiento.acf.clinicas_relacionadas"
+                    :titulo="tratamiento.acf.titulo_cirugias_relacionadas"
+                    :texto="tratamiento.acf.texto_cirugias_relacionadas" class="col-[1/-1]" />
+            </section>
+        </NuxtLazyHydrate>
 
-        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
-            <ClinicasRelacionadas v-if="tratamiento.acf && tratamiento.acf.clinicas_relacionadas"
-                :data="tratamiento.acf.clinicas_relacionadas"
-                :titulo="tratamiento.acf.titulo_cirugias_relacionadas"
-                :texto="tratamiento.acf.texto_cirugias_relacionadas" class="col-[1/-1]" />
-        </section>
+        <NuxtLazyHydrate when-idle>
+            <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
+                <LazyCirugiasFaqs class="grid grid-cols-16 col-[1/-1]" :faqsData="tratamiento.acf" />
+            </section>
+        </NuxtLazyHydrate>
 
-        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
-            <CirugiasFaqs class="grid grid-cols-16 col-[1/-1]" :faqsData="tratamiento.acf" />
-        </section>
-
-        <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
-            <NuxtLazyHydrate when-idle>
+        <NuxtLazyHydrate when-idle>
+            <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
                 <div class="form__page grid grid-cols-16 col-[1/-1] mb-12" v-if="tratamiento.acf">
-                    <CirugiasFormSection :data="tratamiento.acf" :name="tratamiento" :route="route.fullPath" />
+                    <LazyCirugiasFormSection :data="tratamiento.acf" :name="tratamiento" :route="route.fullPath" />
                 </div>
-            </NuxtLazyHydrate>
-        </section>
+            </section>
+        </NuxtLazyHydrate>
         
         <ClientOnly>
             <LazyCirugiasRelatedTreatments :treatmentsData="tratamiento.acf"
@@ -110,7 +115,7 @@
     import { useDoctorsJson } from '~/composables/useDoctorsJson';
     import { getClinicas } from '@/composables/useApi'
     import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
-    import ClinicasRelacionadas from '~/components/cirugias/ClinicasRelacionadas.vue';
+    // import ClinicasRelacionadas from '~/components/cirugias/ClinicasRelacionadas.vue';
 
     
     const { $gsap: gsap } = useNuxtApp();

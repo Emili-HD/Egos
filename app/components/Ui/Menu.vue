@@ -2,7 +2,7 @@
     <div :class="class">
         <ul>
             <li class="mb-0" v-for="item in data" :key="item.ID">
-                <nuxt-link v-if="!isExternal" :to="`${resolveUrl(item.slug)}/`"
+                <nuxt-link v-if="!isExternal" :to="`${resolveUrl(item.url)}`"
                     :aria-current="isCurrentPage(item.slug) ? 'page' : undefined">
                     <span>{{ item.title }}</span>
                 </nuxt-link>
@@ -35,8 +35,8 @@ const props = defineProps({
 const route = useRoute();
 
 // Función auxiliar para resolver URLs
-const resolveUrl = (slug) => {
-    return slug.startsWith('/') ? slug : `/${slug}`;
+const resolveUrl = (url) => {
+    return url.replace('https://clinicaegos.com', '')
 }
 
 // Función para determinar si la página actual coincide con el enlace
@@ -78,6 +78,19 @@ const isCurrentPage = (url) => {
 
     ul {
         @apply list-none !mb-0 flex flex-col sm:flex-row justify-center items-center gap-8 w-full;
+
+        span {
+            @apply text-nude-8;
+        }
+    }
+}
+
+.menu-clinicas {
+    @apply col-span-3 py-4 self-start;
+    grid-template-rows: auto;
+
+    ul {
+        @apply list-none !mb-0 flex flex-row flex-wrap justify-center items-center gap-x-8 gap-y-4 w-full;
 
         span {
             @apply text-nude-8;

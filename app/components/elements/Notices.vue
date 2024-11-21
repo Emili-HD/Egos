@@ -1,7 +1,7 @@
 <template>
     <div
         class="notices w-full min-h-12 overflow-hidden [html:not(.blackfriday)]:bg-[#B7AB87] [.blackfriday_&]:bg-dark-2 relative">
-        <ClientOnly>
+        <!-- <ClientOnly> -->
             <div v-if="countdown.days > 0 || countdown.hours > 0 || countdown.minutes > 0 || countdown.seconds > 0"
                 class="flex justify-center items-center gap-4 w-full bg-blackfriday py-2 px-4">
                 <p class="mb-1 text-left text-sm lg:text-lg text-balance leading-none font-normal text-nude-8 [&_span]:text-gold-2 [&_span]:font-semibold" v-html="badge"></p>
@@ -24,11 +24,11 @@
                     </div>
                 </div>
             </div>
-        </ClientOnly>
-        <div
-            v-if="ofertas.length > 0 && (countdown.days > 0 || countdown.hours > 0 || countdown.minutes > 0 || countdown.seconds > 0)">
+        <!-- </ClientOnly> -->
+        <!-- <div
+            v-else-if="ofertas.length > 0 && (countdown.days === 0 && countdown.hours === 0 && countdown.minutes === 0 && countdown.seconds === 0)">
             <div v-for="(oferta, index) in ofertas" :key="index"
-                class="offer-display min-h-12 flex justify-center items-center text-center text-nude-8 font-semibold tracking-wide leading-none p-2 absolute top-0 left-0 w-full transition-transform duration-1000"
+                class="offer-display [.blackfriday_&]:!bg-dark-2 [.blackfriday_&]:!text-white backface-hidden min-h-12 flex justify-center items-center text-center text-nude-8 font-semibold tracking-wide leading-none p-2 absolute top-0 left-0 w-full transition-transform duration-1000 [&:not(.active),_&.previous]:rotate-x-90 [&.active]:rotate-x-0 [&.next,_&.previous]:absolute [&.next,_&.previous]:top-0 [&.next,_&.previous]:left-0 [&.next,_&.previous]:size-full"
                 :class="{
                     'active': index === currentIndex,
                     'next': index === nextIndex,
@@ -37,7 +37,7 @@
                 :style="`background-color: ${oferta.color}; color: ${oferta.text_color}; transform-origin: ${index === nextIndex ? 'bottom' : 'top'}`">
                 {{ oferta.oferta }}
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -143,23 +143,15 @@
 </script>
 
 <style scoped>
-    .blackfriday .offer-display {
-        @apply !bg-dark-2 !text-white;
-    }
-
-    .offer-display {
-        backface-visibility: hidden;
-    }
-
-    .offer-display:not(.active) {
+    /* .offer-display:not(.active) {
         transform: rotateX(90deg);
     }
 
     .offer-display.active {
         transform: rotateX(0deg);
-    }
+    } */
 
-    .offer-display.next,
+    /* .offer-display.next,
     .offer-display.previous {
         position: absolute;
         top: 0;
@@ -170,5 +162,5 @@
 
     .offer-display.previous {
         transform: rotateX(90deg);
-    }
+    } */
 </style>

@@ -4,7 +4,7 @@
          <h2>Opiniones {{ name }}</h2>
          <ElementsDivider />
       </div>
-      <article v-for="comment in data" class="bg-white p-8 rounded-2xl mb-6 w-full">
+      <div v-for="comment in data" class="bg-white border border-gold-2 p-8 rounded-2xl mb-6 w-full">
          <h3 class="h6">{{ comment.acf.name }}</h3>
          <div class="stars pb-4 w-24" :data-stars="comment.stars">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -28,7 +28,7 @@
          </div>
          <h4 class="text-clamp-base font-normal">{{ comment.title.rendered }}</h4>
          <div class="comentario text-clamp-sm" v-html="comment.content.rendered"></div>
-      </article>
+      </div>
    </div>
 </template>
 

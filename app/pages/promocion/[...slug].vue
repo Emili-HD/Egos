@@ -7,7 +7,7 @@
             <a class="gold" href="#hubspotLanding">Cita con el cirujano
             </a>
         </div>
-        <section class="hero m-0 p-0 min-h-screen flex flex-col lg:flex-row justify-between items-stretch xl:max-h-[1100px]">
+        <section class="hero m-0 p-0 min-h-vh flex flex-col lg:flex-row justify-between items-stretch">
             <LandingsHeader :data="landing" />
             <div id="formulario" class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 px-4 py-8 lg:p-12 w-full lg:w-1/2 flex flex-col justify-around">
                 <div class="insignia mb-8 flex flex-row justify-center text-center">
@@ -24,6 +24,7 @@
 
         <LandingsDetalles :data="landing.acf" />
         <LandingsAntesDespues :data="landing.acf" v-if="landing.acf && landing.acf.antes_despues.titulo_antesdespues" />
+        <LandingsTestimonios :data="landing.acf" />
         <LandingsDestacado :data="landing.acf" />
         <LandingsPromociones :data="landing.acf" />
         <div v-if="landing.acf && landing.acf.quiz_multiple && landing.acf.quiz_multiple.multiple_forms" id="presupuesto"
@@ -34,7 +35,6 @@
         <LandingsFinanciacion :data="landing.acf" />
         <LandingsPasos :data="landing.acf" />
         <LandingsInformacion :data="landing.acf" />
-        <LandingsTestimonios :data="landing.acf" />
         <LandingsResenas :data="landing.acf" />
     </main>
 </template>

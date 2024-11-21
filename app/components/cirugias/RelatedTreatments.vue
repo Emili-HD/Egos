@@ -27,6 +27,9 @@ const props = defineProps({
     },
 });
 
+// console.log('cirugias: ', props.treatmentsData.cirugias_relacionadas);
+
+
 // Estado reactivo para los datos relacionados
 const related = ref(null);
 

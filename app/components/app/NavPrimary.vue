@@ -283,7 +283,7 @@ onMounted(async () => {
                 }
 
                 .submenu {
-                    @apply mt-1 fixed left-0 right-0 top-12 m-auto z-0 h-screen/75 w-[85vw] pointer-events-none [&.open]:pointer-events-auto;
+                    @apply mt-1 fixed left-0 right-0 top-12 m-auto z-0 h-vh/75 w-[85vw] pointer-events-none [&.open]:pointer-events-auto;
                 }
             }
 
@@ -297,14 +297,14 @@ onMounted(async () => {
             }
 
             .submenu__left {
-                @apply bg-nude-8 h-screen/70 block bg-cover bg-center w-[calc(85vw*0.375)] top-0 -left-1 rounded-2xl absolute translate-y-[-140%];
+                @apply bg-nude-8 h-vh/70 block bg-cover bg-center w-[calc(85vw*0.375)] top-0 -left-1 rounded-2xl absolute translate-y-[-140%];
                 background-image: url(/assets/images/hero.webp);
 
                 .submenu__left-slider {
-                    @apply flex flex-col overflow-hidden rounded-2xl h-screen/70;
+                    @apply flex flex-col overflow-hidden rounded-2xl h-vh/70;
 
                     .before-after {
-                        @apply flex h-screen/70 absolute top-0 left-0;
+                        @apply flex h-vh/70 absolute top-0 left-0;
 
                         .slide-c {
                             @apply absolute left-0 top-0 opacity-0 z-0 h-full will-change-transform w-[calc(85vw/2.666667)];
@@ -314,7 +314,7 @@ onMounted(async () => {
             }
 
             .submenu__right {
-                @apply h-screen/70 right-0 w-[calc(85vw*0.625)] top-0 rounded-2xl absolute backdrop-blur-xl;
+                @apply h-vh/70 right-0 w-[calc(85vw*0.625)] top-0 rounded-2xl absolute backdrop-blur-xl;
                 transform: translateY(-140%);
 
                 .submenu__right-list {

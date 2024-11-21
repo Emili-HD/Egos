@@ -435,8 +435,12 @@
                     throw new Error(jsonResponse.message || 'Error al enviar el formulario')
                 }
 
-                // Redirigir a la URL de gracias
-                window.location.href = 'https://heybloome.com/calendarios/';
+                // Redirigir según la ruta actual a la página gracias o al calendario de bloome
+                if (routePath && routePath.includes('/medicina-estetica/')) {
+                    window.location.href = 'https://heybloome.com/calendarios/';
+                } else {
+                    await router.push('/gracias');
+                }
             } catch (e) {
                 console.error('Response is not valid JSON:', textResponse)
                 throw new Error('Response is not valid JSON')

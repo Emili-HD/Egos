@@ -6,7 +6,13 @@
             <header class="doctor__heading pt-36 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
                 v-if="doctor && doctor.title">
                 <h1 class="font-lora">{{ doctor.title.rendered }}</h1>
-                <div v-if="doctor.featured_image_data"
+                <div v-if="doctor.acf.video_cabecera"
+                    class="caso-real__video video__player col-start-2 col-span-10 flex flex-row justify-center items-start">
+                    <div class="w-full bg-nude-5 h-[400px] lg:h-[650px] rounded-2xl">
+                        <VimeoPlayer :videoId="doctor.acf.video_cabecera" />
+                    </div>
+                </div>
+                <div v-else-if="doctor.featured_image_data"
                     class="doctor__media col-start-2 col-span-10 flex flex-row justify-center items-start">
                     <div class="w-full bg-nude-5 h-[400px] lg:h-[650px] rounded-2xl overflow-hidden">
                         <UiImage :data="doctor" class="cover absolute" :preload="true" />
@@ -17,7 +23,7 @@
                 class="doctor__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="doctor && doctor.content">
                 <div class="[&p]:font-nunito" v-html="doctor.content.rendered"></div>
-                <LazyDoctorInsta :data="insta" :name="doctor.title.rendered" :ruta="route.params.slug" class="" />
+                <LazyDoctorInsta v-if="insta && insta.length":data="insta" :name="doctor.title.rendered" :ruta="route.params.slug" class="" />
             </section>
             <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max mx-[calc(100% / 16)]">
                 <DoctorCirugiasRelacionadas :treatmentsData="doctor.acf"

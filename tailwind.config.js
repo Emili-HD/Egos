@@ -112,6 +112,26 @@ module.exports = {
                 'screen/15': '15vh',
                 'screen/10': '10vh',
                 'screen/5': '5vh',
+                'vh': 'calc(100*var(--vh))',
+                'vh/95': 'calc(95*var(--vh))',
+                'vh/90': 'calc(90*var(--vh))',
+                'vh/85': 'calc(85*var(--vh))',
+                'vh/80': 'calc(80*var(--vh))',
+                'vh/75': 'calc(75*var(--vh))',
+                'vh/70': 'calc(70*var(--vh))',
+                'vh/65': 'calc(65*var(--vh))',
+                'vh/60': 'calc(60*var(--vh))',
+                'vh/55': 'calc(55*var(--vh))',
+                'vh/50': 'calc(50*var(--vh))',
+                'vh/45': 'calc(45*var(--vh))',
+                'vh/40': 'calc(40*var(--vh))',
+                'vh/35': 'calc(35*var(--vh))',
+                'vh/30': 'calc(30*var(--vh))',
+                'vh/25': 'calc(25*var(--vh))',
+                'vh/20': 'calc(20*var(--vh))',
+                'vh/15': 'calc(15*var(--vh))',
+                'vh/10': 'calc(10*var(--vh))',
+                'vh/5': 'calc(5*var(--vh))',
             },
             keyframes: {
                 gradient: {
@@ -133,9 +153,7 @@ module.exports = {
         }
     },
     plugins: [
-        // require('@tailwindcss/fontSize'),
-        // require('@tailwindcss/typography'),
-        // require('@tailwindcss/keyframes'),
+        require("@xpd/tailwind-3dtransforms")
     ],
     content: [
         "./components/**/*.{js,vue,ts}",

@@ -2,6 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --vh: 10.8px;
+}
+@media (max-height: 1600px) {
+    :root {
+        --vh: 16px;
+    }
+}
+@media (max-height: 1180px) {
+    :root {
+        --vh: 11.8px;
+    }
+}
+@media (max-height: 1080px) {
+    :root {
+        --vh: 10.8px;
+    }
+}
+@media (max-height: 900px) {
+    :root {
+        --vh: 9px;
+    }
+}
+@media (max-height: 800px) {
+    :root {
+        --vh: 8px;
+    }
+}
+@media (max-height: 768px) {
+    :root {
+        --vh: 7.68px;
+    }
+}
+
 @layer base {
     *,
     *::before,
@@ -143,7 +177,7 @@
 
 
     .site-main {
-        @apply bg-nude-8 overflow-hidden w-[100vw];
+        @apply bg-crema w-[100vw];
     }
     
     .panel#cuidados {

@@ -73,7 +73,9 @@ export default defineNuxtConfig({
     },
 
     googleFonts: {
-        base64: true
+        // base64: true,
+        display: 'swap',
+        download: false
     },
 
     cookiebot: {

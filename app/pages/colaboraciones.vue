@@ -1,6 +1,6 @@
 <template>
-    <section class="min-h-screen grid grid-cols-1 lg:grid-cols-2" v-if="page">
-        <div class="size-full min-h-screen/70 flex justify-center items-center">
+    <section class="min-h-vh grid grid-cols-1 lg:grid-cols-2" v-if="page">
+        <div class="size-full min-h-vh/70 flex justify-center items-center">
             <h1 class="z-10 text-nude-8 text-center mt-10">{{ page.title.rendered }}</h1>
             <UiImage :data="page" class="absolute cover" fetchpriority="high" />
         </div>
