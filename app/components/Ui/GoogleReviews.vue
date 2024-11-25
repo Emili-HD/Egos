@@ -1,8 +1,8 @@
 <template>
     <div>
         <!-- <h2 class="text-2xl font-bold">Reseñas de Google</h2> -->
-        <div class="flex flex-col lg:flex-row mb-24 ">
-            <div v-if="!hasError && averageRating !== null && totalReviews !== null" class="my-4 w-full lg:w-1/6 flex flex-col items-center">
+        <div class="flex flex-col lg:flex-row">
+            <div v-if="averageRating !== null && totalReviews !== null" class="my-4 w-full lg:w-1/6 flex flex-col items-center">
                 <div class="rating-text font-bold text-clamp-2xl">
                     <strong class=""> Excelente </strong>
                 </div>

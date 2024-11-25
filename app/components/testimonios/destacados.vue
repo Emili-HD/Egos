@@ -12,7 +12,7 @@
                     class="testimonios__content bg-blue-1 p-6 text-center flex flex-col justify-center items-center">
                     <h3 class="h6 text-clamp-base xl:text-clamp-xl font-medium text-nude-8">{{ testimonio.title }}</h3>
                     <div
-                        class="button pt-1 px-6 border border-solid text-nude-8 border-nude-8/25 text-center uppercase rounded-xl">
+                        class="button py-1 px-6 border border-solid bg-nude-8 text-blue-1 text-center uppercase rounded-full">
                         Saber más
                     </div>
                 </div>

@@ -26,6 +26,10 @@
         <LandingsAntesDespues :data="landing.acf" v-if="landing.acf && landing.acf.antes_despues.titulo_antesdespues" />
         <LandingsTestimonios :data="landing.acf" />
         <LandingsDestacado :data="landing.acf" />
+        <section
+            class="doctor__description grid grid-cols-16 pb-0 pt-32 xl:pt-48 [html:not(.blackfriday)_&]:bg-blue-1 [html.blackfriday_&]:bg-black">
+            <LazyDoctorInsta v-if="insta && insta.length":data="insta" :name="landing.title.rendered" :ruta="route.params.slug[0]" :tipo="'landing'" class="col-[2/16] [&_h2]:text-nude-8"/>
+        </section>
         <LandingsPromociones :data="landing.acf" />
         <div v-if="landing.acf && landing.acf.quiz_multiple && landing.acf.quiz_multiple.multiple_forms" id="presupuesto"
             class="form__wrapper bg-blue-2 flex flex-wrap justify-center gap-0 items-stretch">
@@ -35,18 +39,21 @@
         <LandingsFinanciacion :data="landing.acf" />
         <LandingsPasos :data="landing.acf" />
         <LandingsInformacion :data="landing.acf" />
-        <LandingsResenas :data="landing.acf" />
+        <!-- <LandingsResenas :data="landing.acf" /> -->
+        <section id="opiniones"
+            class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-nude-6 min-h-max px-8 py-24 xl:px-[calc(100%/16)] mt-24"
+            data-anchor="opiniones">
+            <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
+            <GoogleReviews :placeid="landing.acf.placeid" />
+        </section>
     </main>
 </template>
 
 <script setup>
 import { watch, onMounted, provide } from 'vue';
-import { useAsyncData, useRouter, useRoute } from 'nuxt/app';
-import { getLanding } from '@/composables/useApi';
-
+import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
 useGTM()
 
-const router = useRouter();
 const route = useRoute();
 
 provide('routePath', route.fullPath);
@@ -58,6 +65,23 @@ const loadData = () => {
 
 // Función para cargar los datos
 const { data: landing, error: landingError, refresh } = await useAsyncData(`landing-${route.params.slug}`, loadData, { initialCache: true });
+
+const { data: insta, refresh: refresInsta } = useAsyncData(`insta-${route.params.slug[0]}`, () => getInstaComments({ page: 1, per_page: 100, slug: route.params.slug }), {
+    watch: [() => route.params.slug[0]]
+});
+
+// console.log('ruta', route.params.slug[0]);
+
+
+watch(
+    () => route.params.slug,
+    async (newSlug, oldSlug) => {
+        if (newSlug !== oldSlug) {
+            await Promise.all([refresInsta()]);
+        }
+    },
+    { immediate: true }
+);
 
 // Datos YOAST SEO
 useHead(() => {

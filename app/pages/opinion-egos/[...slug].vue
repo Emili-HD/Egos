@@ -18,6 +18,27 @@
                 <div v-html="processedContent"
                     class="[&>p:has(img)]:w-full [&>p:has(img)]:inline-flex [&>p:has(img)]:flex-col lg:[&>p:has(img)]:flex-row [&>p:has(img)]:justify-center [&>p:has(img)]:gap-2 [&>p:has(img)_img]:w-full lg:[&>p:has(img)_img]:w-full [&>p:has(img)]:max-md:w-[100%] [&>p>img]:w-full [&>p>a]:text-blue-2 [&>p>a]:font-semibold [&>p>a]:underline">
                 </div>
+                <div class="content">
+                    <div v-for="bloque in casoreal.acf?.contenido">
+                        <div v-html="bloque.texto" class="[&_a]:text-blue-2 [&_a]:font-semibold [&_a]:underline mb-8"></div>
+                        <div class="media flex flex-col lg:flex-row gap-4" v-if="bloque.selector_media === 'Imágenes'">
+                            <div v-for="img in bloque.galeria">
+                                <img 
+                                    :src="img.imagen.url" 
+                                    :alt="img.imagen.alt"
+                                    :srcset="img.imagen.scrset"
+                                    :width="img.imagen.width"
+                                    :height="img.imagen.height"
+                                    :sizes="img.imagen.sizes.medium"
+                                    class="rounded-lg"
+                                />
+                            </div>
+                        </div>
+                        <div v-else-if="bloque.selector_media === 'Vídeo'">
+                            <VimeoPlayer :videoId="bloque.video"/>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <NuxtLazyHydrate when-idle>

@@ -42,7 +42,7 @@
                             class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-center items-center">
                             <h3 class="h6 text-clamp-base lg:text-clamp-lg font-medium">{{ testimonio.title.rendered }}</h3>
                             <div
-                                class="button pt-1 px-6 border border-solid border-blue-1/25 text-center uppercase rounded-xl">
+                                class="button py-1.5 px-6 border border-solid bg-blue-1 text-nude-8 text-center uppercase rounded-full">
                                 Saber más
                             </div>
                         </div>

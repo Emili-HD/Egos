@@ -1,5 +1,5 @@
 <template>
-   <section class="promociones [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]bg-blue-1 nude-8 flex flex-col items-center min-h-full pt-32 xl:pt-48 pb-12 xl:pb-20 px-8 xl:px-24 mb-0 " ref="promociones">
+   <section class="promociones [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-1 nude-8 flex flex-col items-center min-h-full pb-12 xl:pb-20 px-8 xl:px-24 mb-0 " ref="promociones">
       <div class="promociones__header pt-20 w-full xl:w-4/5 text-center">
          <h2 class="!text-4xl xl:!text-5xl text-nude-8">{{ data.promocion.titulo }}</h2>
          <ElementsDivider />

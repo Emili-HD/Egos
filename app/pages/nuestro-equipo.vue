@@ -65,11 +65,11 @@
                                     <div class="button__group flex flex-row justify-center items-center gap-2 w-full">
                                         <a v-if="category.form === false" href="#"
                                             @click.passive="showMemberPanel(miembro)"
-                                            class="button border border-solid bg-nude-1 border-nude-1/20 rounded-full py-1 w-full text-center">+
+                                            class="button border border-solid bg-nude-1 border-nude-1/20 text-blue-1 rounded-full py-1 w-full text-center shadow-lg">+
                                             Info</a>
-                                        <UiButton :to="processedPath(miembro.link)" class="bg-nude-1 !w-1/2 text-center text-blue-1"
+                                        <UiButton :to="processedPath(miembro.link)" class="bg-nude-1 !w-1/2 text-center text-blue-1 shadow-lg"
                                             v-if="category.form === true">+ Info</UiButton>
-                                        <UiButton class="bg-blue-1 !w-1/2 text-center" v-if="category.form === true"
+                                        <UiButton class="bg-gold-2 !w-1/2 text-center shadow-lg" v-if="category.form === true"
                                             @click="openPopup">Pedir Cita</UiButton>
                                     </div>
                                 </div>

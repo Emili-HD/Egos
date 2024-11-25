@@ -261,7 +261,7 @@ onMounted(async () => {
 
 .egos-header {
     .nav-categories {
-        @apply bg-crema rounded-bl-xl rounded-tl-xl px-8 flex flex-col justify-center items-stretch w-fit min-w-[54vw] h-16;
+        @apply rounded-bl-xl rounded-tl-xl px-8 flex flex-col justify-center items-stretch;
     }
 
     .header-wrapper {
@@ -278,7 +278,7 @@ onMounted(async () => {
                     @apply block text-clamp-2xs 2xl:text-clamp-xs;
 
                     span {
-                        @apply text-blue-1 cursor-pointer z-[1] before:content-[''] before:bg-gold-3 before:h-[1px] before:w-full before:max-w-0 before:absolute before:bottom-0 before:left-0 before:transition-[max-width];
+                        @apply text-nude-8 cursor-pointer z-[1] before:content-[''] before:bg-gold-3 before:h-[1px] before:w-full before:max-w-0 before:absolute before:bottom-0 before:left-0 before:transition-[max-width];
                     }
                 }
 
@@ -378,7 +378,8 @@ onMounted(async () => {
     
 }
 
-.egos-header:has(.offer-display) {
+.egos-header:has(.offer-display),
+.egos-header:has(.notices) {
     .submenu {
         @apply !top-24;
     }

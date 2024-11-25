@@ -1,7 +1,7 @@
 <template>
     <div v-if="filteredComments.length" class="comments p-0 mb-0 !bg-transparent flex flex-wrap bg-nude-5 pb-20 justify-between gap-4" ref="comments">
-        <div class="comments__header w-full">
-            <h2>Que opinan en instagram del {{ name }}</h2>
+        <div class="comments__header w-full text-center">
+            <h2 class="max-lg:text-clamp-3xl">Que opinan en instagram: {{ name }}</h2>
             <ElementsDivider />
         </div>
         <article
@@ -36,7 +36,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue';
 
 // Estado reactivo
@@ -45,7 +45,7 @@ const comments = ref(null);
 // Props
 const props = defineProps({
     data: {
-        type: Array as () => Array<{ acf: { fecha_publicacion: string; publicar_en: string }, [key: string]: any }>,
+        type: Array,
         required: true,
     },
     name: {
@@ -56,24 +56,39 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    tipo: {
+        type: String,
+        required: true,
+    },
 });
+
+console.log('tipo', props.tipo);
+
 
 // Propiedad calculada para filtrar los comentarios por la ruta
 const filteredComments = computed(() => {
-    return Array.isArray(props.data)
-        ? props.data.filter(comment => comment.acf.publicar_en === props.ruta)
-        : [];
+    if (!Array.isArray(props.data)) return [];
+
+    return props.data.filter(comment => {
+        if (props.tipo === 'doctor') {
+            return comment.acf.publicar_en === props.ruta;
+        }
+        if (props.tipo === 'landing') {
+            return comment.acf.publicar_en_landing === props.ruta;
+        }
+        return false;
+    });
 });
 
 // Función para formatear la fecha relativa
-function formatRelativeTime(dateString: string): string {
+function formatRelativeTime(dateString) {
     const date = new Date(dateString);
     const now = new Date();
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
     const rtf = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
 
-    let formatted: string;
+    let formatted;
 
     if (seconds < 60) {
         formatted = rtf.format(-seconds, 'second');

@@ -134,7 +134,7 @@
         </NuxtLazyHydrate>
 
         <!-- Google Reviews -->
-        <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 xl:px-[calc(100%/16)]">
+        <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)]">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
             <GoogleReviews :placeid="landing.acf.localizaciones[0].placeid" />
         </section>

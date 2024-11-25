@@ -1,7 +1,7 @@
 <template>
-    <div class="header-brand flex flex-col justify-center items-center py-2 px-4 [html:not(.blackfriday)_&]:bg-blue-1 [.blackfriday_&]:bg-dark-2 rounded-2xl h-full">
+    <div class="header-brand flex flex-col justify-center items-center px-4 rounded-2xl h-full">
         <nuxt-link class="block" to="/" aria-label="Vuelve a la página de inicio">
-            <svg viewBox="0 0 194.09 148.77" class="w-full max-w-16 xl:max-w-16">
+            <svg viewBox="0 0 194.09 148.77" class="w-full max-w-16 xl:max-w-20 drop-shadow-md">
                 <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="27.406" y1="1.459" x2="156.737" y2="144.307">
                     <stop offset=".005" stop-color="#9b8e7a"/>
                     <stop offset="1" stop-color="#ccc4b9"/>

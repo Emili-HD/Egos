@@ -206,7 +206,7 @@ onMounted(async () => {
         .header-wrapper {
 
             .menu-list {
-                @apply flex items-start [html:not(.blackfriday)_&]:bg-blue-1/85 [.blackfriday_&]:bg-black/80 backdrop-blur-xl rounded-2xl flex-col gap-0 h-[calc(100lvh_-_.6rem)] justify-start fixed pt-24 px-4 pb-12 top-1 right-1 w-[calc(100vw-.6rem)] max-w-[480px] z-[-1] transition-transform;
+                @apply flex items-start [html:not(.blackfriday)_&]:bg-blue-1/85 [.blackfriday_&]:bg-black/80 backdrop-blur-xl rounded-2xl flex-col gap-0 h-[calc(53*var(--vh))] top-[calc(9*var(--vh))] justify-start fixed pt-12 px-4 pb-12 right-1 w-[calc(100vw-.6rem)] max-w-[480px] z-[-1] transition-transform;
                 transform: translateX(105%);
 
                 &>li {

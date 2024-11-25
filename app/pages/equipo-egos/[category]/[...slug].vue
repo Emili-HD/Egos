@@ -23,7 +23,7 @@
                 class="doctor__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="doctor && doctor.content">
                 <div class="[&p]:font-nunito" v-html="doctor.content.rendered"></div>
-                <LazyDoctorInsta v-if="insta && insta.length":data="insta" :name="doctor.title.rendered" :ruta="route.params.slug" class="" />
+                <LazyDoctorInsta v-if="insta && insta.length":data="insta" :name="doctor.title.rendered" :ruta="route.params.slug" :tipo="'doctor'" />
             </section>
             <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max mx-[calc(100% / 16)]">
                 <DoctorCirugiasRelacionadas :treatmentsData="doctor.acf"
