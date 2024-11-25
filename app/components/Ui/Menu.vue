@@ -1,5 +1,6 @@
 <template>
     <div :class="class">
+        <h3 v-if="titulo" class="font-nunito font-normal text-nude-8 text-clamp-base uppercase border-b border-nude-8/25 w-full pb-4 max-lg:text-center">{{ titulo }}</h3>
         <ul>
             <li class="mb-0" v-for="item in data" :key="item.ID">
                 <nuxt-link v-if="!isExternal" :to="`${resolveUrl(item.url)}`"
@@ -22,6 +23,9 @@ const props = defineProps({
     data: {
         type: Array,
         required: true,
+    },
+    titulo: {
+        type: String,
     },
     class: {
         type: String,
@@ -48,36 +52,35 @@ const isCurrentPage = (url) => {
 
 <style scoped>
 .menu-footer {
-    @apply col-span-3 lg:col-span-1 flex flex-col justify-center items-center lg:items-end lg:justify-end text-center lg:text-right;
+    @apply flex flex-col justify-start items-start max-lg:w-full max-lg:text-center;
 
     ul {
-        @apply list-none !mb-0 flex flex-col gap-2;
+        @apply list-none !mb-0 flex flex-col gap-2 max-lg:w-full;
 
         span {
-            @apply text-nude-8 uppercase;
+            @apply text-nude-8 uppercase text-sm;
         }
     }
 }
 
 .menu-trabaja {
-    @apply col-span-3 lg:col-span-1 flex justify-center items-center lg:items-start lg:justify-start text-center lg:text-left;
+    @apply flex flex-col items-start justify-start max-lg:w-full max-lg:text-center;
 
     ul {
-        @apply list-none !mb-0 flex flex-col gap-2;
+        @apply list-none !mb-0 flex flex-col gap-2 max-lg:w-full;
 
         span {
-            @apply text-nude-8 uppercase;
+            @apply text-nude-8 uppercase text-sm;
         }
     }
 }
 
 .menu-legal,
 .menu-social {
-    @apply col-span-3 py-4 self-start;
-    grid-template-rows: auto;
+    @apply py-4;
 
     ul {
-        @apply list-none !mb-0 flex flex-col sm:flex-row justify-center items-center gap-8 w-full;
+        @apply list-none !mb-0 flex flex-row justify-center items-center gap-4 w-full;
 
         span {
             @apply text-nude-8;
@@ -86,14 +89,15 @@ const isCurrentPage = (url) => {
 }
 
 .menu-clinicas {
-    @apply col-span-3 py-4 self-start;
-    grid-template-rows: auto;
-
     ul {
-        @apply list-none !mb-0 flex flex-row flex-wrap justify-center items-center gap-x-8 gap-y-4 w-full;
+        @apply list-none !mb-0 flex flex-row flex-wrap justify-start items-start gap-x-8 gap-y-4 w-vh/25 max-lg:w-full max-lg:text-center;
+
+        li {
+            @apply w-[calc(50%-1rem)]
+        }
 
         span {
-            @apply text-nude-8;
+            @apply text-nude-8 text-sm;
         }
     }
 }

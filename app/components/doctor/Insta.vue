@@ -1,5 +1,5 @@
 <template>
-    <div v-if="filteredComments.length" class="comments p-0 mb-0 !bg-transparent flex flex-wrap bg-nude-5 pb-20 justify-between gap-4" ref="comments">
+    <div v-if="filteredComments.length" class="comments p-0 mb-0 !bg-transparent flex flex-wrap bg-nude-5 pb-20 justify-center gap-4" ref="comments">
         <div class="comments__header w-full text-center">
             <h2 class="max-lg:text-clamp-3xl">Que opinan en instagram: {{ name }}</h2>
             <ElementsDivider />
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mr-auto w-[80%] lg:w-[70%]">
+            <div class="mr-auto w-[80%] lg:w-[65%]">
                 <div class="flex items-baseline">
                     <h3 class="text-clamp-base font-normal mb-0 mr-2">{{ comment.title.rendered }}</h3>
                     <!-- Aplicación de la función de tiempo relativo -->
@@ -62,7 +62,7 @@ const props = defineProps({
     },
 });
 
-console.log('tipo', props.tipo);
+// console.log('tipo', props.tipo);
 
 
 // Propiedad calculada para filtrar los comentarios por la ruta

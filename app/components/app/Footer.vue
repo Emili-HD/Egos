@@ -4,22 +4,25 @@
     </div>
    <footer v-else class="footer" >
       <div class="footer__inner">
-         <div class="footer-logo">
-            <img loading="lazy" src="~/assets/images/1-navigation/logo-egos.svg" alt="" width="263" height="202" />
-            <div class="text-black absolute w-fit -bottom-6 left-0 right-0 m-auto px-4 font-semibold text-lg text-center bg-gold-2 uppercase rounded-md">Black Days</div>
-         </div>
-         <UiMenu :data="trabajaMenuData.items" class="menu-trabaja"/>
-         <div class="message-footer xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25">
-            <div id="block-16" class="footer__block">
-               <p class="text-clamp-5xl text-center text-nude-8 font-lora mb-0">Hazlo por ti</p>
-               <address class="text-center text-nude-8 flex justify-center gap-8"><a href="tel:+34616987740" class="not-italic">+34 616 98 77 40</a> <a href="mailto:info@clinicaegos.com" class="not-italic">info@clinicaegos.com</a></address>
+         <div class="footer-logo mr-auto max-lg:w-full">
+            <div class="mb-8">
+               <img loading="lazy" src="~/assets/images/1-navigation/logo-egos.svg" alt="" width="263" height="202" class="max-lg:w-48">
+               <div class="text-black absolute w-fit -bottom-6 left-0 px-4 font-semibold lg:text-lg bg-gold-2 uppercase rounded-md">Black Days</div>
+            </div>
+            <div class="message-footer xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25">
+               <div id="block-16" class="footer__block">
+                  <p class="text-clamp-5xl text-nude-8 font-lora mb-0">Hazlo por ti</p>
+                  <address class="text-nude-8 flex justify-center gap-8"><a href="tel:+34616987740" class="not-italic">+34 616 98 77 40</a> <a href="mailto:info@clinicaegos.com" class="not-italic">info@clinicaegos.com</a></address>
+               </div>
             </div>
          </div>
-         <UiMenu :data="footerMenuData.items" class="menu-footer"/>
-         <div class="grid grid-rows-[repeat(2,_min-content)] col-span-full max-lg:divide-y divide-white/25">
+         <UiMenu :data="trabajaMenuData.items" titulo="Egos" class="menu-trabaja"/>
+         <UiMenu :data="footerMenuData.items" titulo="Nuestros clientes" class="menu-footer"/>
+         <UiMenu :data="clinicasMenuData.items" titulo="Nuestras clínicas" class="menu-clinicas uppercase"/>
+         <div class="max-lg:divide-y divide-white/25 w-full">
+            <ElementsPremios />
             <UiMenu :data="socialMenuData.items" class="menu-social [&>ul]:!flex-row" :isExternal="true"/>
-            <UiMenu :data="clinicasMenuData.items" class="menu-clinicas uppercase"/>
-            <UiMenu :data="legalMenuData.items" class="menu-legal [&_ul_li]:text-xs [&_ul_li]:tracking-wide opacity-60"/>
+            <UiMenu :data="legalMenuData.items" class="menu-legal [&_ul_li]:text-clamp-2xs [&_ul_li]:tracking-wide opacity-60"/>
          </div>
       </div>
    </footer>
@@ -55,31 +58,23 @@ const { data: clinicasMenuData, error: clinicasMenuError } = await fetchMenuData
 
 <style lang="scss" scoped>
 .footer {
-   @apply bg-blue-1 px-12 xl:px-24 pt-24 pb-6 flex flex-col justify-center items-center z-[999];
+   @apply bg-blue-1 px-8 xl:px-24 pt-24 pb-6 flex flex-col justify-center items-center z-[999];
 
    .blackfriday:not(.estetica) & {
       @apply bg-dark-1;
    }
 
    &__inner {
-      @apply grid grid-cols-3 auto-rows-auto xl:auto-rows-fr items-center gap-4 w-full gap-y-4 xl:gap-y-8 gap-x-4 xl:gap-x-8;
+      @apply flex flex-wrap auto-rows-auto xl:auto-rows-fr gap-x-vh/15 gap-y-vh/10 lg:gap-y-vh/15 w-full;
    }
 
    &-logo {
-      @apply col-span-3 h-[20vh] flex flex-row justify-center mb-12;
+      @apply col-span-1 flex flex-col justify-center max-lg:items-center lg:mb-12;
    }
 }
 
 .message-footer {
-   @apply flex flex-col col-span-3 xl:col-span-1 justify-center items-center;
-
-   &::before {
-      @apply content-[''] absolute w-[1px] h-full bg-nude-8/20 -left-12;
-   }
-
-   &::after {
-      @apply content-[''] absolute w-[1px] h-full bg-nude-8/20 -right-12;
-   }                          
+   @apply flex flex-col justify-start items-start max-lg:text-center;                        
 }
 
 @media (min-width: 820px) and (max-width: 1180px) {

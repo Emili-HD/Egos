@@ -28,7 +28,7 @@
         <LandingsDestacado :data="landing.acf" />
         <section
             class="doctor__description grid grid-cols-16 pb-0 pt-32 xl:pt-48 [html:not(.blackfriday)_&]:bg-blue-1 [html.blackfriday_&]:bg-black">
-            <LazyDoctorInsta v-if="insta && insta.length":data="insta" :name="landing.title.rendered" :ruta="route.params.slug[0]" :tipo="'landing'" class="col-[2/16] [&_h2]:text-nude-8"/>
+            <LazyDoctorInsta v-if="insta && insta.length":data="insta" :name="landing.title.rendered" :ruta="route.params.slug[0]" :tipo="'landing'" class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]"/>
         </section>
         <LandingsPromociones :data="landing.acf" />
         <div v-if="landing.acf && landing.acf.quiz_multiple && landing.acf.quiz_multiple.multiple_forms" id="presupuesto"

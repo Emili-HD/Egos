@@ -22,9 +22,9 @@
         <NuxtLazyHydrate when-idle>
             <LazyHomeEspecialists />
         </NuxtLazyHydrate>
-        <NuxtLazyHydrate when-idle>
+        <!-- <NuxtLazyHydrate when-idle>
             <ElementsPremios />
-        </NuxtLazyHydrate>
+        </NuxtLazyHydrate> -->
         <NuxtLazyHydrate when-idle>
             <ElementsInfluencers />
         </NuxtLazyHydrate>
