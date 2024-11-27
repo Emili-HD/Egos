@@ -16,8 +16,8 @@
                </div>
             </div>
          </div>
-         <UiMenu :data="trabajaMenuData.items" titulo="Egos" class="menu-trabaja"/>
-         <UiMenu :data="footerMenuData.items" titulo="Nuestros clientes" class="menu-footer"/>
+         <UiMenu :data="trabajaMenuData.items" titulo="Conoce Egos" class="menu-trabaja"/>
+         <UiMenu :data="footerMenuData.items" titulo="Experiencias y Prensa" class="menu-footer"/>
          <UiMenu :data="clinicasMenuData.items" titulo="Nuestras clínicas" class="menu-clinicas uppercase"/>
          <div class="max-lg:divide-y divide-white/25 w-full">
             <ElementsPremios />

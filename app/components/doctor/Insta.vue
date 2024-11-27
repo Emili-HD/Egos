@@ -23,8 +23,8 @@
             </div>
             <div class="mr-auto w-[80%] lg:w-[65%]">
                 <div class="flex items-baseline">
-                    <h3 class="text-clamp-base font-normal mb-0 mr-2">{{ comment.title.rendered }}</h3>
-                    <!-- Aplicación de la función de tiempo relativo -->
+                    <h3 class="text-clamp-base mb-0 mr-2 font-semibold">{{ comment.title.rendered }}</h3>
+                    <img v-if="comment?.acf?.verificado" src="@/assets/icons/verified.svg" alt="Usuario Verificado" class="size-4 mr-2 top-0.5">
                     <div class="fecha leading-none text-gray-400">{{ formatRelativeTime(comment.acf.fecha_publicacion) }}</div>
                 </div>
                 <div class="comentario text-clamp-sm [&>p]:mb-0" v-html="comment.content.rendered"></div>

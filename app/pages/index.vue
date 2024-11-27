@@ -22,6 +22,15 @@
         <NuxtLazyHydrate when-idle>
             <LazyHomeEspecialists />
         </NuxtLazyHydrate>
+        <section v-if="home.acf.descripcion_equipo" class="flex flex-col-reverse lg:flex-row justify-center items-center gap-[calc(100%/16)] px-[calc(100%/16)] min-h-vh/80">
+            <div class="aspect-video w-full lg:w-1/2">
+                <VimeoPlayer :videoId="home.acf.descripcion_equipo.video" />
+            </div>
+            <div class="w-full lg:w-1/2 py-8">
+                <h2>{{ home.acf.descripcion_equipo.titulo }}</h2>
+                <p>{{ home.acf.descripcion_equipo.descripcion }}</p>
+            </div>
+        </section>
         <!-- <NuxtLazyHydrate when-idle>
             <ElementsPremios />
         </NuxtLazyHydrate> -->

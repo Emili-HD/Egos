@@ -5,7 +5,6 @@
         <!-- Encabezado -->
         <section class="clinica grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
             <Encabezado :data="clinica" />
-            <NuxtLazyHydrate when-idle>
 
                 <!-- Clínicas relacionadas -->
                 <RelatedClinicas v-if="clinica.acf && clinica.acf.localizaciones"
@@ -14,7 +13,7 @@
                 <!-- Intro -->
                 <EntryText :data="clinica" />
 
-            </NuxtLazyHydrate>
+            
         </section>
 
         <!-- Cirugías Relacionadas -->
@@ -38,9 +37,8 @@
                 </div>
                 <div id="formulario" class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema  col-start-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
                     <div class="form__wrapper ">
-                        <FormsEsteticaForm v-if="clinica.acf.formulario.tipo_de_formulario === 'Bloom'" :identificador="'topPage'" :portalId="String(clinica.acf.formulario.portalid)"
+                        <FormsEsteticaForm :identificador="'topPage'" :portalId="String(clinica.acf.formulario.portalid)"
                             :formId="clinica.acf.formulario.formid" :name="clinica.title.rendered" :route="route.fullPath"/>
-                        <FormsCustomForm v-else :identificador="'map'" :portalId="String(clinica.acf.formulario.portalid)" :formId="clinica.acf.formulario.formid" />
                     </div>
                 </div>
             </section>
@@ -90,7 +88,15 @@
         </NuxtLazyHydrate>
 
         <!-- Premios -->
-        <ElementsPremios />
+        <section v-if="clinica.acf.descripcion_equipo" class="flex flex-col-reverse lg:flex-row-reverse justify-center items-center gap-[calc(100%/16)] px-[calc(100%/16)] min-h-vh/80">
+            <div class="aspect-video w-full lg:w-1/2">
+                <VimeoPlayer :videoId="clinica.acf.descripcion_equipo.video" />
+            </div>
+            <div class="w-full lg:w-1/2 py-8">
+                <h2>{{ clinica.acf.descripcion_equipo.titulo }}</h2>
+                <p>{{ clinica.acf.descripcion_equipo.descripcion }}</p>
+            </div>
+        </section>
 
         <!-- Content -->
         <NuxtLazyHydrate when-idle>

@@ -76,8 +76,6 @@
             <DoctorComentario :data="doctorsWithComments" />
         </section>
 
-        <ElementsPremios />
-
         <section>
             <div
                 class="detalles__header p-12 lg:p-24 flex justify-center items-center gap-4 md:gap-8 text-nude-8 [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-3 w-full">

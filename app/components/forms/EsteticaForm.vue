@@ -1,7 +1,7 @@
 <template>
     <div v-if="!isLoading && formStructure && formStructure.fieldGroups" :id="props.identificador"
         class="form-landing max-w-full w-[clamp(320px,_30vw,_600px)] m-auto sticky top-40">
-        <form @submit.prevent="handleSubmit" class="flex flex-col p-8  rounded-2xl">
+        <form @submit.prevent="handleSubmit" class="flex flex-col py-8 lg:px-8 rounded-2xl">
             <div v-for="group in formStructure.fieldGroups" :key="group.richText"
                 class="[&_h2]:font-lora [&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance [html:not(.blackfriday).estetica_&_h2]:text-vermell [html:not(.blackfriday).estetica_&_h2_span]:!text-[#e6450f] [.blackfriday_&_h2]:text-crema">
                 <template v-if="group.fields && Array.isArray(group.fields)">
@@ -320,11 +320,19 @@
                 }
 
                 // Redirigir según la ruta actual a la página gracias o al calendario de bloome
-                if (routePath && routePath.includes('/medicina-estetica/')) {
+                if (path.includes('/medicina-estetica/')) {
+                    // Redirigir al calendario externo
                     window.location.href = 'https://heybloome.com/calendarios/';
+                } else if (path.includes('/promocion/') && path.endsWith('-meta/')) {
+                    // Redirigir a la página de "gracias-meta"
+                    await router.push('/gracias-meta/');
+                } else if (path.includes('/promocion/')) {
+                    // Redirigir a la página de "gracias-google"
+                    await router.push('/gracias-google/');
                 } else {
-                    await router.push('/gracias');
-                }
+                    // Redirigir a la página genérica de "gracias"
+                    await router.push('/gracias/');
+        }
             } catch (e) {
                 console.error('Response is not valid JSON:', textResponse);
                 throw new Error('Response is not valid JSON');
