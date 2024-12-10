@@ -7,7 +7,7 @@
          <div class="footer-logo mr-auto max-lg:w-full">
             <div class="mb-8">
                <img loading="lazy" src="~/assets/images/1-navigation/logo-egos.svg" alt="" width="263" height="202" class="max-lg:w-48">
-               <div class="text-black absolute w-fit -bottom-6 left-0 px-4 font-semibold lg:text-lg bg-gold-2 uppercase rounded-md">Black Days</div>
+               <!-- <div class="text-black absolute w-fit -bottom-6 left-0 px-4 font-semibold lg:text-lg bg-gold-2 uppercase rounded-md">Black Days</div> -->
             </div>
             <div class="message-footer xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25">
                <div id="block-16" class="footer__block">

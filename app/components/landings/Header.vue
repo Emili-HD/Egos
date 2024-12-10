@@ -12,7 +12,7 @@
       <div class="header__landing-content text-nude-8 text-center p-5 md:p-24 pb-24 size-full flex flex-col justify-end items-center">
          <h1 class="header__landing-content-title text-clamp-4xl [&>span]:span-gradient [&>span]:border-b-[1px] [&>span]:border-b-white/20 [&>span]:block" v-html="data.acf.titulo_landing"></h1>
          <div class="flex flex-col items-center gap-4 w-full">
-            <ElementsPlazas v-if="data.acf.plazas?.numero_plazas" :data="data.acf.plazas" />
+            <!-- <ElementsPlazas v-if="data.acf.plazas?.numero_plazas" :data="data.acf.plazas" /> -->
             <ElementsButton  v-if="data.acf && data.acf.quiz_multiple && data.acf.quiz_multiple.multiple_forms " class="gold text-clamp-sm uppercase text-center w-fit" href="#presupuesto">
                Calcula tu presupuesto
             </ElementsButton>

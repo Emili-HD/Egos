@@ -5,36 +5,163 @@
 :root {
     --vh: 10.8px;
 }
+
+@media (max-height: 2436px) {
+    :root {
+        --vh: 24.36px;
+    }
+}
+
+@media (max-height: 2160px) {
+    :root {
+        --vh: 21.6px;
+    }
+}
+
+@media (max-height: 1920px) {
+    :root {
+        --vh: 19.2px;
+    }
+}
+
+@media (max-height: 1792px) {
+    :root {
+        --vh: 17.92px;
+    }
+}
+
 @media (max-height: 1600px) {
     :root {
         --vh: 16px;
     }
 }
+
+@media (max-height: 1536px) {
+    :root {
+        --vh: 15.36px;
+    }
+}
+
+@media (max-height: 1440px) {
+    :root {
+        --vh: 14.4px;
+    }
+}
+
+@media (max-height: 1280px) {
+    :root {
+        --vh: 12.8px;
+    }
+}
+
+@media (max-height: 1200px) {
+    :root {
+        --vh: 12px;
+    }
+}
+
 @media (max-height: 1180px) {
     :root {
         --vh: 11.8px;
     }
 }
+
+@media (max-height: 1136px) {
+    :root {
+        --vh: 11.36px;
+    }
+}
+
 @media (max-height: 1080px) {
     :root {
         --vh: 10.8px;
     }
 }
+
+@media (max-height: 1050px) {
+    :root {
+        --vh: 10.5px;
+    }
+}
+
+@media (max-height: 1024px) {
+    :root {
+        --vh: 10.24px;
+    }
+}
+
+@media (max-height: 960px) {
+    :root {
+        --vh: 9.6px;
+    }
+}
+
 @media (max-height: 900px) {
     :root {
         --vh: 9px;
     }
 }
+
+@media (max-height: 896px) {
+    :root {
+        --vh: 8.96px;
+    }
+}
+
+@media (max-height: 844px) {
+    :root {
+        --vh: 8.44px;
+    }
+}
+
+@media (max-height: 812px) {
+    :root {
+        --vh: 8.12px;
+    }
+}
+
 @media (max-height: 800px) {
     :root {
         --vh: 8px;
     }
 }
+
 @media (max-height: 768px) {
     :root {
         --vh: 7.68px;
     }
 }
+
+@media (max-height: 720px) {
+    :root {
+        --vh: 7.2px;
+    }
+}
+
+@media (max-height: 667px) {
+    :root {
+        --vh: 6.67px;
+    }
+}
+
+@media (max-height: 640px) {
+    :root {
+        --vh: 6.4px;
+    }
+}
+
+@media (max-height: 600px) {
+    :root {
+        --vh: 6px;
+    }
+}
+
+@media (max-height: 568px) {
+    :root {
+        --vh: 5.68px;
+    }
+}
+
 
 @layer base {
     *,

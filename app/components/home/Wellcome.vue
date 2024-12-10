@@ -1,15 +1,17 @@
 <template>
     <section class="intro">
-        <div class="intro__image bg-cover bg-[75%] h-[calc(100*var(--vh))] lg:bg-center" :style="`background-image: url('${data.featured_image_data.url}');`">
+        <div class="intro__image bg-cover bg-[75%] min-h-vh pb-12 lg:bg-center"
+            :style="`background-image: url('${data.featured_image_data.url}');`">
             <!-- <UiImage :data="data" class="girl" :preload="true" /> -->
             <div>
                 <p class="intro__title">
-                    <span class="!text-blue-1 text-clamp-3xl lg:text-clamp-6xl text-balance font-semibold font-nunito max-lg:mb-3 leading-[1.1]">ESTE MES CAMBIARÁ TU VIDA </span><span id="a" class="font-nunito text-clamp-xl lg:text-clamp-3xl font-semibold leading-[1.1]">Ahorra hasta 1500€</span>
+                    <span class="!text-blue-1 text-clamp-4xl">Hazlo por ti</span><span id="a">Somos cirujanos</span>
                 </p>
                 <div
                     class="intro__content pl-8 lg:pl-16 text-blue-1 flex flex-col justify-center items-start gap-4 z-10 w-full">
                     <div class="heading mb-12">
-                        <h1 class="!text-clamp-lg lg:!text-clamp-lg">EGOS | Clínica de cirugía plástica y reparadora</h1>
+                        <h1 class="!text-clamp-lg lg:!text-clamp-lg">EGOS | Clínica de cirugía plástica y reparadora
+                        </h1>
                     </div>
                 </div>
             </div>
@@ -19,8 +21,9 @@
                     <nuxt-link :to="formatLink(tratamiento.link)"
                         class="flex items-center bg-nude-8/40 backdrop-blur overflow-hidden rounded-xl min-w-[320px] xl:min-w-[30vw] shadow-lg">
                         <div class="p-0 h-full w-[30%] xl:w-1/3 aspect-square overflow-hidden">
-                            
-                            <nuxt-img v-if="tratamiento && tratamiento.acf && tratamiento.acf.imagen_cards" class="absolute inset-0 w-full h-full object-cover object-center"
+
+                            <nuxt-img v-if="tratamiento && tratamiento.acf && tratamiento.acf.imagen_cards"
+                                class="absolute inset-0 w-full h-full object-cover object-center"
                                 :src="tratamiento.acf.imagen_cards.sizes.medium"
                                 :srcset="tratamiento.acf.imagen_cards.srcset"
                                 :width="tratamiento.acf.imagen_cards.width"
@@ -82,10 +85,10 @@
     }
 
     .intro {
-        @apply h-[calc(100*var(--vh))];
+        @apply min-h-vh;
 
         &__image {
-            @apply flex flex-col justify-evenly items-start gap-8;
+            @apply flex flex-col justify-center items-start gap-8;
 
             &::after {
                 @apply content-[''] absolute inset-0 size-full bg-white/30;

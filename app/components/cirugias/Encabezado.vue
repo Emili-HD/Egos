@@ -26,7 +26,7 @@
             </div>
 
             <!-- Plazas disponibles -->
-            <div v-else-if="data.acf && data.acf.plazas && data.acf.plazas.numero_plazas && data.acf.plazas.numero_plazas.lenght !== null && showPlazas">
+            <!-- <div v-else-if="data.acf && data.acf.plazas && data.acf.plazas.numero_plazas && data.acf.plazas.numero_plazas.lenght !== null && showPlazas">
                 <div class="flex flex-col lg:flex-row justify-center items-center gap-4 mb-3">
                     <ElementsPlazas :data="data.acf.plazas" />
                     <ElementsButton v-if="showPresupuestoLink" class="gold text-clamp-sm uppercase text-center text-balance"
@@ -37,7 +37,7 @@
                 <h1 v-if="data.title && data.title.rendered"
                     class="text-nude-8 mb-6 text-clamp-6xl text-balance text-center leading-none max-w-[25ch]"><u>{{ data.title.rendered }}</u>
                 </h1>
-            </div>
+            </div> -->
 
             <!-- Encabezado normal -->
             <div v-else class="flex gap-6 flex-col items-center">

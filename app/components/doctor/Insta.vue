@@ -62,9 +62,6 @@ const props = defineProps({
     },
 });
 
-// console.log('tipo', props.tipo);
-
-
 // Propiedad calculada para filtrar los comentarios por la ruta
 const filteredComments = computed(() => {
     if (!Array.isArray(props.data)) return [];
@@ -74,7 +71,10 @@ const filteredComments = computed(() => {
             return comment.acf.publicar_en === props.ruta;
         }
         if (props.tipo === 'landing') {
-            return comment.acf.publicar_en_landing === props.ruta;
+            // Evalúa si "publicar_en_landing" es un array y contiene la ruta
+            return Array.isArray(comment.acf.publicar_en_landing) 
+                ? comment.acf.publicar_en_landing.includes(props.ruta) 
+                : comment.acf.publicar_en_landing === props.ruta; // Fallback si no es un array
         }
         return false;
     });

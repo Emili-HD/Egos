@@ -1,7 +1,7 @@
 <template>
     <div v-if="landingError">Error al cargar la Promoción.</div>
     <main v-else class="site-main landing-main has-[.notices]:mt-12" v-if="landing && landing.acf">
-        <ElementsNotices class="[html:not(.blackfriday)_&]:hidden !fixed top-0 left-0 z-[9999]"/>
+        <ElementsNotices class="!fixed top-0 left-0 z-[9999]"/>
         <UiBotonCita v-if="landing.acf.boton_cita" :data="landing.acf.boton_cita" />
         <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
             <a class="gold" href="#hubspotLanding">Cita con el cirujano
@@ -28,7 +28,7 @@
         <LandingsDestacado :data="landing.acf" />
         <section
             class="doctor__description grid grid-cols-16 pb-0 pt-32 xl:pt-48 [html:not(.blackfriday)_&]:bg-blue-1 [html.blackfriday_&]:bg-black">
-            <LazyDoctorInsta v-if="insta && insta.length":data="insta" :name="landing.title.rendered" :ruta="route.params.slug[0]" :tipo="'landing'" class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]"/>
+            <LazyDoctorInsta v-if="insta && insta.length" :data="insta" :name="landing.title.rendered" :ruta="route.params.slug[0]" :tipo="'landing'" class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]"/>
         </section>
         <LandingsPromociones :data="landing.acf" />
         <div v-if="landing.acf && landing.acf.quiz_multiple && landing.acf.quiz_multiple.multiple_forms" id="presupuesto"
@@ -69,6 +69,9 @@ const { data: landing, error: landingError, refresh } = await useAsyncData(`land
 const { data: insta, refresh: refresInsta } = useAsyncData(`insta-${route.params.slug[0]}`, () => getInstaComments({ page: 1, per_page: 100, slug: route.params.slug }), {
     watch: [() => route.params.slug[0]]
 });
+
+// console.log('Insta', insta.value);
+
 
 // console.log('ruta', route.params.slug[0]);
 

@@ -320,19 +320,21 @@
                 }
 
                 // Redirigir según la ruta actual a la página gracias o al calendario de bloome
-                if (path.includes('/medicina-estetica/')) {
-                    // Redirigir al calendario externo
+                if (routePath && routePath.includes('/medicina-estetica/')) {
                     window.location.href = 'https://heybloome.com/calendarios/';
-                } else if (path.includes('/promocion/') && path.endsWith('-meta/')) {
-                    // Redirigir a la página de "gracias-meta"
+                } 
+                else if (routePath && routePath.includes('/promocion/') && routePath.endsWith('-meta/')) {
+                    // Redirigir a la página de "gracias-google"
                     await router.push('/gracias-meta/');
-                } else if (path.includes('/promocion/')) {
+                }
+                else if (routePath && routePath.includes('/promocion/')) {
                     // Redirigir a la página de "gracias-google"
                     await router.push('/gracias-google/');
-                } else {
-                    // Redirigir a la página genérica de "gracias"
+                }
+                else {
                     await router.push('/gracias/');
-        }
+                }
+
             } catch (e) {
                 console.error('Response is not valid JSON:', textResponse);
                 throw new Error('Response is not valid JSON');

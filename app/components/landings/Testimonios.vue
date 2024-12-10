@@ -3,7 +3,7 @@
       <div class="testimonios__header pt-6">
          <h2>{{ data.testimonios.titulo }}</h2>
          <ElementsDivider />
-         <p class="h6" v-html="data.testimonios.descripcion"></p>
+         <div class="h6 text-center mb-6" v-if="data.testimonios && data.testimonios.descripcion" v-html="data.testimonios.descripcion"></div>
       </div>
       <div class="testimonios__videos">
          <figure class="testimonios__videos-item min-w-[25vw] md:w-[calc(50%-.5rem)] xl:w-[30%]" v-for="testimonio in data.testimonios.videos">
