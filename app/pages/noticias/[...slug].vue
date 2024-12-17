@@ -62,10 +62,11 @@
         </div>
 
         <!-- aside right -->
-        <aside class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-2 [.blackfriday_&]:bg-blackfriday col-span-full lg:col-span-4 px-12 py-12 lg:pt-40 lg:pb-20 h-full"
+        <aside
+            class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-2 [.blackfriday_&]:bg-blackfriday col-span-full lg:col-span-4 px-6 py-12 lg:pb-20 h-full"
             v-if="noticia && noticia.acf">
-            <FormsCustomForm :identificador="'formulario'" :portalId="String(noticia.acf.formulario.portalid)"
-                :formId="noticia.acf.formulario.formid" />
+            <FormsCirugia :identificador="'formulario'" :portalId="String(noticia.acf.formulario.portalid)"
+                :formId="noticia.acf.formulario.formid" class="lg:sticky lg:top-40" />
         </aside>
     </main>
 </template>
@@ -174,7 +175,7 @@ const stickyForm = async () => {
 // Ciclo de vida Mounted
 onMounted(async () => {
     await nextTick(); // Espera a la próxima renderización
-    await stickyForm();
+    // await stickyForm();
     await injectStructuredData(); // Asegúrate de que esta función también se ejecute después de la renderización
 });
 

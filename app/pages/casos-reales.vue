@@ -56,7 +56,7 @@
             </div>
 
             <section class="bg-blue-2 p-12 xl:p-24 mb-0" v-if="pages.acf">
-                <FormsCustomForm :identificador="'formulario'" :portalId="String(pages.acf.portalid)"
+                <FormsCirugia :identificador="'formulario'" :portalId="String(pages.acf.portalid)"
                     :formId="pages.acf.formid" />
             </section>
 

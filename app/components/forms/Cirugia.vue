@@ -12,7 +12,7 @@
         portalId: String,
         formId: String,
         identificador: String,
-    })
+    })    
 
     onMounted(() => {
         if ('requestIdleCallback' in window) {
@@ -22,7 +22,7 @@
         }
     })
 
-    function loadHubSpotForm() {
+    const loadHubSpotForm = () => {
         const script = document.createElement('script')
         script.src = 'https://js.hsforms.net/forms/v2.js'
         script.defer = true

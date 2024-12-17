@@ -10,8 +10,8 @@
         <div id="formulario" class="half-right">
             <div class="map-info mb-12 [&>*]:!text-blue-1 [&>ul>li]:!text-blue-1 [&>ul>li]:list-none [&>ul]:border-t [&>ul]:border-blue-1/50 [&>ul]:pt-2 [&>*]:mb-2 [&>ul>li]:mb-0" v-html="content"></div>
             <div class="form__wrapper">
-                <!-- <FormsCirugia :identificador="'map'" :portalId="portalId" :formId="formId" /> -->
-                <FormsCustomForm :identificador="'map'" :portalId="String(portalId)" :formId="formId" />
+                <FormsCirugia :identificador="'map'" :portalId="String(portalId)" :formId="formId" />
+                <!-- <FormsCustomForm :identificador="'map'" :portalId="String(portalId)" :formId="formId" /> -->
             </div>
         </div>
     </section>

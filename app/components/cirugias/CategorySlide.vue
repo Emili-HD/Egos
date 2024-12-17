@@ -41,7 +41,7 @@
         }
     });
 
-    console.log('categoryId', props.categoryId.permalink);
+    // console.log('categoryId', props.categoryId.permalink);
     // Propiedad computada
     const processedLink = computed(() => {
         if (props.categoryId && props.categoryId.permalink) {

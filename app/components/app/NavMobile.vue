@@ -206,7 +206,7 @@ onMounted(async () => {
         .header-wrapper {
 
             .menu-list {
-                @apply flex items-start [html:not(.blackfriday)_&]:bg-blue-1/85 [.blackfriday_&]:bg-black/80 backdrop-blur-xl rounded-2xl flex-col gap-0 h-[calc(53*var(--vh))] top-[calc(9*var(--vh))] justify-start fixed pt-12 px-4 pb-12 right-1 w-[calc(100vw-.6rem)] max-w-[480px] z-[-1] transition-transform;
+                @apply flex items-start [html:not(.blackfriday)_&]:bg-blue-1/85 [.blackfriday_&]:bg-black/80 backdrop-blur-xl rounded-2xl flex-col gap-0 h-[calc(80*var(--vh))] top-[calc(12*var(--vh))] justify-start fixed pt-12 px-4 pb-12 right-1 w-[calc(100vw-.6rem)] max-w-[480px] z-[-1] transition-transform;
                 transform: translateX(105%);
 
                 &>li {
@@ -440,7 +440,7 @@ onMounted(async () => {
 
     .egos-header:has(.offer-display) {
         .header-wrapper .menu-list {
-            @apply !pt-32;
+            @apply !pt-4;
         }
     }
 

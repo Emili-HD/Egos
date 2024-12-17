@@ -23,7 +23,8 @@
                 class="doctor__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="doctor && doctor.content">
                 <div class="[&p]:font-nunito" v-html="doctor.content.rendered"></div>
-                <LazyDoctorInsta v-if="insta && insta.length":data="insta" :name="doctor.title.rendered" :ruta="route.params.slug" :tipo="'doctor'" />
+                <LazyDoctorInsta v-if="insta && insta.length" :data="insta" :name="doctor.title.rendered"
+                    :ruta="route.params.slug" :tipo="'doctor'" />
             </section>
             <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max mx-[calc(100% / 16)]">
                 <DoctorCirugiasRelacionadas :treatmentsData="doctor.acf"
@@ -36,20 +37,22 @@
                 </NuxtLazyHydrate>
             </section>
         </div>
-        <aside class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-1 [.blackfriday_&]:bg-blackfriday col-[1_/_span_16] lg:col-start-12 lg:col-span-5 px-12 py-12 lg:pt-40 lg:pb-20">
-            <FormsEsteticaForm v-if="doctor && doctor.acf" :identificador="'formulario'" :portalId="String(doctor.acf.portalid)"
-                :formId="doctor.acf.formid" :name="doctor.title.rendered"/>
+        <aside
+            class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-1 [.blackfriday_&]:bg-blackfriday col-[1_/_span_16] lg:col-start-12 lg:col-span-5 px-8 lg:px-12 py-12 lg:pt-40 lg:pb-20">
+            <FormsCirugia v-if="doctor && doctor.acf" :identificador="'formulario'"
+                :portalId="String(doctor.acf.portalid)" :formId="doctor.acf.formid" :name="doctor.title.rendered"
+                class="lg:sticky lg:top-44" />
+            <!-- <FormsCirugia :identificador="'popup'" :portalId="'25632462'" 25632464
+                :formId="'196b61c4-eb1f-4d90-8f65-e6c544bd2927'" :name="doctor.title.rendered" />holaaa -->
         </aside>
     </main>
 </template>
 
 <script setup>
-import { useError } from '#app';
 import { watch, onMounted, nextTick, provide } from 'vue';
 import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
 import { getEquipo, getReviews, getEspecialidades } from '@/composables/useApi';
 import { useScrollStore } from '@/stores/scrollStore';
-const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 const router = useRouter();
 const route = useRoute();
@@ -153,35 +156,8 @@ watch(
     { immediate: true }
 );
 
-
-const stickyForm = async () => {
-    gsap.registerPlugin(ScrollTrigger)
-
-    let mm = gsap.matchMedia()
-    mm.add("(min-width: 1025px)", () => {
-        const form = document.querySelector('.form-landing')
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".form__wrapper",
-                pin: form,
-                start: "top 5%",
-                //scrub: 0.5,
-                end: "top bottom",
-                endTrigger: "footer.footer",
-                pinSpacing: false,
-                toggleActions: "restart none none reverse",
-                // markers: true,
-            }
-        });
-    })
-
-}
-
-
 // Ciclo de vida Mounted
 onMounted(async () => {
-    await stickyForm()
     // Utilizar nextTick para asegurarse de que todas las mutaciones DOM y el estado Vue estén actualizados
     nextTick(async () => {
         // const { $lenis } = useNuxtApp();

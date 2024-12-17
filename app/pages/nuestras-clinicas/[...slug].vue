@@ -1,26 +1,27 @@
 <template>
-    <main class="site-main [html:not(.estetica)_&]:bg-nude-8 [.estetica_&]:!bg-crema " v-if="clinica" ref="componentRef">
+    <main class="site-main [html:not(.estetica)_&]:bg-nude-8 [.estetica_&]:!bg-crema " v-if="clinica"
+        ref="componentRef">
         <UiBotonCita v-if="clinica.acf && clinica.acf.boton_cita" :data="clinica.acf.boton_cita" />
 
         <!-- Encabezado -->
         <section class="clinica grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
             <Encabezado :data="clinica" />
 
-                <!-- Clínicas relacionadas -->
-                <RelatedClinicas v-if="clinica.acf && clinica.acf.localizaciones"
-                    :related="clinica.acf.localizaciones" />
+            <!-- Clínicas relacionadas -->
+            <RelatedClinicas v-if="clinica.acf && clinica.acf.localizaciones" :related="clinica.acf.localizaciones" />
 
-                <!-- Intro -->
-                <EntryText :data="clinica" />
+            <!-- Intro -->
+            <EntryText :data="clinica" />
 
-            
+
         </section>
 
         <!-- Cirugías Relacionadas -->
         <NuxtLazyHydrate when-idle>
             <Categories
                 v-if="clinica.acf && clinica.acf.cirugias_relacionadas && clinica.acf.cirugias_relacionadas.categorias_home"
-                :data="clinica.acf.cirugias_relacionadas" sectionId="cirugias" class="[&_.home__services]:!min-h-vh/75" />
+                :data="clinica.acf.cirugias_relacionadas" sectionId="cirugias"
+                class="[&_.home__services]:!min-h-vh/75" />
         </NuxtLazyHydrate>
 
         <!-- Servicios de cirugía -->
@@ -35,10 +36,16 @@
                 <div class="col-span-full lg:col-span-11 min-h-vh/60">
                     <LazyElementsSingleGoogleMap :locations="clinica.acf.localizaciones" :zoom="15" />
                 </div>
-                <div id="formulario" class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema  col-start-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
-                    <div class="form__wrapper ">
-                        <FormsEsteticaForm :identificador="'topPage'" :portalId="String(clinica.acf.formulario.portalid)"
-                            :formId="clinica.acf.formulario.formid" :name="clinica.title.rendered" :route="route.fullPath"/>
+                <div id="formulario"
+                    class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema  col-start-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
+                    <div class="form__wrapper w-full p-12">
+
+                        <!-- <FormsCirugia :identificador="'topPage'" :portalId="String(clinica.acf.formulario.portalid)"
+                            :formId="clinica.acf.formulario.formid" :name="clinica.title.rendered"
+                            :route="route.fullPath" /> -->
+
+                        <FormsCirugia :identificador="'map'" :portalId="String(clinica.acf.formulario.portalid)"
+                            :formId="clinica.acf.formulario.formid" :name="clinica.title.rendered" />
                     </div>
                 </div>
             </section>
@@ -88,7 +95,8 @@
         </NuxtLazyHydrate>
 
         <!-- Premios -->
-        <section v-if="clinica.acf.descripcion_equipo" class="flex flex-col-reverse lg:flex-row-reverse justify-center items-center gap-[calc(100%/16)] px-[calc(100%/16)] min-h-vh/80">
+        <section v-if="clinica.acf.descripcion_equipo"
+            class="flex flex-col-reverse lg:flex-row-reverse justify-center items-center gap-[calc(100%/16)] px-[calc(100%/16)] min-h-vh/80">
             <div class="aspect-video w-full lg:w-1/2">
                 <VimeoPlayer :videoId="clinica.acf.descripcion_equipo.video" />
             </div>
@@ -138,7 +146,8 @@
         </section>
 
         <!-- Google Reviews -->
-        <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)]">
+        <section
+            class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)]">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
             <GoogleReviews :placeid="clinica.acf.placeid" />
         </section>

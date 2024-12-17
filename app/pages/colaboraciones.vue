@@ -6,7 +6,7 @@
         </div>
         <div v-if="page.acf" id="formulario"
             class="form__wrapper w-full bg-blue-2 p-6 xl:pt-24 col-2 flex flex-col justify-center items-stretch">
-            <FormsCustomForm :identificador="'topPage'" :portalId="String(page.acf.portalid)"
+            <FormsCirugia :identificador="'topPage'" :portalId="String(page.acf.portalid)"
                 :formId="page.acf.formid" />
         </div>
     </section>

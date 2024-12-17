@@ -21,8 +21,8 @@
             </svg>
         </div>
 
-        <FormsEsteticaForm v-if="pages && pages.acf" :identificador="'topPage'"
-            :portalId="String(pages.acf.portalid)" :formId="pages.acf.formid" :name="pages.title.rendered" />
+        <FormsCirugia v-if="pages && pages.acf" :identificador="'popup'" :portalId="String(pages.acf.portalid)"
+            :formId="pages.acf.formid" :name="String(pages.title.rendered)" />
     </div>
 
     <main class="site-main about grid grid-cols-16 gap-1">
@@ -31,6 +31,7 @@
         </section>
 
         <template v-if="doctor.length > 0">
+
             <section v-for="category in categories" :key="category.id" :class="`equipo ${category.slug}`"
                 class="pt-20 xl:pb-60 xl:pt-32 w-[100vw] grid grid-cols-subgrid col-[1_/_-1]"
                 :id="`orden-${category.order}`">
@@ -67,10 +68,11 @@
                                             @click.passive="showMemberPanel(miembro)"
                                             class="button border border-solid bg-nude-1 border-nude-1/20 text-blue-1 rounded-full py-1 w-full text-center shadow-lg">+
                                             Info</a>
-                                        <UiButton :to="processedPath(miembro.link)" class="bg-nude-1 !w-1/2 text-center text-blue-1 shadow-lg"
+                                        <UiButton :to="processedPath(miembro.link)"
+                                            class="bg-nude-1 !w-1/2 text-center text-blue-1 shadow-lg"
                                             v-if="category.form === true">+ Info</UiButton>
-                                        <UiButton class="bg-gold-2 !w-1/2 text-center shadow-lg" v-if="category.form === true"
-                                            @click="openPopup">Pedir Cita</UiButton>
+                                        <UiButton class="bg-gold-2 !w-1/2 text-center shadow-lg"
+                                            v-if="category.form === true" @click="openPopup">Pedir Cita</UiButton>
                                     </div>
                                 </div>
                             </div>
@@ -79,12 +81,12 @@
                 </article>
             </section>
         </template>
+
     </main>
 </template>
 
 <script setup>
     import { ref, onMounted, onUnmounted, computed, watch, provide } from 'vue';
-    import { useAsyncData } from 'nuxt/app';
     import { getEspecialidades, getPage, getEquipo } from '@/composables/useApi';
 
     const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp();

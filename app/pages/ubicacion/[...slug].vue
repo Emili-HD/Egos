@@ -9,18 +9,20 @@
         <section class="hero m-0 p-0 flex flex-col lg:flex-row justify-between items-stretch">
             <LocalesHeader :data="landing" />
             <!-- <div id="formulario" class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 p-12 w-full lg:w-1/3 flex flex-col justify-around">
-                <FormsEsteticaForm :identificador="'formulario'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" :name="landing.title.rendered" />
+                <FormsCirugia :identificador="'formulario'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" :name="landing.title.rendered" />
             </div> -->
         </section>
         <CirugiasEntryText :data="landing" class="mt-6 lg:mt-20 p-6 [&>p]:text-clamp-base [&>p]:leading-relaxed" />
 
         <section class="intro lg:px-[calc(100%/16*2)] lg:py-20 lg:my-20" v-if="landing.acf && landing.acf.introduccion">
-            <div class="bg-white px-6 py-12 lg:p-12 rounded-2xl text-clamp-base [&_ul]:mb-6 [&_ul]:pl-10 [&_li]:text-clamp-base [&_h3]:mt-6 [&_li]:mb-0" v-html="landing.acf.introduccion"></div>
+            <div class="bg-white px-6 py-12 lg:p-12 rounded-2xl text-clamp-base [&_ul]:mb-6 [&_ul]:pl-10 [&_li]:text-clamp-base [&_h3]:mt-6 [&_li]:mb-0"
+                v-html="landing.acf.introduccion"></div>
         </section>
 
         <!-- Clínicas relacionadas -->
         <NuxtLazyHydrate when-idle>
-            <RelatedClinicas v-if="landing.acf && landing.acf.localizaciones" :related="landing.acf.localizaciones" class="px-6 mb-12" />
+            <RelatedClinicas v-if="landing.acf && landing.acf.localizaciones" :related="landing.acf.localizaciones"
+                class="px-6 mb-12" />
         </NuxtLazyHydrate>
 
         <!-- Formulario Pide Cita -->
@@ -30,20 +32,23 @@
                 <div class="col-span-full lg:col-span-11 min-h-vh/60">
                     <LazyElementsSingleGoogleMap :locations="landing.acf.localizaciones" :zoom="15" />
                 </div>
-                <div id="formulario" class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
-                    <div class="form__wrapper">
-                        <FormsEsteticaForm :identificador="'map'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" :name="landing.title.rendered" />
+                <div id="formulario"
+                    class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
+                    <div class="form__wrapper w-full p-12">
+                        <FormsCirugia :identificador="'map'" :portalId="String(landing.acf.form[0].portalid)"
+                            :formId="landing.acf.form[0].formid" :name="landing.title.rendered" />
                     </div>
                 </div>
             </section>
         </NuxtLazyHydrate>
-                
+
         <!-- Casos Antes/Después -->
         <section v-for="block in landing.acf.secciones" class="content-wrapper">
             <div v-if="block.acf_fc_layout === 'titulo_precio'" class="destacado"></div>
 
             <div v-if="block.acf_fc_layout === 'antesdespues'" class="antes-despues">
-                <LandingsAntesDespues :data="block" v-if="block && block.antes_despues.titulo_antesdespues" class="px-0" />
+                <LandingsAntesDespues :data="block" v-if="block && block.antes_despues.titulo_antesdespues"
+                    class="px-0" />
             </div>
 
             <div v-if="block.acf_fc_layout === 'contenido'" class="content">
@@ -59,8 +64,7 @@
                                     </div>
                                 </div>
                                 <img v-else class="size-full object-cover object-center rounded-2xl" loading="lazy"
-                                    :src="block.imagen.url"
-                                    :srcset="block.imagen.srcset" :width="block.imagen.width"
+                                    :src="block.imagen.url" :srcset="block.imagen.srcset" :width="block.imagen.width"
                                     :height="block.imagen.height" :alt="block.imagen.alt" />
                             </figure>
 
@@ -77,11 +81,13 @@
         </section>
 
         <NuxtLazyHydrate when-idle>
-            <div class="form__page grid grid-cols-subgrid col-[1/-1] my-12 lg:my-24" v-if="landing.acf && landing.acf.quiz && landing.acf.quiz.formid">
+            <div class="form__page grid grid-cols-subgrid col-[1/-1] my-12 lg:my-24"
+                v-if="landing.acf && landing.acf.quiz && landing.acf.quiz.formid">
                 <div id="presupuesto"
                     class="form__wrapper p-8 xl:p-20 col-[1/-1] xl:col-[1/9] bg-blue-1 flex flex-col justify-center items-center min-h-vh/80">
-                    <FormsQuiz :identificador="'formPage'" :portalId="String(landing.acf.quiz.portalid)" :formId="landing.acf.quiz.formid"
-                        :titulo="landing.acf.quiz.titulo_form" :name="landing.title.rendered" class="max-w-[max(360px,_45vw)]" />
+                    <FormsQuiz :identificador="'formPage'" :portalId="String(landing.acf.quiz.portalid)"
+                        :formId="landing.acf.quiz.formid" :titulo="landing.acf.quiz.titulo_form"
+                        :name="landing.title.rendered" class="max-w-[max(360px,_45vw)]" />
                 </div>
             </div>
         </NuxtLazyHydrate>
@@ -89,9 +95,11 @@
         <!-- Doctores -->
         <NuxtLazyHydrate when-idle>
             <div v-if="landing.acf && landing.acf.dr_comment" class="grid grid-cols-12 sm:mb-20 gap-y-8 pt-20">
-                <h2 class="col-[1/-1] lg:col-[2/-2] px-6 lg:text-center max-lg:text-clamp-4xl">{{ landing.acf.titulo_h2}}</h2>
+                <h2 class="col-[1/-1] lg:col-[2/-2] px-6 lg:text-center max-lg:text-clamp-4xl">{{
+                    landing.acf.titulo_h2}}</h2>
                 <!-- <ElementsDivider class="col-[2/-2]" /> -->
-                <div v-if="doctorsWithComments.length > 0" class="col-[1/-1] lg:col-[2/-2] px-6 grid grid-cols-12 gap-4">
+                <div v-if="doctorsWithComments.length > 0"
+                    class="col-[1/-1] lg:col-[2/-2] px-6 grid grid-cols-12 gap-4">
                     <div class="overflow-hidden size-full flex flex-col items-center col-span-full lg:col-[1/7] border-y border-y-blue-1/25 pt-4"
                         v-for="({ doctor, comentario }, index) in doctorsWithComments" :key="doctor.ID">
                         <div
@@ -108,7 +116,7 @@
                                 </h3>
                                 <!-- Comentario del doctor -->
                                 <div class="text-clamp-sm leading-tight mb-4 text-left" v-html="comentario">
-                                
+
                                 </div>
                                 <!-- Botón de enlace a la página del doctor -->
                                 <UiButton :to="relativeDoctorLink(doctor.permalink)"
@@ -120,11 +128,13 @@
                     </div>
                     <div v-if="landing.acf.descripcion_cirujanos"
                         class="col-span-full sm:col-[7/-1] sm:row-[1/3] text-left sm:text-center flex justify-center items-center text-nude-8 max-lg:mb-20 bg-blue-1 p-8 rounded-xl">
-                        <div class="[&>p]:mb-0 [&>p]:text-balance [&>p]:text-clamp-lg" v-html="landing.acf.descripcion_cirujanos"></div>
+                        <div class="[&>p]:mb-0 [&>p]:text-balance [&>p]:text-clamp-lg"
+                            v-html="landing.acf.descripcion_cirujanos"></div>
                     </div>
                     <div v-if="landing.acf.cirujano"
                         class="col-span-full text-left sm:text-center flex justify-center items-center p-4 rounded-xl py-20 mb-20 lg:my-20 bg-white">
-                        <div class="mb-0 text-balance text-clamp-base lg:[&>*]:!text-center" v-html="landing.acf.cirujano"></div>
+                        <div class="mb-0 text-balance text-clamp-base lg:[&>*]:!text-center"
+                            v-html="landing.acf.cirujano"></div>
                     </div>
                 </div>
                 <div v-else>
@@ -134,7 +144,8 @@
         </NuxtLazyHydrate>
 
         <!-- Google Reviews -->
-        <section class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)]">
+        <section
+            class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)]">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
             <GoogleReviews :placeid="landing.acf.localizaciones[0].placeid" />
         </section>

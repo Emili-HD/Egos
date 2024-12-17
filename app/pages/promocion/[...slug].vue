@@ -1,7 +1,7 @@
 <template>
     <div v-if="landingError">Error al cargar la Promoción.</div>
     <main v-else class="site-main landing-main has-[.notices]:mt-12" v-if="landing && landing.acf">
-        <ElementsNotices class="!fixed top-0 left-0 z-[9999]"/>
+        <ElementsNotices class="!fixed top-0 left-0 z-[9999]" />
         <UiBotonCita v-if="landing.acf.boton_cita" :data="landing.acf.boton_cita" />
         <div class="fixed-button fixed top-full w-full py-3 px-6 z-[998]">
             <a class="gold" href="#hubspotLanding">Cita con el cirujano
@@ -9,16 +9,18 @@
         </div>
         <section class="hero m-0 p-0 min-h-vh flex flex-col lg:flex-row justify-between items-stretch">
             <LandingsHeader :data="landing" />
-            <div id="formulario" class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 px-4 py-8 lg:p-12 w-full lg:w-1/2 flex flex-col justify-around">
+            <div id="formulario"
+                class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 px-4 py-8 lg:p-12 w-full lg:w-1/2 flex flex-col justify-around">
                 <div class="insignia mb-8 flex flex-row justify-center text-center">
                     <img class="max-w-[19rem]" loading="lazy" :src="landing.acf.insignia.url" alt="" />
                 </div>
-                <FormsEsteticaForm
+                <FormsCirugia
                     v-if="landing && landing.acf && landing.acf.form[0] && landing.acf.form[0].tipo_de_formulario === 'Bloom'"
                     :identificador="'topPage'" :portalId="String(landing.acf.form[0].portalid)"
                     :formId="landing.acf.form[0].formid" :name="landing.title.rendered" :route="route.fullPath" />
 
-                <FormsLanding v-else :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" />
+                <FormsLanding v-else :portalId="String(landing.acf.form[0].portalid)"
+                    :formId="landing.acf.form[0].formid" />
             </div>
         </section>
 
@@ -28,13 +30,17 @@
         <LandingsDestacado :data="landing.acf" />
         <section
             class="doctor__description grid grid-cols-16 pb-0 pt-32 xl:pt-48 [html:not(.blackfriday)_&]:bg-blue-1 [html.blackfriday_&]:bg-black">
-            <LazyDoctorInsta v-if="insta && insta.length" :data="insta" :name="landing.title.rendered" :ruta="route.params.slug[0]" :tipo="'landing'" class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]"/>
+            <LazyDoctorInsta v-if="insta && insta.length" :data="insta" :name="landing.title.rendered"
+                :ruta="route.params.slug[0]" :tipo="'landing'"
+                class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]" />
         </section>
         <LandingsPromociones :data="landing.acf" />
-        <div v-if="landing.acf && landing.acf.quiz_multiple && landing.acf.quiz_multiple.multiple_forms" id="presupuesto"
-            class="form__wrapper bg-blue-2 flex flex-wrap justify-center gap-0 items-stretch">
-            <FormsQuiz v-for="(form, index) in landing.acf.quiz_multiple.multiple_forms" :image="form.imagen" :identificador="'formPage-' + index" :portalId="String(form.portalid)" :formId="form.formid"
-                :titulo="form.titulo_form" :name="landing.title.rendered" class="[&_form]:!w-[clamp(200px,_70vw,_700px)] [&_form]:mx-auto even:bg-blue-1" />
+        <div v-if="landing.acf && landing.acf.quiz_multiple && landing.acf.quiz_multiple.multiple_forms"
+            id="presupuesto" class="form__wrapper bg-blue-2 flex flex-wrap justify-center gap-0 items-stretch">
+            <FormsQuiz v-for="(form, index) in landing.acf.quiz_multiple.multiple_forms" :image="form.imagen"
+                :identificador="'formPage-' + index" :portalId="String(form.portalid)" :formId="form.formid"
+                :titulo="form.titulo_form" :name="landing.title.rendered"
+                class="[&_form]:!w-[clamp(200px,_70vw,_700px)] [&_form]:mx-auto even:bg-blue-1" />
         </div>
         <LandingsFinanciacion :data="landing.acf" />
         <LandingsPasos :data="landing.acf" />

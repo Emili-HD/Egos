@@ -4,12 +4,14 @@
         <article :class="{ 'fullwidth': post.acf.quiz && post.acf.quiz.posicion === 'top' }">
             <div class="post__header before-gradient mb-12 bg-cover bg-center bg-no-repeat h-[70vh] max-h-[820px] flex flex-col justify-end items-center overflow-hidden"
                 v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
-                <UiImage :data="post" class="cover absolute" :preload="true" :aria-labelledby="'post-title-' + post.id" />
-                <h1 
+                <UiImage :data="post" class="cover absolute" :preload="true"
+                    :aria-labelledby="'post-title-' + post.id" />
+                <h1
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 text-balance">
                     {{ post.title.rendered }}
                 </h1>
-                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50 cursor-pointer" @click="scrollToBreadcrumbs">
+                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50 cursor-pointer"
+                    @click="scrollToBreadcrumbs">
                     <svg class="arrows scale-50 w-[60px] h-[75px]">
                         <path class="a1" d="M0 0 L30 32 L60 0"></path>
                         <path class="a2" d="M0 20 L30 52 L60 20"></path>
@@ -21,11 +23,13 @@
             <!-- CABECERA MODIFICADA PARA FORM QUIZ -->
             <div class="post__header before-gradient bg-cover bg-center bg-no-repeat h-[70vh] xl:h-[50vh] flex flex-col justify-center items-center overflow-hidden p-8"
                 v-if="post.acf && post.acf.quiz && post.acf.quiz.posicion === 'top'">
-                <UiImage :data="post" class="cover absolute" :preload="true" :aria-labelledby="'post-title-' + post.id" />
+                <UiImage :data="post" class="cover absolute" :preload="true"
+                    :aria-labelledby="'post-title-' + post.id" />
                 <h1
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 mt-20 text-balance">
                     {{ post.title.rendered }}</h1>
-                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50 cursor-pointer" @click="scrollToBreadcrumbs">
+                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50 cursor-pointer"
+                    @click="scrollToBreadcrumbs">
                     <svg class="arrows scale-50 w-[60px] h-[75px]">
                         <path class="a1" d="M0 0 L30 32 L60 0"></path>
                         <path class="a2" d="M0 20 L30 52 L60 20"></path>
@@ -45,9 +49,14 @@
             </aside>
 
             <!-- Breadcrumbs -->
-            <div id="breadcrumbs" class="breadcrumbs flex gap-4 p-4 divide-x divide-blue-1/50 font-nunito rounded-xl shadow-lg w-[calc(100%-4rem)] mx-auto mb-8" style="scroll-margin-top: 5rem">
+            <div id="breadcrumbs"
+                class="breadcrumbs flex gap-4 p-4 divide-x divide-blue-1/50 font-nunito rounded-xl shadow-lg w-[calc(100%-4rem)] mx-auto mb-8"
+                style="scroll-margin-top: 5rem">
                 <NuxtLink class="pl-4 mb-0 leading-none font-normal" to="/">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 2048 2048"><path fill="currentColor" d="m1024 165l941 942l-90 90l-83-82v805h-640v-640H896v640H256v-805l-83 82l-90-90zm640 1627V987l-640-640l-640 640v805h384v-640h512v640z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 2048 2048">
+                        <path fill="currentColor"
+                            d="m1024 165l941 942l-90 90l-83-82v805h-640v-640H896v640H256v-805l-83 82l-90-90zm640 1627V987l-640-640l-640 640v805h384v-640h512v640z" />
+                    </svg>
                 </NuxtLink>
                 <NuxtLink class="pl-4 mb-0 leading-none font-normal" to="/blog/">Blog</NuxtLink>
                 <div class="pl-4 mb-0 leading-none italic opacity-50">{{ post.title.rendered }}</div>
@@ -64,7 +73,8 @@
                             </li>
                             <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
                                 v-if="post.acf.post_description.titulo_recomendaciones">
-                                <NuxtLink to="#recomendadiones"><span v-html="post.acf.post_description.titulo_recomendaciones"></span></NuxtLink>
+                                <NuxtLink to="#recomendadiones"><span
+                                        v-html="post.acf.post_description.titulo_recomendaciones"></span></NuxtLink>
                             </li>
                             <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
                                 v-if="post.acf.post_faqs.titulo_faqs">
@@ -76,17 +86,22 @@
                     <div v-if="post.acf.doctores_relacionados">
                         <div v-if="doctor">
                             <div class="overflow-hidden size-full flex flex-col items-center">
-                                <div class="flex flex-col justify-center items-center flex-wrap gap-x-4 mb-4 text-center">
+                                <div
+                                    class="flex flex-col justify-center items-center flex-wrap gap-x-4 mb-4 text-center">
                                     <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p>
                                     <div class="size-16 aspect-square rounded-full overflow-hidden">
-                                        <UiImage :data="doctor" class="cover absolute object-center inset-0"  :aria-labelledby="'doctor-title-' + doctor.id" />
+                                        <UiImage :data="doctor" class="cover absolute object-center inset-0"
+                                            :aria-labelledby="'doctor-title-' + doctor.id" />
                                     </div>
                                     <div class="w-full">
-                                        <h3 class="text-clamp-base mb-0"><strong>{{ doctor.title.rendered }}</strong></h3>
+                                        <h3 class="text-clamp-base mb-0"><strong>{{ doctor.title.rendered }}</strong>
+                                        </h3>
                                         <p class="text-clamp-xs mb-0">{{ doctor.acf.trayectoria.especialidad }}</p>
                                     </div>
                                 </div>
-                                <UiButton :to="relativeDoctorLink" class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1">más información</UiButton>
+                                <UiButton :to="relativeDoctorLink"
+                                    class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1">
+                                    más información</UiButton>
                             </div>
                         </div>
                         <div v-else>
@@ -96,10 +111,12 @@
                 </aside>
 
                 <div class="post__content-areas p-0 xl:py-6 xl:px-10 col-[2/-2] xl:col-[4/13]">
-                    <div v-if="post.content.rendered" class="[&_h2]:font-lora [&_p]:font-nunito post__content-text pb-4 border-none" v-html="post.content.rendered">
+                    <div v-if="post.content.rendered"
+                        class="[&_h2]:font-lora [&_p]:font-nunito post__content-text pb-4 border-none"
+                        v-html="post.content.rendered">
                     </div>
                     <div class="post__content-text pb-4" v-for="(content, index) in post.acf.areas_de_contenido"
-                        :id="`area-${index}`" >
+                        :id="`area-${index}`">
                         <h2 class="area-title font-lora">{{ content.titulo_area }}</h2>
                         <div class="[&_p]:font-nunito" v-html="content.contenido_area"></div>
                         <div class="post__content-image" v-if="content.imagen_area && content.imagen_area.url">
@@ -121,7 +138,8 @@
                         <div class="list accordion__list">
                             <div class="accordion__list--item flex flex-col flex-wrap justify-between py-2 cursor-pointer separador-lista"
                                 v-for="item in post.acf.post_description.secciones_del_post" :key="item.post_subtitle">
-                                <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
+                                <div
+                                    class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
                                     <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 text-clamp-base mb-0 !font-semibold"
                                         v-html="item.post_subtitle"></div>
                                     <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
@@ -135,7 +153,8 @@
                         </div>
                     </div>
 
-                    <div v-if="post.acf.post_faqs && post.acf.post_faqs.preguntas_frecuentes !== null" class="post__content-text faqs py-12" id="faqs">
+                    <div v-if="post.acf.post_faqs && post.acf.post_faqs.preguntas_frecuentes !== null"
+                        class="post__content-text faqs py-12" id="faqs">
                         <div class="heading accordion__heading">
                             <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0"
                                 v-html="post.acf.post_faqs.titulo_faqs"></h2>
@@ -144,7 +163,8 @@
                             <div class="accordion__list--item flex flex-col flex-wrap justify-between py-2 cursor-pointer separador-lista"
                                 v-for="contentido in post.acf.post_faqs.preguntas_frecuentes"
                                 :key="contentido.faq_subtitle">
-                                <div class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
+                                <div
+                                    class="accordion__list--item-title flex flex-row justify-between items-center [&>*]:font-normal [&>*]:m-0">
                                     <div class="max-w-[85%] [&>.h4]:text-clamp-base [&>.h4]:mb-0 text-clamp-base mb-0 !font-semibold"
                                         v-html="contentido.faq_subtitle"></div>
                                     <svg class="size-6 stroke-blue-1 stroke-1" viewbox="0 0 24 24">
@@ -168,14 +188,16 @@
                     </div>
 
                 </div>
-                <aside class="widgets bg-blue-2 p-6 col-[2/-2] xl:col-[13/17] rounded-xl"
+                <aside class="widgets bg-blue-2 p-8 col-[1/-1] lg:col-[2/-2] xl:col-[13/17] rounded-xl"
                     v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
-                    <div id="formulario" class="form__wrapper p-2 p-xs-6 ">
+                    <div id="formulario" class="form__wrapper p-2 p-xs-6 lg:sticky lg:top-44">
 
-                        <FormsEsteticaForm v-if="post && post.acf && post.acf.formulario && post.acf.formulario.portalid === '25632462'" :identificador="'topPage'"
-                            :portalId="String(post.acf.formulario.portalid)" :formId="post.acf.formulario.formid" :name="post.title.rendered"/>
+                        <FormsCirugia
+                            v-if="post && post.acf && post.acf.formulario && post.acf.formulario.portalid === '25632462'"
+                            :identificador="'topPage'" :portalId="String(post.acf.formulario.portalid)"
+                            :formId="post.acf.formulario.formid" :name="post.title.rendered" />
 
-                        <FormsCustomForm v-else-if="post && post.acf && post.acf.formulario" :identificador="'topPage'"
+                        <FormsCirugia v-else-if="post && post.acf && post.acf.formulario" :identificador="'topPage'"
                             :portalId="String(post.acf.formulario.portalid)" :formId="post.acf.formulario.formid" />
 
                     </div>
@@ -295,43 +317,9 @@ const initAccordion = async () => {
     });
 };
 
-const stickyForm = async () => {
-    gsap.registerPlugin(ScrollTrigger)
-
-    if (ScrollTrigger) {
-        let Alltrigger = ScrollTrigger.getAll()
-        for (let i = 0; i < Alltrigger.length; i++) {
-            Alltrigger[i].kill(true)
-        }
-    }
-
-    let ctx = gsap.context(() => {
-
-        let mm = gsap.matchMedia()
-        mm.add("(min-width: 1025px)", () => {
-            const form = document.querySelector('#formulario')
-
-             const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: ".widgets",
-                    pin: form,
-                    start: "top 10%",
-                    //scrub: 0.5,
-                    endTrigger: "footer.footer",
-                    end: "top bottom",
-                    pinSpacing: false,
-                    toggleActions: "restart none none reverse",
-                    // markers: true,
-                }
-            });
-        })
-    })
-}
-
 // Ciclo de vida Mounted
 onMounted(async () => {
     await initAccordion()
-    await stickyForm()
 });
 
 

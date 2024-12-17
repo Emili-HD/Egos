@@ -4,7 +4,7 @@
         <div class="caso-real__content col-[1/-1] lg:col-start-1 lg:col-span-11 grid grid-cols-subgrid">
             <header class="caso-real__heading pt-32 lg:col-start-2 col-[2_/_span_14] lg:col-span-9 group"
                 v-if="casoreal && casoreal.title">
-                <h1 class="">{{ casoreal.title.rendered }}</h1>
+                <h1 class=" text-clamp-4xl xl:text-clamp-6xl">{{ casoreal.title.rendered }}</h1>
                 <div v-if="casoreal.acf.vimeo_video"
                     class="caso-real__video video__player col-start-2 col-span-10 flex flex-row justify-center items-start">
                     <div class="w-full bg-nude-5 h-[400px] lg:h-[650px] rounded-2xl">
@@ -16,26 +16,21 @@
                 class="caso-real__description lg:col-start-2 col-[2_/_span_14] lg:col-span-9 row-start-2 py-8 lg:py-20"
                 v-if="casoreal && casoreal.content">
                 <div v-html="processedContent"
-                    class="[&>p:has(img)]:w-full [&>p:has(img)]:inline-flex [&>p:has(img)]:flex-col lg:[&>p:has(img)]:flex-row [&>p:has(img)]:justify-center [&>p:has(img)]:gap-2 [&>p:has(img)_img]:w-full lg:[&>p:has(img)_img]:w-full [&>p:has(img)]:max-md:w-[100%] [&>p>img]:w-full [&>p>a]:text-blue-2 [&>p>a]:font-semibold [&>p>a]:underline">
+                    class="[&>h2_a]:font-lora [&>h2]:text-clamp-3xl [&>h2_b]:font-normal [&>h3]:text-clamp-2xl [&>h3_b]:font-normal [&>p:has(img)]:w-full [&>p:has(img)]:inline-flex [&>p:has(img)]:flex-col lg:[&>p:has(img)]:flex-row [&>p:has(img)]:justify-center [&>p:has(img)]:gap-2 [&>p:has(img)_img]:w-full lg:[&>p:has(img)_img]:w-full [&>p:has(img)]:max-md:w-[100%] [&>p>img]:w-full [&>p>a]:text-blue-2 [&>p>a]:font-semibold [&>p>a]:underline">
                 </div>
                 <div class="content">
                     <div v-for="bloque in casoreal.acf?.contenido">
-                        <div v-html="bloque.texto" class="[&_a]:text-blue-2 [&_a]:font-semibold [&_a]:underline mb-8"></div>
+                        <div v-html="bloque.texto" class="[&_a]:text-blue-2 [&_a]:font-semibold [&_a]:underline mb-8">
+                        </div>
                         <div class="media flex flex-col lg:flex-row gap-4" v-if="bloque.selector_media === 'Imágenes'">
                             <div v-for="img in bloque.galeria">
-                                <img 
-                                    :src="img.imagen.url" 
-                                    :alt="img.imagen.alt"
-                                    :srcset="img.imagen.scrset"
-                                    :width="img.imagen.width"
-                                    :height="img.imagen.height"
-                                    :sizes="img.imagen.sizes.medium"
-                                    class="rounded-lg"
-                                />
+                                <img :src="img.imagen.url" :alt="img.imagen.alt" :srcset="img.imagen.scrset"
+                                    :width="img.imagen.width" :height="img.imagen.height"
+                                    :sizes="img.imagen.sizes.medium" class="rounded-lg" />
                             </div>
                         </div>
                         <div v-else-if="bloque.selector_media === 'Vídeo'">
-                            <VimeoPlayer :videoId="bloque.video"/>
+                            <VimeoPlayer :videoId="bloque.video" />
                         </div>
                     </div>
                 </div>
@@ -45,16 +40,19 @@
                 <div class="flex flex-col xl:flex-row gap-4 col-[2_/-2] mb-20">
 
                     <!-- Doctor del caso real -->
-                    <div v-if="casoreal.acf.dr_comment" id="doctores" class="flex flex-col w-full xl:w-1/3 rounded-xl overflow-hidden shadow-2xl shadow-gold-2/20"
+                    <div v-if="casoreal.acf.dr_comment" id="doctores"
+                        class="flex flex-col w-full xl:w-1/3 rounded-xl overflow-hidden shadow-2xl shadow-gold-2/20"
                         data-anchor="doctores">
                         <!-- <h2 class="h4 col-span-full lg:text-center">Qué opina el doctor</h2> -->
-                        <div class="doctor__info" v-for="({ doctor, comentario }, index) in doctorsWithComments" :key="doctor.ID">
+                        <div class="doctor__info" v-for="({ doctor, comentario }, index) in doctorsWithComments"
+                            :key="doctor.ID">
                             <div class="doctor__info-wrapper">
                                 <div class="doctor__info-image h-2/5 overflow-hidden">
                                     <img loading="lazy" :src="doctor.featured_image" :alt="doctor.post_title"
-                                        :aria-labelledby="'doctor-title-' + doctor.ID" class="w-full"/>
+                                        :aria-labelledby="'doctor-title-' + doctor.ID" class="w-full" />
                                 </div>
-                                <div class="doctor__info-description bg-white p-8 rounded-xl -mt-3 h-3/5 grid grid-rows-[min-content]" v-if="doctor.post_title">
+                                <div class="doctor__info-description bg-white p-8 rounded-xl -mt-3 h-3/5 grid grid-rows-[min-content]"
+                                    v-if="doctor.post_title">
                                     <!-- Nombre del doctor -->
                                     <h3 class="text-clamp-base text-left mb-2 font-nunito font-semibold">
                                         {{ doctor.post_title }}
@@ -74,29 +72,40 @@
                     </div>
 
                     <!-- Clínicas en que se hizo la intervención -->
-                    <div class="flex flex-col justify-between w-full xl:w-1/3 rounded-xl overflow-hidden shadow-2xl shadow-gold-2/20">
-                        <div class="links-clinicas col-[2/-2] h-full lg:col-start-8 lg:col-span-4 lg:self-center flex flex-wrap max-lg:justify-between gap-1 items-center" v-for="clinica in casoreal.acf.clinicas_relacionadas" :key="clinica.ID">
+                    <div
+                        class="flex flex-col justify-between w-full xl:w-1/3 rounded-xl overflow-hidden shadow-2xl shadow-gold-2/20">
+                        <div class="links-clinicas col-[2/-2] h-full lg:col-start-8 lg:col-span-4 lg:self-center flex flex-wrap max-lg:justify-between gap-1 items-center"
+                            v-for="clinica in casoreal.acf.clinicas_relacionadas" :key="clinica.ID">
                             <div class="h-2/5 w-full">
-                                <img loading="lazy" :src="clinica.featured_image"  class="w-full"/>
+                                <img loading="lazy" :src="clinica.featured_image" class="w-full" />
                             </div>
                             <div class="h-3/5 w-full bg-white p-8 rounded-xl -mt-3 grid grid-rows-[min-content]">
-                                <h2 class="text-clamp-base font-nunito font-semibold">{{ casoreal.acf.titulo_cirugias_relacionadas }}</h2>
-                                <div v-html="casoreal.acf.texto_cirugias_relacionadas" class="[&>p]:leading-tight"></div>
-                                <UiButton  :to="formatPermalink(clinica.permalink)" class="self-end blue uppercase text-xs text-nude-8 !px-4 !py-4 max-lg:!w-[calc(50%-0.2rem)] lg:min-w-[calc(50%-1rem)]">{{ clinica.post_excerpt }}</UiButton>
+                                <h2 class="text-clamp-base font-nunito font-semibold">{{
+                                    casoreal.acf.titulo_cirugias_relacionadas }}</h2>
+                                <div v-html="casoreal.acf.texto_cirugias_relacionadas" class="[&>p]:leading-tight">
+                                </div>
+                                <UiButton :to="formatPermalink(clinica.permalink)"
+                                    class="self-end blue uppercase text-xs text-nude-8 !px-4 !py-4 max-lg:!w-full lg:min-w-[calc(50%-1rem)]">
+                                    {{ clinica.post_excerpt }}</UiButton>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Cirugía que se realizó -->
-                    <div class="flex flex-col justify-between w-full xl:w-1/3 border-none rounded-xl overflow-hidden shadow-2xl shadow-gold-2/20">
-                        <div v-for="cirugia in casoreal.acf.cirugias_testimonios" class="links-clinicas h-full col-[2/-2] lg:col-start-8 lg:col-span-4 lg:self-center flex flex-wrap max-lg:justify-between gap-1 items-center">
+                    <div
+                        class="flex flex-col justify-between w-full xl:w-1/3 border-none rounded-xl overflow-hidden shadow-2xl shadow-gold-2/20">
+                        <div v-for="cirugia in casoreal.acf.cirugias_testimonios"
+                            class="links-clinicas h-full col-[2/-2] lg:col-start-8 lg:col-span-4 lg:self-center flex flex-wrap max-lg:justify-between gap-1 items-center">
                             <div class="h-2/5 w-full">
-                                <img loading="lazy" :src="cirugia.featured_image"  class="w-full"/>
+                                <img loading="lazy" :src="cirugia.featured_image" class="w-full" />
                             </div>
                             <div class="h-3/5 bg-white p-8 rounded-xl -mt-3 grid grid-rows-[min-content]">
-                                <h2 class="text-clamp-base font-nunito font-semibold">{{ casoreal.acf.titulo_cirugias_testimonios }}</h2>
+                                <h2 class="text-clamp-base font-nunito font-semibold">{{
+                                    casoreal.acf.titulo_cirugias_testimonios }}</h2>
                                 <div v-html="casoreal.acf.texto_cirugias_testimonios" class="[&>p]:leading-tight"></div>
-                                <UiButton :key="cirugia.ID" :to="formatPermalink(cirugia.permalink)" class="self-end blue uppercase text-xs text-nude-8 !px-4 !py-4 max-lg:!w-[calc(50%-0.2rem)] lg:min-w-[calc(50%-1rem)]">Más info sobre {{ casoreal.acf.titulo_cirugias_testimonios }}</UiButton>
+                                <UiButton :key="cirugia.ID" :to="formatPermalink(cirugia.permalink)"
+                                    class="self-end blue uppercase text-xs text-nude-8 !px-4 !py-4 max-lg:!w-full lg:min-w-[calc(50%-1rem)]">
+                                    Más info sobre {{ casoreal.acf.titulo_cirugias_testimonios }}</UiButton>
                             </div>
                         </div>
                     </div>
@@ -104,11 +113,12 @@
 
             </NuxtLazyHydrate>
         </div>
-        <aside class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-2 [.blackfriday_&]:bg-blackfriday col-[1_/_span_16] lg:col-start-12 lg:col-span-5 px-0 py-12 lg:pt-20 xl:pt-28 xl:pb-20 h-full"
+        <aside
+            class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-2 [.blackfriday_&]:bg-blackfriday col-[1_/_span_16] lg:col-start-12 lg:col-span-5 p-8 lg:p-16 lg:pt-20 xl:pt-28 xl:pb-20 h-full"
             v-if="casoreal && casoreal.acf">
-            <FormsEsteticaForm v-if="casoreal.acf.formulario"
-                :identificador="'formulario'" :portalId="String(casoreal.acf.formulario.portalid)"
-                :formId="casoreal.acf.formulario.formid" :name="casoreal.title.rendered" :route="route.fullPath"/>
+            <FormsCirugia v-if="casoreal.acf.formulario" :identificador="'formulario'"
+                :portalId="String(casoreal.acf.formulario.portalid)" :formId="casoreal.acf.formulario.formid"
+                :name="casoreal.title.rendered" :route="route.fullPath" class="sticky top-44" />
         </aside>
     </main>
 </template>
@@ -252,7 +262,7 @@
     // Ciclo de vida Mounted
     onMounted(async () => {
         await nextTick(); // Espera a la próxima renderización
-        await stickyForm();
+        // await stickyForm();
         await injectStructuredData(); // Asegúrate de que esta función también se ejecute después de la renderización
     });
 
