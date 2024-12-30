@@ -65,7 +65,7 @@
 
                 return response || {};
             } catch (err) {
-                console.error(`Error fetching página ${route.params.slug}:`, err);
+                // console.error(`Error fetching página ${route.params.slug}:`, err);
                 error.value = err;
 
                 // Lanzar un error 500 si hay un problema en el servidor

@@ -9,7 +9,8 @@
         </div>
         <div class="w-full p-6 lg:py-16 border border-nude-8/[0.1] [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday_&)]:bg-nude-8/[0.025] rounded-2xl"
             :class="{ 'lg:w-1/2': props.image && props.image.url, 'lg:w-full': !(props.image && props.image.url) }">
-            <h2 class="h5 max-lg:text-clamp-xl text-nude-8 xl:pb-2 text-pretty xl:text-center mb-0">{{ props.titulo }}</h2>
+            <h2 class="h5 max-lg:text-clamp-xl text-nude-8 xl:pb-2 text-pretty xl:text-center mb-0">{{ props.titulo }}
+            </h2>
             <p class="text-nude-8 xl:text-center">Recibirás tu presupuesto por email o whatsapp al instante</p>
             <form @submit.prevent="handleSubmit" class="flex flex-col p-0">
 
@@ -25,15 +26,14 @@
                                             class="form__group field flex flex-wrap justify-center gap-x-6 gap-y-3 !pt-0">
                                             <label
                                                 class="form__label w-full !relative text-clamp-lg leading-none text-center font-nunito">{{
-                                                    field.label }}</label>
+                                                field.label }}</label>
                                             <p class="w-full max-lg:text-clamp-sm text-white mb-0 italic text-center">
-                                                Selecciona una imagen
-                                                para continuar</p>
+                                                Selecciona una imagen para continuar</p>
                                             <div v-for="option in field.options" :key="option.value"
                                                 class="form-check flex justify-start items-center flex-nowrap size-[calc((100%/2)-1rem)] lg:size-[calc((100%/3)-1rem)]">
                                                 <input type="radio" :id="option.value" :name="field.name"
                                                     :value="option.value" v-model="formData[field.name]"
-                                                    :required="field.required"
+                                                    required="required"
                                                     :class="{ 'border-red-500': errors[field.name] }"
                                                     class="form-check-input !size-3 !hidden"
                                                     @change="handleRadioChange" />
@@ -49,14 +49,14 @@
                                         <div class="form__group field flex flex-wrap justify-center gap-x-6 !pt-0">
                                             <label
                                                 class="form__label w-full !relative text-clamp-xl leading-none text-center font-nunito">{{
-                                                    field.label }}</label>
+                                                field.label }}</label>
                                             <p class="w-full text-white mb-0 italic text-center">Selecciona una imagen
                                                 para continuar</p>
                                             <div v-for="option in field.options" :key="option.value"
                                                 class="form-check flex justify-start items-center flex-nowrap size-[calc((100%/2)-1rem)] lg:size-[calc((100%/3)-1rem)]">
                                                 <input type="checkbox" :id="option.value" :name="field.name"
                                                     :value="option.value" v-model="formData[field.name]"
-                                                    :required="field.required"
+                                                    required="required"
                                                     :class="{ 'border-red-500': errors[field.name] }"
                                                     class="form-check-input !size-3 !hidden font-nunito"
                                                     @change="handleRadioChange" />
@@ -69,6 +69,9 @@
                                         </div>
                                     </template>
                                 </div>
+                                <p v-if="errors['currentStep']" class="text-red-500 text-sm text-center">
+                                    {{ errors['currentStep'] }}
+                                </p>
                             </template>
                         </template>
                     </template>
@@ -162,10 +165,10 @@
                                                     </select>
                                                     <label :for="subField.dependentField.name"
                                                         class="form__label font-nunito max-lg:text-sm">{{
-                                                            subField.dependentField.label }}</label>
+                                                        subField.dependentField.label }}</label>
                                                     <p v-if="errors[subField.dependentField.name]"
                                                         class="text-red-500 text-sm">{{
-                                                            errors[subField.dependentField.name] }}</p>
+                                                        errors[subField.dependentField.name] }}</p>
                                                 </div>
                                             </div>
                                         </template>
@@ -226,7 +229,9 @@
                             @click="prevStep">Atrás</button>
                     </div>
                     <div v-if="currentStep < radioFieldGroups.length">
-                        <button type="button" class="btn-blue text-white" @click="nextStep">Siguiente</button>
+                        <button type="button" class="btn-blue text-white" :disabled="!isStepValid" @click="nextStep">
+                            Siguiente
+                        </button>
                     </div>
                     <div v-else>
                         <button type="submit" class="button btn-blue">{{ submitButtonText }}</button>
@@ -276,7 +281,7 @@
         },
     })
 
-     const routePath = inject('routePath')
+    const routePath = inject('routePath')
 
     const formData = ref({})
     const formStructure = ref(null)
@@ -286,6 +291,9 @@
     const dependentFields = ref([])
     const radioFieldGroups = ref([])
     const currentStep = ref(0)
+
+    // console.log('datos hubspot:', props.formId, props.portalId);
+    
 
     const loadFormStructure = async () => {
         await nextTick(); // Asegura que los cambios de DOM estén aplicados antes de continuar.
@@ -504,24 +512,32 @@
         return regex.test(phone)
     }
 
+    const isStepValid = computed(() => {
+        const currentGroup = radioFieldGroups.value[currentStep.value]
+
+        // Verifica si el grupo actual tiene campos válidos
+        if (!currentGroup || !currentGroup.fields) return false
+
+        // Recorre los campos y comprueba si todos los radios requeridos tienen un valor
+        return currentGroup.fields.every(field => {
+            if (field.fieldType === 'radio') {
+                return !!formData.value[field.name]
+            }
+            return true
+        })
+    })
+
+
     // Función para avanzar al siguiente paso
     const nextStep = () => {
-        if (currentStep.value < radioFieldGroups.value.length) {
-            const currentGroup = radioFieldGroups.value[currentStep.value]
-            const isValid = currentGroup.fields.every(field => {
-                if (field.fieldType === 'radio' && field.required) {
-                    return formData.value[field.name]
-                }
-                return true
-            })
-
-            if (isValid) {
-                currentStep.value++
-            } else {
-                errors.value['currentStep'] = 'Por favor, complete este paso antes de continuar.'
-            }
+        if (isStepValid.value) {
+            currentStep.value++
+            delete errors.value['currentStep'] // Limpia el error si avanza
+        } else {
+            errors.value['currentStep'] = 'Por favor, selecciona una opción para continuar.'
         }
     }
+
 
     const prevStep = () => {
         if (currentStep.value > 0) {
@@ -561,7 +577,7 @@
         utmData['utm_term'] = getValueForField('utm_term');
         utmData['isEgosSurgery'] = getValueForField('isEgosSurgery');
 
-        await nextTick();  // Espera un ciclo de actualización si es necesario
+        await nextTick();  // Esperamos un ciclo de actualización si es necesario
         // console.log('Valores de formData asignados:', utmData);
     })
 

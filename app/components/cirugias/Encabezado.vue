@@ -1,6 +1,6 @@
 <template>
     <header
-        class="heading__cirugias h-vh px-8 xl:px-16 py-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-11 flex justify-center items-end bg-cover bg-center"
+        class="heading__cirugias min-h-vh px-8 xl:px-16 py-6 xl:py-12 mb-0 col-[1_/_span_16] xl:col-span-10 flex justify-center items-end bg-cover bg-center"
         :style="`background: linear-gradient(to bottom, rgba(28, 44, 68, 0) 10%, rgba(28, 44, 68, 0.75) 80%), url('${data.featured_image_data.url}'); background-size: cover; background-position: center;`">
         <div class="header__content z-10 lg:mb-16">
 
@@ -61,7 +61,7 @@
         </div>
     </header>
     <div v-if="data.acf && data.acf.formulario" id="formulario"
-        class="form__wrapper min-h-[620px] [.site-main:not(.tratamiento-113)_&]:bg-blue-1 [html:not(.estetica)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema [.blackfriday_&]:!bg-blackfriday p-16 xl:pt-24 col-[1_/_span_16] xl:col-span-5 flex flex-col justify-center items-stretch">
+        class="form__wrapper min-h-[620px] [.site-main:not(.tratamiento-113)_&]:bg-blue-1 [html:not(.estetica)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema [.blackfriday_&]:!bg-blackfriday p-16 xl:pt-24 col-[1_/_span_16] xl:col-span-6 flex flex-col justify-center items-stretch">
         <FormsCirugia :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)"
             :formId="data.acf.formulario.formid" :name="data.title.rendered" :route="route" />
     </div>

@@ -11,7 +11,7 @@
             </div>
             <div class="message-footer xl:border-x-1 border-y-0 xl:border-solid border-nude-1/25">
                <div id="block-16" class="footer__block">
-                  <p class="text-clamp-5xl text-nude-8 font-lora mb-0">Hazlo por ti</p>
+                  <p class="text-clamp-5xl text-nude-8 font-lora mb-0">Somos Cirujanos</p>
                   <address class="text-nude-8 flex justify-center gap-8"><a href="tel:+34616987740" class="not-italic">+34 616 98 77 40</a> <a href="mailto:info@clinicaegos.com" class="not-italic">info@clinicaegos.com</a></address>
                </div>
             </div>

@@ -63,54 +63,34 @@
             </div>
 
             <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
-                <aside class="nav-content p-6 col-[1/-1] xl:col-span-3 self-start rounded-xl">
-                    <h2 class="h4 font-lora nav-content-title h6 bg-nude-4 p-4 rounded-xl">Tabla de contenidos</h2>
-                    <nav>
-                        <ul class="pl-6 list-decimal mb-10">
-                            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                                v-for="(content, index) in post.acf.areas_de_contenido">
-                                <NuxtLink :to="`#area-${index}`"><span>{{ content.titulo_area }}</span></NuxtLink>
-                            </li>
-                            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                                v-if="post.acf.post_description.titulo_recomendaciones">
-                                <NuxtLink to="#recomendadiones"><span
-                                        v-html="post.acf.post_description.titulo_recomendaciones"></span></NuxtLink>
-                            </li>
-                            <li class="py-2 cursor-pointer border-b border-x-0 border-t-0 border-solid border-b-blue-1/25"
-                                v-if="post.acf.post_faqs.titulo_faqs">
-                                <NuxtLink to="#faqs"><span v-html="post.acf.post_faqs.titulo_faqs"></span></NuxtLink>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <div v-if="post.acf.doctores_relacionados">
+                
+                <div class="post__content-areas p-0 xl:py-6 xl:px-10 col-[2/-2] xl:col-[2/11]">
+    
+                    <div v-if="post.acf.doctores_relacionados" class="bg-nude-6 p-6 rounded-xl">
                         <div v-if="doctor">
-                            <div class="overflow-hidden size-full flex flex-col items-center">
-                                <div
-                                    class="flex flex-col justify-center items-center flex-wrap gap-x-4 mb-4 text-center">
-                                    <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p>
-                                    <div class="size-16 aspect-square rounded-full overflow-hidden">
+                            <div class="overflow-hidden size-full flex items-center gap-8">
+                                <!-- <div class="flex flex-row justify-center items-center flex-wrap gap-x-4 mb-4 text-center"> -->
+                                    <div class="size-32 aspect-square rounded-full overflow-hidden">
                                         <UiImage :data="doctor" class="cover absolute object-center inset-0"
-                                            :aria-labelledby="'doctor-title-' + doctor.id" />
+                                        :aria-labelledby="'doctor-title-' + doctor.id" />
                                     </div>
-                                    <div class="w-full">
+                                    <div class="w-[calc(100%-10rem)]">
+                                        <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p>
                                         <h3 class="text-clamp-base mb-0"><strong>{{ doctor.title.rendered }}</strong>
                                         </h3>
                                         <p class="text-clamp-xs mb-0">{{ doctor.acf.trayectoria.especialidad }}</p>
+                                        <UiButton :to="relativeDoctorLink"
+                                            class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1">
+                                            más información</UiButton>
                                     </div>
-                                </div>
-                                <UiButton :to="relativeDoctorLink"
-                                    class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1">
-                                    más información</UiButton>
+                                <!-- </div> -->
                             </div>
                         </div>
                         <div v-else>
                             <p>Cargando información del doctor...</p>
                         </div>
                     </div>
-                </aside>
 
-                <div class="post__content-areas p-0 xl:py-6 xl:px-10 col-[2/-2] xl:col-[4/13]">
                     <div v-if="post.content.rendered"
                         class="[&_h2]:font-lora [&_p]:font-nunito post__content-text pb-4 border-none"
                         v-html="post.content.rendered">
@@ -186,9 +166,8 @@
                                 :titulo="post.acf.quiz.titulo_form" :name="post.title.rendered" />
                         </div>
                     </div>
-
                 </div>
-                <aside class="widgets bg-blue-2 p-8 col-[1/-1] lg:col-[2/-2] xl:col-[13/17] rounded-xl"
+                <aside class="widgets bg-blue-2 p-8 col-[1/-1] lg:col-[2/-2] xl:col-[12/17] rounded-xl"
                     v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
                     <div id="formulario" class="form__wrapper p-2 p-xs-6 lg:sticky lg:top-44">
 

@@ -158,22 +158,22 @@ export default defineNuxtConfig({
             maxAge: 3600
         },
 
-        // providers: {
-        //     // Configuración para manejar imágenes de WordPress
-        //     wp: {
-        //         // Nombre del proveedor personalizado
-        //         name: 'wp',
-        //         // URL base de la API de WordPress, reemplaza con la URL de tu dominio
-        //         provider: 'ipx',
-        //         options: {
-        //             baseURL: 'https://test.clinicaegos.com/wp-content/uploads/',
-        //         },
-        //     },
-        // },
-        // // Define el proveedor por defecto que quieres usar
-        // domains: ['test.clinicaegos.com'],
-        // // Configura el proveedor por defecto si es necesario
-        // provider: 'wp',
+        providers: {
+            // Configuración para manejar imágenes de WordPress
+            wp: {
+                // Nombre del proveedor personalizado
+                name: 'wp',
+                // URL base de la API de WordPress, reemplaza con la URL de tu dominio
+                provider: 'ipx',
+                options: {
+                    baseURL: 'https://test.clinicaegos.com/wp-content/uploads/',
+                },
+            },
+        },
+        // Define el proveedor por defecto que quieres usar
+        domains: ['test.clinicaegos.com'],
+        // Configura el proveedor por defecto si es necesario
+        provider: 'wp',
 
         // Opciones de @nuxt/image
         screens: {

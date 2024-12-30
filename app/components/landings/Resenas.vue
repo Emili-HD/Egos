@@ -4,19 +4,8 @@
             <h2>Reseñas</h2>
             <ElementsDivider />
         </div>
-        <Swiper :slidesPerView="1" :spaceBetween="30" :pagination="{
-            clickable: true,
-        }" :breakpoints="{
-            '768': {
-                slidesPerView: 2,
-                spaceBetween: 40,
-            },
-            '1024': {
-                slidesPerView: 3,
-                spaceBetween: 50,
-            },
-        }" :modules="[SwiperPagination]" class="mySwiper">
-            <SwiperSlide v-for="comment in data.resenas.resena">
+        <swiper-container ref="resenasSlider" class="mySwiper">
+            <swiper-slide v-for="comment in data.resenas.resena">
                 <h3 class="h6">{{ comment.nombre }}</h3>
                 <div class="stars pb-4" :data-stars="comment.valoracion">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -40,8 +29,8 @@
                     </svg>
                 </div>
                 <div class="comentario" v-html="comment.texto"></div>
-            </SwiperSlide>
-        </Swiper>
+            </swiper-slide>
+        </swiper-container>
     </section>
 </template>
 
@@ -50,6 +39,30 @@
 
     // Estado reactivo
     const resenas = ref(null)
+    const resenasSlider = ref(null)
+
+    useSwiper(resenasSlider, {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 30,
+        navigation: true,
+        pagination: {
+            clickable: true
+        },
+        autoplay: {
+            delay: 5000,
+        },
+        breakpoints: {
+            '768': {
+                slidesPerView: 2,
+                spaceBetween: 40,
+            },
+            '1024': {
+                slidesPerView: 3,
+                spaceBetween: 50,
+            },
+        }
+    })
 
     // props
     const props = defineProps({

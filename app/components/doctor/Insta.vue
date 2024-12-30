@@ -70,6 +70,9 @@ const filteredComments = computed(() => {
         if (props.tipo === 'doctor') {
             return comment.acf.publicar_en === props.ruta;
         }
+        if (props.tipo === 'home' && props.ruta === 'home') {
+            return comment.acf.publicar_en_home;
+        }
         if (props.tipo === 'landing') {
             // Evalúa si "publicar_en_landing" es un array y contiene la ruta
             return Array.isArray(comment.acf.publicar_en_landing) 

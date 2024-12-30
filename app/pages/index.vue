@@ -14,7 +14,8 @@
         </NuxtLazyHydrate>
         <HomeTestimonios />
         <NuxtLazyHydrate when-idle>
-            <LazyFormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid" :tipo="home.acf.formulario.tipo_de_formulario" :name="home.title.rendered" />
+            <LazyFormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid"
+                :tipo="home.acf.formulario.tipo_de_formulario" :name="home.title.rendered" />
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
             <LazyHomeAcordeon :data="home.acf.acordeon_cirugias" />
@@ -22,7 +23,13 @@
         <NuxtLazyHydrate when-idle>
             <LazyHomeEspecialists />
         </NuxtLazyHydrate>
-        <section v-if="home.acf.descripcion_equipo" class="flex flex-col-reverse lg:flex-row justify-center items-center gap-[calc(100%/16)] px-[calc(100%/16)] min-h-vh/80">
+        <section
+            class="doctor__description grid grid-cols-16 pb-0 pt-32 xl:pt-48 [html:not(.blackfriday)_&]:bg-blue-1 [html.blackfriday_&]:bg-black">
+            <LazyDoctorInsta v-if="insta && insta.length" :data="insta" :name="'CLÍNICA EGOS'" :tipo="'home'" :ruta="'home'"
+                class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]" />
+        </section>
+        <section v-if="home.acf.descripcion_equipo"
+            class="flex flex-col-reverse lg:flex-row justify-center items-center gap-[calc(100%/16)] px-[calc(100%/16)] min-h-vh/80">
             <div class="aspect-video w-full lg:w-1/2">
                 <VimeoPlayer :videoId="home.acf.descripcion_equipo.video" />
             </div>
@@ -48,6 +55,8 @@ provide('routePath', route.fullPath);
 const { data: home, error } = await useAsyncData(() => getPage(8))
 const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);
 const { data: cirugias, error: cirugiasError } = await useAsyncData('cirugia', () => getTratamiento({ getAll: true }));
+
+const { data: insta, refresh: refresInsta } = useAsyncData('insta-home', () => getInstaComments({ page: 1, per_page: 100 }));
 
 // Obtener los premios del composable
 const { awards } = useAwardsSchema();
