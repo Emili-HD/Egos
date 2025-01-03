@@ -25,7 +25,7 @@
         </NuxtLazyHydrate>
         <section
             class="doctor__description grid grid-cols-16 pb-0 pt-32 xl:pt-48 [html:not(.blackfriday)_&]:bg-blue-1 [html.blackfriday_&]:bg-black">
-            <LazyDoctorInsta v-if="insta && insta.length" :data="insta" :name="'CLÍNICA EGOS'" :tipo="'home'" :ruta="'home'"
+            <LazyDoctorInsta v-if="insta && insta.length" :data="insta" :name="'@clinicaegos'" :tipo="'home'" :ruta="'home'"
                 class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]" />
         </section>
         <section v-if="home.acf.descripcion_equipo"

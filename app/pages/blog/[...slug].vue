@@ -63,26 +63,26 @@
             </div>
 
             <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
-                
+
                 <div class="post__content-areas p-0 xl:py-6 xl:px-10 col-[2/-2] xl:col-[2/11]">
-    
+
                     <div v-if="post.acf.doctores_relacionados" class="bg-nude-6 p-6 rounded-xl">
                         <div v-if="doctor">
                             <div class="overflow-hidden size-full flex items-center gap-8">
                                 <!-- <div class="flex flex-row justify-center items-center flex-wrap gap-x-4 mb-4 text-center"> -->
-                                    <div class="size-32 aspect-square rounded-full overflow-hidden">
-                                        <UiImage :data="doctor" class="cover absolute object-center inset-0"
+                                <div class="size-32 aspect-square rounded-full overflow-hidden">
+                                    <UiImage :data="doctor" class="cover absolute object-center inset-0"
                                         :aria-labelledby="'doctor-title-' + doctor.id" />
-                                    </div>
-                                    <div class="w-[calc(100%-10rem)]">
-                                        <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p>
-                                        <h3 class="text-clamp-base mb-0"><strong>{{ doctor.title.rendered }}</strong>
-                                        </h3>
-                                        <p class="text-clamp-xs mb-0">{{ doctor.acf.trayectoria.especialidad }}</p>
-                                        <UiButton :to="relativeDoctorLink"
-                                            class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1">
-                                            más información</UiButton>
-                                    </div>
+                                </div>
+                                <div class="w-[calc(100%-10rem)]">
+                                    <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p>
+                                    <h3 class="text-clamp-base mb-0"><strong>{{ doctor.title.rendered }}</strong>
+                                    </h3>
+                                    <p class="text-clamp-xs mb-0">{{ doctor.acf.trayectoria.especialidad }}</p>
+                                    <UiButton :to="relativeDoctorLink"
+                                        class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1">
+                                        más información</UiButton>
+                                </div>
                                 <!-- </div> -->
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="post__content-text pb-4" v-for="(content, index) in post.acf.areas_de_contenido"
                         :id="`area-${index}`">
-                        <h2 class="area-title font-lora">{{ content.titulo_area }}</h2>
+                        <h2 class="area-title font-lora text-clamp-2xl xl:text-clamp-3xl">{{ content.titulo_area }}</h2>
                         <div class="[&_p]:font-nunito" v-html="content.contenido_area"></div>
                         <div class="post__content-image" v-if="content.imagen_area && content.imagen_area.url">
                             <img loading="lazy" :src="content.imagen_area.url" :srcset="content.imagen_area.srcset"
@@ -109,7 +109,7 @@
                     <div id="recomendaciones" v-if="post.acf.post_description.titulo_recomendaciones"
                         class="post__content-text recomendaciones pb-6">
                         <div class="heading accordion__heading">
-                            <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0"
+                            <h2 class="accordion__heading-title area-title text-clamp-2xl [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0"
                                 v-html="post.acf.post_description.titulo_recomendaciones"></h2>
                             <div class="accordion__description pb-2"
                                 v-html="post.acf.post_description.descripcion_recomendaciones">
@@ -136,7 +136,7 @@
                     <div v-if="post.acf.post_faqs && post.acf.post_faqs.preguntas_frecuentes !== null"
                         class="post__content-text faqs py-12" id="faqs">
                         <div class="heading accordion__heading">
-                            <h2 class="accordion__heading-title area-title [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0"
+                            <h2 class="accordion__heading-title area-title text-clamp-2xl [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0"
                                 v-html="post.acf.post_faqs.titulo_faqs"></h2>
                         </div>
                         <div class="list accordion__list">
@@ -361,7 +361,7 @@ useHead({
     
     :deep(.post__content-text) {
         scroll-margin-top: 7.5rem;
-        @apply p-10 mb-8 rounded-xl border border-blue-1/25;
+        @apply mb-8 rounded-xl;
 
         &:nth-child(1) {
             @apply p-0 mb-8 rounded-xl bg-transparent;

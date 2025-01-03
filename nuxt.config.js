@@ -54,6 +54,7 @@ export default defineNuxtConfig({
         'nuxt-swiper',
         'nuxt-mail',
         'nuxt-viewport',
+        '@vite-pwa/nuxt',
         ['@nuxtjs/google-fonts', {
             families: {
                 Nunito: true,
@@ -810,6 +811,77 @@ export default defineNuxtConfig({
                 'img-src': ["'self'", "https://www.facebook.com"]
             }
         }
+    },
+
+    pwa: {
+        registerType: 'autoUpdate', // Actualiza el Service Worker automáticamente
+        manifest: {
+            name: 'Egos App',
+            short_name: 'Egos',
+            description: 'Clínica de cirugía plástica y estética',
+            theme_color: '#ffffff', // Color del tema
+            background_color: '#ffffff', // Color de fondo
+            icons: [
+                {
+                    src: '/icon-192x192.png',
+                    sizes: '192x192',
+                    type: 'image/png',
+                },
+                {
+                    src: '/icon-512x512.png',
+                    sizes: '512x512',
+                    type: 'image/png',
+                },
+                {
+                    src: '/icon-512x512.png',
+                    sizes: '512x512',
+                    type: 'image/png',
+                    purpose: 'any maskable',
+                },
+            ],
+        },
+        client: {
+            installPrompt: true, // Habilita la captura del evento beforeinstallprompt
+        },
+        workbox: {
+            maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MiB
+            runtimeCaching: [
+                {
+                    urlPattern: ({ url }) => url.origin === self.location.origin,
+                    handler: 'CacheFirst', // Prioriza la caché para recursos estáticos
+                    options: {
+                        cacheName: 'static-assets',
+                        expiration: {
+                            maxEntries: 50, // Máximo de archivos en la caché
+                            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 días
+                        },
+                    },
+                },
+                {
+                    urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
+                    handler: 'StaleWhileRevalidate', // Carga desde la caché pero actualiza en segundo plano
+                    options: {
+                        cacheName: 'google-fonts',
+                        expiration: {
+                            maxEntries: 20,
+                            maxAgeSeconds: 365 * 24 * 60 * 60, // 1 año
+                        },
+                    },
+                },
+                {
+                    urlPattern: /^https:\/\/test\.clinicaegos\.com\/.*/i,
+                    handler: 'NetworkFirst',
+                    options: {
+                        cacheName: 'api-cache',
+                        networkTimeoutSeconds: 10, // Tiempo antes de usar la caché
+                        expiration: {
+                            maxEntries: 50,
+                            maxAgeSeconds: 7 * 24 * 60 * 60, // 7 días
+                        },
+                    },
+                },
+            ],
+        },
     },
 
     compatibilityDate: '2024-07-07'

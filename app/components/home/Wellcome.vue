@@ -2,7 +2,6 @@
     <section class="intro">
         <div class="intro__image bg-cover bg-[75%] min-h-vh pb-12 lg:bg-center"
             :style="`background-image: url('${data.featured_image_data.url}');`">
-            <!-- <UiImage :data="data" class="girl" :preload="true" /> -->
             <div>
                 <p class="intro__title">
                     <span class="!text-blue-1 text-clamp-4xl">Hazlo por ti</span><span id="a">Somos cirujanos</span>
@@ -22,13 +21,12 @@
                         class="flex items-center bg-nude-8/40 backdrop-blur overflow-hidden rounded-xl min-w-[320px] xl:min-w-[30vw] shadow-lg">
                         <div class="p-0 h-full w-[30%] xl:w-1/3 aspect-square overflow-hidden">
 
-                            <nuxt-img v-if="tratamiento && tratamiento.acf && tratamiento.acf.imagen_cards"
+                            <img v-if="tratamiento && tratamiento.acf && tratamiento.acf.imagen_cards"
                                 class="absolute inset-0 w-full h-full object-cover object-center"
-                                :src="tratamiento.acf.imagen_cards.sizes.medium"
-                                :srcset="tratamiento.acf.imagen_cards.srcset"
-                                :width="tratamiento.acf.imagen_cards.width"
-                                :height="tratamiento.acf.imagen_cards.height"
-                                :alt="tratamiento.acf.imagen_cards.alt || 'Imagen sin descripción'" />
+                                :src="tratamiento.acf.imagen_cards.sizes.calcula"
+                                width="200"
+                                height="200"
+                                :alt="tratamiento.acf.imagen_cards.alt || `Tratamiento de ${tratamiento.acf.titulo} en Clínica Egos`" />
                         </div>
                         <div class="px-4 w-[70%] xl:w-2/3 flex justify-start items-center h-full">
                             <div class="w-full">
@@ -44,11 +42,7 @@
 </template>
 
 <script setup>
-    import { useAsyncData } from 'nuxt/app'
     import { getTratamiento } from '@/composables/useApi';
-
-    // const video = ref(null);
-    // const videoOpacity = ref(0);
 
     const props = defineProps({
         data: {
@@ -57,16 +51,13 @@
         }
     })
 
-    // Usamos `useFetch` para hacer la solicitud de datos.
     const { data: featuredTratamientos, error } = await useAsyncData('featured-tratamientos', async () => {
         const tratamientos = await getTratamiento({ getAll: true });
         return tratamientos.filter(tratamiento =>
             tratamiento.acf?.destacar_post?.includes('featured')
         );
-    });
+    });    
 
-
-    // Función para formatear el link
     const formatLink = (url) => {
         // Si la URL es completa, extraemos el path
         try {

@@ -15,6 +15,7 @@
     "@hubspot/api-client": "^12.0.1",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/partytown": "^1.5.0",
+    "@vite-pwa/nuxt": "^0.10.6",
     "nuxt-lazy-hydrate": "^1.0.0",
     "nuxt-mail": "^5.1.1",
     "nuxt-viewport": "^2.2.0"
@@ -33,7 +34,7 @@
     "gsap": "npm:@gsap/shockingly@^3.12.5",
     "lenis": "^1.1.18",
     "nuxt": "^3.15.0",
-    "nuxt-booster": "^3.1.9-next.3",
+    "nuxt-booster": "^3.1.9",
     "nuxt-swiper": "^2.0.0",
     "pinia": "^2.2.8",
     "puppeteer": "^23.11.1",
