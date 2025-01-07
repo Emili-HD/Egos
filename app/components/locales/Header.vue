@@ -24,7 +24,7 @@
       </div>
       <div id="formulario"
          class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 p-12 w-full h-full lg:w-1/3 flex flex-col justify-around">
-         <FormsCirugia :identificador="'formulario'" :portalId="String(data.acf.form[0].portalid)"
+         <FormsEsteticaForm :identificador="'formulario'" :portalId="String(data.acf.form[0].portalid)"
             :formId="data.acf.form[0].formid" :name="data.title.rendered" />
       </div>
    </div>

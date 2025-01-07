@@ -21,7 +21,7 @@
             </svg>
         </div>
 
-        <FormsCirugia v-if="pages && pages.acf" :identificador="'popup'" :portalId="String(pages.acf.portalid)"
+        <FormsEsteticaForm v-if="pages && pages.acf" :identificador="'popup'" :portalId="String(pages.acf.portalid)"
             :formId="pages.acf.formid" :name="String(pages.title.rendered)" />
     </div>
 

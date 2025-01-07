@@ -6,7 +6,7 @@
     </div>
     <div v-else id="formulario"
         class="form__wrapper p-0 xl:p-36 col-[1/-1] xl:col-[1/9] bg-blue-1 flex flex-col justify-center items-stretch [.estetica:not(.blackfriday)_&]:bg-crema [.blackfriday_&]:bg-blackfriday h-[750px] 2xl:h-[980px]">
-        <FormsCirugia :identificador="'formPage'" :portalId="String(data.formulario.portalid)"
+        <FormsEsteticaForm :identificador="'formPage'" :portalId="String(data.formulario.portalid)"
             :formId="data.formulario.formid" :name="name.title.rendered" :route="route" />
     </div>
     <div v-if="data && data.formulario && data.formulario.form_image"

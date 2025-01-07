@@ -40,7 +40,8 @@
                         </div>
                         <div
                             class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-center items-center">
-                            <h3 class="h6 text-clamp-base lg:text-clamp-lg font-medium">{{ testimonio.title.rendered }}</h3>
+                            <h3 class="h6 text-clamp-base lg:text-clamp-lg font-medium">{{ testimonio.title.rendered }}
+                            </h3>
                             <div
                                 class="button py-1.5 px-6 border border-solid bg-blue-1 text-nude-8 text-center uppercase rounded-full">
                                 Saber más
@@ -56,8 +57,8 @@
             </div>
 
             <section class="bg-blue-2 p-12 xl:p-24 mb-0" v-if="pages.acf">
-                <FormsCirugia :identificador="'formulario'" :portalId="String(pages.acf.portalid)"
-                    :formId="pages.acf.formid" />
+                <FormsEsteticaForm :identificador="'formulario'" :portalId="String(pages.acf.portalid)"
+                    :formId="pages.acf.formid" :name="pages.title.rendered" />
             </section>
 
         </section>

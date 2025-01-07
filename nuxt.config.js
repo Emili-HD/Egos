@@ -17,6 +17,7 @@ export default defineNuxtConfig({
         '~/plugins/scrollToTop.client.js',
         '~/plugins/intersect.js',
         '~/plugins/device-classes.js',
+        '~/plugins/clinicasJson.client.js',
     ],
 
     css: [
@@ -767,15 +768,219 @@ export default defineNuxtConfig({
 
     app: {
         head: {
-            // script: [
-            //     {
-            //         id: 'Cookiebot',
-            //         src: '/cookiebot-proxy/uc.js', // Utiliza el proxy en vez del URL directo
-            //         'data-cbid': '784911a0-4196-4f66-bcbd-407e3ced0201',
-            //         'data-blockingmode': 'auto',
-            //         type: 'text/partytown',
-            //     },
-            // ],
+            script: [
+                {
+                    type: "application/ld+json",
+                    children: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "MedicalOrganization",
+                        "name": "EGOS Cirugía Plástica y Reparadora",
+                        "url": "https://www.clinicaegos.com/",
+                        "logo": "https://test.clinicaegos.com/wp-content/uploads/2023/12/logo-egos.svg",
+                        "sameAs": [
+                            "https://www.facebook.com/clinicaegos",
+                            "https://www.tiktok.com/@clinicaegos",
+                            "https://www.youtube.com/@clinicaegos",
+                            "https://www.instagram.com/clinicaegos/"
+                        ],
+                        "location": [
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Barcelona Balmes",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "C/Balmes, 268",
+                                    "addressLocality": "Barcelona",
+                                    "addressRegion": "Sarrià-Sant Gervasi",
+                                    "postalCode": "08006",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 616987740"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Barcelona Aribau",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "C/Carrer d'Aribau, 192",
+                                    "addressLocality": "Barcelona",
+                                    "addressRegion": "L'Eixample",
+                                    "postalCode": "08036",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 633696383"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Barcelona Gràcia",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "C/ de Sardenya, 515",
+                                    "addressLocality": "Barcelona",
+                                    "addressRegion": "Gràcia",
+                                    "postalCode": "08024",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 681332374"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Badalona",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Plaça de l'Alcalde Xifré, 14",
+                                    "addressLocality": "Badalona",
+                                    "postalCode": "08912",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 699263162"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Hospitalet de Llobregat",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Rambla Just Oliveras, 63",
+                                    "addressLocality": "Hospitalet de Llobregat",
+                                    "postalCode": "08901",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 618276235"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Sabadell",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "C/ Prat de la Riba, 49",
+                                    "addressLocality": "Sabadell",
+                                    "postalCode": "08206",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 722591166"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Mataró",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Carrer d'Argentona, 33",
+                                    "addressLocality": "Mataró",
+                                    "postalCode": "08302",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 650166593"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Manresa",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Ctra. de Vic, 149",
+                                    "addressLocality": "Manresa",
+                                    "postalCode": "08243",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 622804365"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Tarragona",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Rambla President Francesc Macià 10 C",
+                                    "addressLocality": "Tarragona",
+                                    "postalCode": "43002",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 622406576"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Girona",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Plaça Poeta Marquina, 6",
+                                    "addressLocality": "Girona",
+                                    "postalCode": "17001",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 682881842"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Reus",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Carrer de Castellvell, 7",
+                                    "addressLocality": "Reus",
+                                    "postalCode": "43202",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 977327327"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Lleida",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Rambla de Ferran, 54, bajo",
+                                    "addressLocality": "Lleida",
+                                    "postalCode": "25007",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 676381890"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Andorra",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Plaça Coprínceps, Carrer Santa Anna, 1. Edifici",
+                                    "addressLocality": "Escaldes-Engordany",
+                                    "addressCountry": "AD"
+                                },
+                                "telephone": "+376 6668856"
+                            },
+                            {
+                                "@type": "Place",
+                                "name": "EGOS Madrid",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "C. de Sagasta, 3",
+                                    "addressLocality": "Madrid",
+                                    "postalCode": "28004",
+                                    "addressCountry": "ES"
+                                },
+                                "telephone": "+34 636026433"
+                            }
+                        ]
+                    }),
+                },
+                {
+                    type: "application/ld+json",
+                    children: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Organization",
+                        "name": "Clínica EGOS",
+                        "url": "https://www.clinicaegos.com/",
+                        "award": [
+                            "Avalado por Quirónsalud: Reconocimiento por la excelencia médica otorgado por Quirónsalud.",
+                            "Cirujanos titulados por EAFPS: Titulación por la European Academy of Facial Plastic Surgery.",
+                            "Miembros de SECOMCC: Certificación por la Sociedad Española de Cirugía Oral y Maxilofacial de Cabeza y Cuello.",
+                            "Miembros de SECPF: Afiliación a la Sociedad Española de Cirugía Plástica Facial.",
+                            "Miembros de SECPRE: Reconocimiento de la Sociedad Española de Cirugía Plástica, Reparadora y Estética."
+                        ],
+                        "contactPoint": {
+                            "@type": "ContactPoint",
+                            "telephone": "+34 616 98 77 40",
+                            "contactType": "Customer Service",
+                            "areaServed": "ES",
+                            "availableLanguage": ["Spanish", "English"]
+                        }
+                    }),
+                },
+            ],
             link: [
                 {
                     rel: 'preconnect',

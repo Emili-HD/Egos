@@ -1,7 +1,7 @@
 <template>
-   <div class="hero__intro bg-cover bg-center w-full md:w-1/2 h-vh/90 md:h-vh overflow-hidden">
+   <div class="hero__intro bg-cover bg-center w-full lg:w-1/2 min-h-vh/90 overflow-hidden flex flex-col justify-end">
       <div class="blue-gradient-full size-full absolute z-0">
-         <UiImage :data="data" class="h-vh/90 xl:h-vh object-cover object-center absolute" :preload="true" />
+         <UiImage :data="data" class="size-full object-cover object-center absolute" :preload="true" />
       </div>
       <header
          class="header__landing relative px-12 py-6 [.blackfriday_&]:bg-black [html:not(.blackfriday)_&]:bg-blue-1 flex justify-center md:justify-start w-full z-[999]"

@@ -171,7 +171,7 @@
                     v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
                     <div id="formulario" class="form__wrapper p-2 p-xs-6 lg:sticky lg:top-44">
 
-                        <FormsCirugia
+                        <FormsEsteticaForm
                             v-if="post && post.acf && post.acf.formulario && post.acf.formulario.portalid === '25632462'"
                             :identificador="'topPage'" :portalId="String(post.acf.formulario.portalid)"
                             :formId="post.acf.formulario.formid" :name="post.title.rendered" />

@@ -1,27 +1,23 @@
 <template>
     <main class="site-main noticias" v-if="noticias">
         <section class="noticias section__hero gap-x-1 lg:gap-x-4 lg:gap-y-8">
-            <div
-                v-if="pages && pages.title"
+            <div v-if="pages && pages.title"
                 class="noticias__header min-h-[30vh] flex flex-col justify-center align-center p-8 lg:px-40 lg:pt-40 text-center">
                 <h1 class="mb-0">{{ pages.title.rendered }}</h1>
 
-                <div
-                    class="noticias__header flex flex-col justify-center align-center p-8 lg:px-40 text-center">
+                <div class="noticias__header flex flex-col justify-center align-center p-8 lg:px-40 text-center">
                     <div v-html="pages.content.rendered"></div>
                 </div>
             </div>
             <div class="noticias__list max-w-full p-8 lg:px-20 lg:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4"
                 v-if="noticias">
                 <article v-for="noticia in noticias" :key="noticia.id"
-                    class="card item rounded-xl overflow-hidden flex flex-col justify-between items-center gap-2 lg:gap-8 bg-nude-6 p-0"
-                    >
+                    class="card item rounded-xl overflow-hidden flex flex-col justify-between items-center gap-2 lg:gap-8 bg-nude-6 p-0">
                     <nuxt-link :to="`/noticias/${noticia.slug}`" class="size-full">
                         <div class="noticias__image overflow-hidden w-full h-3/5">
                             <UiImage :data="noticia" class="cover" loading="lazy" />
                         </div>
-                        <div
-                            class="noticias__content p-6 text-center h-2/5 flex flex-col justify-between items-center">
+                        <div class="noticias__content p-6 text-center h-2/5 flex flex-col justify-between items-center">
                             <time :datetime="noticia.date_gmt" class="text-gray-400 italic">
                                 {{ formatDate(noticia.date_gmt) }}
                             </time>
@@ -39,8 +35,8 @@
             </div>
 
             <section class="bg-blue-1 p-12 xl:p-24 mb-0" v-if="pages.acf">
-                <FormsCirugia :identificador="'formulario'" :portalId="String(pages.acf.portalid)"
-                    :formId="pages.acf.formid" />
+                <FormsEsteticaForm :identificador="'formulario'" :portalId="String(pages.acf.portalid)"
+                    :formId="pages.acf.formid" :name="pages.title.rendered" />
             </section>
 
         </section>

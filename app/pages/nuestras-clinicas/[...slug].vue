@@ -44,7 +44,7 @@
                             :formId="clinica.acf.formulario.formid" :name="clinica.title.rendered"
                             :route="route.fullPath" /> -->
 
-                        <FormsCirugia :identificador="'map'" :portalId="String(clinica.acf.formulario.portalid)"
+                        <FormsEsteticaForm :identificador="'map'" :portalId="String(clinica.acf.formulario.portalid)"
                             :formId="clinica.acf.formulario.formid" :name="clinica.title.rendered" />
                     </div>
                 </div>

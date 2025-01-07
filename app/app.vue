@@ -50,24 +50,6 @@
         }
     );
 
-    let businessJsonLd = null;
-
-    if (clinicasData && clinicasData.value.length > 0) {
-        const { generateBusinessData } = useBusinessData();
-        businessJsonLd = generateBusinessData(clinicasData.value);
-    } else if (clinicasError.value) {
-        console.error('Error al cargar las clínicas:', clinicasError.value);
-    }
-
-    useHead({
-        script: [
-            businessJsonLd && {
-                type: 'application/ld+json',
-                children: JSON.stringify(businessJsonLd),
-            },
-        ].filter(Boolean), // Filtra los valores nulos o undefined
-    });
-
     const consentBannerRef = ref(null)
 
     const { consentBanner } = useCookiebot({
@@ -84,11 +66,12 @@
         }
     };
 
+    let observer = null; // Declara el observer en el ámbito del componente
+    
     onMounted(async () => {
         await nextTick()
         fetchCampanas();
         consentBanner(consentBannerRef);
-        let observer = null; // Declara el observer en el ámbito del componente
 
         // Watch para observar cambios en `campanya`
         // watch(campanya, (newCampanya) => {

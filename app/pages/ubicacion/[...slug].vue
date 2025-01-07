@@ -9,7 +9,7 @@
         <section class="hero m-0 p-0 flex flex-col lg:flex-row justify-between items-stretch">
             <LocalesHeader :data="landing" />
             <!-- <div id="formulario" class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 p-12 w-full lg:w-1/3 flex flex-col justify-around">
-                <FormsCirugia :identificador="'formulario'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" :name="landing.title.rendered" />
+                <FormsEsteticaForm :identificador="'formulario'" :portalId="String(landing.acf.form[0].portalid)" :formId="landing.acf.form[0].formid" :name="landing.title.rendered" />
             </div> -->
         </section>
         <CirugiasEntryText :data="landing" class="mt-6 lg:mt-20 p-6 [&>p]:text-clamp-base [&>p]:leading-relaxed" />
@@ -35,7 +35,7 @@
                 <div id="formulario"
                     class="half-right [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 col-span-full lg:col-span-5 flex flex-col justify-center items-center">
                     <div class="form__wrapper w-full p-12">
-                        <FormsCirugia :identificador="'map'" :portalId="String(landing.acf.form[0].portalid)"
+                        <FormsEsteticaForm :identificador="'map'" :portalId="String(landing.acf.form[0].portalid)"
                             :formId="landing.acf.form[0].formid" :name="landing.title.rendered" />
                     </div>
                 </div>

@@ -61,8 +61,8 @@
         </div>
     </header>
     <div v-if="data.acf && data.acf.formulario" id="formulario"
-        class="form__wrapper min-h-[620px] [.site-main:not(.tratamiento-113)_&]:bg-blue-1 [html:not(.estetica)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema [.blackfriday_&]:!bg-blackfriday p-16 xl:pt-24 col-[1_/_span_16] xl:col-span-6 flex flex-col justify-center items-stretch">
-        <FormsCirugia :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)"
+        class="form__wrapper min-h-[620px] [.site-main:not(.tratamiento-113)_&]:bg-blue-1 [html:not(.estetica)_&]:bg-blue-1 [.estetica:not(.blackfriday)_&]:!bg-crema [.blackfriday_&]:!bg-blackfriday xl:pt-24 col-[1_/_span_16] xl:col-span-6 flex flex-col justify-center items-stretch">
+        <FormsEsteticaForm :identificador="'topPage'" :portalId="String(data.acf.formulario.portalid)"
             :formId="data.acf.formulario.formid" :name="data.title.rendered" :route="route" />
     </div>
 </template>

@@ -10,11 +10,11 @@
         <section class="hero m-0 p-0 min-h-vh flex flex-col lg:flex-row justify-between items-stretch">
             <LandingsHeader :data="landing" />
             <div id="formulario"
-                class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 px-4 py-8 lg:p-12 w-full lg:w-1/2 flex flex-col justify-around">
+                class="hero__form [.blackfriday_&]:bg-blackfriday [html:not(.blackfriday)_&]:bg-blue-1 px-4 py-8 lg:px-12 w-full lg:w-1/2 flex flex-col justify-around">
                 <div class="insignia mb-8 flex flex-row justify-center text-center">
-                    <img class="max-w-[19rem]" loading="lazy" :src="landing.acf.insignia.url" alt="" />
+                    <img class="max-w-[16rem]" loading="lazy" :src="landing.acf.insignia.url" alt="" />
                 </div>
-                <FormsCirugia
+                <FormsEsteticaForm
                     v-if="landing && landing.acf && landing.acf.form[0] && landing.acf.form[0].tipo_de_formulario === 'Bloom'"
                     :identificador="'topPage'" :portalId="String(landing.acf.form[0].portalid)"
                     :formId="landing.acf.form[0].formid" :name="landing.title.rendered" :route="route.fullPath" />
@@ -201,98 +201,123 @@ onMounted(async () => {
 
 <style>
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  -webkit-text-fill-color: #ffffff;
-  -webkit-box-shadow: 0 0 0px 1000px #1C2C44 inset;
-  transition: background-color 5000s ease-in-out 0s;
-}
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+        -webkit-text-fill-color: #ffffff;
+        -webkit-box-shadow: 0 0 0px 1000px #1C2C44 inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
 
-.hs-form-field {
-    @apply text-white mt-6;
-}
+    .hs-input {
+        display: inline-block;
+        width: 90%;
+        max-width: 500px;
+        height: 30px;
+        padding: 9px 10px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 22px;
+        color: #33475b;
+        border: 1px solid #cbd6e2;
+        box-sizing: border-box;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
+        border-radius: 3px;
+    }
 
-.hs-button {
-  @apply mt-8 bg-gold-2 text-nude-8 uppercase font-normal p-2 rounded-full cursor-pointer animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4;
-}
+    .hs-form-field {
+        @apply text-white mt-6;
+    }
 
-.form-landing {
-  input, select {
-    @apply w-full flex py-2 px-4 text-white bg-transparent  border-b border-b-white/30 pointer-events-auto;    
-  }
-  select {
-    @apply  py-3 px-4;    
-  }
-}
+    .hs-button {
+        @apply mt-8 bg-gold-2 text-nude-8 uppercase font-normal p-2 rounded-full cursor-pointer animate-gradient bg-gold-gradient-text bg-[length:300%_300%] [animation-play-state:paused] hover:[animation-play-state:running] pt-3 pb-2 px-4;
+    }
 
-.hs-form-field input::placeholder {
-  @apply text-transparent opacity-0;
-}
+    .form-landing {
 
-.hs-form-field:has(input[type=tel]::placeholder) {
-  @apply text-red-500;
-}
+        input,
+        select {
+            @apply w-full flex py-2 px-4 text-white bg-transparent border-b border-b-white/30 pointer-events-auto;
+        }
+
+        select {
+            @apply py-3 px-4;
+        }
+    }
+
+    .hs-form-field input::placeholder {
+        @apply text-transparent opacity-0;
+    }
+
+    .hs-form-field:has(input[type=tel]::placeholder) {
+        @apply text-red-500;
+    }
 
 
-.hs-form-field:has(input[type=text]:valid) > label,
-.hs-form-field:has(input[type=email]:valid) > label {
-  @apply -top-5;
-}
-.hs-phone:has(input[type=tel] + input[type=hidden]:not([value=""])) > label {
-  @apply text-transparent;
-}
+    .hs-form-field:has(input[type=text]:valid)>label,
+    .hs-form-field:has(input[type=email]:valid)>label {
+        @apply -top-5;
+    }
 
-.hs-form-field > label {
-  @apply absolute top-2 block transition-all text-nude-8 pointer-events-none;
-}
+    .hs-phone:has(input[type=tel] + input[type=hidden]:not([value=""]))>label {
+        @apply text-transparent;
+    }
 
-.hs-form-field input:focus,
-.hs-form-field select:focus {
-  @apply pb-2 border-b-2 outline-0;
-  border-image: linear-gradient(to right, #e2d9bf, #908057);
-  border-image-slice: 1;
-}
+    .hs-form-field>label {
+        @apply absolute top-2 block transition-all text-nude-8 pointer-events-none;
+    }
 
-.hs-form-field:has(input:focus) > label {
-  @apply text-nude-1 transition-all block absolute -top-5;
-}
+    .hs-form-field input:focus,
+    .hs-form-field select:focus {
+        @apply pb-2 border-b-2 outline-0;
+        border-image: linear-gradient(to right, #e2d9bf, #908057);
+        border-image-slice: 1;
+    }
 
-.is-windows .hs-form-field select option {
-    @apply text-blue-1;
-}
+    .hs-form-field:has(input:focus)>label {
+        @apply text-nude-1 transition-all block absolute -top-5;
+    }
 
-.hs-form-field select.is-placeholder {
-    @apply text-transparent pl-48;
-}
+    .is-windows .hs-form-field select option {
+        @apply text-blue-1;
+    }
 
-.hs_selecciona_la_clinica select,
-.hs_cirugias select {
-    @apply pl-48;
-}
+    .hs-form-field select.is-placeholder {
+        @apply text-transparent pl-48;
+    }
 
-.hs-fieldtype-intl-phone.hs-input .hs-input {
-    @apply pl-0;
-}
+    .hs_selecciona_la_clinica select,
+    .hs_cirugias select {
+        @apply pl-48;
+    }
 
-.legal-consent-container label {
-    @apply flex items-center;
-}
-.legal-consent-container label input {
-    @apply w-4;
-}
-.legal-consent-container label span,
-.legal-consent-container label span p {
-    @apply text-sm;
-}
+    .hs-fieldtype-intl-phone.hs-input .hs-input {
+        @apply pl-0;
+    }
 
-.hs-error-msgs {
-    @apply absolute top-2 right-0 text-red-600;
-}
+    .legal-consent-container label {
+        @apply flex items-center;
+    }
+
+    .legal-consent-container label input {
+        @apply w-4;
+    }
+
+    .legal-consent-container label span,
+    .legal-consent-container label span p {
+        @apply text-sm;
+    }
+
+    .hs-error-msgs {
+        @apply absolute top-2 right-0 text-red-600;
+    }
 </style>

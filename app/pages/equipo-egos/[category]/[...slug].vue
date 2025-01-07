@@ -39,7 +39,7 @@
         </div>
         <aside
             class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-1 [.blackfriday_&]:bg-blackfriday col-[1_/_span_16] lg:col-start-12 lg:col-span-5 px-8 lg:px-12 py-12 lg:pt-40 lg:pb-20">
-            <FormsCirugia v-if="doctor && doctor.acf" :identificador="'formulario'"
+            <FormsEsteticaForm v-if="doctor && doctor.acf" :identificador="'formulario'"
                 :portalId="String(doctor.acf.portalid)" :formId="doctor.acf.formid" :name="doctor.title.rendered"
                 class="lg:sticky lg:top-44" />
             <!-- <FormsCirugia :identificador="'popup'" :portalId="'25632462'" 25632464

@@ -1,31 +1,31 @@
 <template>
     <div v-if="!isLoading && formStructure && formStructure.fieldGroups" :id="props.identificador"
-        class="form-landing max-w-full w-[clamp(320px,_30vw,_600px)] m-auto sticky top-40">
+        class="form-landing max-w-[clamp(320px,_40vw,_650px)] w-full m-auto xl:sticky xl:top-32">
         <form @submit.prevent="handleSubmit" class="flex flex-col py-8 lg:px-8 rounded-2xl">
             <div v-for="group in formStructure.fieldGroups" :key="group.richText"
-                class="[&_h2]:font-lora [&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance [html:not(.blackfriday).estetica_&_h2]:text-vermell [html:not(.blackfriday).estetica_&_h2_span]:!text-[#e6450f] [.blackfriday_&_h2]:text-crema">
+                class="[&_br]:hidden [&_h2]:font-lora [&_h2]:!text-clamp-lg [&_h2]:font-normal [&_h2]:text-center [&_h2]:text-balance [html:not(.blackfriday).estetica_&_h2]:text-vermell [html:not(.blackfriday).estetica_&_h2_span]:!text-[#e6450f] [.blackfriday_&_h2]:text-crema">
                 <template v-if="group.fields && Array.isArray(group.fields)">
                     <template v-for="field in group.fields" :key="field.name">
                         <template v-if="field && !field.hidden">
                             <div class="mb-0">
                                 <template v-if="field.fieldType === 'single_line_text'">
-                                    <div class="form__group field">
+                                    <div class="form__group field flex flex-col xl:flex-row xl:items-center">
+                                        <label :for="field.name" class="form__label w-52 2xl:w-64">{{ field.label }}</label>
                                         <input type="text" :id="field.name" v-model="formData[field.name]"
                                             :required="field.required" :placeholder="field.label"
                                             :class="{ 'border-red-500': errors[field.name] }"
                                             class="form-input form__field" />
-                                        <label :for="field.name" class="form__label">{{ field.label }}</label>
                                         <p v-if="errors[field.name]" class="text-red-500 text-sm">{{ errors[field.name]
                                             }}</p>
                                     </div>
                                 </template>
                                 <template v-else-if="field.fieldType === 'email'">
-                                    <div class="form__group field">
+                                    <div class="form__group field flex flex-col xl:flex-row xl:items-center">
+                                        <label :for="field.name" class="form__label w-52 2xl:w-64">{{ field.label }}</label>
                                         <input type="email" :id="field.name" v-model="formData[field.name]"
                                             :required="field.required" :placeholder="field.label"
                                             :class="{ 'border-red-500': errors[field.name] }"
                                             class="form-input form__field" />
-                                        <label :for="field.name" class="form__label">{{ field.label }}</label>
                                         <p v-if="errors[field.name]" class="text-red-500 text-sm">{{ errors[field.name]
                                             }}</p>
                                     </div>
@@ -33,13 +33,13 @@
 
                                 <!-- telèfon -->
                                 <template v-else-if="field.fieldType === 'phone'">
-                                    <div class="form__group field flex items-end gap-2">
+                                    <div class="form__group field flex flex-col xl:flex-row xl:items-center">
+                                        <label :for="field.name" class="form__label w-52 2xl:w-64">{{ field.label }}</label>
                                         <input type="tel" :id="field.name" v-model="formData[field.name]"
                                             :required="field.required" :placeholder="field.label"
                                             :class="{ 'border-red-500': errors[field.name] }"
                                             class="form-input form__field w-full"
                                             @focus="addCountryPrefix(field.name)" />
-                                        <label :for="field.name" class="form__label">{{ field.label }}</label>
                                         <p v-if="errors[field.name]" class="text-red-500 text-sm">{{ errors[field.name]
                                             }}</p>
                                     </div>
@@ -47,7 +47,8 @@
 
                                 <!-- DROPDOWN -->
                                 <template v-else-if="field.fieldType === 'dropdown'">
-                                    <div class="form__group field select custom-select">
+                                    <div class="form__group field flex flex-col xl:flex-row xl:items-center select custom-select">
+                                        <label :for="field.name" class="form__label w-52 2xl:w-64">{{ field.label }}</label>
                                         <select :id="field.name" v-model="formData[field.name]"
                                             :required="field.required" :class="{ 'border-red-500': errors[field.name] }"
                                             :placeholder="field.label"
@@ -58,14 +59,15 @@
                                                 {{ option.label }}
                                             </option>
                                         </select>
-                                        <label :for="field.name" class="form__label">{{ field.label }}</label>
                                         <p v-if="errors[field.name]" class="text-red-500 text-sm">{{ errors[field.name]
                                             }}</p>
                                     </div>
 
                                     <div v-for="subField in field.dependentFields" :key="subField.dependentField.name"
                                         :class="{ 'hidden': !shouldShowDependentField(subField) }">
-                                        <div class="form__group field select custom-select">
+                                        <div class="form__group field flex flex-col xl:flex-row xl:items-center select custom-select">
+                                            <label :for="subField.dependentField.name" class="form__label w-52 2xl:w-64">{{
+                                                subField.dependentField.label }}</label>
                                             <select :id="subField.dependentField.name"
                                                 v-model="formData[subField.dependentField.name]"
                                                 :required="shouldShowDependentField(subField) && subField.dependentField.required"
@@ -78,8 +80,6 @@
                                                     {{ option.label }}
                                                 </option>
                                             </select>
-                                            <label :for="subField.dependentField.name" class="form__label">{{
-                                                subField.dependentField.label }}</label>
                                             <p v-if="errors[subField.dependentField.name]" class="text-red-500 text-sm">
                                                 {{ errors[subField.dependentField.name] }}</p>
                                         </div>
@@ -438,7 +438,7 @@
 <style scoped>
 
     .blackfriday label, label{
-        @apply mt-4 text-crema;
+        @apply text-crema/75 font-light;
     }
     html:not(.blackfriday).estetica label {
         @apply mt-4 text-vermell;
@@ -462,7 +462,7 @@
 
         input,
         select {
-            @apply w-full flex py-2 px-4 [.estetica_&]:text-vermell bg-transparent border-b [.estetica_&]:border-b-vermell/30 pointer-events-auto font-nunito;
+            @apply w-full flex py-1 px-2 [.estetica_&]:text-vermell bg-transparent border-b [.estetica_&]:border-b-vermell/30 pointer-events-auto font-nunito;
         }
     }
 
@@ -487,7 +487,7 @@
         @apply cursor-text top-4;
     }
 
-    input:-webkit-autofill,
+    /* input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
     textarea:-webkit-autofill,
@@ -513,11 +513,11 @@
         -webkit-text-fill-color: #6D1636;
         -webkit-box-shadow: 0 0 0px 1000px #FFFFF0 inset;
         transition: background-color 5000s ease-in-out 0s;
-    }
+    } */
 
 
     html:not(.blackfriday) .form__label {
-        @apply absolute block transition-all [.estetica_&]:text-vermell pointer-events-none font-nunito;
+        @apply relative block transition-all [.estetica_&]:text-vermell pointer-events-none font-nunito leading-none;
     }
     .blackfriday .form__label {
         @apply absolute -top-5 block transition-all text-crema pointer-events-none font-nunito;
@@ -538,9 +538,9 @@
         @apply text-vermell transition-all block absolute -top-5;
     }
 
-    .select .form__label {
+    /* .select .form__label {
         @apply top-4;
-    }
+    } */
 
 
     .form__select:focus~.form__label,

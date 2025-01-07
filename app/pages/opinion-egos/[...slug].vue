@@ -116,7 +116,7 @@
         <aside
             class="form__wrapper [html:not(.blackfriday)_&]:bg-blue-2 [.blackfriday_&]:bg-blackfriday col-[1_/_span_16] lg:col-start-12 lg:col-span-5 p-8 lg:p-16 lg:pt-20 xl:pt-28 xl:pb-20 h-full"
             v-if="casoreal && casoreal.acf">
-            <FormsCirugia v-if="casoreal.acf.formulario" :identificador="'formulario'"
+            <FormsEsteticaForm v-if="casoreal.acf.formulario" :identificador="'formulario'"
                 :portalId="String(casoreal.acf.formulario.portalid)" :formId="casoreal.acf.formulario.formid"
                 :name="casoreal.title.rendered" :route="route.fullPath" class="sticky top-44" />
         </aside>
