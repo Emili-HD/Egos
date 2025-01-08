@@ -1,41 +1,44 @@
 <template>
     <div class="header-nav flex flex-row justify-end items-stretch size-full">
         <nav aria-label="Global" class="nav-categories">
-            <ul class="menu-list" ref="menuContainer" v-if="menuData">
+            <ul class="menu-list" ref="menuContainer" v-if="menuData" itemscope
+                itemtype="https://schema.org/SiteNavigationElement">
                 <li v-for="tratamiento in menuData" :key="tratamiento.ID"
                     :class="{ 'hasSubmenu': tratamiento.child_items }">
-                    <div class="menu-tab" :data-title="tratamiento.title" :data-name="tratamiento.classes.includes('estetica') ? 'estetica' : ''">
+                    <div class="menu-tab" :data-title="tratamiento.title"
+                        :data-name="tratamiento.classes.includes('estetica') ? 'estetica' : ''">
 
                         <!-- Enlace en desktop -->
-                        <nuxt-link 
-                            :to="tratamiento.classes.includes('nofollow') ? tratamiento.url : tratamiento.path" 
-                            :rel="tratamiento.classes.includes('nofollow') ? 'nofollow noopener' : '' " 
-                            :target="tratamiento.classes.includes('nofollow') ? '_blank' : '' " 
-                            class="nav-title" 
-                            active-class="router-link-active" 
-                            :class="[
+                        <nuxt-link :to="tratamiento.classes.includes('nofollow') ? tratamiento.url : tratamiento.path"
+                            :rel="tratamiento.classes.includes('nofollow') ? 'nofollow noopener' : '' "
+                            :target="tratamiento.classes.includes('nofollow') ? '_blank' : '' " class="nav-title"
+                            active-class="router-link-active" :class="[
                                 ...tratamiento.classes, 
                                 { 'nav-link': tratamiento.child_items.length === 0 }
-                            ]"
-                        >
+                            ]">
                             <span>{{ tratamiento.title }}</span>
                         </nuxt-link>
-                        <ArrowDownRightIcon class="arrow-down" v-if="tratamiento.child_items.length > 0" alt="Abrir menú" />
+                        <ArrowDownRightIcon class="arrow-down" v-if="tratamiento.child_items.length > 0"
+                            alt="Abrir menú" />
 
                     </div>
                     <div class="menu-wrapper">
-                        
+
                         <!-- Si el link tiene la class 'nofollow' aplicar link externo -->
-                        <a v-if="tratamiento.classes == 'nofollow'" :href="tratamiento.url" class="nav-link" active-class="router-link-active" rel="nofollow noopener" target="_blank">
-                            <span class="">{{ tratamiento.title }}</span>
+                        <a v-if="tratamiento.classes == 'nofollow'" :href="tratamiento.url"
+                            :itemprop="`https://www.clinicaegos.com${tratamiento.url}`" class="nav-link"
+                            active-class="router-link-active" rel="nofollow noopener" target="_blank">
+                            <span itemprop="name">{{ tratamiento.title }}</span>
                             <ArrowUpRightIcon
                                 class="arrow-up size-8 p-2 rounded-full order-2 absolute right-4 opacity-50 text-blue-1 hidden"
                                 alt="Cerrar menú" />
                         </a>
 
                         <!-- sino aplicar link interno -->
-                        <nuxt-link v-else :to="tratamiento.path" class="nav-link" active-class="router-link-active">
-                            <span class="">{{ tratamiento.title }}</span>
+                        <nuxt-link v-else :to="tratamiento.path"
+                            :itemprop="`https://www.clinicaegos.com${tratamiento.path}`" class="nav-link"
+                            active-class="router-link-active">
+                            <span itemprop="name">{{ tratamiento.title }}</span>
                             <ArrowUpRightIcon
                                 class="arrow-up size-8 p-2 rounded-full order-2 absolute right-4 opacity-50 text-blue-1 hidden"
                                 alt="Cerrar menú" />
@@ -47,11 +50,12 @@
                                 <ul class="submenu__right-list">
                                     <li class="submenu-child" v-for="(subTratamiento, index) in tratamiento.child_items"
                                         :key="subTratamiento.ID" :data-index="index">
-                                        
+
                                         <nuxt-link v-if="!subTratamiento.child_items" :to="subTratamiento.path"
+                                            :itemprop="`https://www.clinicaegos.com${subTratamiento.path}`"
                                             class="nav-link" :class="subTratamiento.classes"
                                             active-class="nuxt-link-active">
-                                            {{ subTratamiento.title }}
+                                            <span itemprop="name">{{ subTratamiento.title }}</span>
                                         </nuxt-link>
                                         <span class="column" v-else>{{ subTratamiento.title }}</span>
 
@@ -62,17 +66,21 @@
                                                 v-for="(subSubTratamiento, subIndex) in subTratamiento.child_items"
                                                 :key="subSubTratamiento.ID" :data-index="subIndex">
 
-                                                <a v-if="subSubTratamiento.classes == 'nofollow'" :href="subSubTratamiento.url" class="nav-link"
-                                                    :class="subSubTratamiento.classes" active-class="nuxt-link-active" rel="nofollow noopener" target="_blank">
-                                                    {{ subSubTratamiento.title }}
+                                                <a v-if="subSubTratamiento.classes == 'nofollow'"
+                                                    :href="subSubTratamiento.url" class="nav-link"
+                                                    :itemprop="`https://www.clinicaegos.com${subSubTratamiento.url}`"
+                                                    :class="subSubTratamiento.classes" active-class="nuxt-link-active"
+                                                    rel="nofollow noopener" target="_blank">
+                                                    <span itemprop="name">{{ subSubTratamiento.title }}</span>
                                                     <ArrowUpRightIcon
                                                         class="arrow-up  hidden [.is-tablet_&,_.is-tablet_&]:block"
                                                         alt="Cerrar menú" />
                                                 </a>
 
                                                 <nuxt-link v-else :to="subSubTratamiento.path" class="nav-link"
+                                                    :itemprop="`https://www.clinicaegos.com${subSubTratamiento.path}`"
                                                     :class="subSubTratamiento.classes" active-class="nuxt-link-active">
-                                                    {{ subSubTratamiento.title }}
+                                                    <span itemprop="name">{{ subSubTratamiento.title }}</span>
                                                     <ArrowUpRightIcon
                                                         class="arrow-up  hidden [.is-tablet_&,_.is-tablet_&]:block"
                                                         alt="Cerrar menú" />
@@ -351,7 +359,10 @@ onMounted(async () => {
                 }
 
                 & .submenu__right ul>.submenu-child ul>li {
-                    @apply w-full;
+                    @apply w-full mb-0;
+                    &>a>span {
+                        @apply uppercase
+                    }
                 }
 
                 & a {
@@ -396,7 +407,7 @@ onMounted(async () => {
                         clip-path: unset;
                     }
 
-                    span {
+                    &>span {
                         @apply hidden;
                     }
                 }

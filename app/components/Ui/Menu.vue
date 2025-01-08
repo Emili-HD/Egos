@@ -1,15 +1,19 @@
 <template>
     <div :class="class">
-        <h3 v-if="titulo" class="font-nunito font-normal text-nude-8 text-clamp-base uppercase border-b border-nude-8/25 w-full pb-4 max-lg:text-center">{{ titulo }}</h3>
-        <ul>
+        <h3 v-if="titulo"
+            class="font-nunito font-normal text-nude-8 text-clamp-base uppercase border-b border-nude-8/25 w-full pb-4 max-lg:text-center">
+            {{ titulo }}</h3>
+        <ul itemscope itemtype="https://schema.org/SiteNavigationElement">
             <li class="mb-0" v-for="item in data" :key="item.ID">
                 <nuxt-link v-if="!isExternal" :to="`${resolveUrl(item.url)}`"
+                    :itemprop="item.url"
                     :aria-current="isCurrentPage(item.slug) ? 'page' : undefined">
-                    <span>{{ item.title }}</span>
+                    <span itemprop="name">{{ item.title }}</span>
                 </nuxt-link>
                 <nuxt-link v-else :to="item.url" :target="item.target" external>
                     <div v-if="item.acf">
-                        <img :src="item.acf.icon" class="size-8 invert hover:scale-125 transition-transform" :alt="item.post_title" :title="item.post_title">
+                        <img :src="item.acf.icon" class="size-8 invert hover:scale-125 transition-transform"
+                            :alt="item.post_title" :title="item.post_title">
                     </div>
                     <span v-else>{{ item.post_title }}</span>
                 </nuxt-link>

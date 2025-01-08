@@ -25,8 +25,8 @@
         </NuxtLazyHydrate>
         <section
             class="doctor__description grid grid-cols-16 pb-0 pt-32 xl:pt-48 [html:not(.blackfriday)_&]:bg-blue-1 [html.blackfriday_&]:bg-black">
-            <LazyDoctorInsta v-if="insta && insta.length" :data="insta" :name="'@clinicaegos'" :tipo="'home'" :ruta="'home'"
-                class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]" />
+            <LazyDoctorInsta v-if="insta && insta.length" :data="insta" :name="'@clinicaegos'" :tipo="'home'"
+                :ruta="'home'" class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]" />
         </section>
         <section v-if="home.acf.descripcion_equipo"
             class="flex flex-col-reverse lg:flex-row justify-center items-center gap-[calc(100%/16)] px-[calc(100%/16)] min-h-vh/80">
@@ -38,9 +38,6 @@
                 <p>{{ home.acf.descripcion_equipo.descripcion }}</p>
             </div>
         </section>
-        <!-- <NuxtLazyHydrate when-idle>
-            <ElementsPremios />
-        </NuxtLazyHydrate> -->
         <NuxtLazyHydrate when-idle>
             <ElementsInfluencers />
         </NuxtLazyHydrate>
@@ -48,42 +45,18 @@
 </template>
 
 <script setup>
-const route = useRoute();
+    const route = useRoute();
 
-provide('routePath', route.fullPath);
+    provide('routePath', route.fullPath);
 
-const { data: home, error } = await useAsyncData(() => getPage(8))
-const categoriasHome = computed(() => home?.acf?.tratamientos_home?.categorias_home || []);
-const { data: cirugias, error: cirugiasError } = await useAsyncData('cirugia', () => getTratamiento({ getAll: true }));
+    const { data: home, error } = await useAsyncData(() => getPage(8))
+    const { data: insta, refresh: refresInsta } = useAsyncData('insta-home', () => getInstaComments({ page: 1, per_page: 100 }));
 
-const { data: insta, refresh: refresInsta } = useAsyncData('insta-home', () => getInstaComments({ page: 1, per_page: 100 }));
+    // Genera los metadatos de Yoast
+    const { generateYoastHead } = useYoastHead(home);
+    const yoastHead = generateYoastHead();
 
-// Obtener los premios del composable
-const { awards } = useAwardsSchema();
-
-// Convertir los premios a JSON-LD
-const awardsJsonLd = JSON.stringify(awards);
-
-// Generar JSON-LD para todas las cirugías
-const { generateSchema } = useCirugiaServiceSchema(cirugias);
-const schemaData = generateSchema();
-
-// Genera los metadatos de Yoast
-const { generateYoastHead } = useYoastHead(home);
-const yoastHead = generateYoastHead();
-
-useHead({
-    script: [
-        {
-            type: 'application/ld+json',
-            children: JSON.stringify(schemaData)
-        }
-    ],
-    ...yoastHead,
-});
-
-onMounted(() => {
-    // injectStructuredData()
-})
-
+    useHead({
+        ...yoastHead,
+    });
 </script>

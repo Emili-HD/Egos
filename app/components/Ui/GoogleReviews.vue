@@ -138,7 +138,7 @@
         return JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
-            "name": "Nombre de la Clínica", // Cambia esto por el nombre de la clínica
+            "name": "Clínica EGOS",
             "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": averageRating.value,
