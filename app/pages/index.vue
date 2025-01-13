@@ -12,6 +12,12 @@
         <NuxtLazyHydrate when-idle>
             <ElementsHablan :data="home.acf" />
         </NuxtLazyHydrate>
+        <section id="opiniones"
+            class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)] mt-32"
+            data-anchor="opiniones">
+            <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
+            <UiGoogleReviews placeid="ChIJffDn5p2ZpBIRmOqD4_uX82U" />
+        </section>
         <HomeTestimonios />
         <NuxtLazyHydrate when-idle>
             <LazyFormsPiceCita :portalId="String(home.acf.formulario.portalid)" :formId="home.acf.formulario.formid"

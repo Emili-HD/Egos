@@ -34,50 +34,59 @@
             </div>
 
             <!-- Mostrar reseñas filtradas -->
-            <ClientOnly>
-                <swiper-container
-                    class="mySwiper px-6 max-w-full list-none lg:px-6 min-h-96 flex flex-col lg:flex-row gap-6 w-full lg:w-5/6"
-                    v-if="reviews.length" ref="reviewsSlider" :init="false">
-                    <swiper-slide v-for="(review, index) in reviews" :key="index"
-                        class="p-6 mt-2 mb-12 bg-white shadow-xl rounded-md w-full">
-                        <div class="flex items-center gap-4 mb-4">
-                            <img loading="lazy" :src="review.profile_photo_url" :alt="review.author_name" width="40"
-                                height="40" class="size-10 rounded-full">
-                            <div class="w-full">
-                                <p class="font-semibold mb-0">{{ review.author_name }}</p>
-                                <p class="text-xs font-light mb-0">{{ review.relative_time_description }}</p>
+            <div class="relative w-5/6 px-12">
+                <button class="swiper-button-prev absolute left-0 top-1/2 -translate-y-1/2 z-10">
+                    ←
+                </button>
+                <button class="swiper-button-next absolute right-0 top-1/2 -translate-y-1/2 z-10">
+                    →
+                </button>
+                <ClientOnly>
+                    <swiper-container
+                        class="mySwiper px-6 max-w-full list-none lg:px-6 min-h-96 flex flex-col lg:flex-row gap-6 w-full"
+                        v-if="reviews.length" ref="reviewsSlider" :init="false">
+                        <swiper-slide v-for="(review, index) in reviews" :key="index"
+                            class="p-6 mt-2 mb-12 bg-white shadow-xl rounded-md w-full">
+                            <div class="flex items-center gap-4 mb-4">
+                                <img loading="lazy" :src="review.profile_photo_url" :alt="review.author_name" width="40"
+                                    height="40" class="size-10 rounded-full">
+                                <div class="w-full">
+                                    <p class="font-semibold mb-0">{{ review.author_name }}</p>
+                                    <p class="text-xs font-light mb-0">{{ review.relative_time_description }}</p>
+                                </div>
+                                <img src="~/assets/images/icons/google-color-icon.svg" alt="Google" width="24"
+                                    height="24" class="size-6" />
                             </div>
-                            <img src="~/assets/images/icons/google-color-icon.svg" alt="Google" width="24" height="24"
-                                class="size-6" />
-                        </div>
-                        <!-- <p class="text-sm">Calificación: {{ review.rating }} estrellas</p> -->
-                        <div class="stars pb-4 w-24" :data-stars="review.rating">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                                y="0px" viewBox="0 0 172.4 33.6">
-                                <g>
-                                    <defs>
-                                        <path id="SVGID_1" d="M17.8,1.1L23,11.5l11.6,1.7l-8.4,8.1l2,11.4l-10.3-5.4L7.5,32.7l2-11.4l-8.4-8.1l11.6-1.7L17.8,1.1z
+                            <!-- <p class="text-sm">Calificación: {{ review.rating }} estrellas</p> -->
+                            <div class="stars pb-4 w-24" :data-stars="review.rating">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    x="0px" y="0px" viewBox="0 0 172.4 33.6">
+                                    <g>
+                                        <defs>
+                                            <path id="SVGID_1" d="M17.8,1.1L23,11.5l11.6,1.7l-8.4,8.1l2,11.4l-10.3-5.4L7.5,32.7l2-11.4l-8.4-8.1l11.6-1.7L17.8,1.1z
                                      M52,1.1l5.2,10.4l11.6,1.7l-8.4,8.1l2,11.4L52,27.3l-10.3,5.4l2-11.4l-8.4-8.1l11.6-1.7L52,1.1z M86.2,1.1l5.2,10.4l11.6,1.7
                                      l-8.4,8.1l2,11.4l-10.3-5.4l-10.3,5.4l2-11.4l-8.4-8.1L81,11.5L86.2,1.1z M120.4,1.1l5.2,10.4l11.6,1.7l-8.4,8.1l2,11.4l-10.3-5.4
                                      L110,32.7l2-11.4l-8.4-8.1l11.6-1.7L120.4,1.1z M154.6,1.1l5.2,10.4l11.6,1.7l-8.4,8.1l2,11.4l-10.3-5.4l-10.3,5.4l2-11.4
                                      l-8.4-8.1l11.6-1.7L154.6,1.1z" stroke="#F6BB09" />
-                                    </defs>
-                                    <clipPath id="SVGID_2">
-                                        <use xlink:href="#SVGID_1" style="overflow:visible;" />
-                                    </clipPath>
-                                    <rect class="bg-stars [clip-path:url(#SVGID_2)] fill-gold-1" x="0.7" y="0.1"
-                                        :width="calculateWidth(review.rating)" height="33.5" fill="#F6BB09" />
-                                    <use xlink:href="#SVGID_1"
-                                        style="overflow:visible;fill:none;stroke:#F6BB09;stroke-miterlimit:10;" />
-                                </g>
-                            </svg>
-                        </div>
-                        <div class="text-wrapper">
-                            <p class="italic text-sm">"{{ review.text }}"</p>
-                        </div>
-                    </swiper-slide>
-                </swiper-container>
-            </ClientOnly>
+                                        </defs>
+                                        <clipPath id="SVGID_2">
+                                            <use xlink:href="#SVGID_1" style="overflow:visible;" />
+                                        </clipPath>
+                                        <rect class="bg-stars [clip-path:url(#SVGID_2)] fill-gold-1" x="0.7" y="0.1"
+                                            :width="calculateWidth(review.rating)" height="33.5" fill="#F6BB09" />
+                                        <use xlink:href="#SVGID_1"
+                                            style="overflow:visible;fill:none;stroke:#F6BB09;stroke-miterlimit:10;" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <p class="italic text-sm">"{{ review.text }}"</p>
+                            </div>
+                        </swiper-slide>
+                    </swiper-container>
+                </ClientOnly>
+
+            </div>
         </div>
     </div>
 </template>
@@ -117,7 +126,10 @@
         autoHeight: true,
         slidesPerView: 1,
         spaceBetween: 30,
-        navigation: true,
+        navigation: {
+            nextEl: '.swiper-button-next', // Clase del botón "Next"
+            prevEl: '.swiper-button-prev', // Clase del botón "Prev"
+        },
         pagination: {
             clickable: true
         },
@@ -257,6 +269,11 @@
     /* .swiper-slide {
         @apply list-none lg:px-6 pb-16 flex flex-col lg:flex-row gap-6 w-full lg:w-5/6;
     } */
+
+    .swiper-button-prev,
+    .swiper-button-next {
+        @apply bg-white text-black shadow-md rounded-full p-2 w-10 h-10 flex items-center justify-center hover:bg-gray-100 transition;
+    }
 
     .swiper-button-next svg,
     .swiper-button-prev svg {
