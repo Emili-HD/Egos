@@ -90,6 +90,12 @@
         placeid: {
             type: String,
             required: true
+        },
+        datos: {
+            type: Object
+        },
+        cirugia: {
+            type: Object
         }
     })
 
@@ -135,30 +141,97 @@
     const reviewsJsonLd = computed(() => {
         if (!averageRating.value || !totalReviews.value || !reviews.value.length) return null;
 
-        return JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "Clínica EGOS",
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": averageRating.value,
-                "reviewCount": totalReviews.value
-            },
-            "review": reviews.value.map((review) => ({
-                "@type": "Review",
-                "author": {
-                    "@type": "Person",
-                    "name": review.author_name
+        if (props.datos) {
+            return JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                "name": "Clínica EGOS",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": props.datos?.pais,
+                    "addressLocality": props.datos?.localidad,
+                    "postalCode": props.datos?.cp,
+                    "streetAddress": props.datos?.direccion,
                 },
-                "reviewRating": {
-                    "@type": "Rating",
-                    "ratingValue": review.rating,
-                    "bestRating": 5
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": averageRating.value,
+                    "reviewCount": totalReviews.value
                 },
-                "datePublished": new Date(review.time * 1000).toISOString(), // Convierte `time` a formato ISO
-                "description": review.text
-            }))
-        });
+                "review": reviews.value.map((review) => ({
+                    "@type": "Review",
+                    "author": {
+                        "@type": "Person",
+                        "name": review.author_name
+                    },
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": review.rating,
+                        "bestRating": 5
+                    },
+                    "datePublished": new Date(review.time * 1000).toISOString(), // Convierte `time` a formato ISO
+                    "description": review.text
+                }))
+            });
+        } else if (props.cirugia) {
+            return JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Service",
+                "name": props.cirugia?.title?.rendered,
+                "description": props.cirugia?.excerpt?.rendered,
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": averageRating.value,
+                    "reviewCount": totalReviews.value
+                },
+                "review": reviews.value.map((review) => ({
+                    "@type": "Review",
+                    "author": {
+                        "@type": "Person",
+                        "name": review.author_name
+                    },
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": review.rating,
+                        "bestRating": 5
+                    },
+                    "datePublished": new Date(review.time * 1000).toISOString(), // Convierte `time` a formato ISO
+                    "description": review.text
+                }))
+            });
+        } else {
+            return JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                "name": "Clínica EGOS",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "España",
+                    "addressLocality": "Barcelona",
+                    "postalCode": "08006",
+                    "streetAddress": "C/Balmes, 268, Sarrià-Sant Gervasi",
+                },
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": averageRating.value,
+                    "reviewCount": totalReviews.value
+                },
+                "review": reviews.value.map((review) => ({
+                    "@type": "Review",
+                    "author": {
+                        "@type": "Person",
+                        "name": review.author_name
+                    },
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": review.rating,
+                        "bestRating": 5
+                    },
+                    "datePublished": new Date(review.time * 1000).toISOString(), // Convierte `time` a formato ISO
+                    "description": review.text
+                }))
+            });
+        }
     });
 
     // Insertar JSON-LD en la cabecera usando useHead

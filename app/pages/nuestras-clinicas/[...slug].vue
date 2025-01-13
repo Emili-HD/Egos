@@ -149,7 +149,7 @@
         <section
             class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)]">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
-            <GoogleReviews :placeid="clinica.acf.placeid" />
+            <GoogleReviews :placeid="clinica.acf.placeid" :datos="clinica.acf" />
         </section>
     </main>
 </template>

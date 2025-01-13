@@ -124,9 +124,11 @@
 </template>
 
 <script setup>
-    import { ref, watch, nextTick, computed, provide } from 'vue';
-    import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
+    // import { ref, watch, nextTick, computed, provide } from 'vue';
+    // import { useAsyncData, useRouter, useRoute, useNuxtApp } from 'nuxt/app';
     import { getTestimonios } from '@/composables/useApi';
+    import { useSingleVideoJsonLd } from '@/composables/useSingleVideoJsonLd';
+    import { useProcedureData } from '@/composables/useMedicalProcedureSchema';
 
     const router = useRouter();
     const route = useRoute();
@@ -229,52 +231,31 @@
         return permalink.replace('https://clinicaegos.com', '')
     }
 
-    const stickyForm = async () => {
-        await nextTick(); // Espera a la próxima renderización
-        gsap.registerPlugin(ScrollTrigger);
-
-        try {
-            const form = await waitForElement('.form-landing');
-            // console.log('Form:', form);
-
-            if (form) {
-                let mm = gsap.matchMedia();
-                mm.add("(min-width: 1025px)", () => {
-                    const tl = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: ".form__wrapper",
-                            pin: form,
-                            start: "top 0%",
-                            end: "top bottom",
-                            endTrigger: "footer.footer",
-                            pinSpacing: false,
-                            toggleActions: "restart none none reverse",
-                            // markers: true,
-                        }
-                    });
-                });
-            }
-        } catch (error) {
-            console.error(error.message);
-        }
-    };
-
-    // Ciclo de vida Mounted
+    // Ciclo de vida
     onMounted(async () => {
-        await nextTick(); // Espera a la próxima renderización
-        // await stickyForm();
-        await injectStructuredData(); // Asegúrate de que esta función también se ejecute después de la renderización
+        await nextTick();
+        await injectStructuredData();
     });
 
     let tratamiento = casoreal;
     const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
     const breadcrumbJson = generateBreadcrumbData();
 
+    let procedureJsonLd = null;
+    const { generateProcedureData } = useProcedureData(tratamiento);
+    procedureJsonLd = generateProcedureData();
+
     const { generateYoastHead } = useYoastHead(casoreal);
     const yoastHead = generateYoastHead();
 
-    let structuredData = null;
+    const currentUrl = route.fullPath;
+    let singleVideoJsonLd = null;
+    // Genera el JSON-LD para un único video si está disponible
+    if (casoreal.value.acf?.vimeo_video) {
+        singleVideoJsonLd = await useSingleVideoJsonLd(casoreal.value.acf.vimeo_video, currentUrl);
+    }
 
+    let structuredData = null;
     const injectStructuredData = async () => {
         structuredData = {
             "@context": "http://schema.org",
@@ -305,6 +286,15 @@
                 structuredData && {
                     type: 'application/ld+json',
                     children: JSON.stringify(structuredData),
+                },
+                // JSON-LD para el video único
+                singleVideoJsonLd && {
+                    type: 'application/ld+json',
+                    children: JSON.stringify(singleVideoJsonLd),
+                },
+                procedureJsonLd && {
+                    type: 'application/ld+json',
+                    children: JSON.stringify(procedureJsonLd),
                 },
             ].filter(Boolean), // Filtra los valores nulos o undefined
             ...yoastHead,

@@ -549,16 +549,17 @@ export default defineNuxtConfig({
         '/estetica-facial/rinomodelacion/': { redirect: { to: 	'/medicina-estetica/rinomodelacion/', statusCode: 301 } },
         '/estetica-facial/aumento-de-labios/': { redirect: { to: 	'/medicina-estetica/aumento-de-labios/', statusCode: 301 } },
         '/cirugia-de-pechos/eliminar-cicatrices/': { redirect: { to: 	'/medicina-estetica/eliminar-cicatrices/', statusCode: 301 } },
-    },
 
-    // Configuración de nuxt-simple-robots
-    // robots: {
-    //     // Opciones de configuración
-    //     UserAgent: '*',
-    //     Disallow: '/admin',
-    //     Allow: '/',
-    //     Sitemap: 'https://www.clinicaegos.com/sitemap_index.xml',
-    // },
+        '/blog/mommy-makeover/': { redirect: { to: 	'/estetica-corporal/cirugia-mommy-makeover/', statusCode: 301 } },
+        '/blog/como-quitar-las-ojeras/': { redirect: { to: 	'/estetica-facial/blefaroplastia/', statusCode: 301 } },
+        '/blog/parpados-caidos-solucion/': { redirect: { to: 	'/estetica-facial/blefaroplastia/', statusCode: 301 } },
+        '/blog/nuevo-tratamiento-para-la-obesidad-mega-el-futuro-de-la-obesidad/': { redirect: { to: 	'/perdida-de-peso/metodo-endomanga-mega/', statusCode: 301 } },
+        '/blog/la-solucion-definitiva-de-aumentar-los-gluteos-sin-ejercicio/': { redirect: { to: 	'/estetica-corporal/aumento-de-gluteos/', statusCode: 301 } },
+        '/blog/aumento-de-gluteos-opciones/': { redirect: { to: 	'/estetica-corporal/aumento-de-gluteos/', statusCode: 301 } },
+        '/blog/la-mirada-cansada-causas-y-como-prevenir/': { redirect: { to: 	'/estetica-facial/blefaroplastia/', statusCode: 301 } },
+        '/blog/rinoplastia-de-nariz-ancha/': { redirect: { to: 	'/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 301 } },
+        '/blog/parpados-caidos/': { redirect: { to: 	'/estetica-facial/blefaroplastia/', statusCode: 301 } },
+    },
 
     sitemap: {
         cacheMaxAgeSeconds: 3600, // 1 hour
@@ -967,7 +968,6 @@ export default defineNuxtConfig({
                         "award": [
                             "Avalado por Quirónsalud: Reconocimiento por la excelencia médica otorgado por Quirónsalud.",
                             "Cirujanos titulados por EAFPS: Titulación por la European Academy of Facial Plastic Surgery.",
-                            "Miembros de SECOMCC: Certificación por la Sociedad Española de Cirugía Oral y Maxilofacial de Cabeza y Cuello.",
                             "Miembros de SECPF: Afiliación a la Sociedad Española de Cirugía Plástica Facial.",
                             "Miembros de SECPRE: Reconocimiento de la Sociedad Española de Cirugía Plástica, Reparadora y Estética."
                         ],

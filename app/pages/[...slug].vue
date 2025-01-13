@@ -33,6 +33,7 @@
 
 <script setup>
     import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
+    import { useProcedureData } from '@/composables/useMedicalProcedureSchema';
     import { getPage } from '@/composables/useApi';
     import { useError } from '#app';
     import { provide } from 'vue';
@@ -99,52 +100,6 @@
         // Aquí puedes incluir cualquier lógica adicional necesaria cuando cambie el slug
     }, { immediate: true });
 
-
-    // Métodos
-    /* const textReveal = async () => {
-        gsap.registerPlugin(ScrollTrigger, SplitText);
-
-        await nextTick()
-
-        let split = new SplitText(".content__header-title", { type: "lines" });
-        let masks;
-        function makeItHappen() {
-            masks = [];
-            split.lines.forEach((target) => {
-                let mask = document.createElement("span");
-                mask.className = "mask-reveal";
-                target.append(mask);
-                masks.push(mask);
-                gsap.to(mask, {
-                    scaleX: 0,
-                    transformOrigin: "right center",
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: target,
-                        scrub: true,
-                        start: "top center",
-                        end: "bottom center",
-                        pinSpacing: false,
-                        // markers: true
-                    }
-                });
-            });
-        }
-
-        window.addEventListener("resize", newTriggers);
-
-        function newTriggers() {
-            ScrollTrigger.getAll().forEach((trigger, i) => {
-                trigger.kill();
-                masks[i].remove();
-            });
-            split.split();
-            makeItHappen();
-        }
-
-        makeItHappen();
-    } */
-
     const rAF = () => {
         return new Promise(r => window.requestAnimationFrame(r));
     }
@@ -185,10 +140,6 @@
     onMounted(async () => {
         await nextTick()
         await rAF()
-        // if (pages && pages.acf) {
-        //     // Datos disponibles
-        //     textReveal()
-        // }
         if (!pages.value) {
             router.push('/error');
         }
@@ -201,6 +152,13 @@
     const { generateYoastHead } = useYoastHead(pages);
     const yoastHead = generateYoastHead();
 
+    let procedureJsonLd = null;
+    // Genera el JSON-LD para el tratamiento solo si servicetype existe
+    if (pages.value.acf?.datos?.procedureType) {
+        const { generateProcedureData } = useProcedureData(pages);
+        procedureJsonLd = generateProcedureData();
+    }
+
     useHead({
         htmlAttrs: {
             class: route.path.includes('/medicina-estetica/') ? 'estetica' : ''
@@ -209,6 +167,11 @@
             breadcrumbJson && {
                 type: 'application/ld+json',
                 children: JSON.stringify(breadcrumbJson),
+            },
+            // JSON-LD para el procedimiento médico
+            procedureJsonLd && {
+                type: 'application/ld+json',
+                children: JSON.stringify(procedureJsonLd),
             },
         ].filter(Boolean), // Filtra los valores nulos o undefined
         ...yoastHead,

@@ -147,7 +147,7 @@
         <section
             class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)]">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
-            <GoogleReviews :placeid="landing.acf.localizaciones[0].placeid" />
+            <GoogleReviews :placeid="landing.acf.localizaciones[0].placeid" :datos="landing.acf.localizaciones[0]" />
         </section>
     </main>
 </template>
@@ -273,11 +273,11 @@ const injectStructuredData = async () => {
         "address": [
             {
                 "@type": landing.value.acf.datos.adress.type,
-                //  "streetAddress": landing.value.acf.datos.adress.streetaddress,
-                //  "postalCode": landing.value.acf.datos.adress.postalcode,
-                //  "addressLocality": landing.value.acf.datos.adress.addresslocality,
-                //  "addressRegion": landing.value.acf.datos.adress.addressregion,
-                //  "addressCountry": landing.value.acf.datos.adress.addresscountry,
+                 "streetAddress": landing.value.acf.datos.adress.streetaddress,
+                 "postalCode": landing.value.acf.datos.adress.postalcode,
+                 "addressLocality": landing.value.acf.datos.adress.addresslocality,
+                 "addressRegion": landing.value.acf.datos.adress.addressregion,
+                 "addressCountry": landing.value.acf.datos.adress.addresscountry,
                 "name": landing.value.acf.datos.adress.addresscountry,
             }
         ],

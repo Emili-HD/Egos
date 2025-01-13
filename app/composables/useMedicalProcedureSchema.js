@@ -1,18 +1,26 @@
-export const useAwardsSchema = () => {
-    const procedure = [
-        {
-            "@context": "https://schema.org",
-            "@type": "MedicalProcedure",
-            "name": "Cirugía de Pecho",
-            "description": "La cirugía de pecho incluye procedimientos como el aumento, reducción y levantamiento de senos para mejorar la estética y funcionalidad de las mamas.",
-            "bodyLocation": "Pecho",
-            "howPerformed": "El procedimiento se realiza bajo anestesia general, mediante incisiones estratégicas para insertar implantes, eliminar tejido o elevar las mamas, dependiendo del objetivo del paciente.",
-            "preparation": "El paciente debe realizarse análisis preoperatorios, suspender ciertos medicamentos y seguir las recomendaciones del cirujano sobre alimentación y cuidados previos.",
-            "followup": "Se recomiendan visitas de control a la clínica en la primera semana, al mes y a los tres meses para evaluar la evolución y los resultados.",
-            "procedureType": "Surgical",
-            "status": "Active"
-        }
-    ];
+// composables/useMedicalProcedureSchema.js
 
-    return { procedure };
+export const useProcedureData = (tratamiento) => {
+    const generateProcedureData = () => {
+        // Verifica si hay error o si los datos no están disponibles
+        if (!tratamiento.value) {
+            console.error('Error al cargar los datos de la cirugía o los datos no están disponibles.');
+            return null;
+        }
+
+        return {
+            "@context": "https://schema.org",
+            "@type": tratamiento.value.acf.datos.type,
+            "name": tratamiento.value.acf.datos.name,
+            "description": tratamiento.value.acf.datos.description,
+            "bodyLocation": tratamiento.value.acf.datos.bodylocation,
+            "howPerformed": tratamiento.value.acf.datos.howperformed,
+            "preparation": tratamiento.value.acf.datos.preparation,
+            "followup": tratamiento.value.acf.datos.followup,
+            "procedureType": tratamiento.value.acf.datos.procedureType,
+            "status": "Active",
+        };
+    };
+
+    return { generateProcedureData };
 };

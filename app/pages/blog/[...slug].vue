@@ -187,185 +187,230 @@
 </template>
 
 <script setup>
-import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { provide } from 'vue';
+    import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
+    import { usePostData } from '@/composables/blogPostingSchema';
+    import { usePostFaqJson } from '@/composables/usePostFaqsJson';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    import { provide } from 'vue';
 
-// Acceder a los parámetros de la ruta
-const router = useRouter();
-const route = useRoute();
+    // Acceder a los parámetros de la ruta
+    const router = useRouter();
+    const route = useRoute();
 
-provide('routePath', route.fullPath);
+    provide('routePath', route.fullPath);
 
-// Acceder a gsap y lenis desde el contexto de Nuxt
-const { $gsap: gsap } = useNuxtApp();
+    // Acceder a gsap y lenis desde el contexto de Nuxt
+    const { $gsap: gsap } = useNuxtApp();
 
-// Define la función para cargar los datos
-const loadData = async () => {
-  const slug = route.params.slug;
-  const post = await getPosts({ slug });
-  return post;
-};
+    // Define la función para cargar los datos
+    const loadData = async () => {
+        const slug = route.params.slug;
+        const post = await getPosts({ slug });
+        return post;
+    };
 
-// Utiliza `useAsyncData` con un key dinámico y dependencias de reactividad
-const { data: post, refresh } = await useAsyncData(`post-${route.params.slug}`, loadData, { watch: [() => route.params.slug], initialCache: true });
+    // Utiliza `useAsyncData` con un key dinámico y dependencias de reactividad
+    const { data: post, refresh } = await useAsyncData(`post-${route.params.slug}`, loadData, { watch: [() => route.params.slug], initialCache: true });
 
-// Step 2: Definir una referencia para el doctor relacionado
-const doctor = ref(null);
+    // Step 2: Definir una referencia para el doctor relacionado
+    const doctor = ref(null);
 
-// Step 3: Usar watchEffect para cargar el doctor solo cuando el post esté disponible
-watchEffect(async () => {
-  if (post.value && post.value.acf?.doctores_relacionados) {
-    try {
-      const doctorId = post.value.acf.doctores_relacionados[0];
-      doctor.value = await getEquipo({ id: doctorId });
-    //   console.log(doctorId);
-    //   console.log(doctor.value);
-      
-    } catch (error) {
-      console.error("Error fetching doctor:", error);
-    }
-  }
-});
+    // Step 3: Usar watchEffect para cargar el doctor solo cuando el post esté disponible
+    watchEffect(async () => {
+        if (post.value && post.value.acf?.doctores_relacionados) {
+            try {
+                const doctorId = post.value.acf.doctores_relacionados[0];
+                doctor.value = await getEquipo({ id: doctorId });
+                //   console.log(doctorId);
+                //   console.log(doctor.value);
 
-const relativeDoctorLink = computed(() => {
-  if (doctor.value?.link) {
-    // Remover el dominio y dejar solo la parte relativa de la URL
-    const url = new URL(doctor.value.link);
-    return url.pathname;
-  }
-  return '';
-});
-
-// Observador para manejar la recarga de datos cuando cambia el parámetro de ruta
-watch(() => route.params.slug, async (newSlug, oldSlug) => {
-    if (newSlug !== oldSlug) {
-        await refresh();
-    }
-}, { immediate: true });
-
-// Observador adicional para manejar la lógica específica, como redirecciones basadas en cambios de datos
-watch(post, (newPost) => {
-    if (!newPost) {
-        router.push('/error');
-    }
-}, { immediate: true });
-
-function scrollToBreadcrumbs() {
-    const breadcrumbsSection = document.getElementById("breadcrumbs");
-    if (breadcrumbsSection) {
-        breadcrumbsSection.scrollIntoView({ behavior: "smooth" });
-    }
-}
-
-const initAccordion = async () => {
-    const groups = gsap.utils.toArray(".accordion__list--item");
-    const animations = [];
-
-    groups.forEach((group, index) => {
-        const title = group.querySelector('.accordion__list--item-title');
-        const description = group.querySelector('.accordion__list--item-descripcion');
-        const iconV = group.querySelector('.iconV');
-        const iconH = group.querySelector('.iconH');
-
-        // Establece el estado inicial de manera explícita
-        gsap.set(description, { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 });
-        gsap.set([iconV, iconH], { rotate: 0, transformOrigin: '50% 50%' });
-
-        // Usa fromTo para definir explícitamente los estados inicial y final
-        const tl = gsap.timeline({ paused: true, reversed: true })
-            .fromTo(description,
-                { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 },
-                { duration: 0.2, autoAlpha: 1, height: 'auto', marginTop: '2rem', marginBottom: '2rem' }, 0)
-            .fromTo([iconV, iconH],
-                { rotate: 0, transformOrigin: '50% 50%' },
-                { duration: 0.25, rotate: 45, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
-
-        animations[index] = tl;
-
-        title.addEventListener('click', () => {
-            if (tl.reversed()) {
-                animations.forEach((anim) => {
-                    if (anim !== tl) anim.reverse().then(() => anim.pause());
-                });
-                tl.play();
-            } else {
-                tl.reverse();
+            } catch (error) {
+                console.error("Error fetching doctor:", error);
             }
-        });
+        }
     });
-};
 
-// Ciclo de vida Mounted
-onMounted(async () => {
-    await initAccordion()
-});
+    const relativeDoctorLink = computed(() => {
+        if (doctor.value?.link) {
+            // Remover el dominio y dejar solo la parte relativa de la URL
+            const url = new URL(doctor.value.link);
+            return url.pathname;
+        }
+        return '';
+    });
+
+    // Observador para manejar la recarga de datos cuando cambia el parámetro de ruta
+    watch(() => route.params.slug, async (newSlug, oldSlug) => {
+        if (newSlug !== oldSlug) {
+            await refresh();
+        }
+    }, { immediate: true });
+
+    // Observador adicional para manejar la lógica específica, como redirecciones basadas en cambios de datos
+    watch(post, (newPost) => {
+        if (!newPost) {
+            router.push('/error');
+        }
+    }, { immediate: true });
+
+    function scrollToBreadcrumbs() {
+        const breadcrumbsSection = document.getElementById("breadcrumbs");
+        if (breadcrumbsSection) {
+            breadcrumbsSection.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+
+    const initAccordion = async () => {
+        const groups = gsap.utils.toArray(".accordion__list--item");
+        const animations = [];
+
+        groups.forEach((group, index) => {
+            const title = group.querySelector('.accordion__list--item-title');
+            const description = group.querySelector('.accordion__list--item-descripcion');
+            const iconV = group.querySelector('.iconV');
+            const iconH = group.querySelector('.iconH');
+
+            // Establece el estado inicial de manera explícita
+            gsap.set(description, { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 });
+            gsap.set([iconV, iconH], { rotate: 0, transformOrigin: '50% 50%' });
+
+            // Usa fromTo para definir explícitamente los estados inicial y final
+            const tl = gsap.timeline({ paused: true, reversed: true })
+                .fromTo(description,
+                    { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 },
+                    { duration: 0.2, autoAlpha: 1, height: 'auto', marginTop: '2rem', marginBottom: '2rem' }, 0)
+                .fromTo([iconV, iconH],
+                    { rotate: 0, transformOrigin: '50% 50%' },
+                    { duration: 0.25, rotate: 45, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
+
+            animations[index] = tl;
+
+            title.addEventListener('click', () => {
+                if (tl.reversed()) {
+                    animations.forEach((anim) => {
+                        if (anim !== tl) anim.reverse().then(() => anim.pause());
+                    });
+                    tl.play();
+                } else {
+                    tl.reverse();
+                }
+            });
+        });
+    };
+
+    // Ciclo de vida Mounted
+    onMounted(async () => {
+        await initAccordion()
+    });
 
 
-let tratamiento = post
-const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
-const breadcrumbJson = generateBreadcrumbData();
+    let tratamiento = post
+    const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
+    const breadcrumbJson = generateBreadcrumbData();
 
-const { generateYoastHead } = useYoastHead(post);
-const yoastHead = generateYoastHead();
+    let postJsonLd = null;
+    // Genera el JSON-LD para el post solo si servicetype existe
+    if (post.value) {
+        const { generatePostData } = usePostData(post);
+        postJsonLd = generatePostData();
+    }
 
-useHead({
-    script: [
-        breadcrumbJson && {
-            type: 'application/ld+json',
-            children: JSON.stringify(breadcrumbJson),
-        },
-    ].filter(Boolean), // Filtra los valores nulos o undefined
-    ...yoastHead,
-});
+    let faqJsonLd = null;
+    // Genera el JSON-LD para las FAQs
+    if (Array.isArray(post.value.acf?.post_faqs?.preguntas_frecuentes)) {
+        faqJsonLd = usePostFaqJson(post.value.acf.post_faqs);
+    }
+
+
+    const { generateYoastHead } = useYoastHead(post);
+    const yoastHead = generateYoastHead();    
+
+    useHead({
+        script: [
+            // JSON-LD para las migas de pan
+            breadcrumbJson && {
+                type: 'application/ld+json',
+                children: JSON.stringify(breadcrumbJson),
+            },
+            // JSON-LD para el blogPosting
+            postJsonLd && {
+                type: 'application/ld+json',
+                children: JSON.stringify(postJsonLd),
+            },
+            // JSON-LD para las preguntas frecuentes
+            faqJsonLd && {
+                type: 'application/ld+json',
+                children: JSON.stringify(faqJsonLd),
+            },
+        ].filter(Boolean), // Filtra los valores nulos o undefined
+        ...yoastHead,
+    });
 </script>
 
 <style scoped>
     .arrows {
         z-index: 99;
     }
+
     .arrows path {
         width: 2.5rem;
         stroke: #ffffff;
         fill: transparent;
-        stroke-width: 1px;	
+        stroke-width: 1px;
         animation: arrow 2s infinite;
-        -webkit-animation: arrow 2s infinite; 
+        -webkit-animation: arrow 2s infinite;
     }
 
     .arrows path.a1 {
-        animation-delay:-1s;
-        -webkit-animation-delay:-1s; /* Safari 和 Chrome */
+        animation-delay: -1s;
+        -webkit-animation-delay: -1s;
+        /* Safari 和 Chrome */
     }
 
     .arrows path.a2 {
-        animation-delay:-0.5s;
-        -webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
+        animation-delay: -0.5s;
+        -webkit-animation-delay: -0.5s;
+        /* Safari 和 Chrome */
     }
 
-    .arrows path.a3 {	
-        animation-delay:0s;
-        -webkit-animation-delay:0s; /* Safari 和 Chrome */
+    .arrows path.a3 {
+        animation-delay: 0s;
+        -webkit-animation-delay: 0s;
+        /* Safari 和 Chrome */
     }
 
     @keyframes arrow {
-        0% {opacity:0}
-        40% {opacity:1}
-        80% {opacity:0}
-        100% {opacity:0}
+        0% {
+            opacity: 0
+        }
+
+        40% {
+            opacity: 1
+        }
+
+        80% {
+            opacity: 0
+        }
+
+        100% {
+            opacity: 0
+        }
     }
 
     .post__content-image {
         @apply rounded-xl overflow-hidden;
     }
-    
+
     :deep(.post__content-text) {
         scroll-margin-top: 7.5rem;
         @apply mb-8 rounded-xl;
 
         &:nth-child(1) {
             @apply p-0 mb-8 rounded-xl bg-transparent;
-            p { @apply text-clamp-base; }
+
+            p {
+                @apply text-clamp-base;
+            }
         }
 
         a {
@@ -379,21 +424,21 @@ useHead({
         h4 {
             @apply text-clamp-base font-semibold font-nunito mt-6;
         }
-        
+
         iframe {
             @apply w-full aspect-video h-fit my-6;
         }
-    
+
         &-areas {
             @apply col-[4/13];
-    
+
             @media (max-width: 1024px) and (orientation: portrait) {
                 @apply col-[2/-2];
             }
         }
     }
 
-    
+
     .post__content-text.faqs {
         @apply bg-transparent p-0 mt-12 border-none;
 

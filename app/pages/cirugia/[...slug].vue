@@ -95,7 +95,7 @@
             class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)] mt-32"
             data-anchor="opiniones">
             <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
-            <GoogleReviews :placeid="tratamiento.acf.placeid" />
+            <GoogleReviews :placeid="tratamiento.acf.placeid" :cirugia="tratamiento"/>
         </section>
 
         <LazyCirugiasRelatedPosts :treatmentsData="tratamiento.acf" />
@@ -107,6 +107,7 @@
     import { provide } from 'vue';
     import { useYoastHead } from '@/composables/useYoast';
     import { useTratamientoData } from '@/composables/useTratamientoData';
+    import { useProcedureData } from '@/composables/useMedicalProcedureSchema';
     import { useFaqJsonLd } from '@/composables/useFaqJsonLd';
     import { useVideoJsonLd } from '@/composables/useVideoJsonLd';
     import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
@@ -498,11 +499,18 @@
 
     // Inicializamos tratamientoJsonLd como null
     let tratamientoJsonLd = null;
+    let procedureJsonLd = null;
 
     // Genera el JSON-LD para el tratamiento solo si servicetype existe
     if (tratamiento.value.acf?.datos?.servicetype && clinicasData.value) {
         const { generateStructuredData } = useTratamientoData(tratamiento, clinicasData);
         tratamientoJsonLd = generateStructuredData();
+    }
+
+    // Genera el JSON-LD para el tratamiento solo si servicetype existe
+    if (tratamiento.value.acf?.datos?.procedureType) {
+        const { generateProcedureData } = useProcedureData(tratamiento);
+        procedureJsonLd = generateProcedureData();
     }
 
     let faqJsonLd = null;
@@ -528,24 +536,10 @@
                 type: 'application/ld+json',
                 children: JSON.stringify(doctorData)
             },
-            // ...publicationElements.map(publication => ({
-            //     type: 'application/ld+json',
-            //     children: JSON.stringify(publication)
-            // }))
         ].filter(Boolean);
     });
 
-    // Obtener los premios del composable
-    const { awards } = useAwardsSchema();
-
-    // Convertir los premios a JSON-LD
-    const awardsJsonLd = JSON.stringify(awards);
-
-    // Inyectar todos los scripts JSON-LD en un solo `useHead`
     useHead({
-        // bodyAttrs: {
-        //     class: () => (tratamiento.value?.tipo?.includes(112) ? 'estetica' : '')
-        // },
         script: [
             // JSON-LD para el tratamiento
             tratamientoJsonLd && {
@@ -571,10 +565,6 @@
                 type: 'application/ld+json',
                 children: JSON.stringify(faqJsonLd),
             },
-            // awardsJsonLd && {
-            //     type: 'application/ld+json',
-            //     children: awardsJsonLd
-            // },
             // JSON-LD para los doctores
             ...doctorScripts
         ].filter(Boolean),  // Filtrar valores nulos o undefined
