@@ -181,16 +181,27 @@
                         "ratingValue": review.rating,
                         "bestRating": 5
                     },
-                    "datePublished": new Date(review.time * 1000).toISOString(), // Convierte `time` a formato ISO
-                    "description": review.text
+                    "datePublished": new Date(review.time * 1000).toISOString(),
+                    "description": review.text,
+                    "itemReviewed": {
+                        "@type": "LocalBusiness",
+                        "name": "Clínica EGOS"
+                    }
                 }))
             });
         } else if (props.cirugia) {
             return JSON.stringify({
                 "@context": "https://schema.org",
-                "@type": "Service",
-                "name": props.cirugia?.title?.rendered,
+                "@type": "LocalBusiness",
+                "name": `Clínica EGOS | ${props.cirugia?.title?.rendered}`,
                 "description": props.cirugia?.excerpt?.rendered,
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "España",
+                    "addressLocality": "Barcelona",
+                    "postalCode": "08006",
+                    "streetAddress": "C/Balmes, 268, Sarrià-Sant Gervasi",
+                },
                 "aggregateRating": {
                     "@type": "AggregateRating",
                     "ratingValue": averageRating.value,
@@ -207,8 +218,19 @@
                         "ratingValue": review.rating,
                         "bestRating": 5
                     },
-                    "datePublished": new Date(review.time * 1000).toISOString(), // Convierte `time` a formato ISO
-                    "description": review.text
+                    "datePublished": new Date(review.time * 1000).toISOString(),
+                    "description": review.text,
+                    "itemReviewed": {
+                        "@type": "LocalBusiness",
+                        "name": `Clínica EGOS | ${props.cirugia?.title?.rendered}`,
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressCountry": "España",
+                            "addressLocality": "Barcelona",
+                            "postalCode": "08006",
+                            "streetAddress": "C/Balmes, 268, Sarrià-Sant Gervasi",
+                        },
+                    }
                 }))
             });
         } else {
@@ -239,11 +261,16 @@
                         "ratingValue": review.rating,
                         "bestRating": 5
                     },
-                    "datePublished": new Date(review.time * 1000).toISOString(), // Convierte `time` a formato ISO
-                    "description": review.text
+                    "datePublished": new Date(review.time * 1000).toISOString(),
+                    "description": review.text,
+                    "itemReviewed": {
+                        "@type": "LocalBusiness",
+                        "name": "Clínica EGOS"
+                    }
                 }))
             });
         }
+
     });
 
     // Insertar JSON-LD en la cabecera usando useHead
@@ -262,25 +289,8 @@
         fill: #F6BB09;
     }
 
-    .text-wrapper p {
-        transition: max-height 1s ease;
-    }
-
-    /* .swiper-slide {
-        @apply list-none lg:px-6 pb-16 flex flex-col lg:flex-row gap-6 w-full lg:w-5/6;
-    } */
-
     .swiper-button-prev,
     .swiper-button-next {
         @apply bg-white text-black shadow-md rounded-full p-2 w-10 h-10 flex items-center justify-center hover:bg-gray-100 transition;
-    }
-
-    .swiper-button-next svg,
-    .swiper-button-prev svg {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        transform-origin: center;
-        fill: red !important;
     }
 </style>
