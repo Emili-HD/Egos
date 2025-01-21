@@ -2,10 +2,15 @@
     <section
         class="pidecita col-span-full flex flex-col lg:flex-row justify-between items-stretch">
         <div class="w-full lg:w-2/3 min-h-[600px]">
-            <LazyElementsGoogleMap 
+            <!-- <LazyElementsGoogleMap
                 @update-content="handleContentUpdate" 
                 @update-options="handleOptionsUpdate" 
-                :related="related" :lat="lat" :lng="lng" :zoom="zoom" />
+                :related="related" 
+                :lat="lat" 
+                :lng="lng" 
+                :zoom="zoom" 
+            /> -->
+            <ElementsMaps :related="related"/>
         </div>
         <div id="formulario" class="half-right [.blackfriday_&]:!bg-blackfriday w-full lg:w-1/3">
             <div class="map-info mb-12 [&>*]:!text-blue-1 [&>ul>li]:!text-blue-1 [&>ul>li]:list-none [&>ul]:border-t [&>ul]:border-blue-1/50 [&>ul]:pt-2 [&>*]:mb-2 [&>ul>li]:mb-0" v-html="content"></div>

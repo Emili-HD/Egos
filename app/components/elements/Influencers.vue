@@ -1,6 +1,6 @@
 <template>
     <div class="influencers-container flex items-start justify-center flex-wrap gap-4 p-8 lg:px-32 lg:pb-32">
-        <h2 class="w-full text-center max-sm:text-clamp-2xl">Nuestras pacientes de <a href="https://instagram.com/clinicaegos/" target="_blank" rel="noopener noreferrer">@clinicaegos</a></h2>
+        <h2 class="w-full text-center max-sm:text-clamp-2xl">Nuestros pacientes de <a href="https://instagram.com/clinicaegos/" target="_blank" rel="noopener noreferrer">@clinicaegos</a></h2>
         <div v-for="influencer in influencers" :key="influencer.url_del_enlace"
             class="influencer bg-white rounded-xl overflow-hidden w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33%-1rem)] xl:w-[calc(20%-1rem)] shadow-2xl">
             <a :href="influencer.url_del_enlace" target="_blank" rel="noopener noreferrer">

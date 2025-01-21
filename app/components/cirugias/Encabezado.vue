@@ -18,6 +18,7 @@
                         <div class="desde leading-10 span-gradient !text-clamp-2xl drop-shadow lowercase font-normal mb-0 [&>span]:line-through inline"
                             v-if="data.acf && data.acf.rebaja" v-html="data.acf.rebaja"></div>
                     </div>
+                    
                     <ElementsButton v-if="showPresupuestoLink" class="gold text-clamp-xs uppercase text-center h-fit"
                         href="#presupuesto">
                         Calcula tu presupuesto
@@ -42,20 +43,23 @@
 
             <!-- Encabezado normal -->
             <div v-else class="flex gap-6 flex-col items-center">
+
+                <div class="max-xl:mt-20 text-center">
+                    <h1 v-if="data.title && data.title.rendered"
+                        class="text-nude-8 mb-6 text-clamp-4xl text-balance leading-none text-center max-w-[30ch]">{{
+                            data.title.rendered }}</h1>
+                    <img v-if="data.acf && data.acf.logo" :src="data.acf.logo.url" width="270" height="44"
+                        alt="Bloome by Egos" class="mx-auto">
+                </div>
+
                 <p class="desde !text-nude-8 leading-none text-2xl [&>span]:span-gradient bg-blue-1/60 [.blackfriday_&]:bg-black backdrop-blur-lg p-4 mb-0 w-fit rounded-2xl flex flex-row justify-center gap-2 items-center"
                     v-if="data.acf && data.acf.precio_desde" v-html="data.acf.precio_desde"></p>
+
                 <ElementsButton v-if="showPresupuestoLink" class="gold text-clamp-sm uppercase text-center w-fit"
                     href="#presupuesto">
                     Calcula tu presupuesto
                 </ElementsButton>
-                <div class="max-xl:mt-20 text-center">
-                    <h1 v-if="data.title && data.title.rendered"
-                        class="text-nude-8 mb-6 text-clamp-4xl text-balance leading-none text-center max-w-[30ch]">{{
-                        data.title.rendered }}</h1>
-                    <img v-if="data.acf && data.acf.logo" :src="data.acf.logo.url" width="270" height="44"
-                        alt="Bloome by Egos" class="mx-auto">
-                    <!-- <div v-if="data.content && data.content.rendered" class="answer text-nude-8 [&>h2]:!mb-8 [&>h2]:text-2xl [&>h2]:text-balance [&>p]:text-lg [&>p]:text-balance [&>p]:max-w-[75ch]" v-html="data.content.rendered"></div> -->
-                </div>
+
             </div>
 
         </div>
@@ -68,96 +72,96 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+    import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-const showPresupuestoLink = ref(false);
-const checkPresupuestoLink = () => {
-    showPresupuestoLink.value = !!document.getElementById('presupuesto');
-}
+    const showPresupuestoLink = ref(false);
+    const checkPresupuestoLink = () => {
+        showPresupuestoLink.value = !!document.getElementById('presupuesto');
+    }
 
-// Props
-const props = defineProps({
-    data: {
-        type: Object
-    },
-    route: String,
-})
+    // Props
+    const props = defineProps({
+        data: {
+            type: Object
+        },
+        route: String,
+    })
 
 
-const showPlazas = ref(false);  // Inicialmente ocultamos las plazas
+    const showPlazas = ref(false);  // Inicialmente ocultamos las plazas
 
-// Función para convertir una fecha en formato DD/MM/YYYY a un objeto Date
-const parseDate = (dateString) => {
-    if (!dateString) return null; // Si no hay fecha, devolvemos null
+    // Función para convertir una fecha en formato DD/MM/YYYY a un objeto Date
+    const parseDate = (dateString) => {
+        if (!dateString) return null; // Si no hay fecha, devolvemos null
 
-    // Detectamos el formato DD/MM/YYYY
-    const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-    const match = dateString.match(regex);
+        // Detectamos el formato DD/MM/YYYY
+        const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+        const match = dateString.match(regex);
 
-    if (match) {
-        const day = match[1];
-        const month = match[2] - 1; // Los meses van de 0 (enero) a 11 (diciembre) en JS
-        const year = match[3];
+        if (match) {
+            const day = match[1];
+            const month = match[2] - 1; // Los meses van de 0 (enero) a 11 (diciembre) en JS
+            const year = match[3];
 
-        const parsedDate = new Date(year, month, day);
+            const parsedDate = new Date(year, month, day);
 
-        // Verificamos si la fecha es válida
-        if (!isNaN(parsedDate.getTime())) {
-            return parsedDate;
+            // Verificamos si la fecha es válida
+            if (!isNaN(parsedDate.getTime())) {
+                return parsedDate;
+            }
         }
-    }
 
-    // console.error('Fecha en formato incorrecto:', dateString);
-    return null;
-};
+        // console.error('Fecha en formato incorrecto:', dateString);
+        return null;
+    };
 
 
-// Función para verificar si la campaña ya ha comenzado
-const verificarFechaInicio = () => {
-    const today = new Date();  // Fecha actual con hora
-    const todayNoTime = new Date(today.getFullYear(), today.getMonth(), today.getDate()); // Sin horas
+    // Función para verificar si la campaña ya ha comenzado
+    const verificarFechaInicio = () => {
+        const today = new Date();  // Fecha actual con hora
+        const todayNoTime = new Date(today.getFullYear(), today.getMonth(), today.getDate()); // Sin horas
 
-    // Verificamos si existen los datos necesarios para calcular la fecha de inicio
-    if (props.data.acf && props.data.acf.plazas && props.data.acf.plazas.desde) {
-        const startDate = parseDate(props.data.acf.plazas.desde);  // Fecha de inicio sin horas
-        // console.log('Fecha inicio:', startDate, 'Hoy:', todayNoTime); // Verificación en consola
+        // Verificamos si existen los datos necesarios para calcular la fecha de inicio
+        if (props.data.acf && props.data.acf.plazas && props.data.acf.plazas.desde) {
+            const startDate = parseDate(props.data.acf.plazas.desde);  // Fecha de inicio sin horas
+            // console.log('Fecha inicio:', startDate, 'Hoy:', todayNoTime); // Verificación en consola
 
-        // Si hoy es mayor o igual a la fecha de inicio, mostramos las plazas
-        showPlazas.value = todayNoTime >= startDate;
-    } else {
-        console.log('No hay información de plazas o fecha de inicio disponible');
-    }
-};
+            // Si hoy es mayor o igual a la fecha de inicio, mostramos las plazas
+            showPlazas.value = todayNoTime >= startDate;
+        } else {
+            console.log('No hay información de plazas o fecha de inicio disponible');
+        }
+    };
 
-let observer; // Define observer in the outer scope
+    let observer; // Define observer in the outer scope
 
-onMounted(() => {
-    checkPresupuestoLink(); // Initial check in case #presupuesto is already in the DOM
-    verificarFechaInicio()
+    onMounted(() => {
+        checkPresupuestoLink(); // Initial check in case #presupuesto is already in the DOM
+        verificarFechaInicio()
 
-    observer = new MutationObserver(() => {
-        checkPresupuestoLink();
+        observer = new MutationObserver(() => {
+            checkPresupuestoLink();
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
     });
 
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
+    onBeforeUnmount(() => {
+        if (observer) {
+            observer.disconnect();
+        }
     });
-});
-
-onBeforeUnmount(() => {
-    if (observer) {
-        observer.disconnect();
-    }
-});
 </script>
 
 <style scoped>
-.heading__cirugias {
-    width: 100%;
-    /* height: calc(100 * var(--vh) - 50px); */
-    /* min-height: 700px; */
-    /* @media (min-width: 1025px) {
+    .heading__cirugias {
+        width: 100%;
+        /* height: calc(100 * var(--vh) - 50px); */
+        /* min-height: 700px; */
+        /* @media (min-width: 1025px) {
         height: 900px;
         max-height: 100vh;
     }
@@ -174,5 +178,5 @@ onBeforeUnmount(() => {
     @media (max-width: 560px) {
         height: 800px;
     } */
-}
+    }
 </style>

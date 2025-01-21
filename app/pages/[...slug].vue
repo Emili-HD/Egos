@@ -8,11 +8,11 @@
     </div>
 
     <main class="page site-main grid grid-cols-[repeat(16,_minmax(0,_1fr))] [.estetica_&]:bg-crema [.estetica_&]:text-vermell" v-if="pages">
-        <UiBotonCita v-if="pages.acf" :data="pages.acf.boton_cita" />
-        <PageHeading :data="pages" />
+        <UiBotonCita v-if="pages && pages.acf" :data="pages.acf.boton_cita" />
+        <PageHeading v-if="pages" :data="pages" />
         <NuxtLazyHydrate when-idle>
-            <LazyCirugiasEntryText :data="pages" class="mt-12" />
-            <LazyPageCatRelacionadas :data="pages.acf" />
+            <LazyCirugiasEntryText v-if="pages" :data="pages" class="mt-12" />
+            <LazyPageCatRelacionadas v-if="pages && pages.acf" :data="pages.acf" />
         </NuxtLazyHydrate>
         <NuxtLazyHydrate when-idle>
             <FormsPiceCita v-if="pages.acf && pages.acf.formulario" :titulo="`¿No encuentras tu cirugía?`"
@@ -57,6 +57,7 @@
 
                 const response = await getPage(route.params.slug);
 
+                // Si no hay contenido, lanzamos un 404
                 if (!response || Object.keys(response).length === 0) {
                     throw createError({
                         statusCode: 404,
@@ -64,18 +65,22 @@
                     });
                 }
 
-                return response || {};
+                return response;
             } catch (err) {
-                // console.error(`Error fetching página ${route.params.slug}:`, err);
                 error.value = err;
 
-                // Lanzar un error 500 si hay un problema en el servidor
-                throw createError({
-                    statusCode: 500,
-                    message: 'Error en el servidor'
-                });
+                // Si el error ya es 404, relanzarlo tal cual para que Nuxt muestre la página de error 404
+                if (err.statusCode === 404) {
+                    throw err;
+                } else {
+                    // Cualquier otro error (red de servidor, etc.) lanzamos un 500
+                    throw createError({
+                        statusCode: 500,
+                        message: 'Error en el servidor'
+                    });
+                }
             } finally {
-                isLoading.value = false; // Marcar como cargado después de la ejecución
+                isLoading.value = false;
             }
         },
         {
@@ -83,6 +88,7 @@
             initialCache: false
         }
     );
+
 
     watch(() => route.params.slug, async (newSlug, oldSlug) => {
         if (newSlug !== oldSlug) {
@@ -114,14 +120,6 @@
         }
     }
 
-    // Función para eliminar la clase cuando el componente se desmonta
-    function removeHtmlClass(className) {
-        if (htmlClassAdded) {
-            document.documentElement.classList.remove(className);
-            htmlClassAdded = false;
-        }
-    }
-
     onBeforeMount(async () => {
         // const response = await getTratamiento({ slug: route.params.slug });
 
@@ -129,11 +127,6 @@
         if (route.path.includes('/medicina-estetica')) {
             addHtmlClass('estetica');
         }
-    });
-
-    onBeforeUnmount(() => {
-        // Eliminar la clase 'estetica' del body cuando el componente se desmonta
-        // removeHtmlClass('estetica');
     });
 
     // Ciclo de vida
@@ -149,12 +142,15 @@
     const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
     const breadcrumbJson = generateBreadcrumbData();
 
-    const { generateYoastHead } = useYoastHead(pages);
-    const yoastHead = generateYoastHead();
+    let yoastHead = {};
+    if (pages.value) {
+        const { generateYoastHead } = useYoastHead(pages.value);
+        yoastHead = generateYoastHead();
+    }
 
     let procedureJsonLd = null;
     // Genera el JSON-LD para el tratamiento solo si servicetype existe
-    if (pages.value.acf?.datos?.procedureType) {
+    if (pages.value?.acf?.datos?.procedureType) {
         const { generateProcedureData } = useProcedureData(pages);
         procedureJsonLd = generateProcedureData();
     }

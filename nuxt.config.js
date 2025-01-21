@@ -202,6 +202,12 @@ export default defineNuxtConfig({
 
     components: true,
 
+    // scripts: {
+    //     registry: {
+    //         googleMaps: true
+    //     }
+    // },
+
     runtimeConfig: {
         public: {
             googleMaps: {

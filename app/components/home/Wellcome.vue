@@ -3,29 +3,26 @@
         <div class="intro__image bg-cover bg-[75%] min-h-vh pb-12 lg:bg-center"
             :style="`background-image: url('${data.featured_image_data.url}');`">
             <div>
-                <p class="intro__title">
-                    <span class="!text-blue-1 text-clamp-4xl">Hazlo por ti</span><span id="a">Somos cirujanos</span>
-                </p>
                 <div
-                    class="intro__content pl-8 lg:pl-16 text-blue-1 flex flex-col justify-center items-start gap-4 z-10 w-full">
+                    class="intro__content pl-12 lg:pl-16 text-blue-1 flex flex-col justify-center items-start gap-4 z-10 w-full mt-40">
                     <div class="heading mb-12">
-                        <h1 class="!text-clamp-lg lg:!text-clamp-lg">EGOS | Clínica de cirugía plástica y reparadora
-                        </h1>
+                        <h1 class="!text-clamp-2xl mb-3">EGOS | Clínica de cirugía plástica y reparadora</h1>
+                        <p class="intro__title">
+                            <span class="!text-blue-1 text-clamp-4xl">Hazlo por ti</span><span id="a">Somos cirujanos</span>
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="flex flex-col lg:flex-row justify-center items-center w-full z-20 gap-6 px-12 xl:px-16">
                 <div v-for="tratamiento in featuredTratamientos" :key="tratamiento.id"
                     class="video-sample w-full max-w-[320px] sm:max-w-[70%] lg:max-w-[32%] xl:max-w-[33%] ">
-                    <nuxt-link :to="formatLink(tratamiento.link)"
+                    <nuxt-link :to="`${formatLink(tratamiento.link)}#presupuesto`"
                         class="flex items-center bg-nude-8/40 backdrop-blur overflow-hidden rounded-xl min-w-[320px] xl:min-w-[30vw] shadow-lg">
                         <div class="p-0 h-full w-[30%] xl:w-1/3 aspect-square overflow-hidden">
 
                             <img v-if="tratamiento && tratamiento.acf && tratamiento.acf.imagen_cards"
                                 class="absolute inset-0 w-full h-full object-cover object-center"
-                                :src="tratamiento.acf.imagen_cards.sizes.calcula"
-                                width="200"
-                                height="200"
+                                :src="tratamiento.acf.imagen_cards.sizes.calcula" width="200" height="200"
                                 :alt="tratamiento.acf.imagen_cards.alt || `Tratamiento de ${tratamiento.acf.titulo} en Clínica Egos`" />
                         </div>
                         <div class="px-4 w-[70%] xl:w-2/3 flex justify-start items-center h-full">
@@ -92,7 +89,7 @@
     }
 
     .intro__title {
-        @apply font-lora font-normal text-clamp-3xl text-balance lg:text-[8vw] xl:text-[3vw] text-blue-1 leading-[0.9] mb-8 mt-52 lg:mt-40 pl-8 lg:pl-16 text-left z-10;
+        @apply font-lora font-normal text-clamp-3xl text-balance lg:text-[8vw] xl:text-[3vw] text-blue-1 leading-[0.9] mb-8 text-left z-10;
 
         &>span {
             @apply text-gold-3 w-full block lg:inline-block

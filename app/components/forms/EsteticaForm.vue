@@ -231,16 +231,16 @@
             case 'utm_campaign':
                 return 'SEO';
             case 'utm_content':
-                return props.name;  // Usar el nombre de la página
+                return props.name;  // Usa el nombre de la página
             case 'utm_medium':
                 return 'Web';
             case 'utm_source':
                 const rutaFinal = `https://clinicaegos.com${routePath}`
                 return rutaFinal;
             case 'utm_term':
-                return props.name;  // Usar el nombre de la página
+                return props.name;  // Usa el nombre de la página
             case 'isEgosSurgery':
-                return 'true';  // Usar el nombre de la página
+                return 'true';
             default:
                 return '';  // Retorna una cadena vacía si no hay coincidencia
         }

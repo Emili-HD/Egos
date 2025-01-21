@@ -15,7 +15,7 @@
         <section id="opiniones"
             class="col-[2/-2] lg:col-start-2 lg:col-span-9 bg-transparent min-h-max px-8 py-24 xl:px-[calc(100%/16)] mt-32"
             data-anchor="opiniones">
-            <h2 class="h4 text-center">Nuestros pacientes opinan de EGOS</h2>
+            <h2 class="h4 text-center">Valoraciones que reflejan nuestro compromiso con la calidad</h2>
             <UiGoogleReviews placeid="ChIJffDn5p2ZpBIRmOqD4_uX82U" />
         </section>
         <HomeTestimonios />
@@ -35,13 +35,16 @@
                 :ruta="'home'" class="col-[2/16] [&_h2]:text-nude-8 [&_article]:xl:w-[calc(33%-1rem)]" />
         </section>
         <section v-if="home.acf.descripcion_equipo"
-            class="flex flex-col-reverse lg:flex-row justify-center items-center gap-[calc(100%/16)] px-[calc(100%/16)] min-h-vh/80">
-            <div class="aspect-video w-full lg:w-1/2">
+            class="flex flex-col-reverse lg:flex-row justify-center items-center gap-[calc(100vw/16)] px-[calc(100%/16)] min-h-vh/80">
+            <div class="aspect-[9/16] w-full lg:w-1/4">
                 <VimeoPlayer :videoId="home.acf.descripcion_equipo.video" />
             </div>
+            <div class="aspect-[9/16] w-full lg:w-1/4">
+                <VimeoPlayer :videoId="home.acf.descripcion_equipo.video_dos" />
+            </div>
             <div class="w-full lg:w-1/2 py-8">
-                <h2>{{ home.acf.descripcion_equipo.titulo }}</h2>
-                <p>{{ home.acf.descripcion_equipo.descripcion }}</p>
+                <h2 class="text-clamp-3xl lg:text-clamp-5xl">{{ home.acf.descripcion_equipo.titulo }}</h2>
+                <div v-html="home.acf.descripcion_equipo.descripcion"></div>
             </div>
         </section>
         <NuxtLazyHydrate when-idle>
