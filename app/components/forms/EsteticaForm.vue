@@ -216,35 +216,30 @@
     }
 
     // Datos reactivos
-    const utmData = reactive({
-        utm_campaign: '',
-        utm_content: '',
-        utm_medium: '',
-        utm_source: '',
-        utm_term: '',
-        isEgosSurgery: ''
+    const defaultUTM = reactive({
+        utm_campaign: 'SEO',
+        utm_content: props.name,
+        utm_medium: 'Web',
+        utm_source: `https://clinicaegos.com${routePath}`,
+        utm_term: props.name,
+        isEgosSurgery: 'true'
     });
 
-    // Función para obtener el valor según el ID del campo
-    const getValueForField = (fieldName) => {
-        switch (fieldName) {
-            case 'utm_campaign':
-                return 'SEO';
-            case 'utm_content':
-                return props.name;  // Usa el nombre de la página
-            case 'utm_medium':
-                return 'Web';
-            case 'utm_source':
-                const rutaFinal = `https://clinicaegos.com${routePath}`
-                return rutaFinal;
-            case 'utm_term':
-                return props.name;  // Usa el nombre de la página
-            case 'isEgosSurgery':
-                return 'true';
-            default:
-                return '';  // Retorna una cadena vacía si no hay coincidencia
-        }
-    };
+    // Datos reactivos para los utm
+    const utmData = reactive({ ...defaultUTM })
+
+    // Función para leer los parámetros de la URL
+    const getUTMFromURL = () => {
+        const urlParams = new URLSearchParams(window.location.search)
+        const utmKeys = Object.keys(defaultUTM)
+
+        // Recorremos las claves de los UTM y si están en la URL, las sobrescribimos
+        utmKeys.forEach(key => {
+            if (urlParams.has(key)) {
+                utmData[key] = urlParams.get(key)
+            }
+        })
+    }
 
     const handleSubmit = async () => {
         await nextTick();
@@ -421,13 +416,8 @@
     onMounted(async () => {
         await loadFormStructure();  // Asegúrate de que esto se completa
 
-        // Asignar valores a formData después de cargar la estructura
-        utmData['utm_campaign'] = getValueForField('utm_campaign');
-        utmData['utm_content'] = getValueForField('utm_content');
-        utmData['utm_medium'] = getValueForField('utm_medium');
-        utmData['utm_source'] = getValueForField('utm_source');
-        utmData['utm_term'] = getValueForField('utm_term');
-        utmData['isEgosSurgery'] = getValueForField('isEgosSurgery');
+        // Leer los UTM de la URL y sobrescribir los valores predeterminados
+        getUTMFromURL()
 
         await nextTick();  // Espera un ciclo de actualización si es necesario
         // console.log('Valores de formData asignados:', utmData);

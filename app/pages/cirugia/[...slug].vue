@@ -1,5 +1,5 @@
 <template>
-    <!-- <main class="site-main [&.tratamiento-113]:bg-crema [&.tratamiento-113]:text-vermell" v-if="tratamiento"
+    <main class="site-main [&.tratamiento-113]:bg-crema [&.tratamiento-113]:text-vermell" v-if="tratamiento"
         ref="componentRef" :class="`tratamiento-${tratamiento.categoria_tratamiento}`">
         <UiBotonCita v-if="tratamiento && tratamiento.acf && tratamiento.acf.boton_cita"
             :data="tratamiento.acf.boton_cita" />
@@ -100,7 +100,7 @@
 
         <LazyCirugiasRelatedPosts :treatmentsData="tratamiento.acf" />
 
-    </main> -->
+    </main>
 </template>
 
 <script setup>

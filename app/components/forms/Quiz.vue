@@ -26,7 +26,7 @@
                                             class="form__group field flex flex-wrap justify-center gap-x-6 gap-y-3 !pt-0">
                                             <label
                                                 class="form__label w-full !relative text-clamp-lg leading-none text-center font-nunito">{{
-                                                field.label }}</label>
+                                                    field.label }}</label>
                                             <p class="w-full max-lg:text-clamp-sm text-white mb-0 italic text-center">
                                                 Selecciona una imagen para continuar</p>
                                             <div v-for="option in field.options" :key="option.value"
@@ -49,7 +49,7 @@
                                         <div class="form__group field flex flex-wrap justify-center gap-x-6 !pt-0">
                                             <label
                                                 class="form__label w-full !relative text-clamp-xl leading-none text-center font-nunito">{{
-                                                field.label }}</label>
+                                                    field.label }}</label>
                                             <p class="w-full text-white mb-0 italic text-center">Selecciona una imagen
                                                 para continuar</p>
                                             <div v-for="option in field.options" :key="option.value"
@@ -165,10 +165,10 @@
                                                     </select>
                                                     <label :for="subField.dependentField.name"
                                                         class="form__label font-nunito max-lg:text-sm">{{
-                                                        subField.dependentField.label }}</label>
+                                                            subField.dependentField.label }}</label>
                                                     <p v-if="errors[subField.dependentField.name]"
                                                         class="text-red-500 text-sm">{{
-                                                        errors[subField.dependentField.name] }}</p>
+                                                            errors[subField.dependentField.name] }}</p>
                                                 </div>
                                             </div>
                                         </template>
@@ -293,7 +293,7 @@
     const currentStep = ref(0)
 
     // console.log('datos hubspot:', props.formId, props.portalId);
-    
+
 
     const loadFormStructure = async () => {
         await nextTick(); // Asegura que los cambios de DOM estén aplicados antes de continuar.
@@ -338,36 +338,31 @@
         }
     };
 
-    // Datos reactivos
-    const utmData = reactive({
-        utm_campaign: '',
-        utm_content: '',
-        utm_medium: '',
-        utm_source: '',
-        utm_term: '',
-        isEgosSurgery: ''
+    /// Datos reactivos
+    const defaultUTM = reactive({
+        utm_campaign: 'SEO',
+        utm_content: props.name,
+        utm_medium: 'Web',
+        utm_source: `https://clinicaegos.com${routePath}`,
+        utm_term: props.name,
+        isEgosSurgery: 'true'
     });
 
-    // Función para obtener el valor según el ID del campo
-    const getValueForField = (fieldName) => {
-        switch (fieldName) {
-            case 'utm_campaign':
-                return 'SEO';
-            case 'utm_content':
-                return props.name;  // Usar el nombre de la página
-            case 'utm_medium':
-                return 'Web';
-            case 'utm_source':
-                const rutaFinal = `https://clinicaegos.com${routePath}`
-                return rutaFinal;
-            case 'utm_term':
-                return props.name;  // Usar el nombre de la página
-            case 'isEgosSurgery':
-                return 'true';
-            default:
-                return '';  // Retorna una cadena vacía si no hay coincidencia
-        }
-    };
+    // Datos reactivos para los utm
+    const utmData = reactive({ ...defaultUTM })
+
+    // Función para leer los parámetros de la URL
+    const getUTMFromURL = () => {
+        const urlParams = new URLSearchParams(window.location.search)
+        const utmKeys = Object.keys(defaultUTM)
+
+        // Recorremos las claves de los UTM y si están en la URL, las sobrescribimos
+        utmKeys.forEach(key => {
+            if (urlParams.has(key)) {
+                utmData[key] = urlParams.get(key)
+            }
+        })
+    }
 
     const handleSubmit = async () => {
         await nextTick()
@@ -569,13 +564,8 @@
     onMounted(async () => {
         await loadFormStructure();  // Asegúrate de que esto se completa
 
-        // Asignar valores a formData después de cargar la estructura
-        utmData['utm_campaign'] = getValueForField('utm_campaign');
-        utmData['utm_content'] = getValueForField('utm_content');
-        utmData['utm_medium'] = getValueForField('utm_medium');
-        utmData['utm_source'] = getValueForField('utm_source');
-        utmData['utm_term'] = getValueForField('utm_term');
-        utmData['isEgosSurgery'] = getValueForField('isEgosSurgery');
+        // Leer los UTM de la URL y sobrescribir los valores predeterminados
+        getUTMFromURL()
 
         await nextTick();  // Esperamos un ciclo de actualización si es necesario
         // console.log('Valores de formData asignados:', utmData);
