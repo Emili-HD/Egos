@@ -34,7 +34,7 @@
             </div>
 
             <!-- Mostrar reseñas filtradas -->
-            <div class="relative w-5/6 px-12">
+            <div class="relative w-full lg:w-5/6 lg:px-12">
                 <button class="swiper-button-prev absolute left-0 top-1/2 -translate-y-1/2 z-10">
                     ←
                 </button>

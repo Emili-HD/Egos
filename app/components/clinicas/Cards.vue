@@ -5,7 +5,12 @@
             aria-label="Ver detalles de cirugía" v-if="data">
             <picture class="group aspect-square w-36  ">
                 <!-- <UiImage :data="data" class="scale-effect" loading="lazy" /> -->
-                <img :src="data.featured_image" alt="">
+                <img 
+                    :src="data.featured_image" 
+                    :width="data.featured_image_data?.width"
+                    :height="data.featured_image_data?.height"
+                    :alt="data.featured_image_data?.alt" 
+                />
             </picture>
         </nuxt-link>
         <div class="category__title flex flex-col justify-end items-center gap-2 p-4 relative w-full m-auto row-start-1 col-start-2">

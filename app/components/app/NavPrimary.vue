@@ -90,18 +90,14 @@
 <script setup>
 const { $gsap: gsap } = useNuxtApp();
 
-// const { data: menuTratamientosData } = await useAsyncData('menuTratamientos', async () => {
-//     const menuData = await getMenuTratamientos();
-//     return menuData;
-// });
-
 const props = defineProps({
     data: {
         type: Object,
     },
     menuData: {
         type: Object,
-        required: true
+        required: true,
+        default: () => ({}),
     }
 })
 

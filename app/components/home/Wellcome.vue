@@ -53,7 +53,10 @@
         return tratamientos.filter(tratamiento =>
             tratamiento.acf?.destacar_post?.includes('featured')
         );
-    });    
+    });
+
+    console.log('featuredTratamientos', featuredTratamientos.value);
+    
 
     const formatLink = (url) => {
         // Si la URL es completa, extraemos el path

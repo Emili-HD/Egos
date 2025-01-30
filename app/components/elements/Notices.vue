@@ -1,6 +1,13 @@
 <template>
-    <div
+    <div v-if="!ofertas"
         class="notices w-full min-h-12 overflow-hidden [html:not(.blackfriday)]:bg-[#B7AB87] [.blackfriday_&]:bg-dark-2 relative">
+        <!-- Placeholder o skeleton -->
+        <div class="flex justify-center items-center h-12 bg-[#B7AB87] w-full">
+            <div class="text-black font-semibold tracking-wide leading-none p-2">Excelente 4.8/5 ★ en Google</div>
+        </div>
+    </div>
+    <div class="notices w-full min-h-12 overflow-hidden [html:not(.blackfriday)]:bg-[#B7AB87] [.blackfriday_&]:bg-dark-2 relative"
+        v-else-if="ofertas && ofertas.length > 0">
         <ClientOnly>
             <!-- <div v-if="countdown.days > 0 || countdown.hours > 0 || countdown.minutes > 0 || countdown.seconds > 0"
                 class="flex justify-center items-center gap-4 w-full bg-blackfriday py-2 px-4">
@@ -24,7 +31,7 @@
                     </div>
                 </div>
             </div> -->
-            <div v-if="ofertas.length > 0">
+            <div>
                 <div v-for="(oferta, index) in ofertas" :key="index"
                     class="offer-display [.blackfriday_&]:!bg-dark-2 [.blackfriday_&]:!text-white backface-hidden min-h-12 flex justify-center items-center text-center text-nude-8 font-semibold tracking-wide leading-none p-2 absolute top-0 left-0 w-full transition-transform duration-1000 [&:not(.active),_&.previous]:rotate-x-90 [&.active]:rotate-x-0 [&.next,_&.previous]:absolute [&.next,_&.previous]:top-0 [&.next,_&.previous]:left-0 [&.next,_&.previous]:size-full"
                     :class="{
@@ -41,14 +48,11 @@
 </template>
 
 <script setup>
-    import { onMounted, ref, computed } from 'vue';
     import { egosSettings } from '@/composables/useApi.js';
 
-    const ofertas = ref([]);
-    const badge = ref(null);
-    const desde = ref(null);
-    const hasta = ref(null);
-    const currentIndex = ref(0);
+    const { data: ofertasData } = await useAsyncData('fetchOfertas', () =>
+        egosSettings('ofertas')
+    );
 
     const parseDateString = (dateString) => {
         // Divide la fecha y hora en dos partes
@@ -59,18 +63,11 @@
         return new Date(`${year}-${month}-${day}T${timePart}:00`);
     };
 
-    const fetchOfertas = async () => {
-        try {
-            const data = await egosSettings('ofertas');
-            ofertas.value = data.ofertas;
-            desde.value = parseDateString(data.oferta_desde);
-            hasta.value = parseDateString(data.oferta_hasta);
-            badge.value = data.badge;
-            // console.log('Fecha hasta:', hasta.value); // Ahora debería mostrar una fecha válida
-        } catch (error) {
-            console.error('Error fetching ofertas:', error);
-        }
-    };
+    const ofertas = ref(ofertasData.value?.ofertas || null);
+    const badge = ref(ofertasData.value?.badge || null);
+    const desde = ref(parseDateString(ofertasData.value?.oferta_desde || ''));
+    const hasta = ref(parseDateString(ofertasData.value?.oferta_hasta || ''));
+    const currentIndex = ref(0);
 
     const rotateOffers = () => {
         setInterval(() => {
@@ -124,15 +121,12 @@
     calculateCountdown();
 
     onMounted(() => {
-        fetchOfertas().then(() => {
-            calculateCountdown();
-            interval = setInterval(calculateCountdown, 1000);
-            if (ofertas.value.length > 1) {
-                rotateOffers();
-            }
-        });
+        if (ofertas.value.length > 1) {
+            rotateOffers();
+        }
+        interval = setInterval(calculateCountdown, 1000);
+        calculateCountdown();
     });
-
 
     onUnmounted(() => {
         if (interval) {

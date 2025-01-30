@@ -114,8 +114,7 @@
     import { useDoctorsJson } from '~/composables/useDoctorsJson';
     import { getClinicas } from '@/composables/useApi'
     import GoogleReviews from '~/components/Ui/GoogleReviews.vue';
-    // import ClinicasRelacionadas from '~/components/cirugias/ClinicasRelacionadas.vue';
-
+    import { useTreatmentsStore } from '@/stores/treatments';
     
     const { $gsap: gsap } = useNuxtApp();
     const router = useRouter();
@@ -137,41 +136,30 @@
     const isLoading = ref(false);
     const errorMessage = ref("");
 
-    // const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(`tratamiento-${route.params.slug}`, { watch: [() => route.params.slug], initialCache: true });
+    // Estado global del store de tratamientos
+    const treatmentsStore = useTreatmentsStore();
 
+    // Computed para el slug actual, evitando valores inválidos
+    const slug = computed(() => {
+        const param = route.params.slug;
+        return Array.isArray(param) ? param.join('/') : param || null;
+    });
+    
+    // Cargar el tratamiento desde el store
+    if (slug.value) {
+        await treatmentsStore.fetchTreatment({ slug: slug.value });
+    }
 
-    // Manejo del tratamiento
-    const { data: tratamiento, refresh: refreshTratamiento } = await useAsyncData(
-        `tratamiento-${route.params.slug}`,
-        async () => {
-            try {
-                const response = await getTratamiento({ slug: route.params.slug });
+    // Acceder al tratamiento desde el store
+    const tratamiento = computed(() => treatmentsStore.treatments[route.params.slug]);
 
-                // Verifica si la respuesta es válida
-                if (!response || typeof response !== 'object' || Object.keys(response).length === 0) {
-                    throw createError({
-                        statusCode: 404,
-                        message: 'Tratamiento no encontrado'
-                    });
-                }
-
-                return response;
-            } catch (error) {
-                // console.error(`Error fetching tratamiento ${route.params.slug}:`, error);
-
-                // Lanzar un error genérico si hay un problema con la solicitud
-                throw createError({
-                    statusCode: 500,
-                    message: 'Error en el servidor'
-                });
-            }
-        },
-        {
-            watch: [() => route.params.slug],
-            initialCache: true
-        }
-    );
-
+    // Verificar si el tratamiento existe
+    if (!tratamiento.value) {
+        throw createError({
+            statusCode: 404,
+            message: 'Tratamiento no encontrado',
+        });
+    }
 
     let htmlClassAdded = false; // Para evitar duplicar clases
 
@@ -269,29 +257,30 @@
         }
     };
 
-    // Unificar el watch del `slug` para manejar tanto el refresco de los datos como la validación de URLs malformadas
+    watch(slug, async (newSlug) => {
+        if (newSlug) {
+            await treatmentsStore.fetchTreatment({ slug: newSlug });
+        }
+    }, { immediate: true });
+
     watch(
         () => route.params.slug,
         async (newSlug) => {
             isLoading.value = true;
             errorMessage.value = "";
 
-            // Validar si la URL está malformada
-            const fullPath = route.fullPath;
-
-
-            const httpCount = (fullPath.match(/https?:\/\//g) || []).length;
-
-            if (httpCount > 1) {
-                // Si la URL contiene más de un "http" o "https", redirigimos a la página de error
+            // Si la URL contiene '/http', la redirigimos a la página de error
+            if (route.fullPath.includes('/http')) {
                 router.push('/error');
                 return;
             }
 
             try {
-                // Refresca los datos del tratamiento y el formulario
-                await refreshTratamiento();
-                await refreshFormData();
+                // Solo intentamos refrescar si el slug es válido
+                if (newSlug) {
+                    await treatmentsStore.fetchTreatment({ slug: newSlug });
+                    await refreshFormData();
+                }
             } catch (error) {
                 errorMessage.value = "No se pudo cargar la información.";
             } finally {
@@ -301,9 +290,9 @@
         { immediate: true }
     );
 
-    watch(tratamiento, (nuevoValor) => {
+    watch(tratamiento, (newValue) => {
         // Si 'tratamiento' es nulo o indefinido, redirige a '/error'.
-        if (!nuevoValor) {
+        if (newValue === null) {
             router.push('/error');
         }
     }, { immediate: true });
@@ -387,7 +376,6 @@
                         trigger: navigation,
                         start: "300 top",
                         toggleActions: "play none reverse none",
-                        // markers: true 
                     }
                 }, 0)
 
@@ -436,31 +424,6 @@
 
         }
     }
-
-    const mostrarRiesgos = async () => {
-        // Seleccionamos los elementos necesarios
-        let disparador = document.querySelector('#riesgos.panel .panel__content h2');
-        let icono = document.querySelector('#riesgos.panel .panel__content h2 svg');
-        let contenido = document.querySelector('#riesgos.panel .panel__content .answer');
-
-        if (disparador && contenido && icono) {
-            // Añadir un solo listener para alternar entre mostrar y ocultar
-            disparador.addEventListener('click', () => {
-                if (contenido.classList.contains('isExpanded')) {
-                    // Contraer el contenido
-                    icono.style.transform = "rotate(0deg)";
-                    contenido.style.maxHeight = '0px';
-                    contenido.classList.remove('isExpanded');
-                } else {
-                    // Expandir el contenido
-                    icono.style.transform = "rotate(45deg)";
-                    contenido.style.maxHeight = '1000px';
-                    contenido.classList.add('isExpanded');
-                }
-            });
-        }
-    };
-
 
     const currentUrl = route.fullPath
 
@@ -572,10 +535,14 @@
     });
 
     onMounted(async () => {
+        if (window.location.href.includes('/false/')) {
+            const cleanUrl = window.location.href.replace('/false/', '/');
+            window.history.replaceState({}, '', cleanUrl);
+        }
+
         await cellHeights()
         await mainActive()
         await mostrarAnchorsMenu()
-        await mostrarRiesgos()
         observeDOM()
 
         checkAndApplyClass();

@@ -6,8 +6,12 @@
             <nuxt-link :to="formatPermalink(testimonio.permalink)" class="size-full">
                 <div class="testimonios__image overflow-hidden w-full h-[60%]"
                     v-if="testimonio.featured_image">
-                    <img loading="lazy" :src="testimonio.featured_image" :alt="data.post_title"
-                        :aria-labelledby="'testimonio-title-' + data.ID" class="object-center object-cover w-full" />
+                    <img loading="lazy" 
+                        :src="testimonio.featured_image" 
+                        :alt="testimonio.post_title"
+                        :aria-labelledby="'testimonio-title-' + data.ID" 
+                        class="object-center object-cover w-full" 
+                    />
                 </div>
                 <div
                     class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-center items-center">

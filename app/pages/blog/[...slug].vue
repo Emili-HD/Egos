@@ -64,30 +64,51 @@
 
             <section class="post__content px-2 pb-10 gap-1 xl:gap-4 grid grid-cols-[repeat(16,_minmax(0,_1fr))]">
 
-                <div class="post__content-areas p-0 xl:py-6 xl:px-10 col-[2/-2] xl:col-[2/11]">
+                <div class="post__content-areas p-0 xl:py-6 col-[2/-2] xl:col-[2/11]">
 
-                    <div v-if="post.acf.doctores_relacionados" class="bg-nude-6 p-6 rounded-xl">
-                        <div v-if="doctor">
-                            <div class="overflow-hidden size-full flex items-center gap-8">
-                                <!-- <div class="flex flex-row justify-center items-center flex-wrap gap-x-4 mb-4 text-center"> -->
-                                <div class="size-32 aspect-square rounded-full overflow-hidden">
-                                    <UiImage :data="doctor" class="cover absolute object-center inset-0"
-                                        :aria-labelledby="'doctor-title-' + doctor.id" />
+                    <div class="flex flex-col lg:flex-row gap-4 mb-12">
+                        <div v-if="post.acf.doctores_relacionados" class="bg-nude-6 p-6 rounded-xl w-full lg:w-[calc(50%-1rem)]">
+                            <div v-if="doctor">
+                                <div class="overflow-hidden size-full flex items-center gap-8">
+                                    <div class="size-32 aspect-square overflow-hidden">
+                                        <UiImage :data="doctor" class="cover absolute object-center inset-0"
+                                            :aria-labelledby="'doctor-title-' + doctor.id" />
+                                    </div>
+                                    <div class="w-[calc(100%-10rem)]">
+                                        <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p>
+                                        <h3 class="text-clamp-base mb-0"><strong>{{ doctor.title.rendered }}</strong>
+                                        </h3>
+                                        <p class="text-clamp-xs mb-3">{{ doctor.acf.trayectoria.especialidad }}</p>
+                                        <UiButton :to="relativeDoctorLink"
+                                            class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1 !no-underline">
+                                            más información</UiButton>
+                                    </div>
                                 </div>
-                                <div class="w-[calc(100%-10rem)]">
-                                    <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p>
-                                    <h3 class="text-clamp-base mb-0"><strong>{{ doctor.title.rendered }}</strong>
-                                    </h3>
-                                    <p class="text-clamp-xs mb-0">{{ doctor.acf.trayectoria.especialidad }}</p>
-                                    <UiButton :to="relativeDoctorLink"
-                                        class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1">
-                                        más información</UiButton>
-                                </div>
-                                <!-- </div> -->
+                            </div>
+                            <div v-else>
+                                <p>Cargando información del doctor...</p>
                             </div>
                         </div>
-                        <div v-else>
-                            <p>Cargando información del doctor...</p>
+                        <div v-if="post.acf?.cirugias_relacionadas" class="bg-nude-6 p-6 rounded-xl w-full lg:w-[calc(50%-1rem)]">
+                            <div v-if="cirugia">
+                                <div class="overflow-hidden size-full flex items-center gap-8">
+                                    <div class="size-32 aspect-square rounded-full overflow-hidden">
+                                        <UiImage :data="cirugia" class="cover absolute object-center inset-0"
+                                            :aria-labelledby="'cirugia-title-' + cirugia.id" />
+                                    </div>
+                                    <div class="w-[calc(100%-10rem)]">
+                                        <!-- <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p> -->
+                                        <h3 class="text-clamp-base mb-3"><strong>{{ cirugia.title.rendered }}</strong>
+                                        </h3>
+                                        <UiButton :to="relativeCirugiaLink"
+                                            class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1 !no-underline">
+                                            más información</UiButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <p>Cargando información de la clínica...</p>
+                            </div>
                         </div>
                     </div>
 
@@ -214,15 +235,29 @@
 
     // Step 2: Definir una referencia para el doctor relacionado
     const doctor = ref(null);
-
+    
     // Step 3: Usar watchEffect para cargar el doctor solo cuando el post esté disponible
     watchEffect(async () => {
         if (post.value && post.value.acf?.doctores_relacionados) {
             try {
                 const doctorId = post.value.acf.doctores_relacionados[0];
                 doctor.value = await getEquipo({ id: doctorId });
-                //   console.log(doctorId);
-                //   console.log(doctor.value);
+                
+            } catch (error) {
+                console.error("Error fetching doctor:", error);
+            }
+        }
+    });
+    
+    // Step 4: Definir una referencia para la clínica relacionada
+    const cirugia = ref(null);
+
+    // Step 3: Usar watchEffect para cargar la clínica solo cuando el post esté disponible
+    watchEffect(async () => {
+        if (post.value && post.value.acf?.cirugias_relacionadas) {
+            try {
+                const cirugiaId = post.value.acf.cirugias_relacionadas[0];
+                cirugia.value = await getTratamiento({ id: cirugiaId });
 
             } catch (error) {
                 console.error("Error fetching doctor:", error);
@@ -234,6 +269,15 @@
         if (doctor.value?.link) {
             // Remover el dominio y dejar solo la parte relativa de la URL
             const url = new URL(doctor.value.link);
+            return url.pathname;
+        }
+        return '';
+    });
+
+    const relativeCirugiaLink = computed(() => {
+        if (cirugia.value?.link) {
+            // Remover el dominio y dejar solo la parte relativa de la URL
+            const url = new URL(cirugia.value.link);
             return url.pathname;
         }
         return '';

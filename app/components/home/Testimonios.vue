@@ -17,7 +17,7 @@
             class="card rounded-2xl overflow-hidden p-2 !aspect-auto col-[1/-1] sm:col-span-2 xl:col-auto flex flex-col justify-between items-center gap-8 h-full">
             <div v-if="testimonio.acf.vimeo_video" class="video__player rounded-xl w-full overflow-hidden">
                <div class="size-full aspect-[9/16]">
-                  <VimeoPlayer :videoId="testimonio.acf.vimeo_video" />
+                  <UiVideo :videoId="testimonio.acf.vimeo_video" />
                </div>
             </div>
             <div
@@ -43,8 +43,6 @@ import { onMounted, ref } from 'vue';
 import { useLazyAsyncData } from 'nuxt/app';
 import { getTestimonios } from '@/composables/useApi';
 
-
-
 // Definir explícitamente los valores de page y perPage
 const page = 1;
 const perPage = 50;
@@ -60,7 +58,7 @@ const testimoniosDestacados = computed(() => {
    if (!testimoniosData.value) return [];
 
    // Filtrar primero todos los testimonios destacados
-   const destacados = testimoniosData.value.filter(testimonio => testimonio.acf.destacado && testimonio.acf.destacado.includes("Destacar"));
+   const destacados = testimoniosData.value.filter(testimonio => testimonio.acf?.destacado && testimonio.acf?.destacado?.includes("Destacar"));
 
    // Si hay más de 4 destacados, retornar solo los últimos 4
    if (destacados.length > 4) {

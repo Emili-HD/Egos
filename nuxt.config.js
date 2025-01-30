@@ -7,6 +7,11 @@ export default defineNuxtConfig({
     
     devtools: { enabled: false },
 
+    devServer: {
+        host: '0.0.0.0', // Escucha en todas las IPs
+        port: 3000, // Puerto por defecto
+    },
+
     site: {
         url: 'https://www.clinicaegos.com/',
         trailingSlash: true,

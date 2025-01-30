@@ -3,8 +3,14 @@
         <div class="doctor__info" v-for="({ doctor, comentario }, index) in data" :key="doctor.ID">
             <div class="doctor__info-wrapper">
                 <div class="doctor__info-image">
-                    <img loading="lazy" :src="doctor.featured_image" :alt="doctor.post_title"
-                        :aria-labelledby="'doctor-title-' + doctor.ID" />
+                    <img 
+                        loading="lazy" 
+                        :src="doctor.featured_image" 
+                        :alt="doctor.featured_image_data?.alt"
+                        :width="doctor.featured_image_data?.width"
+                        :height="doctor.featured_image_data?.height"
+                        :aria-labelledby="'doctor-title-' + doctor.ID" 
+                    />
                 </div>
                 <div class="doctor__info-description" v-if="doctor.post_title">
                     <!-- Título del doctor -->

@@ -10,7 +10,7 @@
             <div class="border-wrap size-16 overflow-hidden rounded-full">
                 <div class="image-wrapper size-[60px] overflow-hidden rounded-full absolute top-0.5 left-0.5 bg-white">
                     <div class="image-inset rounded-full overflow-hidden size-[52px] top-1 left-1">
-                        <img :src="comment.featured_image_data?.url"
+                        <img :src="comment.featured_image_data.url"
                             :alt="`Imagen de ${comment.title.rendered}`"
                             :sizes="comment.featured_image_data?.sizes?.social" alt=""
                             class="object-cover object-center min-h-full" loading="lazy" width="60" height="60" />
@@ -22,8 +22,9 @@
                     <h3 class="text-clamp-base mb-0 mr-2 font-semibold">{{ comment.title.rendered }}</h3>
                     <img loading="lazy" v-if="comment?.acf?.verificado" src="@/assets/icons/verified.svg"
                         alt="Usuario Verificado" class="size-4 mr-2 top-0.5" />
-                    <div class="fecha leading-none text-gray-600" v-if="comment.acf.fecha_publicacion">{{ formatRelativeTime(comment.acf.fecha_publicacion)
-                        }}</div>
+                    <div class="fecha leading-none text-gray-600" v-if="comment.acf.fecha_publicacion">
+                        {{ formatRelativeTime(comment.acf.fecha_publicacion) }}
+                    </div>
                 </div>
                 <div class="comentario text-clamp-sm [&>p]:mb-0" v-html="comment.content.rendered"></div>
             </div>

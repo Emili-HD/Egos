@@ -13,14 +13,14 @@
       v-if="contentData.fondo != 'sin'">
       <div v-if="contentData.fondo == 'vHorizontal'" class="video__player aspect-video">
          <div class="size-full">
-            <VimeoPlayer :videoId="contentData.video" />
+            <UiVideo :videoId="contentData.video" />
          </div>
       </div>
       <div v-else-if="contentData.fondo == 'vVertical'"
          class="video__player max-w-full flex flex-col lg:flex-row gap-4 h-fit">
          <div class="size-full lg:max-w-[60%] aspect-[9/16]" v-for="(videoItem, index) in contentData.videos"
             :key="index">
-            <VimeoPlayer :videoId="videoItem.video" />
+            <UiVideo :videoId="videoItem.video" />
          </div>
       </div>
       <img class="[.columnas_&]:rounded-none [.is-desktop_.columnas_&]:xl:rounded-xl size-full object-cover object-center" loading="lazy"

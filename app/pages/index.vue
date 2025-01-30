@@ -37,10 +37,10 @@
         <section v-if="home.acf.descripcion_equipo"
             class="flex flex-col-reverse lg:flex-row justify-center items-center gap-[calc(100vw/16)] px-[calc(100%/16)] min-h-vh/80">
             <div class="aspect-[9/16] w-full lg:w-1/4">
-                <VimeoPlayer :videoId="home.acf.descripcion_equipo.video" />
+                <UiVideo :videoId="home.acf.descripcion_equipo.video" />
             </div>
             <div class="aspect-[9/16] w-full lg:w-1/4">
-                <VimeoPlayer :videoId="home.acf.descripcion_equipo.video_dos" />
+                <UiVideo :videoId="home.acf.descripcion_equipo.video_dos" />
             </div>
             <div class="w-full lg:w-1/2 py-8">
                 <h2 class="text-clamp-3xl lg:text-clamp-5xl">{{ home.acf.descripcion_equipo.titulo }}</h2>

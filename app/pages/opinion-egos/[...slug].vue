@@ -8,7 +8,7 @@
                 <div v-if="casoreal.acf.vimeo_video"
                     class="caso-real__video video__player col-start-2 col-span-10 flex flex-row justify-center items-start">
                     <div class="w-full bg-nude-5 h-[400px] lg:h-[650px] rounded-2xl">
-                        <VimeoPlayer :videoId="casoreal.acf.vimeo_video" />
+                        <UiVideo :videoId="casoreal.acf.vimeo_video" />
                     </div>
                 </div>
             </header>
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div v-else-if="bloque.selector_media === 'Vídeo'">
-                            <VimeoPlayer :videoId="bloque.video" />
+                            <UiVideo :videoId="bloque.video" />
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,8 @@
                             :key="doctor.ID">
                             <div class="doctor__info-wrapper">
                                 <div class="doctor__info-image h-2/5 overflow-hidden">
-                                    <img loading="lazy" :src="doctor.featured_image" :alt="doctor.post_title"
+                                    <img loading="lazy" 
+                                        :src="doctor.featured_image" 
                                         :aria-labelledby="'doctor-title-' + doctor.ID" class="w-full" />
                                 </div>
                                 <div class="doctor__info-description bg-white p-8 rounded-xl -mt-3 h-3/5 grid grid-rows-[min-content]"
@@ -77,7 +78,13 @@
                         <div class="links-clinicas col-[2/-2] h-full lg:col-start-8 lg:col-span-4 lg:self-center flex flex-wrap max-lg:justify-between gap-1 items-center"
                             v-for="clinica in casoreal.acf.clinicas_relacionadas" :key="clinica.ID">
                             <div class="h-2/5 w-full">
-                                <img loading="lazy" :src="clinica.featured_image" class="w-full" />
+                                <img loading="lazy" 
+                                    :src="clinica.featured_image"
+                                    :alt="clinica.featured_image_data?.alt"
+                                    :width="clinica.featured_image_data?.width"
+                                    :height="clinica.featured_image_data?.height" 
+                                    class="w-full" 
+                                />
                             </div>
                             <div class="h-3/5 w-full bg-white p-8 rounded-xl -mt-3 grid grid-rows-[min-content]">
                                 <h2 class="text-clamp-base font-nunito font-semibold">{{
@@ -97,7 +104,14 @@
                         <div v-for="cirugia in casoreal.acf.cirugias_testimonios"
                             class="links-clinicas h-full col-[2/-2] lg:col-start-8 lg:col-span-4 lg:self-center flex flex-wrap max-lg:justify-between gap-1 items-center">
                             <div class="h-2/5 w-full">
-                                <img loading="lazy" :src="cirugia.featured_image" class="w-full" />
+                                <img 
+                                    loading="lazy" 
+                                    :src="cirugia.featured_image"
+                                    :alt="cirugia.featured_image_data?.alt"
+                                    :width="cirugia.featured_image_data?.width"
+                                    :height="cirugia.featured_image_data?.height" 
+                                    class="w-full" 
+                                />
                             </div>
                             <div class="h-3/5 bg-white p-8 rounded-xl -mt-3 grid grid-rows-[min-content]">
                                 <h2 class="text-clamp-base font-nunito font-semibold">{{

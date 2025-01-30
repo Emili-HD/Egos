@@ -2,15 +2,17 @@
     <div class="card p-2 flex flex-col justify-between items-center" :class="props.classes">
         <nuxt-link :to="processedLink" class="w-full min-h-full block " aria-label="Ver detalles de cirugía"
             v-if="categoryId">
-            <picture class="group aspect-square block rounded-2xl overflow-hidden mb-2">
+            <picture class="group aspect-square rounded-2xl overflow-hidden mb-2 p-2 flex flex-col justify-end">
                 <!-- <UiImage :data="category" class="scale-effect" loading="lazy" /> -->
-                <img loading="lazy" class="scale-effect h-full object-cover object-center"
-                     :src="props.categoryId.featured_image" alt="">
+                <img loading="lazy" class="scale-effect absolute inset-0 h-full object-cover object-center"
+                    :src="props.categoryId.featured_image" 
+                    :alt="props.categoryId.post_title"
+                />
+                <h3 v-if="props.categoryId.post_title"
+                    class="h6 text-center text-clamp-base text-balance font-semibold mb-0 font-lora p-4 bg-white/30 backdrop-blur-xl rounded-xl">{{
+                        props.categoryId.post_title }}</h3>
             </picture>
             <div class="category__title flex flex-col justify-end items-center gap-2 p-4 relative w-full m-auto">
-                <h3 v-if="props.categoryId.post_title"
-                    class="h6 text-center text-clamp-base text-balance font-semibold mb-0 font-lora">{{
-                        props.categoryId.post_title }}</h3>
                 <p v-if="props.categoryId.post_excerpt" v-html="props.categoryId.post_excerpt"
                     class="text-clamp-sm mb-0 text-center font-nunito"></p>
             </div>
@@ -25,11 +27,6 @@
 </template>
 
 <script setup>
-    import { computed } from 'vue';
-    import { useAsyncData } from 'nuxt/app';
-    import { getTratamiento } from '@/composables/useApi';
-
-
     // Definir props
     const props = defineProps({
         categoryId: {
@@ -50,7 +47,4 @@
         }
         return ''; // Devuelve una ruta vacía si no hay URL
     });
-
-    // const { data: category, error } = await useAsyncData(`tratamiento-${props.categoryId}`, () => getTratamiento({ id: props.categoryId }));
-
 </script>

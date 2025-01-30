@@ -42,7 +42,7 @@
             </figure>
 
             <figure class="size-full aspect-[9/16] min-h-[550px]" :class="elem.orientacion" v-if="elem.orientacion === 'video'">
-               <VimeoPlayer :videoId="elem.video_url" />
+               <UiVideo :videoId="elem.video_url" />
                <!-- <figcaption>Exhibit B. The <cite>Rough Copy</cite> trailer.</figcaption> -->
             </figure>
          </div>

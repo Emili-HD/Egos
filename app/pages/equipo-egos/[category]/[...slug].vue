@@ -9,7 +9,7 @@
                 <div v-if="doctor.acf.video_cabecera"
                     class="caso-real__video video__player col-start-2 col-span-10 flex flex-row justify-center items-start">
                     <div class="w-full bg-nude-5 h-[400px] lg:h-[650px] rounded-2xl">
-                        <VimeoPlayer :videoId="doctor.acf.video_cabecera" />
+                        <UiVideo :videoId="doctor.acf.video_cabecera" />
                     </div>
                 </div>
                 <div v-else-if="doctor.featured_image_data"

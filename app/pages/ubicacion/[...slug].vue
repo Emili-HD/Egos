@@ -105,9 +105,15 @@
                         <div
                             class="flex flex-col sm:flex-row justify-center items-center gap-x-6 text-center max-sm:pb-8">
                             <div class="w-full min-h-56 mb-8 sm:w-80  lg:aspect-square rounded-lg overflow-hidden">
-                                <img loading="lazy" :src="doctor.featured_image" :alt="doctor.post_title"
+                                <img 
+                                    loading="lazy" 
+                                    :src="doctor.featured_image" 
+                                    :alt="doctor.featured_image_data?.alt"
+                                    :width="doctor.featured_image_data?.width"
+                                    :height="doctor.featured_image_data?.height"
                                     class="cover absolute object-center h-full max-w-none left-1/2 -translate-x-1/2"
-                                    :aria-labelledby="'doctor-title-' + doctor.ID" />
+                                    :aria-labelledby="'doctor-title-' + doctor.ID" 
+                                />
                             </div>
                             <div class="w-full" v-if="doctor.post_title">
                                 <!-- Título del doctor -->
