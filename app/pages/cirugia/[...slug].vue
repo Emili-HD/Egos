@@ -177,7 +177,7 @@
         if (htmlClassAdded && document.documentElement) {
             document.documentElement.classList.remove(className);
             htmlClassAdded = false;
-            console.log('Clase eliminada de <html>:', document.documentElement.classList);
+            // console.log('Clase eliminada de <html>:', document.documentElement.classList);
         }
     }
 

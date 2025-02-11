@@ -59,16 +59,18 @@
 
 <script setup>
     import { useAsyncData } from 'nuxt/app';
-    import { getPosts, getPage } from '@/composables/useApi';
-    import { ref, onMounted, onBeforeUnmount } from 'vue';
+    import { getPosts } from '@/composables/useApi';
+    import { usePagesStore } from '@/stores/page'; // Importamos el store de páginas
+    import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
     import ScrollTrigger from 'gsap/ScrollTrigger';
 
-    const postsPerPage = 100;
+    // Configuración de GSAP y posts
     const { $gsap: gsap } = useNuxtApp();
+    const postsPerPage = 100;
     const showLoadingIndicator = ref(true);
     const page = ref(1);
 
-    // Carga inicial de posts con try/catch
+    // Carga de posts con try/catch
     let posts, refreshPosts;
     try {
         const { data: postsData, refresh } = await useAsyncData('posts', () => getPosts({ page: page.value, perPage: postsPerPage }), { initialCache: true });
@@ -76,34 +78,34 @@
         refreshPosts = refresh;
     } catch (error) {
         console.error('Error fetching posts:', error);
-        postsError.value = error; // Guardar el error en una variable reactiva
     }
 
-    // Carga de información de la página del blog con try/catch
-    let blogPage;
-    try {
-        const { data: blogPageData } = await useAsyncData('blogPage', () => getPage(934), { initialCache: true });
-        blogPage = blogPageData;
-    } catch (error) {
-        console.error('Error fetching blog page:', error);
-        blogPageError.value = error; // Guardar el error en una variable reactiva
-    }
+    // **Uso del Store de Páginas**
+    const pagesStore = usePagesStore();
+    const pageId = 934; // ID de la página del blog
 
-    // Carga más posts
+    // Cargar la página al montar el componente
+    await pagesStore.fetchPage(pageId);
+
+    // Acceder a la página desde el store
+    const blogPage = computed(() => pagesStore.pages[pageId]);
+
+    // Cargar más posts
     const loadMorePosts = async () => {
         page.value++;
         await refreshPosts();
     };
 
+    // Formatear fecha de publicación
     const formatDate = (date) => {
-        const newDate = new Date(date)
-        const day = newDate.getDate().toString().padStart(2, '0')
-        const month = (newDate.getMonth() + 1).toString().padStart(2, '0') // Meses comienzan en 0
-        const year = newDate.getFullYear()
-        return `${day}/${month}/${year}`
-    }
+        const newDate = new Date(date);
+        const day = newDate.getDate().toString().padStart(2, '0');
+        const month = (newDate.getMonth() + 1).toString().padStart(2, '0'); // Meses comienzan en 0
+        const year = newDate.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
 
-    // Mounted lifecycle
+    // Configurar ScrollTrigger para carga infinita de posts
     onMounted(() => {
         if (import.meta.client) {
             gsap.registerPlugin(ScrollTrigger);
@@ -120,6 +122,7 @@
         }
     });
 
+    // **SEO con Yoast**
     const { generateYoastHead } = useYoastHead(blogPage);
     const yoastHead = generateYoastHead();
 
@@ -127,6 +130,7 @@
         ...yoastHead,
     });
 </script>
+
 
 <style scoped>
     /* // empty style */

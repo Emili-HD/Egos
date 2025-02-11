@@ -36,43 +36,51 @@
     import { usePagesStore } from '@/stores/page';
     import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
     import { useProcedureData } from '@/composables/useMedicalProcedureSchema';
-    // import { useYoastHead } from '@/composables/useYoastHead';
     import { provide } from 'vue';
 
-    // Router y ruta actual
     const router = useRouter();
     const route = useRoute();
-
-    // Estado reactivo para manejar errores
     const error = ref(null);
     provide('routePath', route.fullPath);
 
-    // Usar el store de páginas
     const pagesStore = usePagesStore();
+    let pages = ref(null); // Iniciar como null para evitar acceder a undefined
 
-    // Cargar la página desde el store al montar el componente
-    await pagesStore.fetchPage(route.params.slug);
+    try {
+        await pagesStore.fetchPage(route.params.slug);
+        pages.value = pagesStore.pages[route.params.slug];
 
-    // Acceder a la página desde el store
-    const pages = computed(() => pagesStore.pages[route.params.slug]);
+        if (!pages.value) {
+            throw createError({
+                statusCode: 404,
+                message: 'Página no encontrada',
+            });
+        }
+    } catch (err) {
+        error.value = err;
+    }
 
-    // Yoast SEO Head
+    // Si hay un error, lanzar el error para que Nuxt maneje el 404
+    if (error.value) {
+        throw createError({
+            statusCode: 404,
+            message: error.value.message || 'Página no encontrada',
+        });
+    }
+
+    // SEO y JSON-LD
     const { generateYoastHead } = useYoastHead(pages);
     const yoastHead = generateYoastHead();
 
-    // Breadcrumb JSON-LD
     const { generateBreadcrumbData } = useBreadcrumbData(pages);
     const breadcrumbJson = generateBreadcrumbData();
 
-    // Procedure JSON-LD (si aplica)
     let procedureJsonLd = null;
-
-    if (pages.value.acf?.datos?.procedureType) {
+    if (pages.value?.acf?.datos?.procedureType) {
         const { generateProcedureData } = useProcedureData(pages);
         procedureJsonLd = generateProcedureData();
     }
 
-    // Configurar metaetiquetas y JSON-LD
     useHead({
         htmlAttrs: {
             class: route.path.includes('/medicina-estetica') ? 'estetica' : '',
@@ -86,39 +94,13 @@
                 type: 'application/ld+json',
                 children: JSON.stringify(procedureJsonLd),
             },
-        ].filter(Boolean), // Filtra valores nulos o undefined
+        ].filter(Boolean),
         ...yoastHead,
     });
 
-    // Verificar si la página existe
-    if (!pages.value) {
-        throw createError({
-            statusCode: 404,
-            message: 'Página no encontrada',
-        });
-    }
-
-    // Añadir clases HTML condicionales
-    let htmlClassAdded = false;
-
-    function addHtmlClass(className) {
-        if (!htmlClassAdded) {
-            document.documentElement.classList.add(className);
-            htmlClassAdded = true;
-        }
-    }
-
-    onBeforeMount(() => {
+    onMounted(() => {
         if (route.path.includes('/medicina-estetica')) {
-            addHtmlClass('estetica');
-        }
-    });
-
-    // Ciclo de vida
-    onMounted(async () => {
-        if (!pages.value) {
-            router.push('/error');
+            document.documentElement.classList.add('estetica');
         }
     });
 </script>
-

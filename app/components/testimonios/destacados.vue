@@ -8,9 +8,10 @@
                     v-if="testimonio.featured_image_data && testimonio.featured_image_data.url">
                     <UiImage :data="testimonio" class="cover" loading="lazy" />
                 </div>
-                <div
-                    class="testimonios__content bg-blue-1 p-6 text-center flex flex-col justify-center items-center">
+                <div class="testimonios__content bg-blue-1 p-6 text-center flex flex-col justify-center items-center">
                     <h3 class="h6 text-clamp-base xl:text-clamp-xl font-medium text-nude-8">{{ testimonio.title }}</h3>
+                    <p v-if="testimonio.acf?.cirugias_testimonios[0]?.datos?.name">Se realizó: {{
+                        testimonio.acf?.cirugias_testimonios[0]?.datos?.name }}</p>
                     <div
                         class="button py-1 px-6 border border-solid bg-nude-8 text-blue-1 text-center uppercase rounded-full">
                         Saber más

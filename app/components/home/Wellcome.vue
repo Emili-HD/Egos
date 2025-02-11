@@ -55,7 +55,7 @@
         );
     });
 
-    console.log('featuredTratamientos', featuredTratamientos.value);
+    // console.log('featuredTratamientos', featuredTratamientos.value);
     
 
     const formatLink = (url) => {

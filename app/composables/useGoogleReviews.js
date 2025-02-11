@@ -17,7 +17,7 @@ export const useGoogleReviews = async (placeId) => {
     }
 
     // Verifica la respuesta completa
-    console.log('Respuesta de la API:', data.value)
+    // console.log('Respuesta de la API:', data.value)
 
     return data.value?.result?.reviews || []
 }

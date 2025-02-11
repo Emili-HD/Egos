@@ -8,7 +8,7 @@
          <div id="ofertas"></div>
          <div class="category__cards [&>h3]:!text-clamp-sm" v-for="(categoryId, index) in data.categorias_home" :key="`category-${categoryId}-${index}`">
             <div class="card__wrapper">
-               <HomeCategorySlide :categoryId="categoryId" class="[&>.card-wrapper>.card]:h-full [&>.card-wrapper>.card]:objet-cover [&>.card-wrapper>.card]:object-center [&>.card-wrapper>.card]:w-[90vw] [&>.card-wrapper>.card]:shadow-2xl" />
+               <HomeCategorySlide :categoryId="categoryId" class="bg-white shadow-2xl shadow-black/10 pb-4 [&>.card-wrapper>.card]:h-full [&>.card-wrapper>.card]:objet-cover [&>.card-wrapper>.card]:object-center [&>.card-wrapper>.card]:w-[90vw] [&>.card-wrapper>.card]:shadow-2xl" />
             </div>
          </div>
       </div>

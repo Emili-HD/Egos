@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
         const body = await readBody(event)
 
         // Verificar si el cuerpo de la solicitud se lee correctamente
-        console.log('Body received from client:', JSON.stringify(body, null, 2))
+        // console.log('Body received from client:', JSON.stringify(body, null, 2))
         const hubspotFormEndpoint = `https://api-eu1.hsforms.com/submissions/v3/integration/submit/${body.portalId}/${body.formId}`
 
         const formDataFiltered = body.fields ? body.fields.map(field => ({
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
         })) : []
 
         // Log del formData filtrado
-        console.log('Filtered formData:', JSON.stringify(formDataFiltered, null, 2))
+        // console.log('Filtered formData:', JSON.stringify(formDataFiltered, null, 2))
 
         const legalConsentOptions = body.legalConsentOptions ? {
             consentToProcess: body.legalConsentOptions.consentToProcess === true,
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
         } : undefined
 
         // Log del legalConsentOptions procesado
-        console.log('Processed legalConsentOptions:', JSON.stringify(legalConsentOptions, null, 2))
+        // console.log('Processed legalConsentOptions:', JSON.stringify(legalConsentOptions, null, 2))
 
         const submissionData = {
             fields: formDataFiltered,
@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
         }
 
         // Log de los datos de envío a HubSpot
-        console.log('Datos de envío a HubSpot:', JSON.stringify(submissionData, null, 2))
+        // console.log('Datos de envío a HubSpot:', JSON.stringify(submissionData, null, 2))
 
         const response = await fetch(hubspotFormEndpoint, {
             method: 'POST',
@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
         const textResponse = await response.text()
 
         // Log de la respuesta sin procesar desde HubSpot
-        console.log('Raw Response from HubSpot:', textResponse)
+        // console.log('Raw Response from HubSpot:', textResponse)
 
         try {
             const jsonResponse = JSON.parse(textResponse)

@@ -5,10 +5,11 @@
             <div>
                 <label for="interest" class="block text-sm font-medium text-white">Me interesa trabajar de...</label>
                 <select v-model="form.interest" id="interest"
-                    class="mt-1 block w-full px-4 py-3 border border-gray-300 bg-white/5 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    class="mt-1 block w-full px-4 py-3 border border-gray-300 bg-white/65 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required>
                     <option disabled value="">Selecciona</option>
                     <option value="auxiliar_estetico">Auxiliar estético</option>
+                    <option value="auxiliar_enfermeria">Auxiliar de enfermería</option>
                     <option value="asesor_cirugia">Asesor de cirugía</option>
                     <option value="administracion">Administrativo</option>
                     <option value="cirujano">Cirujano</option>
@@ -20,7 +21,7 @@
             <div>
                 <label for="lugar" class="block text-sm font-medium text-white">Me gustaría trabajar en...</label>
                 <select v-model="form.lugar" id="lugar"
-                    class="mt-1 block w-full px-4 py-3 border border-gray-300 bg-white/5 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    class="mt-1 block w-full px-4 py-3 border border-gray-300 bg-white/65 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required>
                     <option disabled value="">Selecciona</option>
                     <option value="barcelona_guinardo">Barcelona (Guinardó)</option>
@@ -45,7 +46,7 @@
             <div>
                 <label for="name" class="block text-sm font-medium text-white">Nombre</label>
                 <input type="text" v-model="form.name" id="name"
-                    class="mt-1 block w-full px-4 py-3 bg-white/5 text-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    class="mt-1 block w-full px-4 py-3 bg-white/65 text-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required />
                 <span v-if="errors.name" class="text-red-500 text-sm">{{ errors.name }}</span>
             </div>
@@ -53,7 +54,7 @@
             <div>
                 <label for="email" class="block text-sm font-medium text-white">Correo</label>
                 <input type="email" v-model="form.email" id="email"
-                    class="mt-1 block w-full px-4 py-3 bg-white/5 text-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    class="mt-1 block w-full px-4 py-3 bg-white/65 text-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required />
                 <span v-if="errors.email" class="text-red-500 text-sm">{{ errors.email }}</span>
             </div>
@@ -61,7 +62,7 @@
             <div>
                 <label for="phone" class="block text-sm font-medium text-white">Teléfono</label>
                 <input type="tel" v-model="form.phone" id="phone"
-                    class="mt-1 block w-full px-4 py-3 bg-white/5 text-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    class="mt-1 block w-full px-4 py-3 bg-white/65 text-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required />
                 <span v-if="errors.phone" class="text-red-500 text-sm">{{ errors.phone }}</span>
             </div>

@@ -25,7 +25,7 @@ export const useTreatmentsStore = defineStore('treatments', {
                     return treatment;
                 }
 
-                console.warn(`fetchTreatment: Tratamiento con identificador "${key}" no encontrado.`);
+                // console.warn(`fetchTreatment: Tratamiento con identificador "${key}" no encontrado.`);
                 return null;
             } catch (error) {
                 console.error('Error al obtener el tratamiento:', error);

@@ -42,6 +42,7 @@
                             class="testimonios__content p-6 text-center h-[40%] flex flex-col justify-center items-center">
                             <h3 class="h6 text-clamp-base lg:text-clamp-lg font-medium">{{ testimonio.title.rendered }}
                             </h3>
+                            <p v-if="testimonio.acf?.cirugias_testimonios[0]?.datos?.name">Se realizó: {{ testimonio.acf?.cirugias_testimonios[0]?.datos?.name }}</p>
                             <div
                                 class="button py-1.5 px-6 border border-solid bg-blue-1 text-nude-8 text-center uppercase rounded-full">
                                 Saber más
@@ -66,157 +67,160 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted } from 'vue';
-import { useAsyncData } from 'nuxt/app';
-import { getTestimonios, getPage, egosSettings } from '@/composables/useApi';
-import { Flip } from 'gsap/Flip';
+    import { ref, nextTick, onMounted } from 'vue';
+    import { useAsyncData } from 'nuxt/app';
+    import { getTestimonios, getPage, egosSettings } from '@/composables/useApi';
+    import { Flip } from 'gsap/Flip';
 
 
-const { $gsap: gsap } = useNuxtApp();
-const categoriasSeleccionadas = ref({});
+    const { $gsap: gsap } = useNuxtApp();
+    const categoriasSeleccionadas = ref({});
 
-// Cargar testimonios
-const { data: testimonios, error: testimoniosError } = await useAsyncData(
-    'testimonios',
-    async () => {
-        try {
-            const response = await getTestimonios({ page: 1, perPage: 100 });
-            return response || {}; // Asegurarse de que siempre se retorne un objeto
-        } catch (error) {
-            console.error('Error fetching testimonios:', error);
-            return {}; // En caso de error, retornar un objeto vacío
+    // Cargar testimonios
+    const { data: testimonios, error: testimoniosError } = await useAsyncData(
+        'testimonios',
+        async () => {
+            try {
+                const response = await getTestimonios({ page: 1, perPage: 100 });
+                return response || {}; // Asegurarse de que siempre se retorne un objeto
+            } catch (error) {
+                console.error('Error fetching testimonios:', error);
+                return {}; // En caso de error, retornar un objeto vacío
+            }
         }
+    );
+
+    // console.log(testimonios.value[0]?.acf?.cirugias_testimonios[0].datos.name);
+    
+
+    // Cargar página específica (p.ej., la información de la página de testimonios)
+    const pageId = 16851; // ID página de testimonios
+    const { data: pages, error: pagesError } = await useAsyncData(
+        `page-${pageId}`,
+        async () => {
+            try {
+                const response = await getPage(pageId);
+                return response || {};
+            } catch (error) {
+                console.error(`Error fetching casoreal ${pageId}:`, error);
+                return {}; // En caso de error, retornar un objeto vacío
+            }
+        },
+        { initialCache: true }
+    );
+
+
+    // Cargar categorías de testimonios
+    const { data: categorias, error: categoriasError } = await useAsyncData(
+        'categoriasTestimonios',
+        async () => {
+            try {
+                const response = await getTestimonios({ categories: true });
+                return response || {}; // Asegurarse de que siempre se retorne un objeto
+            } catch (error) {
+                console.error('Error fetching categorias:', error);
+                return {}; // En caso de error, retornar un objeto vacío
+            }
+        }
+    );
+
+    const removeAccents = (str) => {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
-);
 
-// Cargar página específica (p.ej., la información de la página de testimonios)
-const pageId = 16851; // ID página de testimonios
-const { data: pages, error: pagesError } = await useAsyncData(
-    `page-${pageId}`,
-    async () => {
-        try {
-            const response = await getPage(pageId);
-            return response || {};
-        } catch (error) {
-            console.error(`Error fetching casoreal ${pageId}:`, error);
-            return {}; // En caso de error, retornar un objeto vacío
+    const getCategoriesNames = (testimonio) => {
+        if (!testimonio.categories_names || !testimonio.categories_names.length) {
+            return '';
         }
-    },
-    { initialCache: true }
-);
-
-
-// Cargar categorías de testimonios
-const { data: categorias, error: categoriasError } = await useAsyncData(
-    'categoriasTestimonios',
-    async () => {
-        try {
-            const response = await getTestimonios({ categories: true });
-            return response || {}; // Asegurarse de que siempre se retorne un objeto
-        } catch (error) {
-            console.error('Error fetching categorias:', error);
-            return {}; // En caso de error, retornar un objeto vacío
-        }
+        return testimonio.categories_names.map(name => removeAccents(name).toLowerCase()).join(' '); // Usa ' ' como delimitador
     }
-);
 
-const removeAccents = (str) => {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
+    const filtros = async () => {
 
-const getCategoriesNames = (testimonio) => {
-    if (!testimonio.categories_names || !testimonio.categories_names.length) {
-        return '';
-    }
-    return testimonio.categories_names.map(name => removeAccents(name).toLowerCase()).join(' '); // Usa ' ' como delimitador
-}
+        // Eliminamos la referencia a '#all' ya que no se usará
+        const filters = gsap.utils.toArray('.filter');
+        const items = gsap.utils.toArray('.item');
 
-const filtros = async () => {
+        function updateFilters() {
+            const state = Flip.getState(items); // Obtiene el estado actual
+            const classes = filters.filter(checkbox => checkbox.checked).map(checkbox => "." + checkbox.id);
+            let matches;
 
-    // Eliminamos la referencia a '#all' ya que no se usará
-    const filters = gsap.utils.toArray('.filter');
-    const items = gsap.utils.toArray('.item');
+            // Si no hay checkboxes seleccionados, matches incluye todos los ítems
+            if (classes.length === 0) {
+                matches = items;
+            } else {
+                // Si hay checkboxes seleccionados, filtra los ítems basados en las clases de los checkboxes seleccionados
+                matches = gsap.utils.toArray(classes.join(","));
+            }
 
-    function updateFilters() {
-        const state = Flip.getState(items); // Obtiene el estado actual
-        const classes = filters.filter(checkbox => checkbox.checked).map(checkbox => "." + checkbox.id);
-        let matches;
+            // Ajusta la propiedad display de cada ítem
+            items.forEach(item => {
+                item.style.display = matches.includes(item) ? "inline-flex" : "none";
+            });
 
-        // Si no hay checkboxes seleccionados, matches incluye todos los ítems
-        if (classes.length === 0) {
-            matches = items;
-        } else {
-            // Si hay checkboxes seleccionados, filtra los ítems basados en las clases de los checkboxes seleccionados
-            matches = gsap.utils.toArray(classes.join(","));
+            // Anima desde el estado previo
+            Flip.from(state, {
+                duration: 0.7,
+                scale: true,
+                ease: "power1.inOut",
+                stagger: 0.08,
+                absolute: true,
+                onEnter: elements => gsap.fromTo(elements, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 1 }),
+                onLeave: elements => gsap.to(elements, { opacity: 0, scale: 0, duration: 1 })
+            });
         }
 
-        // Ajusta la propiedad display de cada ítem
-        items.forEach(item => {
-            item.style.display = matches.includes(item) ? "inline-flex" : "none";
+        // Escucha el evento click en cada checkbox para actualizar los filtros
+        filters.forEach(btn => btn.addEventListener('click', updateFilters));
+    }
+
+    onMounted(async () => {
+        await nextTick()
+        await filtros()
+        categorias.value.forEach(categoria => {
+            categoriasSeleccionadas.value[categoria.slug] = false; // Inicializar todas las categorías como no seleccionadas
         });
+    })
+    const { generateYoastHead } = useYoastHead(pages);
+    const yoastHead = generateYoastHead();
 
-        // Anima desde el estado previo
-        Flip.from(state, {
-            duration: 0.7,
-            scale: true,
-            ease: "power1.inOut",
-            stagger: 0.08,
-            absolute: true,
-            onEnter: elements => gsap.fromTo(elements, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 1 }),
-            onLeave: elements => gsap.to(elements, { opacity: 0, scale: 0, duration: 1 })
-        });
-    }
-
-    // Escucha el evento click en cada checkbox para actualizar los filtros
-    filters.forEach(btn => btn.addEventListener('click', updateFilters));
-}
-
-onMounted(async () => {
-    await nextTick()
-    await filtros()
-    categorias.value.forEach(categoria => {
-        categoriasSeleccionadas.value[categoria.slug] = false; // Inicializar todas las categorías como no seleccionadas
+    useHead({
+        ...yoastHead,
     });
-})
-const { generateYoastHead } = useYoastHead(pages);
-const yoastHead = generateYoastHead();
-
-useHead({
-    ...yoastHead,
-});
 </script>
 
 <style>
-:root {
-    --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-h1,
-h2,
-h3 {
-    @apply font-lora;
-}
-
-.button {
-    @apply font-nunito;
-}
-
-.checkboxes {
-    .path {
-        @apply fill-none stroke-gold-3 stroke-0;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        transition: stroke-dasharray var(--transition), stroke-dashoffset var(--transition), stroke var(--transition), stroke-width var(--transition);
-        stroke-dasharray: 241 9999999;
-        stroke-dashoffset: 0;
+    :root {
+        --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    input:checked~svg .path {
-        @apply stroke-nude-8;
-        stroke-width: 5;
-        stroke-dasharray: 70.5096664428711 9999999;
-        stroke-dashoffset: -262.2723388671875;
+    h1,
+    h2,
+    h3 {
+        @apply font-lora;
     }
 
-}
+    .button {
+        @apply font-nunito;
+    }
+
+    .checkboxes {
+        .path {
+            @apply fill-none stroke-gold-3 stroke-0;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke-dasharray var(--transition), stroke-dashoffset var(--transition), stroke var(--transition), stroke-width var(--transition);
+            stroke-dasharray: 241 9999999;
+            stroke-dashoffset: 0;
+        }
+
+        input:checked~svg .path {
+            @apply stroke-nude-8;
+            stroke-width: 5;
+            stroke-dasharray: 70.5096664428711 9999999;
+            stroke-dashoffset: -262.2723388671875;
+        }
+
+    }
 </style>

@@ -6,7 +6,7 @@
                     <img 
                         loading="lazy" 
                         :src="doctor.featured_image" 
-                        :alt="doctor.featured_image_data?.alt"
+                        :alt="doctor.featured_image_data?.alt || `${doctor.post_title}, doctor especialista en Clínica Egos`"
                         :width="doctor.featured_image_data?.width"
                         :height="doctor.featured_image_data?.height"
                         :aria-labelledby="'doctor-title-' + doctor.ID" 

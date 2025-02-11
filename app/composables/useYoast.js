@@ -17,8 +17,8 @@ export const useYoastHead = (page) => {
                     let canonical = yoast.value.canonical.startsWith('https://www.')
                         ? yoast.value.canonical
                         : yoast.value.canonical.startsWith('https://')
-                        ? `https://www.${yoast.value.canonical.substring(8)}`
-                        : yoast.value.canonical;
+                            ? `https://www.${yoast.value.canonical.substring(8)}`
+                            : yoast.value.canonical;
                     canonical = canonical.endsWith('/') ? canonical : `${canonical}/`;
                     return canonical;
                 })()

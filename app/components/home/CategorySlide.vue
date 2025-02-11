@@ -26,7 +26,7 @@
             <div class="category__title">
                 <h3 class="h5">{{ category.title.rendered }}</h3>
                 <div v-html="category.excerpt.rendered"
-                    class="[&>p]:text-clamp-sm [&>p]:mb-0 [&>p]:text-center [&>p]:text-pretty"></div>
+                    class="[&>p]:text-clamp-xs [&>p]:mb-0 [&>p]:text-center [&>p]:text-pretty"></div>
             </div>
         </nuxt-link>
         <UiButton v-if="category.acf && category.acf.anchor"
@@ -95,7 +95,7 @@
 
 <style lang="scss" scoped>
     .card {
-        @apply pb-4 rounded-xl min-h-full flex flex-col justify-between items-center;
+        @apply pb-4 rounded-2xl min-h-full flex flex-col justify-between items-center;
 
         &__link {
             @apply w-full h-full block;
@@ -138,7 +138,7 @@
         }
 
         .button {
-            @apply w-fit py-2 px-6 bg-blue-1 text-nude-8 text-center uppercase rounded-xl hover:bg-blue-6 transition-colors;
+            @apply w-fit py-2 px-6 my-3 bg-blue-1 text-nude-8 text-center uppercase rounded-xl hover:bg-blue-6 transition-colors;
         }
     }
 </style>

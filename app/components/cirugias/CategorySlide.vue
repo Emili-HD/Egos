@@ -1,6 +1,6 @@
 <template>
-    <div class="card p-2 flex flex-col justify-between items-center" :class="props.classes">
-        <nuxt-link :to="processedLink" class="w-full min-h-full block " aria-label="Ver detalles de cirugía"
+    <div class="card pb-12 flex flex-col justify-between items-center bg-white shadow-2xl shadow-black/10 rounded-2xl !aspect-[unset] h-full" :class="props.classes">
+        <nuxt-link :to="processedLink" class="w-full min-h-[97%] block " aria-label="Ver detalles de cirugía"
             v-if="categoryId">
             <picture class="group aspect-square rounded-2xl overflow-hidden mb-2 p-2 flex flex-col justify-end">
                 <!-- <UiImage :data="category" class="scale-effect" loading="lazy" /> -->

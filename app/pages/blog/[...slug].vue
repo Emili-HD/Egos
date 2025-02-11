@@ -3,21 +3,13 @@
         <UiBotonCita v-if="post.acf && post.acf.boton_cita" :data="post.acf.boton_cita" />
         <article :class="{ 'fullwidth': post.acf.quiz && post.acf.quiz.posicion === 'top' }">
             <div class="post__header before-gradient mb-12 bg-cover bg-center bg-no-repeat h-[70vh] max-h-[820px] flex flex-col justify-end items-center overflow-hidden"
-                v-if="post.acf && !post.acf.quiz || post.acf.quiz.posicion === 'bottom'">
+                v-if="post.acf">
                 <UiImage :data="post" class="cover absolute" :preload="true"
                     :aria-labelledby="'post-title-' + post.id" />
-                <h1
+                <h1 v-if="post?.title?.rendered"
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 text-balance">
                     {{ post.title.rendered }}
                 </h1>
-                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50 cursor-pointer"
-                    @click="scrollToBreadcrumbs">
-                    <svg class="arrows scale-50 w-[60px] h-[75px]">
-                        <path class="a1" d="M0 0 L30 32 L60 0"></path>
-                        <path class="a2" d="M0 20 L30 52 L60 20"></path>
-                        <path class="a3" d="M0 40 L30 72 L60 40"></path>
-                    </svg>
-                </div>
             </div>
 
             <!-- CABECERA MODIFICADA PARA FORM QUIZ -->
@@ -28,14 +20,6 @@
                 <h1
                     class="font-lora text-nude-8 font-semibold text-center max-lg:text-clamp-4xl w-full xl:max-w-[60vw] z-10 mt-20 text-balance">
                     {{ post.title.rendered }}</h1>
-                <div class="size-20 mb-6 border border-nude-8/50 rounded-full flex justify-center items-center z-50 cursor-pointer"
-                    @click="scrollToBreadcrumbs">
-                    <svg class="arrows scale-50 w-[60px] h-[75px]">
-                        <path class="a1" d="M0 0 L30 32 L60 0"></path>
-                        <path class="a2" d="M0 20 L30 52 L60 20"></path>
-                        <path class="a3" d="M0 40 L30 72 L60 40"></path>
-                    </svg>
-                </div>
             </div>
 
             <!-- FORM QUIZ SÓLO SI ESTÁ PRESENTE -->
@@ -67,49 +51,47 @@
                 <div class="post__content-areas p-0 xl:py-6 col-[2/-2] xl:col-[2/11]">
 
                     <div class="flex flex-col lg:flex-row gap-4 mb-12">
-                        <div v-if="post.acf.doctores_relacionados" class="bg-nude-6 p-6 rounded-xl w-full lg:w-[calc(50%-1rem)]">
-                            <div v-if="doctor">
+                        <div v-if="post.acf?.doctores_relacionados && post.acf?.doctores_relacionados.length"
+                            class="bg-nude-6 p-6 rounded-xl w-full lg:w-[calc(50%-1rem)]">
+                            <div v-for="doctor in post.acf.doctores_relacionados" :key="doctor.ID">
                                 <div class="overflow-hidden size-full flex items-center gap-8">
-                                    <div class="size-32 aspect-square overflow-hidden">
-                                        <UiImage :data="doctor" class="cover absolute object-center inset-0"
-                                            :aria-labelledby="'doctor-title-' + doctor.id" />
+                                    <div class="size-32 aspect-square rounded-full overflow-hidden">
+                                        <img v-if="doctor.featured_image" :src="doctor.featured_image"
+                                            :alt="doctor.post_title"
+                                            class="aspect-square h-full object-cover object-center" />
                                     </div>
                                     <div class="w-[calc(100%-10rem)]">
                                         <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p>
-                                        <h3 class="text-clamp-base mb-0"><strong>{{ doctor.title.rendered }}</strong>
-                                        </h3>
-                                        <p class="text-clamp-xs mb-3">{{ doctor.acf.trayectoria.especialidad }}</p>
-                                        <UiButton :to="relativeDoctorLink"
+                                        <h3 class="text-clamp-base mb-0"><strong>{{ doctor.post_title }}</strong></h3>
+                                        <p class="text-clamp-xs mb-3">{{ doctor.acf?.trayectoria?.especialidad }}</p>
+                                        <UiButton :to="doctor.permalink"
                                             class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1 !no-underline">
-                                            más información</UiButton>
+                                            más información
+                                        </UiButton>
                                     </div>
                                 </div>
                             </div>
-                            <div v-else>
-                                <p>Cargando información del doctor...</p>
-                            </div>
                         </div>
-                        <div v-if="post.acf?.cirugias_relacionadas" class="bg-nude-6 p-6 rounded-xl w-full lg:w-[calc(50%-1rem)]">
-                            <div v-if="cirugia">
+
+                        <div v-if="post.acf?.cirugias_relacionadas && post.acf?.cirugias_relacionadas.length"
+                            class="bg-nude-6 p-6 rounded-xl w-full lg:w-[calc(50%-1rem)]">
+                            <div v-for="cirugia in post.acf.cirugias_relacionadas" :key="cirugia.ID">
                                 <div class="overflow-hidden size-full flex items-center gap-8">
                                     <div class="size-32 aspect-square rounded-full overflow-hidden">
-                                        <UiImage :data="cirugia" class="cover absolute object-center inset-0"
-                                            :aria-labelledby="'cirugia-title-' + cirugia.id" />
+                                        <img v-if="cirugia.featured_image" :src="cirugia.featured_image"
+                                            :alt="cirugia.post_title" />
                                     </div>
                                     <div class="w-[calc(100%-10rem)]">
-                                        <!-- <p class="w-full mb-3 border-b border-b-blue-1/50">Artículo revisado por:</p> -->
-                                        <h3 class="text-clamp-base mb-3"><strong>{{ cirugia.title.rendered }}</strong>
-                                        </h3>
-                                        <UiButton :to="relativeCirugiaLink"
+                                        <h3 class="text-clamp-base mb-3"><strong>{{ cirugia.post_title }}</strong></h3>
+                                        <UiButton :to="cirugia.permalink"
                                             class="button gold text-clamp-xs size-full rounded-2xl block uppercase !px-2 !py-1 !no-underline">
-                                            más información</UiButton>
+                                            más información
+                                        </UiButton>
                                     </div>
                                 </div>
                             </div>
-                            <div v-else>
-                                <p>Cargando información de la clínica...</p>
-                            </div>
                         </div>
+
                     </div>
 
                     <div v-if="post.content.rendered"
@@ -211,7 +193,6 @@
     import { useBreadcrumbData } from '@/composables/useBreadcrumbJson';
     import { usePostData } from '@/composables/blogPostingSchema';
     import { usePostFaqJson } from '@/composables/usePostFaqsJson';
-    import { ScrollTrigger } from 'gsap/ScrollTrigger';
     import { provide } from 'vue';
 
     // Acceder a los parámetros de la ruta
@@ -223,47 +204,26 @@
     // Acceder a gsap y lenis desde el contexto de Nuxt
     const { $gsap: gsap } = useNuxtApp();
 
-    // Define la función para cargar los datos
+    // Función para obtener el post
     const loadData = async () => {
         const slug = route.params.slug;
         const post = await getPosts({ slug });
         return post;
     };
 
-    // Utiliza `useAsyncData` con un key dinámico y dependencias de reactividad
-    const { data: post, refresh } = await useAsyncData(`post-${route.params.slug}`, loadData, { watch: [() => route.params.slug], initialCache: true });
-
-    // Step 2: Definir una referencia para el doctor relacionado
-    const doctor = ref(null);
-    
-    // Step 3: Usar watchEffect para cargar el doctor solo cuando el post esté disponible
-    watchEffect(async () => {
-        if (post.value && post.value.acf?.doctores_relacionados) {
-            try {
-                const doctorId = post.value.acf.doctores_relacionados[0];
-                doctor.value = await getEquipo({ id: doctorId });
-                
-            } catch (error) {
-                console.error("Error fetching doctor:", error);
-            }
-        }
+    // Llamar a la API y almacenar la respuesta en `post`
+    const { data: post, refresh } = await useAsyncData(`post-${route.params.slug}`, loadData, {
+        watch: [() => route.params.slug],
+        initialCache: false, // Para asegurarnos de obtener datos frescos en cada carga
     });
-    
-    // Step 4: Definir una referencia para la clínica relacionada
-    const cirugia = ref(null);
 
-    // Step 3: Usar watchEffect para cargar la clínica solo cuando el post esté disponible
-    watchEffect(async () => {
-        if (post.value && post.value.acf?.cirugias_relacionadas) {
-            try {
-                const cirugiaId = post.value.acf.cirugias_relacionadas[0];
-                cirugia.value = await getTratamiento({ id: cirugiaId });
-
-            } catch (error) {
-                console.error("Error fetching doctor:", error);
-            }
+    // Recargar datos cuando cambia el slug en la URL
+    watch(() => route.params.slug, async (newSlug, oldSlug) => {
+        if (newSlug !== oldSlug) {
+            await refresh();
         }
-    });
+    }, { immediate: true });
+
 
     const relativeDoctorLink = computed(() => {
         if (doctor.value?.link) {
@@ -282,53 +242,32 @@
         }
         return '';
     });
-
-    // Observador para manejar la recarga de datos cuando cambia el parámetro de ruta
-    watch(() => route.params.slug, async (newSlug, oldSlug) => {
-        if (newSlug !== oldSlug) {
-            await refresh();
-        }
-    }, { immediate: true });
-
-    // Observador adicional para manejar la lógica específica, como redirecciones basadas en cambios de datos
-    watch(post, (newPost) => {
-        if (!newPost) {
-            router.push('/error');
-        }
-    }, { immediate: true });
-
-    function scrollToBreadcrumbs() {
-        const breadcrumbsSection = document.getElementById("breadcrumbs");
-        if (breadcrumbsSection) {
-            breadcrumbsSection.scrollIntoView({ behavior: "smooth" });
-        }
-    }
-
+    
     const initAccordion = async () => {
         const groups = gsap.utils.toArray(".accordion__list--item");
         const animations = [];
-
+        
         groups.forEach((group, index) => {
             const title = group.querySelector('.accordion__list--item-title');
             const description = group.querySelector('.accordion__list--item-descripcion');
             const iconV = group.querySelector('.iconV');
             const iconH = group.querySelector('.iconH');
-
+            
             // Establece el estado inicial de manera explícita
             gsap.set(description, { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 });
             gsap.set([iconV, iconH], { rotate: 0, transformOrigin: '50% 50%' });
-
+            
             // Usa fromTo para definir explícitamente los estados inicial y final
             const tl = gsap.timeline({ paused: true, reversed: true })
-                .fromTo(description,
-                    { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 },
-                    { duration: 0.2, autoAlpha: 1, height: 'auto', marginTop: '2rem', marginBottom: '2rem' }, 0)
-                .fromTo([iconV, iconH],
-                    { rotate: 0, transformOrigin: '50% 50%' },
-                    { duration: 0.25, rotate: 45, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
-
+            .fromTo(description,
+            { autoAlpha: 0, height: 0, marginTop: 0, marginBottom: 0 },
+            { duration: 0.2, autoAlpha: 1, height: 'auto', marginTop: '2rem', marginBottom: '2rem' }, 0)
+            .fromTo([iconV, iconH],
+            { rotate: 0, transformOrigin: '50% 50%' },
+            { duration: 0.25, rotate: 45, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
+            
             animations[index] = tl;
-
+            
             title.addEventListener('click', () => {
                 if (tl.reversed()) {
                     animations.forEach((anim) => {
@@ -341,13 +280,14 @@
             });
         });
     };
-
+    
     // Ciclo de vida Mounted
     onMounted(async () => {
         await initAccordion()
     });
-
-
+    
+    
+    // Datos SEO
     let tratamiento = post
     const { generateBreadcrumbData } = useBreadcrumbData(tratamiento);
     const breadcrumbJson = generateBreadcrumbData();
@@ -367,7 +307,7 @@
 
 
     const { generateYoastHead } = useYoastHead(post);
-    const yoastHead = generateYoastHead();    
+    const yoastHead = generateYoastHead();
 
     useHead({
         script: [

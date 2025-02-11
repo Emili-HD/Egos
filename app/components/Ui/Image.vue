@@ -1,8 +1,15 @@
 <template>
-    <nuxt-img provider="wp" v-if="data && data.featured_image_data && data.featured_image_data.url" :class="class"
-        :src="data.featured_image_data.url" :srcset="data.featured_image_data.srcset"
-        :width="data.featured_image_data.width" :height="data.featured_image_data.height"
-        :alt="data.featured_image_data.alt || 'Imagen sin descripción'" sizes="100vw lg:50vw" format="webp"
+    <nuxt-img 
+        provider="wp" 
+        v-if="data && data.featured_image_data && data.featured_image_data.url" 
+        :class="class"
+        :src="data.featured_image_data.url" 
+        :srcset="data.featured_image_data.srcset"
+        :width="data.featured_image_data.width" 
+        :height="data.featured_image_data.height"
+        :alt="data.featured_image_data?.alt || `Imagen de ${data.title?.rendered}`" 
+        sizes="100vw lg:50vw" 
+        format="webp"
         quality="80" />
 </template>
 

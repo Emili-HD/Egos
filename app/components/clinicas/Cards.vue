@@ -3,13 +3,14 @@
         :class="props.classes">
         <nuxt-link :to="processedLink(data.permalink)" class="w-full min-h-full col-start-1 row-span-2 rounded-lg overflow-hidden"
             aria-label="Ver detalles de cirugía" v-if="data">
-            <picture class="group aspect-square w-36  ">
+            <picture class="group aspect-square w-36">
                 <!-- <UiImage :data="data" class="scale-effect" loading="lazy" /> -->
                 <img 
+                    loading="lazy"
                     :src="data.featured_image" 
                     :width="data.featured_image_data?.width"
                     :height="data.featured_image_data?.height"
-                    :alt="data.featured_image_data?.alt" 
+                    :alt="data.featured_image_data?.alt || data.post_title" 
                 />
             </picture>
         </nuxt-link>

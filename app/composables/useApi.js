@@ -12,7 +12,7 @@ export const getPage = async (identifier) => {
     const endpoint = isSlug ? `pages?slug=${identifier}` : `pages/${identifier}`;
 
     const url = `${JSON_URL}/wp/v2/${endpoint}`;
-    
+
     try {
         const data = await $fetch(url, {
             headers: {
@@ -142,13 +142,13 @@ export const getClinicas = async ({ page = 1, perPage = 100, slug = null, id = n
 // Función unificada para obtener testimonios, categorías de testimonios, o un testimonio específico
 // ***************************************************************************************************
 
-export const getTestimonios = async ({ page = 1, perPage = 50, slug = null, categories = false } = {}) => {
+export const getTestimonios = async ({ page = 1, perPage = 100, slug = null, categories = false } = {}) => {
     let endpoint = 'wp/v2';
     const timestamp = new Date().getTime();
 
     // Si se solicitan las categorías de testimonios
     if (categories) {
-        endpoint = 'wp/v2/categoria-opinion';
+        endpoint += '/categoria-opinion';
     } else {
         // Para testimonios o un testimonio específico por slug
         endpoint += `/testimonio${slug ? `?slug=${slug}` : `?per_page=${perPage}&page=${page}&timestamp=${timestamp}`}`;
