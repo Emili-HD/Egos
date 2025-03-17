@@ -12,6 +12,12 @@ export default defineNuxtConfig({
         trailingSlash: true,
     },
 
+	ssr: true, // Asegura que está en modo SSR
+	target: 'server', // No debe ser 'static'
+	generate: {
+		fallback: 'index.html', // Asegura que las rutas sean manejadas por Nuxt
+	},
+
     plugins: [
         '~/plugins/setHtmlLang.js',
         '~/plugins/scrollToTop.client.js',
@@ -267,7 +273,6 @@ export default defineNuxtConfig({
             '~/middleware/apiProxy.js',
             '~/middleware/force-slash.global.js',
             '~/middleware/force-cirugias.global.js',
-            '~/middleware/cleanQueryParams.global.js',
         ]
     },
 
@@ -388,6 +393,7 @@ export default defineNuxtConfig({
         '/alimentacion-despues-de-la-cirugia-bariatrica/': { redirect: { to: '/perdida-de-peso/sleeve-gastrico/', statusCode: 301 } },
         // '/balon-gastrico/': { redirect: { to: '/perdida-de-peso/balon-gastrico/', statusCode: 301 } },
         '/cirugia-bariatrica/balon-gastrico/': { redirect: { to: '/perdida-de-peso/balon-gastrico/', statusCode: 301 } },
+        '/perdida-de-peso/endomanga-reduccion-de-estomago-sin-cirugia/': { redirect: { to: '/perdida-de-peso/metodo-endomanga-mega/', statusCode: 301 } },
 
         // Redirecciones para entradas específicas del blog y categorías
         '/5-beneficios-de-la-blefaroplastia/': { redirect: { to: '/blog/5-beneficios-de-la-blefaroplastia', statusCode: 301 } },
@@ -568,8 +574,26 @@ export default defineNuxtConfig({
         '/blog/la-mirada-cansada-causas-y-como-prevenir/': { redirect: { to: '/estetica-facial/blefaroplastia/', statusCode: 301 } },
         '/blog/rinoplastia-de-nariz-ancha/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 301 } },
         '/blog/parpados-caidos/': { redirect: { to: '/estetica-facial/blefaroplastia/', statusCode: 301 } },
+		'/blog/precio-aumento-de-pecho/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
+		'/blog/lipo-vaser-que-es-y-beneficios/': { redirect: { to: '/estetica-corporal/liposuccion/', statusCode: 301 } },
 
         '/cirugia-bariatrica/endomanga-reduccion-de-estomago-sin-cirugia/': { redirect: { to: '/perdida-de-peso/endomanga-reduccion-de-estomago-sin-cirugia/', statusCode: 301 } },
+
+        '/ubicacion/aumento-de-pecho-en-madrid/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
+        '/ubicacion/aumento-de-pecho-en-badalona/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
+        '/ubicacion/aumento-de-pecho-en-manresa/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
+        '/ubicacion/aumento-de-pecho-en-barcelona/': { redirect: { to: '/cirugia-de-pechos/aumento-de-pecho/', statusCode: 301 } },
+        '/ubicacion/blefaroplastia-en-madrid/': { redirect: { to: '/estetica-facial/blefaroplastia/', statusCode: 301 } },
+        '/ubicacion/blefaroplastia-en-badalona/': { redirect: { to: '/estetica-facial/blefaroplastia/', statusCode: 301 } },
+        '/ubicacion/blefaroplastia-en-manresa/': { redirect: { to: '/estetica-facial/blefaroplastia/', statusCode: 301 } },
+        '/ubicacion/blefaroplastia-en-barcelona/': { redirect: { to: '/estetica-facial/blefaroplastia/', statusCode: 301 } },
+        '/ubicacion/rinoplastia-ultrasonica-en-madrid/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 301 } },
+        '/ubicacion/rinoplastia-ultrasonica-en-badalona/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 301 } },
+        '/ubicacion/rinoplastia-ultrasonica-en-manresa/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 301 } },
+        '/ubicacion/rinoplastia-en-barcelona/': { redirect: { to: '/estetica-facial/rinoplastia/rinoplastia-ultrasonica/', statusCode: 301 } },
+        '/ubicacion/liposuccion-en-barcelona/': { redirect: { to: '/estetica-corporal/liposuccion/', statusCode: 301 } },
+        '/ubicacion/liposuccion-en-badalona/': { redirect: { to: '/estetica-corporal/liposuccion/', statusCode: 301 } },
+        '/ubicacion/liposuccion-en-manresa/': { redirect: { to: '/estetica-corporal/liposuccion/', statusCode: 301 } }
     },
 
     sitemap: {
@@ -703,6 +727,8 @@ export default defineNuxtConfig({
                 '/cirugia-de-pechos/mastopexia/',
                 '/cirugia-de-pechos/quitar-implantes-de-pecho/',
                 '/cirugia-de-pechos/reconstruccion-mamaria/',
+                '/cirugia-de-pechos/reduccion-de-pecho/',
+
                 '/cirugia-intima/vaginoplastia/',
                 '/cirugia-de-pechos/reduccion-de-areolas-o-pezon/',
                 '/cirugia-de-pechos/reduccion-de-pecho/',
@@ -734,6 +760,8 @@ export default defineNuxtConfig({
                 '/medicina-estetica/rinomodelacion/',
                 '/medicina-estetica/sonrisa-gingival/',
                 '/medicina-estetica/hilos-tensores/',
+                '/medicina-estetica/tratamientos-mantenimiento-capilar/',
+                '/medicina-estetica/tratamientos-restauradores-capilares/',
 
                 '/estetica-facial/aumento-de-pomulos/',
                 '/estetica-facial/bichectomia/',
@@ -758,10 +786,11 @@ export default defineNuxtConfig({
                 '/perdida-de-peso/',
                 '/perdida-de-peso/balon-gastrico/',
                 '/perdida-de-peso/bypass-gastrico/',
-                '/perdida-de-peso/endomanga-reduccion-de-estomago-sin-cirugia/',
+                // '/perdida-de-peso/endomanga-reduccion-de-estomago-sin-cirugia/',
                 '/perdida-de-peso/sleeve-gastrico/',
                 '/perdida-de-peso/tratamiento-farmacologico-obesidad/',
                 '/perdida-de-peso/metodo-endomanga-mega/',
+                '/perdida-de-peso/programa-jove-activat/',
             ]
         },
         render: {

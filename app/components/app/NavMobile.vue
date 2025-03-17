@@ -4,29 +4,28 @@
             <ul class="menu-list" ref="menuContainer" v-if="menuData">
                 <li v-for="tratamiento in menuData" :key="tratamiento.ID"
                     :class="{ 'hasSubmenu': tratamiento.child_items }">
-                    <div class="menu-tab" :data-title="tratamiento.title" :data-name="tratamiento.classes.includes('estetica') ? 'estetica' : ''">
+                    <div class="menu-tab" :data-title="tratamiento.title"
+                        :data-name="tratamiento.classes.includes('estetica') ? 'estetica' : ''">
 
                         <!-- Enlace en desktop -->
-                        <nuxt-link 
-                            :to="tratamiento.classes.includes('nofollow') ? tratamiento.url : tratamiento.path" 
-                            :rel="tratamiento.classes.includes('nofollow') ? 'nofollow noopener' : '' " 
-                            :target="tratamiento.classes.includes('nofollow') ? '_blank' : '' " 
-                            class="nav-title" 
-                            active-class="router-link-active" 
-                            :class="[
-                                ...tratamiento.classes, 
+                        <nuxt-link :to="tratamiento.classes.includes('nofollow') ? tratamiento.url : tratamiento.path"
+                            :rel="tratamiento.classes.includes('nofollow') ? 'nofollow noopener' : ''"
+                            :target="tratamiento.classes.includes('nofollow') ? '_blank' : ''" class="nav-title"
+                            active-class="router-link-active" :class="[
+                                ...tratamiento.classes,
                                 { 'nav-link': tratamiento.child_items.length === 0 }
-                            ]"
-                        >
+                            ]">
                             <span>{{ tratamiento.title }}</span>
                         </nuxt-link>
-                        <ArrowDownRightIcon class="arrow-down" v-if="tratamiento.child_items.length > 0" alt="Abrir menú" />
+                        <ArrowDownRightIcon class="arrow-down" v-if="tratamiento.child_items.length > 0"
+                            alt="Abrir menú" />
 
                     </div>
                     <div class="menu-wrapper">
-                        
+
                         <!-- Si el link tiene la class 'nofollow' aplicar link externo -->
-                        <a v-if="tratamiento.classes == 'nofollow'" :href="tratamiento.url" class="nav-link" active-class="router-link-active" rel="nofollow noopener" target="_blank">
+                        <a v-if="tratamiento.classes == 'nofollow'" :href="tratamiento.url" class="nav-link"
+                            active-class="router-link-active" rel="nofollow noopener" target="_blank">
                             <span class="">{{ tratamiento.title }}</span>
                             <ArrowUpRightIcon
                                 class="arrow-up size-8 p-2 rounded-full order-2 absolute right-4 opacity-50 text-blue-1 hidden"
@@ -47,7 +46,7 @@
                                 <ul class="submenu__right-list">
                                     <li class="submenu-child" v-for="(subTratamiento, index) in tratamiento.child_items"
                                         :key="subTratamiento.ID" :data-index="index">
-                                        
+
                                         <nuxt-link v-if="!subTratamiento.child_items" :to="subTratamiento.path"
                                             class="nav-link" :class="subTratamiento.classes"
                                             active-class="nuxt-link-active">
@@ -62,8 +61,10 @@
                                                 v-for="(subSubTratamiento, subIndex) in subTratamiento.child_items"
                                                 :key="subSubTratamiento.ID" :data-index="subIndex">
 
-                                                <a v-if="subSubTratamiento.classes == 'nofollow'" :href="subSubTratamiento.url" class="nav-link"
-                                                    :class="subSubTratamiento.classes" active-class="nuxt-link-active" rel="nofollow noopener" target="_blank">
+                                                <a v-if="subSubTratamiento.classes == 'nofollow'"
+                                                    :href="subSubTratamiento.url" class="nav-link"
+                                                    :class="subSubTratamiento.classes" active-class="nuxt-link-active"
+                                                    rel="nofollow noopener" target="_blank">
                                                     {{ subSubTratamiento.title }}
                                                     <ArrowUpRightIcon
                                                         class="arrow-up  hidden [.is-tablet_&,_.is-tablet_&]:block"
@@ -95,104 +96,102 @@
 </template>
 
 <script setup>
-import { ArrowUpRightIcon, ArrowDownRightIcon } from '@heroicons/vue/24/outline'
-const { $gsap: gsap } = useNuxtApp();
+    import { ArrowUpRightIcon, ArrowDownRightIcon } from '@heroicons/vue/24/outline'
+    const { $gsap: gsap } = useNuxtApp();
 
-// const { data: menuTratamientosData } = await useAsyncData('menuTratamientos', async () => {
-//     const menuData = await getMenuTratamientos();
-//     return menuData;
-// });
+    // const { data: menuTratamientosData } = await useAsyncData('menuTratamientos', async () => {
+    //     const menuData = await getMenuTratamientos();
+    //     return menuData;
+    // });
 
-const props = defineProps({
-    data: {
-        type: Object,
-    },
-    menuData: {
-        type: Object,
-        required: true
-    }
-})
+    const props = defineProps({
+        data: {
+            type: Object,
+        },
+        menuData: {
+            type: Object,
+            required: true
+        }
+    })
 
-const initializeMenus = () => {   
-    const groups = gsap.utils.toArray(".hasSubmenu:has(.arrow-down)");
-    const animations = [];
+    const initializeMenus = () => {
+        const groups = gsap.utils.toArray(".hasSubmenu:has(.arrow-down)");
+        const animations = [];
 
-    groups.forEach((group, index) => {
-        const title = group.querySelector('.menu-tab');
-        const description = group.querySelector('.menu-wrapper');
-        const arrow = group.querySelector('.arrow-down');
-        const scroller = document.querySelector('.menu-list')
+        groups.forEach((group, index) => {
+            const title = group.querySelector('.menu-tab');
+            const description = group.querySelector('.menu-wrapper');
+            const arrow = group.querySelector('.arrow-down');
+            const scroller = document.querySelector('.menu-list')
 
-        // Establece el estado inicial de manera explícita
-        gsap.set(description, { autoAlpha: 0, height: 0 });
-        gsap.set(arrow, { rotate: 0, transformOrigin: '50% 50%' });
+            // Establece el estado inicial de manera explícita
+            gsap.set(description, { autoAlpha: 0, height: 0 });
+            gsap.set(arrow, { rotate: 0, transformOrigin: '50% 50%' });
 
-        // Usa fromTo para definir explícitamente los estados inicial y final
-        const tl = gsap.timeline({ paused: true, reversed: true })
-            .fromTo(description,
-                { autoAlpha: 0, height: 0 },
-                { duration: 0.2, autoAlpha: 1, height: 'auto' }, 0)
-            .fromTo(arrow,
-                { rotate: 0, transformOrigin: '50% 50%' },
-                { duration: 0.25, rotate: 180, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
+            // Usa fromTo para definir explícitamente los estados inicial y final
+            const tl = gsap.timeline({ paused: true, reversed: true })
+                .fromTo(description,
+                    { autoAlpha: 0, height: 0 },
+                    { duration: 0.2, autoAlpha: 1, height: 'auto' }, 0)
+                .fromTo(arrow,
+                    { rotate: 0, transformOrigin: '50% 50%' },
+                    { duration: 0.25, rotate: 180, stagger: 0.05, transformOrigin: '50% 50%' }, '<');
 
-        animations[index] = tl;
+            animations[index] = tl;
 
-        title.addEventListener('click', () => {
-            if (tl.reversed()) {
-                animations.forEach((anim) => {
-                    if (anim !== tl) anim.reverse().then(() => anim.pause());
-                });
-                tl.play();
-                setTimeout(() => {
-                    gsap.to(scroller, { duration: 1, scrollTo: { y: title, offsetY: 150 } })
-                }, 150);
-            } else {
-                tl.reverse();
-            }
+            title.addEventListener('click', () => {
+                if (tl.reversed()) {
+                    animations.forEach((anim) => {
+                        if (anim !== tl) anim.reverse().then(() => anim.pause());
+                    });
+                    tl.play();
+                    setTimeout(() => {
+                        gsap.to(scroller, { duration: 1, scrollTo: { y: title, offsetY: 150 } })
+                    }, 150);
+                } else {
+                    tl.reverse();
+                }
+            });
         });
-    });  
-};
+    };
 
-const cerrarMenuMobile = () => {
-    const burger = document.querySelector('.navTrigger');
-    const nav = document.querySelector('.menu-list');
-    const submenu = gsap.utils.toArray('.menu-wrapper');
-    const allLinks = gsap.utils.toArray('.nav-link');
-    let mql = window.matchMedia("(max-width: 1200px)");
+    const cerrarMenuMobile = () => {
+        const burger = document.querySelector('.navTrigger');
+        const nav = document.querySelector('.menu-list');
+        const submenu = gsap.utils.toArray('.menu-wrapper');
+        const allLinks = gsap.utils.toArray('.nav-link');
+        let mql = window.matchMedia("(max-width: 1200px)");
 
-    // Cierra el menú al hacer clic en un enlace
-    allLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            burger.classList.remove('active');
-            nav.classList.remove('active');
-            if (window.matchMedia("(max-width: 1200px)").matches) {
+        // Cierra el menú al hacer clic en un enlace
+        allLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                nav.classList.remove('active');
+                if (window.matchMedia("(max-width: 1200px)").matches) {
+                    gsap.set(submenu, { autoAlpha: 0, height: 0 });
+                }
+            });
+        });
+
+        // Alterna la visibilidad del menú al hacer clic en el disparador (navTrigger)
+        burger.addEventListener('click', () => {
+            if (burger.classList.contains('active')) {
                 gsap.set(submenu, { autoAlpha: 0, height: 0 });
             }
         });
-    });
+    }
 
-    // Alterna la visibilidad del menú al hacer clic en el disparador (navTrigger)
-    burger.addEventListener('click', () => {
-        if (burger.classList.contains('active')) {
-            gsap.set(submenu, { autoAlpha: 0, height: 0 });
-        }
-    });
-}
-
-onMounted(async () => {
-    initializeMenus();
-    cerrarMenuMobile()
-})
+    onMounted(async () => {
+        initializeMenus();
+        cerrarMenuMobile()
+    })
 
 </script>
 
 <style scoped>
-.header-nav * {
-    @apply font-nunito font-normal;
-}
-
-
+    .header-nav * {
+        @apply font-nunito font-normal;
+    }
 
     .egos-header {
         .nav-categories {
@@ -206,7 +205,7 @@ onMounted(async () => {
         .header-wrapper {
 
             .menu-list {
-                @apply flex items-start [html:not(.blackfriday)_&]:bg-blue-1/85 [.blackfriday_&]:bg-black/80 backdrop-blur-xl rounded-2xl flex-col gap-0 h-[calc(53*var(--vh))] top-[calc(9*var(--vh))] justify-start fixed pt-12 px-4 pb-12 right-1 w-[calc(100vw-.6rem)] max-w-[480px] z-[-1] transition-transform;
+                @apply list-none flex items-start [html:not(.blackfriday)_&]:bg-blue-1/85 [.blackfriday_&]:bg-black/80 backdrop-blur-xl rounded-2xl flex-col gap-0 h-[calc(87*var(--vh))] top-[calc(12*var(--vh))] justify-start fixed pt-12 px-4 pb-4 right-1 w-[calc(100vw-.6rem)] max-w-[480px] z-[-1] transition-transform;
                 transform: translateX(105%);
 
                 &>li {
@@ -226,7 +225,7 @@ onMounted(async () => {
                         .nav-title {
                             @apply hidden;
                         }
-                        
+
                         &::before {
                             background-image: url(https://test.clinicaegos.com/wp-content/uploads/2024/02/icono-21.svg);
                         }
@@ -299,7 +298,7 @@ onMounted(async () => {
                                 @apply hidden;
                             }
                         }
-                        
+
                     }
                 }
 
@@ -362,9 +361,9 @@ onMounted(async () => {
                     }
                 }
 
-                &>li:has(.activo) .menu-tab::after {
+                /* &>li:has(.activo) .menu-tab::after {
                     @apply content-['']
-                }
+                } */
 
                 & a img {
                     @apply inline-block max-w-8 max-h-8;
@@ -440,7 +439,7 @@ onMounted(async () => {
 
     .egos-header:has(.offer-display) {
         .header-wrapper .menu-list {
-            @apply !pt-32;
+            @apply !pt-4;
         }
     }
 

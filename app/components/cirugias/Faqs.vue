@@ -1,18 +1,18 @@
 <template>
   <section v-if="faqsData.faqs" class="faqs grid grid-cols-16 gap-x-0 gap-y-8 xl:gap-4 xl:py-20" id="faqs" >
-    <div class="faqs__image row-span-2 col-[2_/_span_14] xl:col-[2_/_span_6] overflow-hidden rounded-xl aspect-square">
-      <img 
-        loading="lazy" 
-        class="size-full object-cover" 
-        :src="faqsData.imagen_faqs.url" 
-        :srcset="faqsData.imagen_faqs.srcset" 
-        :alt="faqsData.imagen_faqs.url" 
-        :width="faqsData.imagen_faqs.width" 
-        :height="faqsData.imagen_faqs.height" 
-      />
-    </div>
-    <div class="heading accordion__heading col-[2_/_span_14] xl:col-[9_/_span_7] self-end">
-      <h2 class="h4 accordion__heading-title text-clamp-3xl [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0" v-html="faqsData.titulo_faqs"></h2>
+    <div class="faqs__image row-span-2 col-[2_/_span_14] xl:col-[2_/_span_4] max-lg:pt-12">
+		<div class="heading accordion__heading">
+			<h2 class="h4 accordion__heading-title text-clamp-3xl [&>span]:block [&>span]:text-clamp-xl [&>span]:mb-0" v-html="faqsData.titulo_faqs"></h2>
+		</div>
+		<!-- <img 
+		  loading="lazy" 
+		  class="size-full object-cover" 
+		  :src="faqsData.imagen_faqs.url" 
+		  :srcset="faqsData.imagen_faqs.srcset" 
+		  :alt="faqsData.imagen_faqs.url" 
+		  :width="faqsData.imagen_faqs.width" 
+		  :height="faqsData.imagen_faqs.height" 
+		/> -->
     </div>
     <UiAccordion :data="faqsData.faqs" v-if="faqsData && faqsData.faqs" />
   </section>

@@ -9,28 +9,6 @@
     <div class="notices w-full min-h-12 overflow-hidden [html:not(.blackfriday)]:bg-[#B7AB87] [.blackfriday_&]:bg-dark-2 relative"
         v-else-if="ofertas && ofertas.length > 0">
         <ClientOnly>
-            <!-- <div v-if="countdown.days > 0 || countdown.hours > 0 || countdown.minutes > 0 || countdown.seconds > 0"
-                class="flex justify-center items-center gap-4 w-full bg-blackfriday py-2 px-4">
-                <p class="mb-1 text-left text-sm lg:text-lg text-balance leading-none font-normal text-nude-8 [&_span]:text-gold-2 [&_span]:font-semibold" v-html="badge"></p>
-                <div class="counter flex justify-center gap-2 text-blue-1 max-lg:w-1/2">
-                    <div
-                        class="flex items-baseline justify-center py-2 px-3 text-sm bg-nude-8 text-black [.x2_&]:text-clamp-lg rounded-lg w-[20%] font-normal leading-tight">
-                        {{ countdown.days }} <span class="text-xs">d</span>
-                    </div>
-                    <div
-                        class="flex items-baseline justify-center py-2 px-3 text-sm bg-nude-8 text-black [.x2_&]:text-clamp-lg rounded-lg w-[20%] font-normal leading-tight">
-                        {{ countdown.hours }} <span class="text-xs">h</span>
-                    </div>
-                    <div
-                        class="flex items-baseline justify-center py-2 px-3 text-sm bg-nude-8 text-black [.x2_&]:text-clamp-lg rounded-lg w-[20%] font-normal leading-tight">
-                        {{ countdown.minutes }} <span class="text-xs">m</span>
-                    </div>
-                    <div
-                        class="flex items-baseline justify-center py-2 px-3 text-sm bg-nude-8 text-black [.x2_&]:text-clamp-lg rounded-lg w-[20%] font-normal leading-tight">
-                        {{ countdown.seconds }} <span class="text-xs">s</span>
-                    </div>
-                </div>
-            </div> -->
             <div>
                 <div v-for="(oferta, index) in ofertas" :key="index"
                     class="offer-display [.blackfriday_&]:!bg-dark-2 [.blackfriday_&]:!text-white backface-hidden min-h-12 flex justify-center items-center text-center text-nude-8 font-semibold tracking-wide leading-none p-2 absolute top-0 left-0 w-full transition-transform duration-1000 [&:not(.active),_&.previous]:rotate-x-90 [&.active]:rotate-x-0 [&.next,_&.previous]:absolute [&.next,_&.previous]:top-0 [&.next,_&.previous]:left-0 [&.next,_&.previous]:size-full"

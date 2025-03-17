@@ -336,7 +336,7 @@ onMounted(async () => {
         :class="{ 'lg:w-1/2': props.image && props.image.url, 'lg:w-full': !(props.image && props.image.url) }">
         <h2 class="h5 max-lg:text-clamp-xl text-nude-8 xl:pb-2 text-pretty xl:text-center mb-0">{{ props.titulo }}
         </h2>
-        <p class="text-nude-8 xl:text-center">Recibirás tu presupuesto por email o whatsapp al instante</p>
+        <p class="form-text text-nude-8 xl:text-center">Recibirás tu presupuesto por email o whatsapp al instante</p>
         <form @submit.prevent="handleSubmit" class="flex flex-col p-0">
 
             <div v-for="(group, groupIndex) in radioFieldGroups" :key="groupIndex" v-show="groupIndex === currentStep"
@@ -354,7 +354,7 @@ onMounted(async () => {
                                         <p class="w-full max-lg:text-clamp-sm text-white mb-0 italic text-center">
                                             Selecciona una imagen para continuar</p>
                                         <div v-for="option in field.options" :key="option.value"
-                                            class="form-check flex justify-start items-center flex-nowrap size-[calc((100%/2)-1rem)] lg:size-[calc((100%/3)-1rem)]">
+                                            class="form-check flex justify-start items-center flex-nowrap size-[calc((100%/2)-1rem)] lg:size-[calc(28%-1rem)]">
                                             <input type="radio" :id="option.value" :name="field.name"
                                                 :value="option.value" v-model="formData[field.name]" required="required"
                                                 :class="{ 'border-red-500': errors[field.name] }"
@@ -375,7 +375,7 @@ onMounted(async () => {
                                         <p class="w-full text-white mb-0 italic text-center">Selecciona una imagen
                                             para continuar</p>
                                         <div v-for="option in field.options" :key="option.value"
-                                            class="form-check flex justify-start items-center flex-nowrap size-[calc((100%/2)-1rem)] lg:size-[calc((100%/3)-1rem)]">
+                                            class="form-check flex justify-start items-center flex-nowrap size-[calc((100%/2)-1rem)] lg:size-[calc(28%)-1rem)]">
                                             <input type="checkbox" :id="option.value" :name="field.name"
                                                 :value="option.value" v-model="formData[field.name]" required="required"
                                                 :class="{ 'border-red-500': errors[field.name] }"

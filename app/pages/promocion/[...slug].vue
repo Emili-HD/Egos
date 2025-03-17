@@ -15,12 +15,9 @@
                     <img class="max-w-[16rem]" loading="lazy" :src="landing.acf.insignia.url" alt="" />
                 </div>
                 <FormsEsteticaForm
-                    v-if="landing && landing.acf && landing.acf.form[0] && landing.acf.form[0].tipo_de_formulario === 'Bloom'"
+                    v-if="landing && landing.acf && landing.acf.form[0]"
                     :identificador="'topPage'" :portalId="String(landing.acf.form[0].portalid)"
                     :formId="landing.acf.form[0].formid" :name="landing.title.rendered" :route="route.fullPath" />
-
-                <FormsLanding v-else :portalId="String(landing.acf.form[0].portalid)"
-                    :formId="landing.acf.form[0].formid" />
             </div>
         </section>
 

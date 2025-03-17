@@ -39,6 +39,8 @@
             <section class="cirugia grid grid-cols-16 gap-0 xl:p-0 min-h-fit">
                 <LazyCirugiasClinicasRelacionadas v-if="tratamiento.acf && tratamiento.acf.clinicas_relacionadas"
                     :data="tratamiento.acf.clinicas_relacionadas"
+					:cirugia="tratamiento.acf.anchor"
+					:lugar="tratamiento.acf.localidad"
                     :titulo="tratamiento.acf.titulo_cirugias_relacionadas"
                     :texto="tratamiento.acf.texto_cirugias_relacionadas" class="col-[1/-1]" />
             </section>

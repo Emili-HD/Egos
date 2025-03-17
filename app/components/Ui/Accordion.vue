@@ -1,5 +1,5 @@
 <template>
-    <div class="list accordion__list col-[2_/_span_14] xl:col-[9_/_span_7]">
+    <div class="list accordion__list col-[2_/_span_14] xl:col-[7_/_span_9]">
         <div class="accordion__list--item separador-lista" v-for="content in data" :key="content.heading_faq">
             <div class="accordion__list--item-title  [&>*]:font-normal [&>*]:m-0">
                 <div class="title !font-semibold" v-html="content.heading_faq"></div>
@@ -25,7 +25,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .accordion__list {
-    @apply col-[2_/_span_14] xl:col-[9_/_span_7];
+    // @apply col-[2_/_span_14] xl:col-[9_/_span_7];
 
     &--item {
         @apply flex flex-col flex-wrap justify-between py-2 cursor-pointer;
